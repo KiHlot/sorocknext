@@ -1,0 +1,80 @@
+$font: "Inter, Times News Roman, san-serif";
+
+$white: #ffffff;
+$color: #a8b6bb;
+$bgFooter: #141e2e;
+$blockQuoteBg: #272a31;
+$bgColor: #22313a;
+$greyDark: #1f2426;
+$greyDarkLight: #323232;
+$bgColorDark: #1e2a31;
+$bgColorLight: #2b3942;
+$bgColorComment: #394650;
+$bgColorButton: #3f4e59;
+$preload: #384b56;
+$black: #000000;
+$blue: #234657;
+$accent: #cf304d;
+$error: #c35249;
+$user_liked_post: #cf304d;
+$errorDark: #7b3a33ff;
+$warning: #b9730b;
+$yellow: #e5b924;
+$post_added: #ffc107;
+$bgStripeAnim: #5ec9cf;
+$user_commented_post: #03a9f4;
+$blueLight: #2a7cd7;
+$correct: #267873;
+$user_registered: #0e813d;
+$user_activated: #30ed7e;
+$bgGradient: linear-gradient(
+  90deg,
+  rgba(24, 34, 41, 1) 0%,
+  rgba(34, 49, 58, 1) 50%,
+  rgba(24, 34, 41, 1) 100%
+);
+$gold_gradient: linear-gradient(
+  90deg,
+  rgba(230, 174, 68, 1) 16%,
+  rgba(255, 223, 91, 1) 49%,
+  rgba(189, 120, 38, 1) 84%,
+  rgba(231, 181, 69, 1) 95%
+);
+$silver_gradient: linear-gradient(
+  90deg,
+  rgba(188, 190, 192, 1) 16%,
+  rgba(241, 242, 242, 1) 49%,
+  rgba(147, 149, 152, 1) 84%,
+  rgba(209, 211, 212, 1) 95%
+);
+$bronze_gradient: linear-gradient(
+  90deg,
+  rgba(176, 81, 44, 1) 16%,
+  rgba(249, 163, 82, 1) 49%,
+  rgba(163, 54, 27, 1) 84%,
+  rgba(216, 129, 61, 1) 95%
+);
+
+$box_shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.3);
+$text_shadow: 1px 1px 2px #000000;
+$box_shadow_light: 0 6px 20px 0 rgba(94, 201, 207, 0.14);
+$svg_shadow: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.6));
+
+$border_radius: 8px;
+$border_radius_btn: 20px;
+
+$zIndexPopup: 70;
+$zIndexMenu: 50;
+$zIndexNotify: 20;
+
+$breakpoints: (
+  xxs: 340px,
+  xs: 420px,
+  sm: 576px,
+  md: 768px,
+  xmd: 890px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1500px,
+  xxxl: 1700px,
+);
