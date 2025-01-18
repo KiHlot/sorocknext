@@ -1,10 +1,13 @@
-import HomeTPL from "@/templates/HomeTPL/HomeTPL.component"
+import { getApi } from '@/helpers/api';
+import HomeTPL from '@/templates/HomeTPL/HomeTPL.component';
 
 const Home = async () => {
-  // const api = await getApi<MainPageTPLIF>("get-home-page-data");
+    // const api = await getApi<any>('page/main-page-data');
 
-  // return <>{api && <HomeTPL data={api} />}</>;
-  return <HomeTPL />
-}
+    // console.log('api', api);
 
-export default Home
+    // return <>{api && <HomeTPL data={api} />}</>;
+    return <HomeTPL />;
+};
+
+export default Home;
