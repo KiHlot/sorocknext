@@ -1,12 +1,10 @@
-@use 'styles/variables' as *;
+@use '@/styles/variables' as *;
 
 .button {
     width: 100%;
     height: 42px;
     border-radius: $borderRadius;
-    box-shadow: $elemShadow;
-    background-color: $accent;
-    color: $white;
+    box-shadow: $boxShadow;
     cursor: pointer;
     position: relative;
 
@@ -21,54 +19,8 @@
 }
 
 .accent {
-    background-color: $accentYellow;
-    color: $bgColor;
-}
-
-.green {
-    background-color: $accentGreen;
-}
-
-.info {
-    background-color: $info;
-}
-
-.link {
-    height: fit-content;
-    width: fit-content;
-    border-radius: 0;
-    box-shadow: none;
-    background-color: transparent;
+    background-color: $accent;
     color: $white;
-    text-decoration: underline;
-}
-
-.edit {
-    width: 42px;
-    background-color: $grayDark;
-    fill: $color;
-
-    svg {
-        width: 24px;
-        height: 24px;
-    }
-}
-
-.close {
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-    box-shadow: none;
-
-    &:hover {
-        opacity: 0.8;
-    }
-
-    svg {
-        width: 30px;
-        height: 30px;
-        fill: $color;
-    }
 }
 
 .icon {

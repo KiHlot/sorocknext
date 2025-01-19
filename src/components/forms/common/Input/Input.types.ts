@@ -20,4 +20,5 @@ export interface InputProps<T extends FieldValues = FieldValues> {
     isTextsOnly?: boolean;
     isRequired?: boolean;
     isPassword?: boolean;
+    styleType?: 'default' | 'main';
 }

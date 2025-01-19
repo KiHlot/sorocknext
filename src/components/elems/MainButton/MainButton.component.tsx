@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { IoClose } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
-import styles from 'components/elems/MainButton/MainButton.module.scss';
-import { MainButtonPropsIF } from 'components/elems/MainButton/MainButton.types';
+import Link from 'next/link';
+import styles from '@/components/elems/MainButton/MainButton.module.scss';
+import { MainButtonPropsIF } from '@/components/elems/MainButton/MainButton.types';
 
 const MainButton: FC<MainButtonPropsIF> = ({
     children,
@@ -23,7 +23,7 @@ const MainButton: FC<MainButtonPropsIF> = ({
 
     if (href) {
         return (
-            <Link {...commonProps} to={href}>
+            <Link {...commonProps} href={href}>
                 {icon && <span className={`flc ${styles.icon}`}>{icon}</span>}
                 {children}
             </Link>

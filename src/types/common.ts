@@ -20,3 +20,23 @@ export interface ValidatorModeIF {
 export type ValidatorT = {
     [index: string]: Partial<ValidatorModeIF>;
 };
+
+export type ResponseResultT = 'ok' | 'errors' | 'redirect' | 'logout';
+
+export type ResponseErrorIF = {
+    code: string;
+    fieldName?: string;
+    addInfo?: string;
+};
+
+export type ResponseRedirectToIF = {
+    url: string;
+    text?: string;
+};
+
+export interface ResponseIF<DataIF = any> {
+    result: ResponseResultT;
+    data: DataIF | null;
+    errors?: ResponseErrorIF[];
+    redirectTo?: ResponseRedirectToIF;
+}

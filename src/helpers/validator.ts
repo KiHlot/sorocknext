@@ -1,6 +1,10 @@
 import { ValidatorT } from '@/types/common';
 
 export const VALIDATORS: ValidatorT = {
+    phrase: {
+        minLength: 3,
+        maxLength: 30,
+    },
     name: {
         minLength: 2,
         maxLength: 30,

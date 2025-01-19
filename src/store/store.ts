@@ -1,14 +1,20 @@
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { siteApi } from '@/api/site/site';
-import { combineReducers, configureStore, Store } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
     [siteApi.reducerPath]: siteApi.reducer,
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+export const makeStore = () => {
+    return configureStore({
+        reducer: rootReducer,
+        middleware: getDefaultMiddleware =>
+            getDefaultMiddleware().concat([siteApi.middleware]),
+    });
+};
 
-export const store: Store<RootState> = configureStore({
-    reducer: rootReducer,
-    middleware: getDefaultMiddleware =>
-        getDefaultMiddleware().concat([siteApi.middleware]),
-});
+// Infer the type of makeStore
+export type AppStore = ReturnType<typeof makeStore>;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];

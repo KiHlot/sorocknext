@@ -1,4 +1,4 @@
-import {ReactElement, ReactNode} from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 export interface MainButtonPropsIF {
     children?: ReactNode;
@@ -8,6 +8,6 @@ export interface MainButtonPropsIF {
     clickHandler?: () => void;
     className?: string;
     type?: 'button' | 'submit' | 'reset';
-    variant?: 'accent' | 'green' | 'info' | 'link' | 'edit' | 'close';
+    variant?: 'accent' | 'default';
     icon?: ReactElement;
 }

@@ -21,6 +21,8 @@ export const Input = <T extends FieldValues>({
     isTextsOnly,
     isRequired,
     isPassword,
+    className = '',
+    styleType = 'main',
 }: InputProps<T>): ReactElement => {
     const {
         field: { value, onChange },
@@ -44,7 +46,7 @@ export const Input = <T extends FieldValues>({
     };
 
     return (
-        <div className={styles.inputBlock}>
+        <div className={`${styles.inputBlock} ${className}`}>
             {label && (
                 <div className={styles.label}>
                     {label}
@@ -65,6 +67,7 @@ export const Input = <T extends FieldValues>({
                     disabled={isDisabled}
                     maxLength={maxLength}
                     autoComplete={name}
+                    className={styles[styleType]}
                 />
                 {isPassword && (
                     <button
@@ -84,7 +87,9 @@ export const Input = <T extends FieldValues>({
                     </button>
                 )}
             </div>
-            <div className={styles.error}>{fieldState.error?.message}</div>
+            {fieldState.error?.message && (
+                <div className={styles.error}>{fieldState.error.message}</div>
+            )}
         </div>
     );
 };

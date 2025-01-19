@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
 body {
@@ -45,76 +45,6 @@ header {
 
 .d_none {
     display: none !important;
-}
-
-.rnc__base {
-    width: calc(100% - 60px);
-    height: calc(100% - 50px);
-}
-
-.rnc__notification-item--success {
-    background-color: $correct;
-    border-left: 8px solid $bgColorLight;
-}
-
-.rnc__notification-item--danger {
-    background-color: $error;
-    border-left: 8px solid $bgColorLight;
-}
-
-.rnc__notification-item--warning {
-    background-color: $warning;
-    border-left: 8px solid $bgColorLight;
-}
-
-.rnc__notification-container--bottom-right {
-    bottom: 0;
-    right: 15px;
-    @include media(sm) {
-        min-width: 300px;
-        right: 10px;
-    }
-    @include media(xxs) {
-        min-width: 280px;
-    }
-}
-
-.rnc__notification-container--top-center {
-    @include media(sm) {
-        min-width: 300px;
-        right: 10px;
-    }
-    @include media(xxs) {
-        min-width: 280px;
-        right: -10px;
-    }
-}
-
-.rnc__notification-item {
-    @include media(sm) {
-        margin-bottom: 10px;
-    }
-}
-
-.rnc__notification {
-    @include media(xxs) {
-        min-width: 280px;
-        width: 280px !important;
-    }
-}
-
-.rnc__base {
-    @include media(lg) {
-        width: calc(100% - 40px);
-    }
-
-    @include media(md) {
-        width: 100%;
-    }
-}
-
-.rnc__notification-timer {
-    background-color: #959595 !important;
 }
 
 .cvscroll {

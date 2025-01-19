@@ -1,15 +1,67 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { IoSearch } from 'react-icons/io5';
+import { parseResponse } from '@/store/functions';
 import { siteApi } from '@/api/site/site';
+import { SearchIF } from '@/api/site/types';
+import MainButton from '@/components/elems/MainButton/MainButton.component';
 import styles from '@/components/forms/SearchForm/SearchForm.module.scss';
-import { SearchFormPropsIF } from '@/components/forms/SearchForm/SearchForm.types';
+import {
+    FieldsNames,
+    SearchFormPropsIF,
+} from '@/components/forms/SearchForm/SearchForm.types';
+import { Input } from '@/components/forms/common/Input/Input.component';
 
-const SearchForm: FC<SearchFormPropsIF> = ({ className }) => {
-    const [search, { isLoading, isSuccess }] = siteApi.useSearchMutation();
-    
+const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
+    const router = useRouter();
+
+    const [search, { isLoading }] = siteApi.useSearchMutation();
+
+    const { handleSubmit, control, reset, watch } = useForm<SearchIF>({
+        mode: 'onSubmit',
+        defaultValues: {
+            phrase: '',
+        },
+    });
+
+    const phraseValue = watch('phrase');
+
+    const onSubmit = async (values: SearchIF): Promise<void> => {
+        await search(values)
+            .unwrap()
+            .then(data => {
+                parseResponse<FieldsNames, void>(data, () => {
+                    reset();
+                    router.push('/search');
+                });
+            });
+    };
+
     return (
-        <div className={`${styles.wrapper} ${className || ''}`}>SearchForm</div>
+        <form
+            className={`${styles.searchFormWrapper} ${className}`}
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <Input
+                name="phrase"
+                placeholder="Поищем..."
+                control={control}
+                className={styles.input}
+                styleType="default"
+            />
+
+            <MainButton
+                type="submit"
+                disabled={isLoading || phraseValue.length < 3}
+                className={styles.button}
+                variant="default"
+            >
+                <IoSearch />
+            </MainButton>
+        </form>
     );
 };
 

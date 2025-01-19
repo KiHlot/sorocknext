@@ -1,10 +1,10 @@
-import { getApi } from '@/helpers/api';
+import { getApi } from '@/store/functions';
 import HomeTPL from '@/templates/HomeTPL/HomeTPL.component';
 
 const Home = async () => {
-    // const api = await getApi<any>('page/main-page-data');
+    const api = await getApi<any>('site/base-data');
 
-    // console.log('api', api);
+    console.log('api', api);
 
     // return <>{api && <HomeTPL data={api} />}</>;
     return <HomeTPL />;

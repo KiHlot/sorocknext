@@ -1,4 +1,4 @@
-@use 'styles/variables' as *;
+@use '@/styles/variables' as *;
 
 .inputBlock {
     width: 100%;
@@ -19,11 +19,14 @@
     position: relative;
 
     input {
-        height: 42px;
         width: 100%;
-        background-color: $gray;
-        border-radius: $borderRadius;
         padding: 0 8px;
+
+        &.main {
+            background-color: red;
+            height: 42px;
+            border-radius: $borderRadius;
+        }
     }
 
     &.password {
@@ -37,8 +40,8 @@
             width: 42px;
             height: 100%;
             border-radius: $borderRadius;
-            background-color: $grayLight;
-            box-shadow: $elemShadow;
+            background-color: red;
+            box-shadow: $boxShadow;
 
             svg {
                 width: 20px;

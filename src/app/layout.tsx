@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google';
 import { FC } from 'react';
 import '@/styles/global.scss';
 // import MainLayoutComponent from "@/layouts/MainLayout/MainLayout.component"
-// import { getApi } from "@/helpers"
 // import { PopularTagsIF } from "@/components/Blocks/PopularTags/PopularTags.types"
 // import { TopMenuIF } from "@/components/Header/TopMenu/TopMenuVerticalSlider/TopMenuVerticalSlider.types"
 import MainLayout from '@/layouts/MainLayout/MainLayout.component';
