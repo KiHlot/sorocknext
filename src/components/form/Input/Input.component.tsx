@@ -2,11 +2,8 @@ import { ReactElement, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { RiLockPasswordLine } from 'react-icons/ri';
-import styles from '@/components/forms/common/Input/Input.module.scss';
-import {
-    InputProps,
-    InputTypeT,
-} from '@/components/forms/common/Input/Input.types';
+import styles from '@/components/form/Input/Input.module.scss';
+import { InputProps, InputTypeT } from '@/components/form/Input/Input.types';
 
 export const Input = <T extends FieldValues>({
     label,

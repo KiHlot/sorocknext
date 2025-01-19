@@ -8,12 +8,12 @@ import { parseResponse } from '@/store/functions';
 import { siteApi } from '@/api/site/site';
 import { SearchIF } from '@/api/site/types';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
-import styles from '@/components/forms/SearchForm/SearchForm.module.scss';
+import { Input } from '@/components/form/Input/Input.component';
+import styles from '@/components/menus/TopMenu/SearchForm/SearchForm.module.scss';
 import {
     FieldsNames,
     SearchFormPropsIF,
-} from '@/components/forms/SearchForm/SearchForm.types';
-import { Input } from '@/components/forms/common/Input/Input.component';
+} from '@/components/menus/TopMenu/SearchForm/SearchForm.types';
 
 const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
     const router = useRouter();

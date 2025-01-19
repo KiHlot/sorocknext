@@ -3,7 +3,7 @@
 import { FC } from 'react';
 import { POINTINT } from '@/helpers/config';
 import MainLogo from '@/components/elems/MainLogo/MainLogo.component';
-import SearchForm from '@/components/forms/SearchForm/SearchForm.component';
+import SearchForm from '@/components/menus/TopMenu/SearchForm/SearchForm.component';
 import styles from '@/components/menus/TopMenu/TopMenu.module.scss';
 import { TopMenuPropsIF } from '@/components/menus/TopMenu/TopMenu.types';
 
