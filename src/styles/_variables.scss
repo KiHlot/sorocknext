@@ -22,32 +22,32 @@ $warning: #b9730b;
 $yellow: #e5b924;
 $post_added: #ffc107;
 $bgStripeAnim: #5ec9cf;
-$user_commented_post: #03a9f4;
+$userCommented_post: #03a9f4;
 $blueLight: #2a7cd7;
 $correct: #267873;
-$user_registered: #0e813d;
-$user_activated: #30ed7e;
+$userRegistered: #0e813d;
+$userActivated: #30ed7e;
 $bgGradient: linear-gradient(
   90deg,
   rgba(24, 34, 41, 1) 0%,
   rgba(34, 49, 58, 1) 50%,
   rgba(24, 34, 41, 1) 100%
 );
-$gold_gradient: linear-gradient(
+$goldGradient: linear-gradient(
   90deg,
   rgba(230, 174, 68, 1) 16%,
   rgba(255, 223, 91, 1) 49%,
   rgba(189, 120, 38, 1) 84%,
   rgba(231, 181, 69, 1) 95%
 );
-$silver_gradient: linear-gradient(
+$silverGradient: linear-gradient(
   90deg,
   rgba(188, 190, 192, 1) 16%,
   rgba(241, 242, 242, 1) 49%,
   rgba(147, 149, 152, 1) 84%,
   rgba(209, 211, 212, 1) 95%
 );
-$bronze_gradient: linear-gradient(
+$bronzeGradient: linear-gradient(
   90deg,
   rgba(176, 81, 44, 1) 16%,
   rgba(249, 163, 82, 1) 49%,
@@ -55,13 +55,13 @@ $bronze_gradient: linear-gradient(
   rgba(216, 129, 61, 1) 95%
 );
 
-$box_shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.3);
-$text_shadow: 1px 1px 2px #000000;
-$box_shadow_light: 0 6px 20px 0 rgba(94, 201, 207, 0.14);
-$svg_shadow: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.6));
+$boxShadow: 0 10px 25px 0 rgba(0, 0, 0, 0.3);
+$textShadow: 1px 1px 2px #000000;
+$boxShadowLight: 0 6px 20px 0 rgba(94, 201, 207, 0.14);
+$svgShadow: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.6));
 
-$border_radius: 8px;
-$border_radius_btn: 20px;
+$borderRadius: 8px;
+$borderRadiusBtn: 20px;
 
 $zIndexPopup: 70;
 $zIndexMenu: 50;

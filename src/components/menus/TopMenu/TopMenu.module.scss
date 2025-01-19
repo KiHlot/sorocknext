@@ -1,0 +1,58 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.topMenuWrapper {
+    position: fixed;
+    width: calc(100% - 60px);
+    height: 50px;
+    top: 0;
+    left: 60px;
+    background-color: $bgColorLight;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-shadow: $boxShadow;
+    padding: 0 100px 0 40px;
+    z-index: 50;
+
+    @include media(xxl) {
+        padding: 0 100px 0 20px;
+    }
+
+    @include media(lg) {
+        width: calc(100% - 45px);
+        left: 45px;
+    }
+
+    @include media(md) {
+        width: 100%;
+        left: 0;
+        padding: 0;
+        z-index: 52;
+    }
+
+    h1 {
+        display: none;
+    }
+}
+
+.widget_panel_navigation {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 16px 0 8px;
+
+    @include media(xxl) {
+        margin: 0 0 0 auto;
+    }
+
+    @include media(md) {
+        margin: 0 0 0 8px;
+    }
+}
+
+.logo {
+    width: 35px;
+    height: 100%;
+    margin: 0 auto 0 8px;
+}

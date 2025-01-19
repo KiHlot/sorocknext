@@ -1,21 +1,20 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ADDRESS } from 'configs/address';
-import { ERRORS, SERVER_ERRORS } from 'configs/errors';
-import { ResponseIF } from 'store/types';
-import { logout } from 'helpers/auth/logout';
-import { errorNotify, warningNotify } from 'helpers/notify';
-import { getCookie } from 'helpers/utils';
+import { ResponseIF } from '@/store/types';
+import { logout } from '@/helpers/auth/logout';
+import { ADDRESS } from '@/helpers/config';
+import { ERRORS, SERVER_ERRORS } from '@/helpers/errors';
+import { getCookie } from '@/helpers/utils';
 
 export const fetchAuthBaseQuery = () => {
     return fetchBaseQuery({
         baseUrl: ADDRESS.WP_AJAX_URL,
         responseHandler: async (response): Promise<ResponseIF> => {
             if (response?.status !== 200) {
-                errorNotify(
-                    SERVER_ERRORS[`e${response.status}`] ||
-                        `Ошибка ${response.status}`,
-                    `Код ошибки: ${response.status}`,
-                );
+                // errorNotify(
+                //     SERVER_ERRORS[`e${response.status}`] ||
+                //         `Ошибка ${response.status}`,
+                //     `Код ошибки: ${response.status}`,
+                // );
             }
 
             const data: ResponseIF = await response.json();
@@ -23,16 +22,16 @@ export const fetchAuthBaseQuery = () => {
             if (data.result === 'errors' && data.errors?.length) {
                 data.errors.forEach(({ code, fieldName }) => {
                     if (!fieldName) {
-                        errorNotify(
-                            ERRORS[code] ||
-                                `Код ошибки: ${code || 'Неизвестно'}`,
-                        );
+                        // errorNotify(
+                        //     ERRORS[code] ||
+                        //         `Код ошибки: ${code || 'Неизвестно'}`,
+                        // );
                     }
                 });
             }
 
             if (data.result === 'redirect' && data.redirectTo?.text) {
-                warningNotify(data.redirectTo?.text, 'Готовим редирект!');
+                // warningNotify(data.redirectTo?.text, 'Готовим редирект!');
             }
 
             if (data.result === 'logout') {
@@ -46,8 +45,8 @@ export const fetchAuthBaseQuery = () => {
 
 export const fetchRestApiQuery = (baseUrl: string) => {
     return fetchBaseQuery({
-        baseUrl: `${ADDRESS.WP_REST_API_URL}${baseUrl}`,
-        prepareHeaders: (headers) => {
+        baseUrl: `${ADDRESS.WP_API_URL}${baseUrl}`,
+        prepareHeaders: headers => {
             const token = getCookie('token');
 
             if (token) {
@@ -56,13 +55,13 @@ export const fetchRestApiQuery = (baseUrl: string) => {
 
             return headers;
         },
-        responseHandler: async (response): Promise<ResponseIF> => {
+        responseHandler: async (response): Promise<ResponseIF | null> => {
             if (response?.status !== 200) {
-                errorNotify(
-                    SERVER_ERRORS[`e${response.status}`] ||
-                        `Ошибка ${response.statusText || response.status}`,
-                    `Код ошибки: ${response.status}`,
-                );
+                // errorNotify(
+                //     SERVER_ERRORS[`e${response.status}`] ||
+                //         `Ошибка ${response.statusText || response.status}`,
+                //     `Код ошибки: ${response.status}`,
+                // );
 
                 if ([401, 403].includes(response?.status)) {
                     logout();
@@ -76,16 +75,16 @@ export const fetchRestApiQuery = (baseUrl: string) => {
             if (data.result === 'errors' && data.errors?.length) {
                 data.errors.forEach(({ code, fieldName }) => {
                     if (!fieldName) {
-                        errorNotify(
-                            ERRORS[code] ||
-                                `Код ошибки: ${code || 'Неизвестно'}`,
-                        );
+                        // errorNotify(
+                        //     ERRORS[code] ||
+                        //         `Код ошибки: ${code || 'Неизвестно'}`,
+                        // );
                     }
                 });
             }
 
             if (data.result === 'redirect' && data.redirectTo?.text) {
-                warningNotify(data.redirectTo?.text, 'Готовим редирект!');
+                // warningNotify(data.redirectTo?.text, 'Готовим редирект!');
             }
 
             if (data.result === 'logout') {
@@ -100,9 +99,9 @@ export const fetchRestApiQuery = (baseUrl: string) => {
 export const fetchJWTTokenQuery = () => {
     return fetchBaseQuery({
         baseUrl: ADDRESS.WP_JWT_API_URL,
-        responseHandler: async (response): Promise<ResponseIF> => {
+        responseHandler: async (response): Promise<ResponseIF | null> => {
             if (response?.status !== 200) {
-                errorNotify(ERRORS.er209)
+                // errorNotify(ERRORS.er209);
 
                 if ([401, 403].includes(response?.status)) {
                     logout();

@@ -11,5 +11,11 @@ export const siteApi = createApi({
                 method: 'POST',
             }),
         }),
+        search: builder.mutation<any, any>({
+            query: () => ({
+                url: `/search`,
+                method: 'POST',
+            }),
+        }),
     }),
 });

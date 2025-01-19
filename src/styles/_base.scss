@@ -1,390 +1,392 @@
-@use "variables" as *;
-@import "mixins";
+@use 'variables' as *;
+@use '@/styles/mixins' as *;
 
 body {
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  position: relative;
-  background: $bgGradient;
-  font-size: 16px;
-  color: $color;
-  line-height: normal;
-  overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    position: relative;
+    background: $bgGradient;
+    font-size: 16px;
+    color: $color;
+    line-height: normal;
+    overflow-x: hidden;
+    padding-left: 60px;
+    padding-top: 50px;
 
-  @include media(lg) {
-    padding-left: 45px;
-  }
+    @include media(lg) {
+        padding-left: 45px;
+    }
 
-  @include media(md) {
-    padding-left: 0;
-  }
+    @include media(md) {
+        padding-left: 0;
+    }
 
-  &.home {
-    padding-top: 70px;
-  }
+    &.home {
+        padding-top: 70px;
+    }
 
-  &.ovh {
-    overflow: hidden;
-  }
+    &.ovh {
+        overflow: hidden;
+    }
 
-  &.clean {
-    padding-left: 0;
-    padding-top: 0;
-  }
+    &.clean {
+        padding-left: 0;
+        padding-top: 0;
+    }
 }
 
 section,
 header {
-  height: auto;
-  position: relative;
-  z-index: 10;
+    height: auto;
+    position: relative;
+    z-index: 10;
 }
 
 .d_none {
-  display: none !important;
+    display: none !important;
 }
 
 .rnc__base {
-  width: calc(100% - 60px);
-  height: calc(100% - 50px);
+    width: calc(100% - 60px);
+    height: calc(100% - 50px);
 }
 
 .rnc__notification-item--success {
-  background-color: $correct;
-  border-left: 8px solid $bgColorLight;
+    background-color: $correct;
+    border-left: 8px solid $bgColorLight;
 }
 
 .rnc__notification-item--danger {
-  background-color: $error;
-  border-left: 8px solid $bgColorLight;
+    background-color: $error;
+    border-left: 8px solid $bgColorLight;
 }
 
 .rnc__notification-item--warning {
-  background-color: $warning;
-  border-left: 8px solid $bgColorLight;
+    background-color: $warning;
+    border-left: 8px solid $bgColorLight;
 }
 
 .rnc__notification-container--bottom-right {
-  bottom: 0;
-  right: 15px;
-  @include media(sm) {
-    min-width: 300px;
-    right: 10px;
-  }
-  @include media(xxs) {
-    min-width: 280px;
-  }
+    bottom: 0;
+    right: 15px;
+    @include media(sm) {
+        min-width: 300px;
+        right: 10px;
+    }
+    @include media(xxs) {
+        min-width: 280px;
+    }
 }
 
 .rnc__notification-container--top-center {
-  @include media(sm) {
-    min-width: 300px;
-    right: 10px;
-  }
-  @include media(xxs) {
-    min-width: 280px;
-    right: -10px;
-  }
+    @include media(sm) {
+        min-width: 300px;
+        right: 10px;
+    }
+    @include media(xxs) {
+        min-width: 280px;
+        right: -10px;
+    }
 }
 
 .rnc__notification-item {
-  @include media(sm) {
-    margin-bottom: 10px;
-  }
+    @include media(sm) {
+        margin-bottom: 10px;
+    }
 }
 
 .rnc__notification {
-  @include media(xxs) {
-    min-width: 280px;
-    width: 280px !important;
-  }
+    @include media(xxs) {
+        min-width: 280px;
+        width: 280px !important;
+    }
 }
 
 .rnc__base {
-  @include media(lg) {
-    width: calc(100% - 40px);
-  }
+    @include media(lg) {
+        width: calc(100% - 40px);
+    }
 
-  @include media(md) {
-    width: 100%;
-  }
+    @include media(md) {
+        width: 100%;
+    }
 }
 
 .rnc__notification-timer {
-  background-color: #959595 !important;
+    background-color: #959595 !important;
 }
 
 .cvscroll {
-  scrollbar-color: $bgColor $bgColorLight;
-  scrollbar-width: thin;
+    scrollbar-color: $bgColor $bgColorLight;
+    scrollbar-width: thin;
 }
 
 .cvscroll::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 .cvscroll::-webkit-scrollbar-track {
-  box-shadow: none;
+    box-shadow: none;
 }
 
 .cvscroll::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .custom_scroll_horizontal::-webkit-scrollbar {
-  height: 10px;
+    height: 10px;
 }
 
 .custom_scroll_horizontal::-webkit-scrollbar-track {
-  box-shadow: none;
+    box-shadow: none;
 }
 
 .custom_scroll_horizontal::-webkit-scrollbar-thumb {
-  background-color: rgba($bgColorLight, 0.8);
+    background-color: rgba($bgColorLight, 0.8);
 }
 
 .pd_com {
-  padding: 60px 0;
-  @include media(xl) {
-    padding: 40px 0;
-  }
-  @include media(sm) {
-    padding: 30px 0;
-  }
+    padding: 60px 0;
+    @include media(xl) {
+        padding: 40px 0;
+    }
+    @include media(sm) {
+        padding: 30px 0;
+    }
 }
 
 .marquee {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 
-  span {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 20s infinite linear;
-  }
+    span {
+        display: inline-block;
+        padding-left: 100%;
+        animation: marquee 20s infinite linear;
+    }
 
-  @keyframes marquee {
-    0% {
-      transform: translate(-15%, 0);
+    @keyframes marquee {
+        0% {
+            transform: translate(-15%, 0);
+        }
+        25% {
+            transform: translate(-75%, 0);
+        }
+        50% {
+            transform: translate(-15%, 0);
+        }
+        75% {
+            transform: translate(-75%, 0);
+        }
+        100% {
+            transform: translate(-15%, 0);
+        }
     }
-    25% {
-      transform: translate(-75%, 0);
-    }
-    50% {
-      transform: translate(-15%, 0);
-    }
-    75% {
-      transform: translate(-75%, 0);
-    }
-    100% {
-      transform: translate(-15%, 0);
-    }
-  }
 }
 
 .the_content {
-  font-size: 19px;
-  line-height: 28px;
-  word-break: keep-all;
-  overflow-wrap: break-word;
-
-  @include media(md) {
-    font-size: 18px;
-    line-height: 26px;
-  }
-
-  @include media(sm) {
-    font-size: 17px;
-    line-height: 25px;
-  }
-
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  pre {
-    width: 100%;
-    height: auto;
-    margin: 0 0 20px;
+    font-size: 19px;
+    line-height: 28px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 
     @include media(md) {
-      margin: 0 0 16px;
-    }
-  }
-
-  pre {
-    //Check in TextEditor
-    background-color: $blockQuoteBg;
-    overflow: hidden;
-    white-space: pre-wrap;
-    padding: 12px;
-    border-radius: $border_radius;
-    font-size: 14px;
-  }
-
-  img {
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    margin: 0 auto 20px;
-  }
-
-  ul {
-    //Check in TextEditor
-    margin: 20px 0;
-    padding-left: 30px;
-    @include media(md) {
-      padding-left: 20px;
-    }
-
-    li {
-      margin-bottom: 16px;
-      position: relative;
-
-      &:before {
-        content: "";
-        display: block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: $accent;
-        position: absolute;
-        top: 7px;
-        left: -24px;
-        @include media(md) {
-          left: -20px;
-          top: 8px;
-        }
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  blockquote {
-    //Check in TextEditor
-    margin: 0 0 20px;
-    padding: 30px 50px 30px 100px;
-    position: relative;
-    border-radius: $border_radius;
-    background-color: $blockQuoteBg;
-    font-size: 20px;
-    font-style: italic;
-
-    @include media(md) {
-      padding: 16px 32px 16px 60px;
-      font-size: 18px;
-    }
-
-    &:before {
-      content: "";
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' width='100%25' height='100%25' version='1.1' style='shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd'%0AviewBox='0 0 18944 18557' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cdefs%3E%3Cstyle type='text/css'%3E%3C!%5BCDATA%5B .fil0 %7Bfill:%23CF304D;fill-rule:nonzero%7D %5D%5D%3E%3C/style%3E%3C/defs%3E%3Cg id='Слой_x0020_1'%3E%3Cmetadata id='CorelCorpID_0Corel-Layer'/%3E%3Cpath class='fil0' d='M7189 13713c-532,988 -4901,5871 -5697,4649l-1417 -2216c-142,-223 -76,-520 146,-662 1441,-921 2116,-1065 2946,-2547 628,-1111 1018,-2584 1171,-4420l-2630 0c-627,0 -1139,-512 -1139,-1139l0 -6239c0,-627 512,-1139 1139,-1139l5649 0c627,0 1139,512 1139,1139 0,3450 344,9489 -1307,12574zm10418 0c-532,988 -4901,5871 -5697,4649l-1417 -2216c-142,-223 -76,-520 146,-662 1441,-921 2116,-1065 2946,-2547 628,-1111 1018,-2584 1171,-4420l-2630 0c-627,0 -1139,-512 -1139,-1139l0 -6239c0,-627 512,-1139 1139,-1139l5649 0c627,0 1139,512 1139,1139 0,3450 344,9489 -1307,12574z'/%3E%3C/g%3E%3C/svg%3E%0A");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      top: 30px;
-      left: 30px;
-      @include media(md) {
-        width: 30px;
-        height: 30px;
-        top: 20px;
-        left: 16px;
-      }
-    }
-
-    p {
-      margin-bottom: 0;
-    }
-  }
-
-  a {
-    text-decoration: underline;
-    white-space: pre-line;
-  }
-
-  iframe {
-    display: block;
-    width: 100%;
-    height: 350px;
-    margin: 0 auto 20px;
-
-    @include media(md) {
-      height: 320px;
-      margin: 0 auto 16px;
+        font-size: 18px;
+        line-height: 26px;
     }
 
     @include media(sm) {
-      height: 280px;
+        font-size: 17px;
+        line-height: 25px;
     }
-  }
 
-  h1 {
-    font-size: 24px;
-  }
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    pre {
+        width: 100%;
+        height: auto;
+        margin: 0 0 20px;
 
-  h2 {
-    font-size: 22px;
-  }
+        @include media(md) {
+            margin: 0 0 16px;
+        }
+    }
 
-  h3 {
-    font-size: 20px;
-  }
+    pre {
+        //Check in TextEditor
+        background-color: $blockQuoteBg;
+        overflow: hidden;
+        white-space: pre-wrap;
+        padding: 12px;
+        border-radius: $borderRadius;
+        font-size: 14px;
+    }
 
-  h4 {
-    font-size: 18px;
-  }
+    img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        margin: 0 auto 20px;
+    }
+
+    ul {
+        //Check in TextEditor
+        margin: 20px 0;
+        padding-left: 30px;
+        @include media(md) {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 16px;
+            position: relative;
+
+            &:before {
+                content: '';
+                display: block;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: $accent;
+                position: absolute;
+                top: 7px;
+                left: -24px;
+                @include media(md) {
+                    left: -20px;
+                    top: 8px;
+                }
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    blockquote {
+        //Check in TextEditor
+        margin: 0 0 20px;
+        padding: 30px 50px 30px 100px;
+        position: relative;
+        border-radius: $borderRadius;
+        background-color: $blockQuoteBg;
+        font-size: 20px;
+        font-style: italic;
+
+        @include media(md) {
+            padding: 16px 32px 16px 60px;
+            font-size: 18px;
+        }
+
+        &:before {
+            content: '';
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' width='100%25' height='100%25' version='1.1' style='shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd'%0AviewBox='0 0 18944 18557' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cdefs%3E%3Cstyle type='text/css'%3E%3C!%5BCDATA%5B .fil0 %7Bfill:%23CF304D;fill-rule:nonzero%7D %5D%5D%3E%3C/style%3E%3C/defs%3E%3Cg id='Слой_x0020_1'%3E%3Cmetadata id='CorelCorpID_0Corel-Layer'/%3E%3Cpath class='fil0' d='M7189 13713c-532,988 -4901,5871 -5697,4649l-1417 -2216c-142,-223 -76,-520 146,-662 1441,-921 2116,-1065 2946,-2547 628,-1111 1018,-2584 1171,-4420l-2630 0c-627,0 -1139,-512 -1139,-1139l0 -6239c0,-627 512,-1139 1139,-1139l5649 0c627,0 1139,512 1139,1139 0,3450 344,9489 -1307,12574zm10418 0c-532,988 -4901,5871 -5697,4649l-1417 -2216c-142,-223 -76,-520 146,-662 1441,-921 2116,-1065 2946,-2547 628,-1111 1018,-2584 1171,-4420l-2630 0c-627,0 -1139,-512 -1139,-1139l0 -6239c0,-627 512,-1139 1139,-1139l5649 0c627,0 1139,512 1139,1139 0,3450 344,9489 -1307,12574z'/%3E%3C/g%3E%3C/svg%3E%0A");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            top: 30px;
+            left: 30px;
+            @include media(md) {
+                width: 30px;
+                height: 30px;
+                top: 20px;
+                left: 16px;
+            }
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+
+    a {
+        text-decoration: underline;
+        white-space: pre-line;
+    }
+
+    iframe {
+        display: block;
+        width: 100%;
+        height: 350px;
+        margin: 0 auto 20px;
+
+        @include media(md) {
+            height: 320px;
+            margin: 0 auto 16px;
+        }
+
+        @include media(sm) {
+            height: 280px;
+        }
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    h4 {
+        font-size: 18px;
+    }
 }
 
 .cl_30 {
-  width: 30%;
+    width: 30%;
 }
 
 .cl_48 {
-  width: 48%;
+    width: 48%;
 }
 
 .cl_68 {
-  width: 68%;
+    width: 68%;
 }
 
 .cl_100 {
-  width: 100%;
+    width: 100%;
 }
 
 .bgc {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .bgt {
-  background-size: cover;
-  background-position: top;
-  background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
 }
 
 .flc {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .flcol {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+    html {
+        color-scheme: dark;
+    }
 }

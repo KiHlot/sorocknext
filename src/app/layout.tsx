@@ -1,13 +1,13 @@
-import { RootLayoutIF } from '@/app/types';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { FC } from 'react';
+import '@/styles/global.scss';
 // import MainLayoutComponent from "@/layouts/MainLayout/MainLayout.component"
 // import { getApi } from "@/helpers"
 // import { PopularTagsIF } from "@/components/Blocks/PopularTags/PopularTags.types"
 // import { TopMenuIF } from "@/components/Header/TopMenu/TopMenuVerticalSlider/TopMenuVerticalSlider.types"
 import MainLayout from '@/layouts/MainLayout/MainLayout.component';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { FC } from 'react';
-import '@/styles/global.scss';
+import { RootLayoutIF } from '@/app/types';
 
 const inter = Inter({ subsets: ['cyrillic'] });
 
