@@ -55,7 +55,11 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
 
             <MainButton
                 type="submit"
-                disabled={isLoading || phraseValue.length < 3}
+                disabled={
+                    isLoading ||
+                    phraseValue.length < 5 ||
+                    phraseValue.length > 30
+                }
                 className={styles.button}
                 variant="default"
             >
