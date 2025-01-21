@@ -6,8 +6,12 @@ import MainLogo from '@/components/elems/MainLogo/MainLogo.component';
 import SearchForm from '@/components/menus/TopMenu/SearchForm/SearchForm.component';
 import styles from '@/components/menus/TopMenu/TopMenu.module.scss';
 import { TopMenuPropsIF } from '@/components/menus/TopMenu/TopMenu.types';
+import TrendsSlider from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.component';
 
 const TopMenu: FC<TopMenuPropsIF> = ({ className }) => {
+    
+    
+    
     return (
         <div className={`${styles.topMenuWrapper} ${className || ''}`}>
             <>
@@ -21,6 +25,7 @@ const TopMenu: FC<TopMenuPropsIF> = ({ className }) => {
                     <SearchForm />
                 )}
             </>
+            <TrendsSlider />
         </div>
     );
 };

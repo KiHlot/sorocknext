@@ -1,5 +1,6 @@
-import { ReactNode } from "react"
+import { ReactNode } from 'react';
 
 export interface RootLayoutIF {
-  children: ReactNode
+    children: ReactNode;
 }
+
