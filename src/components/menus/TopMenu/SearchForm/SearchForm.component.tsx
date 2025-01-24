@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
 import { parseResponse } from '@/store/functions';
 import { siteApi } from '@/api/site/site';
-import { SearchIF } from '@/api/site/types';
+import { SearchIF, SearchResultIF } from '@/api/site/types';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import { Input } from '@/components/form/Input/Input.component';
 import styles from '@/components/menus/TopMenu/SearchForm/SearchForm.module.scss';
@@ -33,7 +33,7 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
         await search(values)
             .unwrap()
             .then(data => {
-                parseResponse<FieldsNames, void>(data, () => {
+                parseResponse<FieldsNames, SearchResultIF[]>(data, () => {
                     reset();
                     router.push('/search');
                 });

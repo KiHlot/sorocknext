@@ -9,9 +9,7 @@ import { TopMenuPropsIF } from '@/components/menus/TopMenu/TopMenu.types';
 import TrendsSlider from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.component';
 
 const TopMenu: FC<TopMenuPropsIF> = ({ className }) => {
-    
-    
-    
+
     return (
         <div className={`${styles.topMenuWrapper} ${className || ''}`}>
             <>

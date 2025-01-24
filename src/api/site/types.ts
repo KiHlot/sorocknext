@@ -19,3 +19,7 @@ export interface SearchResultIF {
         thumb: string | null;
     };
 }
+
+export interface BaseData {
+    trends: { label: string; url: string }[];
+}

@@ -1,4 +1,13 @@
-import { ValidatorT } from '@/types/common';
+interface ValidatorModeIF {
+    accept: string[];
+    maxSize: number;
+    minLength: number;
+    maxLength: number;
+}
+
+type ValidatorT = {
+    [index: string]: Partial<ValidatorModeIF>;
+};
 
 export const VALIDATORS: ValidatorT = {
     phrase: {

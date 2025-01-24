@@ -8,14 +8,16 @@
     "semi": true,
     "importOrder": [
         "^react",
-        "^next/link",
+        "^swiper",
+        "^next",
+        "^~/",
         "^@/store/(.*)$",
         "^@/api/(.*)$",
         "^@/styles/(.*)$",
         "^@/images/(.*)$",
         "^@/helpers/(.*)$",
         "^@/layouts/(.*)$",
-        "^@/(.*)$",
+        "^@/(.*)$"
     ],
     "importOrderSeparation": false,
     "importOrderSortSpecifiers": false

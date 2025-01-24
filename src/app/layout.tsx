@@ -1,11 +1,10 @@
+import { FC } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { FC } from 'react';
+import '~/swiper/swiper.min.css';
 import '@/styles/global.scss';
-// import MainLayoutComponent from "@/layouts/MainLayout/MainLayout.component"
-// import { PopularTagsIF } from "@/components/Blocks/PopularTags/PopularTags.types"
-// import { TopMenuIF } from "@/components/Header/TopMenu/TopMenuVerticalSlider/TopMenuVerticalSlider.types"
 import MainLayout from '@/layouts/MainLayout/MainLayout.component';
+import StoreProvider from '@/app/StoreProvider';
 import { RootLayoutIF } from '@/app/types';
 
 const inter = Inter({ subsets: ['cyrillic'] });
@@ -22,20 +21,12 @@ export const metadata: Metadata = {
 };
 
 const RootLayout: FC<RootLayoutIF> = async ({ children }) => {
-    // const headerData = await getApi<TopMenuIF>("get-header-data")
-    // const popularTags = await getApi<PopularTagsIF>("get-popular-tags")
-
     return (
         <html lang="en">
             <body className={inter.className}>
-                <MainLayout
-                // data={{
-                //   topMenuVerticalSliderData: headerData?.topMenuVerticalSliderData,
-                //   popularTags: popularTags?.popularTags,
-                // }}
-                >
-                    {children}
-                </MainLayout>
+                <StoreProvider>
+                    <MainLayout>{children}</MainLayout>
+                </StoreProvider>
             </body>
         </html>
     );

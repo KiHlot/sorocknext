@@ -1,6 +1,5 @@
 import { ReactElement, ReactNode } from 'react';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
-import { FileInputT } from '@/types/common';
 
 export interface InputFileProps<T extends FieldValues = FieldValues> {
     register: UseFormRegister<T>;
@@ -8,7 +7,7 @@ export interface InputFileProps<T extends FieldValues = FieldValues> {
     isDisabled?: boolean;
     changeHandler?: (fakePath?: string | null) => void;
     className?: string;
-    acceptType: FileInputT;
+    acceptType: 'image';
     children: ReactNode;
     icon: ReactElement;
 }

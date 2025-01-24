@@ -1,11 +1,11 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ErrorOption } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { ResponseErrorIF, ResponseIF } from '@/store/types';
 import { logout } from '@/helpers/auth/logout';
 import { ADDRESS } from '@/helpers/config';
 import { ERRORS, SERVER_ERRORS } from '@/helpers/errors';
 import { getCookie } from '@/helpers/utils';
-import { ResponseErrorIF, ResponseIF } from '@/types/common';
 
 export const fetchRestApiQuery = (baseUrl: string) => {
     return fetchBaseQuery({

@@ -1,16 +1,32 @@
-import { FC } from 'react';
+'use client';
+
+import { FC, useEffect } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
+import { siteApi } from '@/api/site/site';
 import { MainLayoutPropsIF } from '@/layouts/MainLayout/MainLayout.types';
-import StoreProvider from '@/app/StoreProvider';
 import Footer from '@/components/main/Footer/Footer.component';
 import Header from '@/components/main/Header/Header.component';
+import GlobLoading from '@/components/main/Loading/Loading.component';
 
 const MainLayout: FC<MainLayoutPropsIF> = ({ children }) => {
+    const [getBaseData, { isLoading }] = siteApi.useGetBaseDataMutation({fixedCacheKey: 'baseData'});
+
+    useEffect(() => {
+        getBaseData();
+    }, []);
+
     return (
-        <StoreProvider>
-            <Header />
-            {children}
-            <Footer />
+        <>
+            {isLoading ? (
+                <GlobLoading />
+            ) : (
+                <>
+                    <Header />
+                    {children}
+                    <Footer />
+                </>
+            )}
+
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}
@@ -24,7 +40,7 @@ const MainLayout: FC<MainLayoutPropsIF> = ({ children }) => {
                 theme="colored"
                 transition={Bounce}
             />
-        </StoreProvider>
+        </>
     );
 };
 
