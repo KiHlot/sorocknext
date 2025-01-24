@@ -22,4 +22,7 @@ export interface SearchResultIF {
 
 export interface BaseData {
     trends: { label: string; url: string }[];
+    base: {
+        supportEmail: string;
+    };
 }

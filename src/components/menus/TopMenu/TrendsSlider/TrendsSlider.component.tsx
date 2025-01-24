@@ -6,7 +6,7 @@ import { siteApi } from '@/api/site/site';
 import styles from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.module.scss';
 
 const TrendsSlider: FC = () => {
-    const [, { data: trendsData }] = siteApi.useGetBaseDataMutation({
+    const [, { data: baseData }] = siteApi.useGetBaseDataMutation({
         fixedCacheKey: 'baseData',
     });
 
@@ -25,7 +25,7 @@ const TrendsSlider: FC = () => {
                 loop={true}
                 className={styles.swiperBlock}
             >
-                {trendsData?.trends?.map(({ label, url }) => (
+                {baseData?.trends?.map(({ label, url }) => (
                     <SwiperSlide className={styles.slide} key={url}>
                         <Link href={url}>{label}</Link>
                     </SwiperSlide>

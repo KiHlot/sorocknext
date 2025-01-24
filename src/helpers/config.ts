@@ -24,3 +24,7 @@ export const POINTINT = {
 export const TIME_FORMAT = {
     common: 'YYYY-MM-DD HH:mm:ss',
 };
+
+export const EMAIL = {
+    common: 'YYYY-MM-DD HH:mm:ss',
+};
