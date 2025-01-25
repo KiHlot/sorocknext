@@ -1,29 +1,48 @@
-import { FC } from 'react';
+'use client';
+
+import { FC, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
 import { POINTINT } from '@/helpers/config';
 import MainLogo from '@/components/elems/MainLogo/MainLogo.component';
 import styles from '@/components/menus/LeftMenu/LeftMenu.module.scss';
-import { LeftMenuPropsIF } from '@/components/menus/LeftMenu/LeftMenu.types';
 import SearchForm from '@/components/menus/TopMenu/SearchForm/SearchForm.component';
+import LeftMenuList from '@/components/menus/LeftMenu/LeftMenuList/LeftMenuList.component';
+import LeftMenuFooter from '@/components/menus/LeftMenu/LeftMenuFooter/LeftMenuFooter.component';
 
-const LeftMenu: FC<LeftMenuPropsIF> = ({ isLeftMenuOpened }) => {
-    const isLessThenMd =
-        Number(typeof window !== 'undefined' && window?.innerWidth) <=
-        POINTINT.md;
+const LeftMenu: FC = () => {
+    const pathname = usePathname();
+
+    const { isLeftMenuOpened } = useAppSelector(
+        (state: RootState) => state.globalDataSlice,
+    );
+
+    const [isLessThenMd, setIsLessThenMd] = useState<boolean>(false);
+
+    useEffect(() => {
+        setIsLessThenMd(
+            Number(typeof window !== 'undefined' && window?.innerWidth) <=
+                POINTINT.md,
+        );
+    }, []);
 
     return (
-        <div className={`${styles.leftMenuWrapper} ${styles.opened}`}>
+        <div
+            className={`${styles.leftMenuWrapper} ${isLeftMenuOpened ? styles.opened : ''}`}
+        >
             {isLessThenMd ? (
                 <SearchForm className={styles.searchForm} />
             ) : (
                 <>
-                    <MainLogo className="logo" />
+                    <MainLogo className={styles.logo} />
                     {isLeftMenuOpened &&
-                        (isHome ? (
-                            <h1 className="logo_text">
+                        (pathname === '/' ? (
+                            <h1 className={styles.logoText}>
                                 Сорок Ру комьюнити. Только лучшее!
                             </h1>
                         ) : (
-                            <div className="logo_text">
+                            <div className={styles.logoText}>
                                 Сорок Ру комьюнити. Только лучшее!
                             </div>
                         ))}
@@ -31,7 +50,7 @@ const LeftMenu: FC<LeftMenuPropsIF> = ({ isLeftMenuOpened }) => {
             )}
             <LeftMenuList className={styles.menuList} />
             <LeftMenuFooter className={styles.menuFooter} />
-            <ToggleLeftMenuButton isLeftMenuOpened={isLeftMenuOpened} />
+            {/*<ToggleLeftMenuButton isLeftMenuOpened={isLeftMenuOpened} />*/}
         </div>
     );
 };

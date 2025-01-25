@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { POINTINT } from '@/helpers/config';
 import MainLogo from '@/components/elems/MainLogo/MainLogo.component';
 import SiteEmail from '@/components/elems/SiteEmail/SiteEmail.component';
@@ -10,9 +10,14 @@ import { TopMenuPropsIF } from '@/components/menus/TopMenu/TopMenu.types';
 import TrendsSlider from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.component';
 
 const TopMenu: FC<TopMenuPropsIF> = ({ className }) => {
-    const isLessThenMd =
-        Number(typeof window !== 'undefined' && window?.innerWidth) <=
-        POINTINT.md;
+    const [isLessThenMd, setIsLessThenMd] = useState<boolean>(false);
+
+    useEffect(() => {
+        setIsLessThenMd(
+            Number(typeof window !== 'undefined' && window?.innerWidth) <=
+                POINTINT.md,
+        );
+    }, []);
 
     return (
         <div className={`${styles.topMenuWrapper} ${className || ''}`}>

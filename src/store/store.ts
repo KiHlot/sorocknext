@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { globalDataSlice } from '@/store/slices/globalDataSlice';
 import { siteApi } from '@/api/site/site';
 
 const rootReducer = combineReducers({
     [siteApi.reducerPath]: siteApi.reducer,
+    [globalDataSlice.reducerPath]: globalDataSlice.reducer,
 });
 
 export const makeStore = () => {
@@ -13,8 +15,6 @@ export const makeStore = () => {
     });
 };
 
-// Infer the type of makeStore
 export type AppStore = ReturnType<typeof makeStore>;
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<AppStore['getState']>;
 export type AppDispatch = AppStore['dispatch'];

@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { siteApi } from '@/api/site/site';
 import styles from '@/components/elems/SiteEmail/SiteEmail.module.scss';
+import { SiteEmailPropsIF } from '@/components/elems/SiteEmail/SiteEmail.types';
 
-const SiteEmail: FC = () => {
+const SiteEmail: FC<SiteEmailPropsIF> = ({ className = '' }) => {
     const [, { data: baseData }] = siteApi.useGetBaseDataMutation({
         fixedCacheKey: 'baseData',
     });
@@ -10,7 +11,10 @@ const SiteEmail: FC = () => {
     const { supportEmail } = baseData?.base || {};
 
     return supportEmail ? (
-        <a href={`mailto:${supportEmail}`} className={styles.siteEmailWrapper}>
+        <a
+            href={`mailto:${supportEmail}`}
+            className={`${styles.siteEmailWrapper} ${className}`}
+        >
             {supportEmail}
         </a>
     ) : null;

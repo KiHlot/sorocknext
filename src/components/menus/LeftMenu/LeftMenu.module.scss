@@ -62,19 +62,29 @@
 }
 
 .menuList {
-    height: calc(
-        //100vh - ${({ isLeftMenuOpened }) => (isLeftMenuOpened ? 110 : 60)}px
-    );
-	
+    height: calc(100vh - 60px);
+
+    &.opened {
+        height: calc(100vh - 110px);
+
+        @include media(md) {
+            height: calc(100vh - 160px);
+        }
+    }
+
     @include media(md) {
-        height: calc(
-            //100vh - ${({ isLeftMenuOpened }) => (isLeftMenuOpened ? 160 : 100)}px
-        );
+        height: calc(100vh - 100px);
         margin: 0;
         padding: 0;
     }
 }
 
 .menuFooter {
+    display: none;
     background-color: $bgColor;
+    
+    @include media(md) {
+        display: flex;
+    }
+
 }

@@ -1,3 +1,3 @@
 export interface SiteEmailPropsIF {
-    isHide: boolean;
+    className?: string;
 }
