@@ -63,7 +63,10 @@
 
 .menuList {
     height: calc(100vh - 60px);
-
+    background-color: $bgColor;
+    position: relative;
+    z-index: 2;
+    
     &.opened {
         height: calc(100vh - 110px);
 
@@ -82,9 +85,8 @@
 .menuFooter {
     display: none;
     background-color: $bgColor;
-    
+
     @include media(md) {
         display: flex;
     }
-
 }

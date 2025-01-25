@@ -6,7 +6,7 @@ import { LeftMenuListPropsIF } from '@/components/menus/LeftMenu/LeftMenuList/Le
 
 const LeftMenuList: FC<LeftMenuListPropsIF> = ({ className }) => {
     return (
-        <div className={`${className || ''} ${styles.left_menu_list} cvscroll`}>
+        <div className={`${className || ''} ${styles.leftMenuListWrapper} cvscroll`}>
             <ul>
                 {LEFT_MENU.map(item => (
                     <LeftMenuItem key={item.url} data={item} />

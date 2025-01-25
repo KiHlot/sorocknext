@@ -10,6 +10,7 @@ import styles from '@/components/menus/LeftMenu/LeftMenu.module.scss';
 import SearchForm from '@/components/menus/TopMenu/SearchForm/SearchForm.component';
 import LeftMenuList from '@/components/menus/LeftMenu/LeftMenuList/LeftMenuList.component';
 import LeftMenuFooter from '@/components/menus/LeftMenu/LeftMenuFooter/LeftMenuFooter.component';
+import ToggleLeftMenuButton from '@/components/menus/LeftMenu/ToggleLeftMenuButton/ToggleLeftMenuButton.component';
 
 const LeftMenu: FC = () => {
     const pathname = usePathname();
@@ -50,7 +51,7 @@ const LeftMenu: FC = () => {
             )}
             <LeftMenuList className={styles.menuList} />
             <LeftMenuFooter className={styles.menuFooter} />
-            {/*<ToggleLeftMenuButton isLeftMenuOpened={isLeftMenuOpened} />*/}
+            <ToggleLeftMenuButton />
         </div>
     );
 };

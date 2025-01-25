@@ -13,7 +13,6 @@ export const globalDataSlice = createSlice({
     initialState,
     reducers: {
         setIsLeftMenuOpened: (state, action) => {
-            // Изменяем состояние правильным образом
             state.isLeftMenuOpened = action.payload;
         },
     },

@@ -32,7 +32,7 @@ const TopMenu: FC<TopMenuPropsIF> = ({ className }) => {
                 )}
             </>
             <TrendsSlider />
-            {isLessThenMd && <SiteEmail />}
+            {!isLessThenMd && <SiteEmail />}
         </div>
     );
 };
