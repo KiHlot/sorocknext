@@ -35,8 +35,19 @@ export const siteApi = createApi({
         }),
         updateCronInfo: builder.query<ResponseIF<CronInfoIF | null>, void>({
             query: () => ({
-                url: `/update-cron-info`,
+                url: `/update-cron-task`,
             }),
         }),
+        updateCronTask: builder.mutation<ResponseIF<CronInfoIF | string>, void>(
+            {
+                query: taskName => ({
+                    url: `/update-cron-info`,
+                    method: 'POST',
+                    body: {
+                        taskName,
+                    },
+                }),
+            },
+        ),
     }),
 });

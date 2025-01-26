@@ -1,4 +1,5 @@
+import { ModifyDataIF } from '@/api/site/types';
+
 export interface CronInfoPropsIF {
-    data: any;
-    className?: string;
+    modifyData?: ModifyDataIF | null;
 }

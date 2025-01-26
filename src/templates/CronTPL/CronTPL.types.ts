@@ -1,3 +1,5 @@
+import { CronInfoIF } from '@/api/site/types';
+
 export interface CronTPLPropsIF {
-    data?: any;
+    data?: CronInfoIF | null;
 }

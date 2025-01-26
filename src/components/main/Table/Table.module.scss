@@ -1,0 +1,45 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.tableWrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: $borderRadius;
+    background-color: $bgColor;
+    width: 100%;
+    height: auto;
+}
+
+.tableHeader {
+    width: 100%;
+    height: auto;
+    background-color: $bgColorDark;
+
+    th {
+        color: $color;
+        font-weight: 400;
+        text-align: left;
+    }
+}
+
+.tableRowWrapper {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid rgba($color, 0.2);
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    > * {
+        height: auto;
+        min-height: 40px;
+        padding: 10px 20px;
+        border-right: 1px solid rgba($color, 0.2);
+        font-size: 16px;
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}

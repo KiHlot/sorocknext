@@ -4,47 +4,49 @@ import dayjs from 'dayjs';
 import { FC, useEffect, useState } from 'react';
 import { RxUpdate } from '~/react-icons/rx';
 import { siteApi } from '@/api/site/site';
-import { CronInfoIF } from '@/api/site/types';
+import { ModifyDataIF } from '@/api/site/types';
 import { TIME_FORMAT } from '@/helpers/config';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import styles from '@/templates/CronTPL/CronInfo/CronInfo.module.scss';
 import { CronInfoPropsIF } from '@/templates/CronTPL/CronInfo/CronInfo.types';
 
-const CronInfo: FC<CronInfoPropsIF> = ({ data, className = '' }) => {
+const CronInfo: FC<CronInfoPropsIF> = ({ modifyData }) => {
     const [updateCronInfo, { isLoading: isUpdateCronInfoLoading }] =
         siteApi.useLazyUpdateCronInfoQuery();
 
-    const [currentData, setCurrentData] = useState<CronInfoIF | null>(null);
+    const [currentData, setCurrentData] = useState<ModifyDataIF | null>(null);
 
     useEffect(() => {
-        setCurrentData(data);
-    }, [data]);
+        setCurrentData(modifyData || null);
+    }, [modifyData]);
 
     const clickHandler = () => {
         updateCronInfo()
             .unwrap()
             .then(({ data }) => {
-                setCurrentData(data);
+                setCurrentData(data?.modifyData || null);
             });
     };
 
     return (
-        <div className={`flcol ${styles.cronInfo}`}>
-            <div className={styles.cronInfoBlock}>
+        <div className={`flcol ${styles.cronInfoWrapper}`}>
+            <div
+                className={`${styles.cronInfoBlock} ${styles[currentData?.lastUpdateStatus || 'error']}`}
+            >
                 <div className={styles.label}>Последнее обновление:</div>
                 <div className={styles.value}>
-                    {dayjs(
-                        currentData?.modifyData?.lastUpdate,
-                        TIME_FORMAT.common,
-                    ).format(TIME_FORMAT.previewWithTime)}
+                    {currentData?.lastUpdate
+                        ? dayjs(
+                              currentData.lastUpdate,
+                              TIME_FORMAT.common,
+                          ).format(TIME_FORMAT.previewWithTime)
+                        : 'no date'}
                 </div>
-                <div
-                    className={`${styles.value} ${styles[currentData?.modifyData?.lastUpdateStatus || 'error']}`}
-                >
-                    {currentData?.modifyData?.lastUpdateStatus || 'error'}
+                <div className={`${styles.value} `}>
+                    {currentData?.lastUpdateStatus || 'error'}
                 </div>
                 <div className={styles.value}>
-                    {currentData?.modifyData?.updatedBy}
+                    {currentData?.updatedBy || 'error'}
                 </div>
                 <MainButton
                     variant="default"

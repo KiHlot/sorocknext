@@ -27,14 +27,17 @@ export interface BaseData {
     };
 }
 
-interface ModifyDataIF {
+export interface ModifyDataIF {
     lastUpdate: string;
     lastUpdateStatus: 'success' | 'error';
     updatedBy: string | 'cron';
     itemsCount?: number;
+    label: string;
 }
+
+export type JsonStatusesT = Record<string, ModifyDataIF | null>;
 
 export interface CronInfoIF {
     modifyData: ModifyDataIF;
-    jsonStatuses: Record<string, ModifyDataIF | null>;
+    jsonStatuses: JsonStatusesT;
 }

@@ -1,16 +1,19 @@
 @use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
-.cronInfo {
+.cronInfoWrapper {
     gap: 20px 0;
 }
 
 .cronInfoBlock {
     display: flex;
     gap: 0 20px;
+    font-size: 18px;
 
     & > * {
         position: relative;
+        display: flex;
+        align-items: center;
 
         &:after {
             content: '';
@@ -30,6 +33,12 @@
             }
         }
     }
+
+    &.error {
+        .value {
+            color: $error;
+        }
+    }
 }
 
 .label {
@@ -38,10 +47,6 @@
 
 .value {
     color: $correct;
-
-    &.error {
-        color: $error;
-    }
 }
 
 .updateCronInfoButton {
