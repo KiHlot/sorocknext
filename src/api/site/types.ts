@@ -26,3 +26,15 @@ export interface BaseData {
         supportEmail: string;
     };
 }
+
+interface ModifyDataIF {
+    lastUpdate: string;
+    lastUpdateStatus: 'success' | 'error';
+    updatedBy: string | 'cron';
+    itemsCount?: number;
+}
+
+export interface CronInfoIF {
+    modifyData: ModifyDataIF;
+    jsonStatuses: Record<string, ModifyDataIF | null>;
+}

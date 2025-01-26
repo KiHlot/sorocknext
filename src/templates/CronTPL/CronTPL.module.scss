@@ -1,0 +1,14 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.cronTPLWrapper {
+    gap: 30px 0;
+}
+
+.pageTitle {
+    color: $accent;
+
+    h1 {
+        margin-bottom: 0;
+    }
+}

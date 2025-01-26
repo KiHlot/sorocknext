@@ -1,0 +1,9 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.pageLayoutWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1360px;
+    margin: 40px auto 0;
+}

@@ -1,0 +1,50 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.cronInfo {
+    gap: 20px 0;
+}
+
+.cronInfoBlock {
+    display: flex;
+    gap: 0 20px;
+
+    & > * {
+        position: relative;
+
+        &:after {
+            content: '';
+            width: 1px;
+            height: 60%;
+            position: absolute;
+            right: -10px;
+            top: 20%;
+            display: block;
+            background-color: $white;
+        }
+
+        &:last-child,
+        &:first-child {
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+.label {
+    font-weight: 600;
+}
+
+.value {
+    color: $correct;
+
+    &.error {
+        color: $error;
+    }
+}
+
+.updateCronInfoButton {
+    height: 30px;
+    width: 30px;
+}

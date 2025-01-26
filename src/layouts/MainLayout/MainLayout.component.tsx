@@ -4,12 +4,15 @@ import { FC, useEffect } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { siteApi } from '@/api/site/site';
 import { MainLayoutPropsIF } from '@/layouts/MainLayout/MainLayout.types';
+import PageLayout from '@/layouts/PageLayout/PageLayout.component';
 import Footer from '@/components/main/Footer/Footer.component';
 import Header from '@/components/main/Header/Header.component';
 import GlobLoading from '@/components/main/Loading/Loading.component';
 
 const MainLayout: FC<MainLayoutPropsIF> = ({ children }) => {
-    const [getBaseData, { isLoading }] = siteApi.useGetBaseDataMutation({fixedCacheKey: 'baseData'});
+    const [getBaseData, { isLoading }] = siteApi.useGetBaseDataMutation({
+        fixedCacheKey: 'baseData',
+    });
 
     useEffect(() => {
         getBaseData();
@@ -22,7 +25,7 @@ const MainLayout: FC<MainLayoutPropsIF> = ({ children }) => {
             ) : (
                 <>
                     <Header />
-                    {children}
+                    <PageLayout>{children}</PageLayout>
                     <Footer />
                 </>
             )}
