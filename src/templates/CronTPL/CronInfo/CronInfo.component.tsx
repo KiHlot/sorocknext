@@ -1,57 +1,48 @@
-'use client';
-
 import dayjs from 'dayjs';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { RxUpdate } from '~/react-icons/rx';
 import { siteApi } from '@/api/site/site';
-import { ModifyDataIF } from '@/api/site/types';
 import { TIME_FORMAT } from '@/helpers/config';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import styles from '@/templates/CronTPL/CronInfo/CronInfo.module.scss';
 import { CronInfoPropsIF } from '@/templates/CronTPL/CronInfo/CronInfo.types';
 
-const CronInfo: FC<CronInfoPropsIF> = ({ modifyData }) => {
-    const [updateCronInfo, { isLoading: isUpdateCronInfoLoading }] =
+const CronInfo: FC<CronInfoPropsIF> = ({ modifyData, setCronInfoData }) => {
+    const [updateCronInfo, { isLoading }] =
         siteApi.useLazyUpdateCronInfoQuery();
-
-    const [currentData, setCurrentData] = useState<ModifyDataIF | null>(null);
-
-    useEffect(() => {
-        setCurrentData(modifyData || null);
-    }, [modifyData]);
 
     const clickHandler = () => {
         updateCronInfo()
             .unwrap()
             .then(({ data }) => {
-                setCurrentData(data?.modifyData || null);
+                setCronInfoData(data || null);
             });
     };
 
     return (
         <div className={`flcol ${styles.cronInfoWrapper}`}>
             <div
-                className={`${styles.cronInfoBlock} ${styles[currentData?.lastUpdateStatus || 'error']}`}
+                className={`${styles.cronInfoBlock} ${styles[modifyData?.lastUpdateStatus || 'error']}`}
             >
                 <div className={styles.label}>Последнее обновление:</div>
                 <div className={styles.value}>
-                    {currentData?.lastUpdate
+                    {modifyData?.lastUpdate
                         ? dayjs(
-                              currentData.lastUpdate,
+                              modifyData.lastUpdate,
                               TIME_FORMAT.common,
                           ).format(TIME_FORMAT.previewWithTime)
                         : 'no date'}
                 </div>
                 <div className={`${styles.value} `}>
-                    {currentData?.lastUpdateStatus || 'error'}
+                    {modifyData?.lastUpdateStatus || 'error'}
                 </div>
                 <div className={styles.value}>
-                    {currentData?.updatedBy || 'error'}
+                    {modifyData?.updatedBy || 'error'}
                 </div>
                 <MainButton
                     variant="default"
                     className={styles.updateCronInfoButton}
-                    disabled={isUpdateCronInfoLoading}
+                    disabled={isLoading}
                     clickHandler={clickHandler}
                 >
                     <RxUpdate />

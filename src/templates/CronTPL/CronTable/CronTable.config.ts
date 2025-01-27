@@ -5,5 +5,6 @@ export const TABLE_TITLES: TableTitlesIF[] = [
     { title: 'Дата обновления' },
     { title: 'Статус' },
     { title: 'Автор' },
+    { title: 'Количество' },
     { title: 'Действие' },
 ];

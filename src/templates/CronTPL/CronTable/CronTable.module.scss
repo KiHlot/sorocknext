@@ -1,2 +1,17 @@
 @use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
+
+.updateButton {
+    width: 32px;
+    height: 32px;
+    border-right: $borderRadius;
+    border: $border;
+}
+
+.success {
+    color: $correct;
+}
+
+.error {
+    color: $error;
+}

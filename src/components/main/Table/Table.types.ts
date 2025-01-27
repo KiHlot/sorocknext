@@ -18,4 +18,5 @@ export interface TableRowPropsIF {
 
 export interface RowItemPropsIF {
     children: ReactNode;
+    className?: string;
 }

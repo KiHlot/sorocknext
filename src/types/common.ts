@@ -10,3 +10,12 @@ export interface OptionIF {
     label: string;
     value: string;
 }
+
+export interface TagIF {
+    id: number;
+    slug: string;
+    name: string;
+    coverImg: string | null;
+    innerImg: string | null;
+    postsCount: number;
+}

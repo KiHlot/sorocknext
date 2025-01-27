@@ -27,8 +27,8 @@ export const TableRow: FC<TableRowPropsIF> = ({ children }) => {
     return <tr className={styles.tableRowWrapper}>{children}</tr>;
 };
 
-export const RowItem: FC<RowItemPropsIF> = ({ children }) => {
-    return <td>{children}</td>;
+export const RowItem: FC<RowItemPropsIF> = ({ children, className = '' }) => {
+    return <td className={className}>{children}</td>;
 };
 
 export default Table;
