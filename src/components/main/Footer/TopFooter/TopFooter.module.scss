@@ -1,64 +1,69 @@
-@import "@/css/variables";
-@import "@/css/mixins";
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
 
-.top_footer {
-  background-color: $bgColor;
-  padding: 60px 0;
-  @include media(sm) {
-    padding: 40px 0;
-  }
+.topFooterWrapper {
+    background-color: $bgColor;
+    padding: 60px 0;
+    @include media(sm) {
+        padding: 40px 0;
+    }
 }
 
-.full_wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+.fullWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.footer_col {
-  width: 24%;
-  position: relative;
+.footerCol {
+    width: 24%;
+    position: relative;
 
-  &:not(.menu) {
-    @include media(xl) {
-      order: 0;
-      width: 49%;
-    }
-    @include media(sm) {
-      order: 1;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-    @include media(xs) {
-      order: 0;
-      margin-bottom: 30px;
-    }
-  }
+    &:not(.menu) {
+        @include media(xl) {
+            order: 0;
+            width: 49%;
+        }
 
-  &.menu {
-    width: 15%;
-    @include media(xl) {
-      order: 1;
-      width: 32%;
-      margin-top: 20px;
+        @include media(sm) {
+            order: 1;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        @include media(xs) {
+            order: 0;
+            margin-bottom: 30px;
+        }
     }
-    @include media(sm) {
-      order: 0;
-      margin-bottom: 20px;
-      margin-top: 0;
-      font-size: 15px;
-      line-height: 20px;
-      width: 33%;
+
+    &.menu {
+        width: 15%;
+
+        @include media(xl) {
+            order: 1;
+            width: 32%;
+            margin-top: 20px;
+        }
+
+        @include media(sm) {
+            order: 0;
+            margin-bottom: 20px;
+            margin-top: 0;
+            font-size: 15px;
+            line-height: 20px;
+            width: 33%;
+        }
+
+        @include media(xs) {
+            order: 1;
+            width: 49%;
+        }
     }
-    @include media(xs) {
-      order: 1;
-      width: 49%;
-    }
-  }
 }
 
 .title {
-  color: $accent;
-  margin-bottom: 16px;
+    color: $accent;
+    margin-bottom: 16px;
 }

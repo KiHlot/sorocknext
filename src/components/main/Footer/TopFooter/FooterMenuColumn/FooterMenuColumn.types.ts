@@ -1,5 +1,8 @@
-import { MenuItemType } from "@/types/simple";
+export interface MenuItemIF {
+    uri: string;
+    label: string;
+}
 
-export interface DefaultProps {
-  menuItems: MenuItemType[];
+export interface FooterMenuColumnPropsIF {
+    menuItems: MenuItemIF[];
 }

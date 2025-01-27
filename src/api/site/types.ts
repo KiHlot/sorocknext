@@ -1,3 +1,5 @@
+import { TagIF } from '@/types/common';
+
 export interface SearchIF {
     phrase: string;
     postTypes?: string[] | null;
@@ -25,6 +27,7 @@ export interface BaseData {
     base: {
         supportEmail: string;
     };
+    popularTags: TagIF[]
 }
 
 export interface ModifyDataIF {

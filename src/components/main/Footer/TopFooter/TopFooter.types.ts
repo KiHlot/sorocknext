@@ -1,5 +1,5 @@
-import { TagThumbIF } from "@/types/post";
+import { TagIF } from '@/types/common';
 
-export interface DefaultProps {
-  popularTags?: TagThumbIF[];
+export interface TopFooterPropsIF {
+    popularTags?: TagIF[];
 }

@@ -2,20 +2,14 @@ import dayjs from 'dayjs';
 import { TIME_FORMAT } from '@/helpers/config';
 import { CookieOptionsT } from '@/types/common';
 
-export const shuffle = (array: any) => {
-    let currentIndex = array.length,
-        randomIndex;
+export const shuffle = <T>(array: T[]): T[] => {
+    const arrayCopy = [...array];
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex],
-            array[currentIndex],
-        ];
+    for (let i = arrayCopy.length - 1; i > 0; i--) {
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        [arrayCopy[i], arrayCopy[randomIndex]] = [arrayCopy[randomIndex], arrayCopy[i]];
     }
-
-    return array;
+    return arrayCopy;
 };
 
 export const setCookie = (

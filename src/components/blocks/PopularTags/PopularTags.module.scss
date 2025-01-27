@@ -1,0 +1,13 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.popularTagsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0;
+
+    .tagButton {
+        margin: 0 10px 10px 0;
+    }
+}

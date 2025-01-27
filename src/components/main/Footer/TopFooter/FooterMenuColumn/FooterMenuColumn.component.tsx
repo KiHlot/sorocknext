@@ -1,19 +1,18 @@
-import { FC } from "react";
-import Link from "next/link";
+import { FC } from 'react';
+import Link from 'next/link';
+import styles from '@/components/main/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.module.scss';
+import { FooterMenuColumnPropsIF } from '@/components/main/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.types';
 
-import { DefaultProps } from "@/components/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.types";
-import styles from "@/components/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.module.scss";
-
-const FooterMenuColumn: FC<DefaultProps> = ({ menuItems }) => {
-  return (
-    <div className={styles.menu_column}>
-      {menuItems.map(({ uri, label }) => (
-        <Link key={uri} href={uri}>
-          {label}
-        </Link>
-      ))}
-    </div>
-  );
+const FooterMenuColumn: FC<FooterMenuColumnPropsIF> = ({ menuItems }) => {
+    return (
+        <div className={styles.menuColumn}>
+            {menuItems.map(({ uri, label }) => (
+                <Link key={uri} href={uri}>
+                    {label}
+                </Link>
+            ))}
+        </div>
+    );
 };
 
 export default FooterMenuColumn;

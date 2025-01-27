@@ -1,9 +1,9 @@
 @use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
-.pageLayoutWrapper {
+.mainWrapper {
     position: relative;
     width: 100%;
-    max-width: 1360px;
+    max-width: 1720px;
     margin: 40px auto 0;
 }
