@@ -3,43 +3,30 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
     images: { unoptimized: true },
     webpack: config => {
-        // Находим правило для работы с SVG
         const fileLoaderRule = config.module.rules.find(
             (rule: { test: { test: (arg0: string) => any } }) =>
-                rule.test && rule.test.test('.svg'),
+                rule.test?.test?.('.svg'),
         );
 
-        // Если нашли правило, удаляем его
-        if (fileLoaderRule) {
-            config.module.rules.splice(
-                config.module.rules.indexOf(fileLoaderRule),
-                1,
-            );
-        }
+        config.module.rules.push(
+            {
+                ...fileLoaderRule,
+                test: /\.svg$/i,
+                resourceQuery: /url/,
+            },
 
-        // Добавляем новое правило для работы со SVG
-        config.module.rules.push({
-            test: /\.svg$/,
-            use: [
-                {
-                    loader: '@svgr/webpack',
-                    options: {
-                        babel: false,
-                        typescript: true,
-                        exportType: 'default',
-                        ref: true,
-                        svgo: false,
-                        titleProp: true,
-                    },
+            {
+                test: /\.svg$/i,
+                issuer: fileLoaderRule.issuer,
+                resourceQuery: {
+                    not: [...fileLoaderRule.resourceQuery.not, /url/],
                 },
-            ],
-        });
+                use: ['@svgr/webpack'],
+            },
+        );
 
-        config.module.rules.push({
-            test: /\.css$/,
-            use: ['style-loader', 'css-loader'],
-        });
-
+        fileLoaderRule.exclude = /\.svg$/i;
+        
         return config;
     },
     experimental: {
