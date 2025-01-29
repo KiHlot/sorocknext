@@ -4,9 +4,9 @@ import { FC, useEffect } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { siteApi } from '@/api/site/site';
 import { MainLayoutPropsIF } from '@/layouts/MainLayout/MainLayout.types';
-import Footer from '@/components/main/Footer/Footer.component';
-import Header from '@/components/main/Header/Header.component';
-import GlobLoading from '@/components/main/Loading/Loading.component';
+import GlobLoading from '@/components/blocks/GlobLoading/GlobLoading.component';
+import Footer from '@/components/sections/Footer/Footer.component';
+import Header from '@/components/sections/Header/Header.component';
 
 const MainLayout: FC<MainLayoutPropsIF> = ({ children }) => {
     const [getBaseData, { isLoading }] = siteApi.useGetBaseDataMutation({

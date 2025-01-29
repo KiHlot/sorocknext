@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import styles from '@/components/main/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.module.scss';
-import { FooterMenuColumnPropsIF } from '@/components/main/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.types';
+import styles from '@/components/sections/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.module.scss';
+import { FooterMenuColumnPropsIF } from '@/components/sections/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.types';
 
 const FooterMenuColumn: FC<FooterMenuColumnPropsIF> = ({ menuItems }) => {
     return (

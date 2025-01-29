@@ -20,7 +20,7 @@ const TopMenu: FC<TopMenuPropsIF> = ({ className }) => {
     }, []);
 
     return (
-        <div className={`${styles.topMenuWrapper} ${className || ''}`}>
+        <div className={`hide ${styles.topMenuWrapper} ${className || ''}`}>
             <>
                 {isLessThenMd ? (
                     <>

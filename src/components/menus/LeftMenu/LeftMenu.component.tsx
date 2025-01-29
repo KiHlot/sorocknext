@@ -7,10 +7,10 @@ import { RootState } from '@/store/store';
 import { POINTINT } from '@/helpers/config';
 import MainLogo from '@/components/elems/MainLogo/MainLogo.component';
 import styles from '@/components/menus/LeftMenu/LeftMenu.module.scss';
-import SearchForm from '@/components/menus/TopMenu/SearchForm/SearchForm.component';
-import LeftMenuList from '@/components/menus/LeftMenu/LeftMenuList/LeftMenuList.component';
 import LeftMenuFooter from '@/components/menus/LeftMenu/LeftMenuFooter/LeftMenuFooter.component';
+import LeftMenuList from '@/components/menus/LeftMenu/LeftMenuList/LeftMenuList.component';
 import ToggleLeftMenuButton from '@/components/menus/LeftMenu/ToggleLeftMenuButton/ToggleLeftMenuButton.component';
+import SearchForm from '@/components/menus/TopMenu/SearchForm/SearchForm.component';
 
 const LeftMenu: FC = () => {
     const pathname = usePathname();
@@ -30,7 +30,7 @@ const LeftMenu: FC = () => {
 
     return (
         <div
-            className={`${styles.leftMenuWrapper} ${isLeftMenuOpened ? styles.opened : ''}`}
+            className={`hide ${styles.leftMenuWrapper} ${isLeftMenuOpened ? styles.opened : ''}`}
         >
             {isLessThenMd ? (
                 <SearchForm className={styles.searchForm} />

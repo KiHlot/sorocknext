@@ -14,10 +14,10 @@ const PopularTags: FC<DefaultProps> = ({ className = '' }) => {
         <div className={`${styles.popularTagsWrapper} ${className || ''}`}>
             {shuffle(baseData.popularTags)
                 .slice(0, 15)
-                .map(item => (
+                .map(tagData => (
                     <TagButton
-                        key={item.slug}
-                        data={item}
+                        key={tagData.slug}
+                        tagData={tagData}
                         className={styles.tagButton}
                     />
                 ))}

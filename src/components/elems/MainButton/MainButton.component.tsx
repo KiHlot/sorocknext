@@ -42,7 +42,7 @@ const MainButton: FC<MainButtonPropsIF> = ({
     return (
         <button {...commonProps} type={type}>
             {icon && <span className={`flc ${styles.icon}`}>{icon}</span>}
-            {variant === 'close' ? <IoClose /> : children}
+            {children}
         </button>
     );
 };

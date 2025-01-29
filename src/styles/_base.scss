@@ -22,17 +22,14 @@ body {
         padding-left: 0;
     }
 
-    &.home {
-        padding-top: 70px;
-    }
-
     &.ovh {
         overflow: hidden;
     }
 
-    &.clean {
-        padding-left: 0;
-        padding-top: 0;
+    &.hide {
+        .hide {
+            z-index: 1;
+        }
     }
 }
 
@@ -78,11 +75,11 @@ header {
 
 .pd_com {
     padding: 60px 0;
-    
+
     @include media(xl) {
         padding: 40px 0;
     }
-    
+
     @include media(sm) {
         padding: 30px 0;
     }

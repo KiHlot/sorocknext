@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
 import PopularTags from '@/components/blocks/PopularTags/PopularTags.component';
-import FooterMenuColumn from '@/components/main/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.component';
-import { FOOTER_MENU } from '@/components/main/Footer/TopFooter/TopFooter.config';
-import styles from '@/components/main/Footer/TopFooter/TopFooter.module.scss';
-import { TopFooterPropsIF } from '@/components/main/Footer/TopFooter/TopFooter.types';
+import FooterMenuColumn from '@/components/sections/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.component';
+import { FOOTER_MENU } from '@/components/sections/Footer/TopFooter/TopFooter.config';
+import styles from '@/components/sections/Footer/TopFooter/TopFooter.module.scss';
+import { TopFooterPropsIF } from '@/components/sections/Footer/TopFooter/TopFooter.types';
 
 const TopFooter: FC<TopFooterPropsIF> = () => {
     return (

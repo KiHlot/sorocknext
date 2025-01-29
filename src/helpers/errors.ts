@@ -19,6 +19,7 @@ export const ERRORS: { [key: string]: string } = {
     er216: 'Один или несколько файлов имеют неверный тип!',
     er217: 'Недостаточно прав!',
     er218: 'Не удалось загрузить файл!',
+    er219: 'Данные не являются числом!',
 };
 
 export const SERVER_ERRORS: { [key: string]: string } = {
