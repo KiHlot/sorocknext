@@ -1,24 +1,23 @@
 import { FC } from 'react';
 import { siteApi } from '@/api/site/site';
 import { shuffle } from '@/helpers/utils';
+import PopularTagModal from '@/components/blocks/PopularTags/PopularTagModal/PopularTagModal.component';
 import styles from '@/components/blocks/PopularTags/PopularTags.module.scss';
-import { DefaultProps } from '@/components/blocks/PopularTags/PopularTags.types';
-import TagButton from '@/components/blocks/PopularTags/TagButton/TagButton.component';
 
-const PopularTags: FC<DefaultProps> = ({ className = '' }) => {
+const PopularTags: FC = () => {
     const [, { data: baseData }] = siteApi.useGetBaseDataMutation({
         fixedCacheKey: 'baseData',
     });
 
     return baseData?.popularTags?.length ? (
-        <div className={`${styles.popularTagsWrapper} ${className || ''}`}>
+        <div className={styles.popularTagsWrapper}>
             {shuffle(baseData.popularTags)
                 .slice(0, 15)
                 .map(tagData => (
-                    <TagButton
+                    <PopularTagModal
                         key={tagData.slug}
                         tagData={tagData}
-                        className={styles.tagButton}
+                        className={styles.popularTagButton}
                     />
                 ))}
         </div>

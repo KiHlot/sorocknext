@@ -18,9 +18,7 @@
     width: 600px;
     max-width: 90%;
     height: fit-content;
-    max-height: 80vh;
     margin-top: 10vh;
-    overflow-y: auto;
     background-color: $greyDark;
     border-radius: $borderRadius;
     box-shadow: $boxShadow;
@@ -78,4 +76,6 @@
     position: relative;
     width: 100%;
     padding: 20px;
+    max-height: calc(70vh - 80px);
+    overflow-y: auto;
 }

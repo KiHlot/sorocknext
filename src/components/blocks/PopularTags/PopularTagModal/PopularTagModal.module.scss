@@ -1,0 +1,61 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.tagButtonWrapper {
+    height: 40px;
+    border-radius: $borderRadius;
+    word-break: break-word;
+    padding: 10px;
+    background-color: rgba($accent, 0.3);
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.yearWrapper {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 20px;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.yearTitle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: $white;
+    margin-bottom: 15px;
+
+    svg {
+        width: 16px;
+        height: 16px;
+        stroke: $accent;
+        fill: $accent;
+        margin-right: 8px;
+    }
+}
+
+.yearList {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 20px;
+    position: relative;
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 7px;
+        top: -8px;
+        height: 100%;
+        width: 1px;
+        background-color: rgba($accent, 0.6);
+        display: block;
+    }
+}
