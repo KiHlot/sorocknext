@@ -3,6 +3,7 @@ import { fetchRestApiQuery } from '@/store/functions';
 import { ResponseIF } from '@/store/types';
 import {
     BaseData,
+    ContactFormIF,
     CronInfoIF,
     SearchIF,
     SearchResultIF,
@@ -38,13 +39,22 @@ export const siteApi = createApi({
                 url: `/update-cron-info`,
             }),
         }),
-        updateCronTask: builder.mutation<ResponseIF<CronInfoIF | null>, string>({
-            query: taskName => ({
-                url: `/update-cron-task`,
+        updateCronTask: builder.mutation<ResponseIF<CronInfoIF | null>, string>(
+            {
+                query: taskName => ({
+                    url: `/update-cron-task`,
+                    method: 'POST',
+                    body: {
+                        taskName,
+                    },
+                }),
+            },
+        ),
+        sendContactForm: builder.mutation<ResponseIF<{ isSent: boolean }>, ContactFormIF>({
+            query: contactForm => ({
+                url: `/send-contact-form`,
                 method: 'POST',
-                body: {
-                    taskName,
-                },
+                body: contactForm,
             }),
         }),
     }),

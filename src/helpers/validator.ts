@@ -34,4 +34,8 @@ export const VALIDATORS: ValidatorT = {
         maxSize: 2,
         accept: ['image/png', 'image/jpeg', 'image/jpg'],
     },
+    message: {
+        minLength: 10,
+        maxLength: 200,
+    },
 };

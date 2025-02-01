@@ -2,6 +2,8 @@ import { ReactElement, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { RiLockPasswordLine } from 'react-icons/ri';
+import FieldError from '@/components/form/FieldError/FieldError.component';
+import FieldLabel from '@/components/form/FieldLabel/FieldLabel.component';
 import styles from '@/components/form/Input/Input.module.scss';
 import { InputProps, InputTypeT } from '@/components/form/Input/Input.types';
 
@@ -20,6 +22,7 @@ export const Input = <T extends FieldValues>({
     isPassword,
     className = '',
     styleType = 'main',
+    backError,
 }: InputProps<T>): ReactElement => {
     const {
         field: { value, onChange },
@@ -44,12 +47,7 @@ export const Input = <T extends FieldValues>({
 
     return (
         <div className={`${styles.inputBlock} ${className}`}>
-            {label && (
-                <div className={styles.label}>
-                    {label}
-                    {isRequired && <span>*</span>}
-                </div>
-            )}
+            <FieldLabel label={label} isRequired={isRequired} />
             <div
                 className={`${styles.inputWrapper} ${isPassword ? styles.password : ''}`}
             >
@@ -84,9 +82,7 @@ export const Input = <T extends FieldValues>({
                     </button>
                 )}
             </div>
-            {fieldState.error?.message && (
-                <div className={styles.error}>{fieldState.error.message}</div>
-            )}
+            <FieldError message={fieldState.error?.message || backError} />
         </div>
     );
 };

@@ -27,7 +27,7 @@ export interface BaseData {
     base: {
         supportEmail: string;
     };
-    popularTags: TagIF[]
+    popularTags: TagIF[];
 }
 
 export interface ModifyDataIF {
@@ -43,4 +43,10 @@ export type JsonStatusesT = Record<string, ModifyDataIF | null>;
 export interface CronInfoIF {
     modifyData: ModifyDataIF;
     jsonStatuses: JsonStatusesT;
+}
+
+export interface ContactFormIF {
+    email: string;
+    name: string;
+    message: string;
 }

@@ -309,9 +309,13 @@ header {
     align-items: center;
 }
 
-.flcol {
+.flcol, .form {
     display: flex;
     flex-direction: column;
+}
+
+.form {
+    gap: 20px 0;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,0 +1,43 @@
+@use '@/styles/variables' as *;
+
+.infoBlockWrapper {
+    border-radius: $borderRadius;
+    padding: 20px 40px 20px 20px;
+    gap: 20px;
+    color: $white;
+    position: relative;
+}
+
+.info {
+    background-color: $blueLight;
+}
+
+.error {
+    background-color: $error;
+}
+
+.success {
+    background-color: $correct;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.content {
+    line-height: 20px;
+}
+
+.button {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+}

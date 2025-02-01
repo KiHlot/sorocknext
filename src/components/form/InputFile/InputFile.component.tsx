@@ -3,8 +3,8 @@ import { FieldValues } from 'react-hook-form';
 import { VALIDATORS } from '@/helpers/validator';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import buttonStyles from '@/components/elems/MainButton/MainButton.module.scss';
-import styles from '@/components/form/inputFile/inputFile.module.scss';
-import { InputFileProps } from '@/components/form/inputFile/inputFile.types';
+import styles from '@/components/form/InputFile/inputFile.module.scss';
+import { InputFilePropsIF } from '@/components/form/InputFile/InputFile.types';
 
 export const InputFile = <T extends FieldValues>({
     isDisabled,
@@ -15,7 +15,7 @@ export const InputFile = <T extends FieldValues>({
     icon,
     register,
     className = '',
-}: InputFileProps<T>): ReactElement => {
+}: InputFilePropsIF<T>): ReactElement => {
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0] ?? null;
 

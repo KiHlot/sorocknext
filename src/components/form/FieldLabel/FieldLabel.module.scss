@@ -1,0 +1,11 @@
+@use '@/styles/variables' as *;
+
+.fieldLabelWrapper {
+    margin-bottom: 6px;
+    font-size: 14px;
+    
+    span {
+        margin-left: 4px;
+        padding-bottom: 4px;
+    }
+}

@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { IoClose } from 'react-icons/io5';
 import Link from 'next/link';
 import styles from '@/components/elems/MainButton/MainButton.module.scss';
 import { MainButtonPropsIF } from '@/components/elems/MainButton/MainButton.types';

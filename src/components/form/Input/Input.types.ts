@@ -8,7 +8,7 @@ export interface InputProps<T extends FieldValues = FieldValues> {
     label?: string;
     name: Path<T>;
     type?: InputTypeT;
-    error?: string;
+    backError?: string;
     placeholder?: string;
     isDisabled?: boolean;
     value?: string;

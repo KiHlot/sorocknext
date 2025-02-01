@@ -36,6 +36,7 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
                 parseResponse<FieldsNames, SearchResultIF[]>(data, () => {
                     reset();
                     router.push('/search');
+                    //TODO error
                 });
             });
     };

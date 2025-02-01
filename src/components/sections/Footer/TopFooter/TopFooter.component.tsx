@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
 import PopularTags from '@/components/blocks/PopularTags/PopularTags.component';
+import ContactForm from '@/components/sections/Footer/TopFooter/ContactForm/ContactForm.component';
 import FooterMenuColumn from '@/components/sections/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.component';
 import { FOOTER_MENU } from '@/components/sections/Footer/TopFooter/TopFooter.config';
 import styles from '@/components/sections/Footer/TopFooter/TopFooter.module.scss';
@@ -32,7 +33,7 @@ const TopFooter: FC<TopFooterPropsIF> = () => {
 
                 <div className={styles.footerCol}>
                     <div className={styles.title}>Обратная связь</div>
-                    {/*<ContactForm />*/}
+                    <ContactForm />
                 </div>
             </MainWrapper>
         </div>
