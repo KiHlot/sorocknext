@@ -13,7 +13,7 @@ import { IoEarthOutline } from 'react-icons/io5';
 import { IoFingerPrintOutline } from 'react-icons/io5';
 import { PiFilmReel } from 'react-icons/pi';
 import { SlSocialYoutube } from 'react-icons/sl';
-import { MenuItemIF } from '@/components/menus/LeftMenu/LeftMenuList/LeftMenuList.types';
+import { MenuItemIF } from '@/components/menus/LeftMenu/LeftMenuItem/LeftMenuItem.types';
 
 export const LEFT_MENU: MenuItemIF[] = [
     {
@@ -45,6 +45,7 @@ export const LEFT_MENU: MenuItemIF[] = [
         url: '/nocommerce',
         label: 'Новый рок',
         icon: <IoMegaphoneOutline />,
+        hasBorder: true
     },
     {
         url: '/alboms',
@@ -75,6 +76,7 @@ export const LEFT_MENU: MenuItemIF[] = [
         url: '/okolorock',
         label: 'Вокруг рока',
         icon: <IoEarthOutline />,
+        hasBorder: true
     },
     {
         url: '/users',

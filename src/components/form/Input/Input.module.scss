@@ -21,9 +21,14 @@
     input {
         width: 100%;
         padding: 0 8px;
-
+        border: $border;
+        
+        &.error {
+            border: $borderError;
+        }
+        
         &.main {
-            background-color: $bgColorDark;
+            background-color: $bgColor;
             height: 42px;
             border-radius: $borderRadius;
         }
@@ -41,7 +46,7 @@
             width: 42px;
             height: 100%;
             border-radius: $borderRadius;
-            background-color: $bgColorDark;
+            background-color: $bgColor;
             box-shadow: $boxShadow;
 
             svg {

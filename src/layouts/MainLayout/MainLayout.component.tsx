@@ -3,10 +3,12 @@
 import { FC, useEffect } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { siteApi } from '@/api/site/site';
+import styles from '@/layouts/MainLayout/MainLayout.module.scss';
 import { MainLayoutPropsIF } from '@/layouts/MainLayout/MainLayout.types';
 import GlobLoading from '@/components/blocks/GlobLoading/GlobLoading.component';
+import LeftMenu from '@/components/menus/LeftMenu/LeftMenu.component';
 import Footer from '@/components/sections/Footer/Footer.component';
-import Header from '@/components/sections/Header/Header.component';
+import TopMenu from '@/components/menus/TopMenu/TopMenu.component';
 
 const MainLayout: FC<MainLayoutPropsIF> = ({ children }) => {
     const [getBaseData, { isLoading }] = siteApi.useGetBaseDataMutation({
@@ -23,8 +25,14 @@ const MainLayout: FC<MainLayoutPropsIF> = ({ children }) => {
                 <GlobLoading />
             ) : (
                 <>
-                    <Header />
-                    {children}
+                    <TopMenu />
+                    <div className={styles.mainLayoutWrapper}>
+                        <div className={styles.menu}>
+                            <LeftMenu />
+                        </div>
+                        <div className={styles.content}>{children}</div>
+                        <div className={styles.sidebar}>sidebar</div>
+                    </div>
                     <Footer />
                 </>
             )}

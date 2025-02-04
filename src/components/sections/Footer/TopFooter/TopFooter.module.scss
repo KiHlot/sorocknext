@@ -2,8 +2,8 @@
 @use '@/styles/mixins' as *;
 
 .topFooterWrapper {
-    background-color: $bgColor;
     padding: 60px 0;
+    
     @include media(sm) {
         padding: 40px 0;
     }

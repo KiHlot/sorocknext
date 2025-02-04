@@ -9,13 +9,18 @@
 
 .textAreaWrapper {
     position: relative;
-}
 
-.textarea {
-    width: 100%;
-    padding: 10px 8px;
-    background-color: $bgColorDark;
-    height: 150px;
-    border-radius: $borderRadius;
-    resize: none;
+    textarea {
+        width: 100%;
+        padding: 10px 8px;
+        background-color: $bgColor;
+        height: 150px;
+        border-radius: $borderRadius;
+        resize: none;
+        border: $border;
+
+        &.error {
+            border: $borderError;
+        }
+    }
 }

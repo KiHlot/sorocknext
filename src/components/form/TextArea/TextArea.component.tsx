@@ -33,7 +33,7 @@ export const TextArea = <T extends FieldValues>({
                     disabled={isDisabled}
                     maxLength={maxLength}
                     autoComplete={name}
-                    className={styles.textarea}
+                    className={fieldState.error?.message ? styles.error : ''}
                 />
             </div>
             <FieldError message={fieldState.error?.message || backError} />

@@ -6,12 +6,11 @@ body {
     height: 100%;
     min-height: 100vh;
     position: relative;
-    background: $bgGradient;
+    background: $bgColor;
     font-size: 16px;
     color: $color;
     line-height: normal;
     overflow-x: hidden;
-    padding-left: 60px;
     padding-top: 60px;
 
     @include media(lg) {
@@ -71,18 +70,6 @@ header {
 
 .custom_scroll_horizontal::-webkit-scrollbar-thumb {
     background-color: rgba($bgColorLight, 0.8);
-}
-
-.pd_com {
-    padding: 60px 0;
-
-    @include media(xl) {
-        padding: 40px 0;
-    }
-
-    @include media(sm) {
-        padding: 30px 0;
-    }
 }
 
 .marquee {

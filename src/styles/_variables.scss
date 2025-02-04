@@ -1,19 +1,15 @@
 $white: #ffffff;
+$black: #000000;
 $color: #a8b6bb;
-$bgFooter: #141e2e;
+$accent: #cf304d;
+$bgColor: #1B2026;
+$bgColorLight: #232A34;
 $blockQuoteBg: #272a31;
-$bgColor: #22313a;
 $greyDark: #1f2426;
 $greyDarkLight: #323232;
-$bgColorDark: #1e2a31;
-$bgColorLight: #2b3942;
-$bgColorComment: #394650;
-$bgColorButton: #3f4e59;
-$preload: #384b56;
-$black: #000000;
-$blue: #234657;
-$accent: #cf304d;
 $error: #c35249;
+$correct: #267873;
+
 $user_liked_post: #cf304d;
 $errorDark: #7b3a33ff;
 $warning: #b9730b;
@@ -22,15 +18,8 @@ $post_added: #ffc107;
 $bgStripeAnim: #5ec9cf;
 $userCommented_post: #03a9f4;
 $blueLight: #2a7cd7;
-$correct: #267873;
 $userRegistered: #0e813d;
 $userActivated: #30ed7e;
-$bgGradient: linear-gradient(
-    90deg,
-    rgba(24, 34, 41, 1) 0%,
-    rgba(34, 49, 58, 1) 50%,
-    rgba(24, 34, 41, 1) 100%
-);
 $goldGradient: linear-gradient(
     90deg,
     rgba(230, 174, 68, 1) 16%,
@@ -61,6 +50,7 @@ $svgShadow: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.6));
 $borderRadius: 8px;
 $borderRadiusBtn: 20px;
 $border: 1px solid rgba($color, 0.2);
+$borderError: 1px solid rgba($error, 0.2);
 
 $zIndexPopup: 70;
 $zIndexMenu: 50;
