@@ -4,7 +4,7 @@
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
-    grid-template-columns: 300px 1fr 400px;
+    grid-template-columns: 300px 1fr 600px;
     gap: 20px 20px;
     padding: 20px 40px;
     position: relative;
@@ -17,5 +17,5 @@
 }
 
 .content {
-    height: 300vh;
+    height: auto;
 }
