@@ -2,7 +2,7 @@
 @use '@/styles/mixins' as *;
 
 ::placeholder {
-    color: $color;
+    color: rgba($color, 0.5);
 }
 
 ::selection {

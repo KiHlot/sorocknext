@@ -6,14 +6,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Link from 'next/link';
 import { siteApi } from '@/api/site/site';
 import styles from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.module.scss';
+import { TrendsSliderPropsIF } from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.types';
 
-const TrendsSlider: FC = () => {
+const TrendsSlider: FC<TrendsSliderPropsIF> = ({className}) => {
     const [, { data: baseData }] = siteApi.useGetBaseDataMutation({
         fixedCacheKey: 'baseData',
     });
 
     return (
-        <div className={styles.trendsSliderWrapper}>
+        <div className={`${styles.trendsSliderWrapper} ${className}`}>
             <div className={`flc ${styles.swiperTitle}`}>Тренд:</div>
             <Swiper
                 direction="vertical"

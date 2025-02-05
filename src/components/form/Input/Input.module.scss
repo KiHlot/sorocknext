@@ -21,13 +21,13 @@
     input {
         width: 100%;
         padding: 0 8px;
-        border: $border;
-        
+
         &.error {
             border: $borderError;
         }
         
         &.main {
+            border: $border;
             background-color: $bgColor;
             height: 42px;
             border-radius: $borderRadius;

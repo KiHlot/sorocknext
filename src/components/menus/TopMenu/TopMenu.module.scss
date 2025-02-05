@@ -9,29 +9,20 @@
     left: 0;
     background-color: $bgColor;
     display: flex;
-    flex-direction: row;
     align-items: center;
+    gap: 0 20px;
     padding: 0 40px;
     z-index: 50;
 }
 
-.widget_panel_navigation {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin: 0 16px 0 8px;
-
-    @include media(xxl) {
-        margin: 0 0 0 auto;
-    }
-
-    @include media(md) {
-        margin: 0 0 0 8px;
-    }
+.scrolled {
+    box-shadow: $boxShadow;
 }
 
-.logo {
-    width: 35px;
-    height: 100%;
-    margin: 0 auto 0 8px;
+.mr {
+    margin-right: auto;
+}
+
+.ml {
+    margin-left: auto;
 }
