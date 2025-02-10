@@ -1,7 +1,4 @@
-export interface MenuItemIF {
-    uri: string;
-    label: string;
-}
+import { MenuItemIF } from '@/components/menus/LeftMenu/LeftMenuItem/LeftMenuItem.types';
 
 export interface FooterMenuColumnPropsIF {
     menuItems: MenuItemIF[];

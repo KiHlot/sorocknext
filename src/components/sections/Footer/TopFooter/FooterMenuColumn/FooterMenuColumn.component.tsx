@@ -6,8 +6,8 @@ import { FooterMenuColumnPropsIF } from '@/components/sections/Footer/TopFooter/
 const FooterMenuColumn: FC<FooterMenuColumnPropsIF> = ({ menuItems }) => {
     return (
         <div className={styles.menuColumn}>
-            {menuItems.map(({ uri, label }) => (
-                <Link key={uri} href={uri}>
+            {menuItems.map(({ url, label }) => (
+                <Link key={url} href={url}>
                     {label}
                 </Link>
             ))}

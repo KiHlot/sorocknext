@@ -5,10 +5,11 @@ import { Bounce, ToastContainer } from 'react-toastify';
 import { siteApi } from '@/api/site/site';
 import styles from '@/layouts/MainLayout/MainLayout.module.scss';
 import { MainLayoutPropsIF } from '@/layouts/MainLayout/MainLayout.types';
-import GlobLoading from '@/components/blocks/GlobLoading/GlobLoading.component';
+import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
+import Loading from '@/components/blocks/Loading/Loading.component';
 import LeftMenu from '@/components/menus/LeftMenu/LeftMenu.component';
-import Footer from '@/components/sections/Footer/Footer.component';
 import TopMenu from '@/components/menus/TopMenu/TopMenu.component';
+import Footer from '@/components/sections/Footer/Footer.component';
 
 const MainLayout: FC<MainLayoutPropsIF> = ({ children }) => {
     const [getBaseData, { isLoading }] = siteApi.useGetBaseDataMutation({
@@ -22,17 +23,19 @@ const MainLayout: FC<MainLayoutPropsIF> = ({ children }) => {
     return (
         <>
             {isLoading ? (
-                <GlobLoading />
+                <Loading />
             ) : (
                 <>
                     <TopMenu />
-                    <div className={styles.mainLayoutWrapper}>
-                        <div className={styles.menu}>
-                            <LeftMenu />
+                    <MainWrapper>
+                        <div className={styles.mainLayoutWrapper}>
+                            <div className={styles.menu}>
+                                <LeftMenu />
+                            </div>
+                            <div className={styles.content}>{children}</div>
+                            <div className={styles.sidebar}>sidebar</div>
                         </div>
-                        <div className={styles.content}>{children}</div>
-                        <div className={styles.sidebar}>sidebar</div>
-                    </div>
+                    </MainWrapper>
                     <Footer />
                 </>
             )}

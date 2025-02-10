@@ -61,16 +61,16 @@ export const fetchRestApiQuery = (baseUrl: string) => {
 
 export const getApi = async <ResultType>(
     route: string,
-): Promise<ResultType | null | undefined > => {
+): Promise<ResultType | null | undefined> => {
     try {
-        console.log('fetch route:', `${ADDRESS.WP_API_URL}/${route}`);
-        const response = await fetch(`${ADDRESS.WP_API_URL}/${route}`, {
+        console.log('fetch route:', `${ADDRESS.WP_API_URL}${route}`);
+        const response = await fetch(`${ADDRESS.WP_API_URL}${route}`, {
             cache: 'force-cache',
         });
-        
-        const data: ResponseIF<ResultType> = await response.json()
-        
-        return data.result === 'ok' ? data.data : null;
+
+        const { result, data }: ResponseIF<ResultType> = await response.json();
+
+        return result === 'ok' ? data : null;
     } catch (e) {
         console.error('error', e);
     }

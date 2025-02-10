@@ -22,6 +22,7 @@
     background-color: $greyDark;
     border-radius: $borderRadius;
     box-shadow: $boxShadow;
+    overflow: hidden;
 
     &.small {
         width: 400px;

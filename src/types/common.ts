@@ -19,3 +19,11 @@ export interface TagIF {
     innerImg: string | null;
     postsCount: number;
 }
+
+export interface PageProps {
+    params: Promise<{
+        slug: string;
+    }>;
+}
+
+

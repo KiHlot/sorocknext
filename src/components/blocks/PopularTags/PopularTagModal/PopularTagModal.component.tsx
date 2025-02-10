@@ -4,7 +4,7 @@ import { FC, useState } from 'react';
 import { IoPricetagOutline } from 'react-icons/io5';
 import { IoCalendarOutline } from 'react-icons/io5';
 import { taxonomyApi } from '@/api/taxonomy/taxonomy';
-import GlobLoading from '@/components/blocks/GlobLoading/GlobLoading.component';
+import Loading from '@/components/blocks/Loading/Loading.component';
 import styles from '@/components/blocks/PopularTags/PopularTagModal/PopularTagModal.module.scss';
 import { PopularTagModalPropsIF } from '@/components/blocks/PopularTags/PopularTagModal/PopularTagModal.types';
 import PopularTagThumb from '@/components/blocks/PopularTags/PopularTagModal/PopularTagThumb/PopularTagThumb.component';
@@ -71,7 +71,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
                         ))}
                     </>
                 ) : (
-                    <GlobLoading />
+                    <Loading />
                 )}
             </Modal>
         </>

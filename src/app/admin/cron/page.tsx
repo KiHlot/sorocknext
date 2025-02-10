@@ -5,7 +5,7 @@ import CronTPL from '@/templates/CronTPL/CronTPL.component';
 
 const Help = async () => {
     const cronInfo =
-        await getApi<ResponseIF<CronInfoIF | null>>('site/get-cron-info');
+        await getApi<ResponseIF<CronInfoIF | null>>('/site/get-cron-info');
 
     return <CronTPL data={cronInfo?.data} />;
 };

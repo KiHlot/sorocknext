@@ -1,69 +1,69 @@
-import { MenuItemIF } from '@/components/main/Footer/TopFooter/FooterMenuColumn/FooterMenuColumn.types';
+import { MenuItemIF } from '@/components/menus/LeftMenu/LeftMenuItem/LeftMenuItem.types';
 
 export const FOOTER_MENU: { [key: number]: MenuItemIF[] } = {
     947: [
         {
-            uri: '/clips/',
+            url: '/clips',
             label: 'Клипы',
         },
         {
-            uri: '/alboms/',
+            url: '/alboms',
             label: 'Альбомы',
         },
         {
-            uri: '/concerts/',
+            url: '/concerts',
             label: 'Концерты',
         },
         {
-            uri: '/rock-films/',
+            url: '/rock-films',
             label: 'Фильмы',
         },
         {
-            uri: '/intervju/',
+            url: '/intervju',
             label: 'Интервью',
         },
         {
-            uri: '/okolorock/',
+            url: '/okolorock',
             label: 'Вокруг рока',
         },
     ],
     948: [
         {
-            uri: '/news/',
+            url: '/news',
             label: 'Новости',
         },
         {
-            uri: '/rock-data/',
+            url: '/rock-data',
             label: 'Рок-дата',
         },
         {
-            uri: '/cool/',
+            url: '/cool',
             label: 'Видео',
         },
         {
-            uri: '/reviews/',
+            url: '/reviews',
             label: 'Рецензии',
         },
         {
-            uri: '/nocommerce/',
+            url: '/nocommerce',
             label: 'Новый рок',
         },
         {
-            uri: '/autors/',
+            url: '/autors',
             label: 'Статьи',
         },
     ],
     949: [
         {
-            uri: '/users/',
+            url: '/users',
             label: 'Пользователи',
         },
         {
-            uri: '/activity/',
+            url: '/activity',
             label: 'Активность на сайте',
         },
         {
-            uri: '/about/',
+            url: '/about',
             label: 'О нас',
         },
     ],
