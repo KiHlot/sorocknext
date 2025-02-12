@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" height="100%" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
+viewBox="0 0 846666 846666">
+  <polygon fill="#FFE700" points="0,564387 846666,564387 846666,705527 0,705527 "/>
+  <polygon fill="black" points="0,423247 846666,423247 846666,564387 0,564387 "/>
+  <polygon fill="#DE3908" points="0,282279 846666,282279 846666,423247 0,423247 "/>
+  <polygon fill="#FFE700" points="0,141139 846666,141139 846666,282279 0,282279 "/>
+  <polygon fill="black" points="0,0 846666,0 846666,141139 0,141139 "/>
+  <polygon fill="#DE3908" points="0,705527 846666,705527 846666,846666 0,846666 "/>
+  <path fill="white" d="M423333 267546c86039,0 155787,69748 155787,155787 0,86039 -69748,155787 -155787,155787 -86039,0 -155787,-69748 -155787,-155787 0,-86039 69748,-155787 155787,-155787z"/>
+</svg>

@@ -1,0 +1,14 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.breadcrumbsWrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+        width: fit-content;
+        display: flex;
+    }
+}

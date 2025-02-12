@@ -1,7 +1,13 @@
+import dayjs from 'dayjs';
 import { FC } from 'react';
+import { IoTimerOutline } from 'react-icons/io5';
+import { IoCalendarOutline } from 'react-icons/io5';
+import { IoPersonOutline } from 'react-icons/io5';
+import { TIME_FORMAT } from '@/helpers/config';
 import Loading from '@/components/blocks/Loading/Loading.component';
 import Author from '@/components/elems/Author/Author.component';
-import NoData from '@/components/elems/NoData/NoData.component';
+import Breadcrumbs from '@/components/elems/Breadcrumbs/Breadcrumbs.component';
+import Country from '@/components/elems/Country/Country.component';
 import styles from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.module.scss';
 import { SinglePostPromoSectionPropsIF } from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.types';
 
@@ -9,14 +15,37 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
     data,
 }) => {
     return data ? (
-        <div className={styles.singlePostPromoSectionWrapper}>
-            <div className="breadcrumbs"></div>
-            <Author data={data.author} />
-            <h1 className="title">{data.title}</h1>
-            <div className="perks">
-                <div className="date">{}</div>
-                <div className="readtime"></div>
-                <div className="country"></div>
+        <div className={`flcol ${styles.singlePostPromoSectionWrapper}`}>
+            <div
+                className={`bgc ${styles.bg}`}
+                style={{
+                    backgroundImage: `linear-gradient(
+        		to left,
+        		rgba(35, 42, 52, 0.6),
+        		rgba(35, 42, 52, 1)), url(${data.innerImg}`,
+                }}
+            />
+            <Breadcrumbs title={data.titleSeo} />
+            <h1 className={styles.title}>{data.titleH1}</h1>
+            <div className={styles.perks}>
+                <ul>
+                    <li title="Дата публикации">
+                        <IoCalendarOutline />
+                        {dayjs(data.postDate, TIME_FORMAT.common).format(
+                            'DD.MM.YYYY',
+                        )}
+                        г.
+                    </li>
+                    <li title="Время на прочтение">
+                        <IoTimerOutline />
+                        {data.readingTime}мин.
+                    </li>
+                    <li title="Автор">
+                        <IoPersonOutline />
+                        <Author data={data.author} type="name" />
+                    </li>
+                </ul>
+                <Country value={data.country} />
             </div>
         </div>
     ) : (
