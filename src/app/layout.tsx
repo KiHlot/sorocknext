@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '~/swiper/swiper.min.css';
 import '@/styles/global.scss';
-import MainLayout from '@/layouts/MainLayout/MainLayout.component';
+import Layout from '@/layouts/Layout/Layout.component';
 import StoreProvider from '@/app/StoreProvider';
 import { RootLayoutIF } from '@/app/types';
 
@@ -25,7 +25,7 @@ const RootLayout: FC<RootLayoutIF> = async ({ children }) => {
         <html lang="en">
             <body className={inter.className}>
                 <StoreProvider>
-                    <MainLayout>{children}</MainLayout>
+                    <Layout>{children}</Layout>
                 </StoreProvider>
             </body>
         </html>

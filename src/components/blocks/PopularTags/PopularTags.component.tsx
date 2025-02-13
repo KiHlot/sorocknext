@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import { siteApi } from '@/api/site/site';
 import { shuffle } from '@/helpers/utils';

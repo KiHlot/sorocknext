@@ -1,11 +1,19 @@
-import { HomeTPLPropsIF } from "@/templates/HomeTPL/HomeTPL.types"
-import { FC } from "react"
-import styles from "@/templates/HomeTPL/HomeTPL.module.scss"
+import { FC } from 'react';
+import CommonLayout, {
+    Content,
+    Sidebar,
+} from '@/layouts/CommonLayout/CommonLayout.component';
+import { HomeTPLPropsIF } from '@/templates/HomeTPL/HomeTPL.types';
 
 const HomeTPL: FC<HomeTPLPropsIF> = ({ props }) => {
-  const temp = "remove_this"
+    const temp = 'remove_this';
 
-  return <div className={styles.wrapper}>HomeTPLasdasd</div>
-}
+    return (
+        <CommonLayout>
+            <Content>content</Content>
+            <Sidebar>sidebar</Sidebar>
+        </CommonLayout>
+    );
+};
 
-export default HomeTPL
+export default HomeTPL;

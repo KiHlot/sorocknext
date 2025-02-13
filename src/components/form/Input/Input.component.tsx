@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactElement, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { RiLockPasswordFill } from 'react-icons/ri';

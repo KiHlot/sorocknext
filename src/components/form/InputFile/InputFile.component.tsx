@@ -1,3 +1,5 @@
+'use client';
+
 import { ChangeEvent, ReactElement } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { VALIDATORS } from '@/helpers/validator';

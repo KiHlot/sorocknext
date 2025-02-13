@@ -2,7 +2,10 @@
 
 import { FC, useEffect, useState } from 'react';
 import { CronInfoIF } from '@/api/site/types';
-import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
+import CommonLayout, {
+    Content,
+    Sidebar,
+} from '@/layouts/CommonLayout/CommonLayout.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import CronInfo from '@/templates/CronTPL/CronInfo/CronInfo.component';
 import styles from '@/templates/CronTPL/CronTPL.module.scss';
@@ -17,23 +20,26 @@ const CronTPL: FC<CronTPLPropsIF> = ({ data }) => {
     }, [data]);
 
     return (
-        <MainWrapper className={`flcol ${styles.cronTPLWrapper}`}>
-            <div className={styles.pageTitle}>
-                <h1>Настройки крона</h1>
-            </div>
-            <CronInfo
-                modifyData={cronInfoData?.modifyData}
-                setCronInfoData={setCronInfoData}
-            />
-            {cronInfoData?.jsonStatuses ? (
-                <CronTable
-                    jsonStatuses={cronInfoData.jsonStatuses}
+        <CommonLayout>
+            <Content className={`flcol ${styles.cronTPLWrapper}`}>
+                <div className={styles.pageTitle}>
+                    <h1>Настройки крона</h1>
+                </div>
+                <CronInfo
+                    modifyData={cronInfoData?.modifyData}
                     setCronInfoData={setCronInfoData}
                 />
-            ) : (
-                <NoData />
-            )}
-        </MainWrapper>
+                {cronInfoData?.jsonStatuses ? (
+                    <CronTable
+                        jsonStatuses={cronInfoData.jsonStatuses}
+                        setCronInfoData={setCronInfoData}
+                    />
+                ) : (
+                    <NoData />
+                )}
+            </Content>
+            <Sidebar>sidebar</Sidebar>
+        </CommonLayout>
     );
 };
 
