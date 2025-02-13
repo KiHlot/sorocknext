@@ -1,9 +1,5 @@
-import { PromoSectionIF } from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.types';
-import { HTMLString } from '@/types/common';
+import { SinglePostIF } from '@/types/post';
 
 export interface NewsSingleTPLPropsIF {
-    data?: {
-        promoSection: PromoSectionIF | null;
-        content: HTMLString;
-    };
+    data?: SinglePostIF;
 }
