@@ -9,6 +9,7 @@
     background-color: $bgColorLight;
     justify-content: space-between;
     position: relative;
+    overflow: hidden;
 
     > * {
         z-index: 2;
@@ -29,6 +30,7 @@
     line-height: 42px;
     font-weight: 700;
     width: 70%;
+    margin-top: 40px;
 }
 
 .perks {

@@ -1,0 +1,9 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.postContentSectionWrapper {
+    width: 100%;
+    border-radius: $borderRadius;
+    padding: 30px 40px;
+    background-color: $bgColorLight;
+}

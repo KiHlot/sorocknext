@@ -1,3 +1,5 @@
+export type HTMLString = string;
+
 export type CookieOptionsT = {
     expires?: Date | string | number;
     path?: string;
@@ -25,5 +27,3 @@ export interface PageProps {
         slug: string;
     }>;
 }
-
-

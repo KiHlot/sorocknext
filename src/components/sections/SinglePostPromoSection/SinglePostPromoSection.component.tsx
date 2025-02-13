@@ -15,7 +15,7 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
     data,
 }) => {
     return data ? (
-        <div className={`flcol ${styles.singlePostPromoSectionWrapper}`}>
+        <section className={`flcol ${styles.singlePostPromoSectionWrapper}`}>
             <div
                 className={`bgc ${styles.bg}`}
                 style={{
@@ -47,7 +47,7 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
                 </ul>
                 <Country value={data.country} />
             </div>
-        </div>
+        </section>
     ) : (
         <Loading />
     );
