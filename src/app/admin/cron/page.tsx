@@ -1,13 +1,16 @@
 import { getApi } from '@/store/functions';
-import { ResponseIF } from '@/store/types';
 import { CronInfoIF } from '@/api/site/types';
+import AdminLayout from '@/layouts/AdminLayout/AdminLayout.component';
 import CronTPL from '@/templates/CronTPL/CronTPL.component';
 
 const Help = async () => {
-    const cronInfo =
-        await getApi<ResponseIF<CronInfoIF | null>>('/site/get-cron-info');
+    const cronInfo = await getApi<CronInfoIF>('/site/get-cron-info', 'reload');
 
-    return <CronTPL data={cronInfo?.data} />;
+    return (
+        <AdminLayout>
+            <CronTPL data={cronInfo} />
+        </AdminLayout>
+    );
 };
 
 export default Help;

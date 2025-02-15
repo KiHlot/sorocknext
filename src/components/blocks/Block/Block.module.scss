@@ -1,7 +1,7 @@
 @use '@/styles/variables' as *;
 
 .blockWrapper {
-    padding: $gapDesctop;
+    padding: 20px;
     border-radius: $borderRadius;
     background-color: $bgColorLight;
 }

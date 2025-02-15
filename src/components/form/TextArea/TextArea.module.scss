@@ -17,10 +17,5 @@
         height: 150px;
         border-radius: $borderRadius;
         resize: none;
-        border: $border;
-
-        &.error {
-            border: $borderError;
-        }
     }
 }

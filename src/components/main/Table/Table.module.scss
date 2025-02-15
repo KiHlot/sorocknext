@@ -5,27 +5,27 @@
     position: relative;
     overflow: hidden;
     border-radius: $borderRadius;
-    background-color: $bgColor;
     width: 100%;
     height: auto;
+    border: $border;
 }
 
 .tableHeader {
     width: 100%;
     height: auto;
-    background-color: $bgColor;
 
     th {
         color: $color;
         font-weight: 400;
         text-align: left;
+        background-color: $bgColor;
     }
 }
 
 .tableRowWrapper {
     width: 100%;
     height: auto;
-    border-bottom: 1px solid rgba($color, 0.2);
+    background-color: $bgColorLight;
 
     &:last-child {
         border-bottom: none;
@@ -33,13 +33,25 @@
 
     > * {
         height: auto;
-        min-height: 40px;
+        min-height: 42px;
         padding: 10px 20px;
         border-right: 1px solid rgba($color, 0.2);
         font-size: 16px;
 
         &:last-child {
             border-right: none;
+        }
+    }
+}
+
+tbody {
+    .tableRowWrapper {
+        &:nth-child(even) {
+            background-color: rgba($bgColorLight, 0.4);
+        }
+
+        &:hover {
+            background-color: $active;
         }
     }
 }

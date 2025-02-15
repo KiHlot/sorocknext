@@ -49,7 +49,11 @@ export const Input = <T extends FieldValues>({
 
     return (
         <div className={`${styles.inputBlock} ${className}`}>
-            <FieldLabel label={label} isRequired={isRequired} />
+            <FieldLabel
+                label={label}
+                isRequired={isRequired}
+                isError={!!fieldState.error?.message}
+            />
             <div
                 className={`${styles.inputWrapper} ${isPassword ? styles.password : ''}`}
             >

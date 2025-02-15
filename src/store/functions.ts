@@ -64,29 +64,28 @@ export const fetchJWTTokenQuery = () => {
         baseUrl: ADDRESS.WP_JWT_API_URL,
         responseHandler: async (response): Promise<ResponseIF | null> => {
             if (response?.status !== 200) {
-
                 toast.error(ERRORS.er209);
-                
+
                 if ([401, 403].includes(response?.status)) {
                     logout();
                 }
-                
+
                 return null;
             }
-            
+
             return await response.json();
         },
     });
 };
 
-
 export const getApi = async <ResultType>(
     route: string,
+    cache: RequestCache = 'force-cache',
 ): Promise<ResultType | null | undefined> => {
     try {
         console.log('fetch route:', `${ADDRESS.WP_API_URL}${route}`);
         const response = await fetch(`${ADDRESS.WP_API_URL}${route}`, {
-            cache: 'force-cache',
+            cache,
         });
 
         const { result, data }: ResponseIF<ResultType> = await response.json();

@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 export type HTMLString = string;
 
 export type CookieOptionsT = {
@@ -26,4 +28,11 @@ export interface PageProps {
     params: Promise<{
         slug: string;
     }>;
+}
+
+export interface MenuItemIF {
+    url: string;
+    label: string;
+    icon?: ReactElement;
+    hasBorder?: boolean;
 }

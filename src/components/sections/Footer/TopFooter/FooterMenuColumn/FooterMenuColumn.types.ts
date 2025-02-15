@@ -1,4 +1,4 @@
-import { MenuItemIF } from '@/components/menus/LeftMenu/LeftMenuItem/LeftMenuItem.types';
+import { MenuItemIF } from '@/types/common';
 
 export interface FooterMenuColumnPropsIF {
     menuItems: MenuItemIF[];

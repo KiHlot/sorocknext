@@ -1,0 +1,31 @@
+import { FC } from 'react';
+import styles from '@/layouts/AdminLayout/AdminLayout.module.scss';
+import { AdminLayoutPropsIF } from '@/layouts/AdminLayout/AdminLayout.types';
+import layoutStyles from '@/layouts/Layout/Layout.module.scss';
+import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
+import AdminMenu from '@/components/menus/AdminMenu/AdminMenu.component';
+import LeftMenu from '@/components/menus/LeftMenu/LeftMenu.component';
+import TopMenu from '@/components/menus/TopMenu/TopMenu.component';
+import Footer from '@/components/sections/Footer/Footer.component';
+
+const AdminLayout: FC<AdminLayoutPropsIF> = ({ children }) => {
+    return (
+        <>
+            <TopMenu />
+            <MainWrapper
+                className={`${layoutStyles.layout} ${styles.adminLayoutWrapper}`}
+            >
+                <div className={styles.menu}>
+                    <LeftMenu />
+                </div>
+                <div className={styles.adminMenu}>
+                    <AdminMenu />
+                </div>
+                <div className={styles.contnet}>{children}</div>
+            </MainWrapper>
+            <Footer />
+        </>
+    );
+};
+
+export default AdminLayout;

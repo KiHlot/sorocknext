@@ -1,11 +1,9 @@
 @use '@/styles/variables' as *;
-@use '@/styles/mixins' as *;
 
-.pageTitle {
-    color: $accent;
-    font-size: 24px;
+.cronTPLWrapper {
+    gap: $gapDesctop 0;
+}
 
-    h1 {
-        margin-bottom: 0;
-    }
+.blockWrapper {
+    gap: 20px 0;
 }

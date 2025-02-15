@@ -1,3 +1,4 @@
+import { FiUsers } from 'react-icons/fi';
 import { FiActivity } from 'react-icons/fi';
 import { HiOutlineMicrophone } from 'react-icons/hi';
 import { IoNewspaperOutline } from 'react-icons/io5';
@@ -76,6 +77,16 @@ export const LEFT_MENU: MenuItemIF[] = [
         label: 'Вокруг рока',
         icon: <IoEarthOutline />,
         hasBorder: true
+    },
+    {
+        url: '/users',
+        label: 'Пользователи',
+        icon: <FiUsers />,
+    },
+    {
+        url: '/activity',
+        label: 'Активность',
+        icon: <FiActivity />,
     },
     {
         url: '/about',

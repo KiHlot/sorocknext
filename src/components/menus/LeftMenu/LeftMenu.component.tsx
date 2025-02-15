@@ -1,19 +1,9 @@
 import { FC } from 'react';
+import VerticalMenu from '@/components/main/VerticalMenu/VerticalMenu.component';
 import { LEFT_MENU } from '@/components/menus/LeftMenu/LeftMenu.config';
-import styles from '@/components/menus/LeftMenu/LeftMenu.module.scss';
-import { LeftMenuPropsIF } from '@/components/menus/LeftMenu/LeftMenu.types';
-import LeftMenuItem from '@/components/menus/LeftMenu/LeftMenuItem/LeftMenuItem.component';
 
-const LeftMenu: FC<LeftMenuPropsIF> = () => {
-    return (
-        <div className={`cvscroll ${styles.leftMenuWrapper}`}>
-            <ul>
-                {LEFT_MENU.map(item => (
-                    <LeftMenuItem key={item.url} data={item} />
-                ))}
-            </ul>
-        </div>
-    );
+const LeftMenu: FC = () => {
+    return <VerticalMenu menuList={LEFT_MENU} />;
 };
 
 export default LeftMenu;
