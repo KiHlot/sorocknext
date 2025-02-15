@@ -13,7 +13,7 @@ const SiteEmail: FC<SiteEmailPropsIF> = ({ className = '' }) => {
     return supportEmail ? (
         <a
             href={`mailto:${supportEmail}`}
-            className={`${styles.siteEmailWrapper} ${className}`}
+            className={`flc ${styles.siteEmailWrapper} ${className}`}
         >
             {supportEmail}
         </a>

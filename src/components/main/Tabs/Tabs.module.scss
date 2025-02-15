@@ -1,0 +1,38 @@
+@use '@/styles/variables' as *;
+
+.tabsWrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.headLine {
+    display: flex;
+    border-bottom: $border;
+    background-color: $bgColorLight;
+}
+
+.fullWidth {
+    width: 100%;
+    
+    .tabButton {
+        width: 100%;
+    }
+}
+
+.tabButton {
+    width: fit-content;
+    height: 46px;
+    padding: 0 16px;
+    background-color: $bgColorLight;
+
+    &.active {
+        background-color: $bgColor;
+        cursor: default;
+    }
+}
+
+.bodyLine {
+    padding: 24px;
+}

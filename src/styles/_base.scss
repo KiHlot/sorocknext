@@ -11,15 +11,6 @@ body {
     color: $color;
     line-height: normal;
     overflow-x: hidden;
-    padding-top: 60px;
-
-    @include media(lg) {
-        padding-left: 45px;
-    }
-
-    @include media(md) {
-        padding-left: 0;
-    }
 
     &.ovh {
         overflow: hidden;

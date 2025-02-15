@@ -63,7 +63,7 @@ export const Input = <T extends FieldValues>({
                     placeholder={placeholder}
                     disabled={isDisabled}
                     maxLength={maxLength}
-                    autoComplete={name}
+                    autoComplete={`${name}off`}
                     className={styles[styleType]}
                 />
                 {isPassword && (

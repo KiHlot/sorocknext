@@ -1,0 +1,16 @@
+@use '@/styles/variables' as *;
+
+.authLayout {
+    grid-template-columns: 600px 1fr;
+    padding-left: 10vw;
+}
+
+.thumb {
+    height: auto;
+    min-height: 100vh;
+}
+
+.content {
+    gap: $gapDesctop 0;
+    padding: $gapDesctop;
+}

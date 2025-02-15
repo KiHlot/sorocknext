@@ -8,15 +8,22 @@
     top: 0;
     left: 0;
     background-color: $bgColor;
-    display: flex;
-    align-items: center;
-    gap: 0 40px;
-    padding: 0 60px;
-    z-index: 50;
+    z-index: $zIndexMenu;
 }
 
 .scrolled {
     box-shadow: $boxShadow;
+}
+
+.mainWrapper {
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    gap: 0 40px;
+    
+    > * {
+        height: 100%;
+    }
 }
 
 .mr {

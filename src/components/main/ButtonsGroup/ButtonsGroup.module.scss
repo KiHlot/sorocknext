@@ -1,0 +1,50 @@
+@use '@/styles/variables' as *;
+
+.buttonsGroupWrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    border-radius: $borderRadius;
+    overflow: hidden;
+}
+
+.tabButton {
+    width: fit-content;
+    height: 42px;
+    background-color: $bgColorLight;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 0 10px;
+    border-right: $border;
+
+    &:last-child {
+        border-right: none;
+    }
+
+    &:hover {
+        &:not(.active) {
+            opacity: 0.8;
+        }
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+        stroke: $color;
+    }
+}
+
+.active {
+    color: rgba($color, 0.6);
+    background-color: $active;
+    cursor: default;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.fullWidth {
+    width: 100%;
+}

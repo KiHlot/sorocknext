@@ -3,7 +3,7 @@
 
 .searchFormWrapper {
     width: fit-content;
-    height: 35px;
+    height: auto;
     display: flex;
     align-items: center;
     gap: 0 10px;
@@ -16,7 +16,7 @@
 
 .input {
     width: calc(100% - 50px);
-    height: 35px !important;
+    height: 35px;
 
     > * {
         height: 100%;

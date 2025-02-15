@@ -59,6 +59,27 @@ export const fetchRestApiQuery = (baseUrl: string) => {
     });
 };
 
+export const fetchJWTTokenQuery = () => {
+    return fetchBaseQuery({
+        baseUrl: ADDRESS.WP_JWT_API_URL,
+        responseHandler: async (response): Promise<ResponseIF | null> => {
+            if (response?.status !== 200) {
+
+                toast.error(ERRORS.er209);
+                
+                if ([401, 403].includes(response?.status)) {
+                    logout();
+                }
+                
+                return null;
+            }
+            
+            return await response.json();
+        },
+    });
+};
+
+
 export const getApi = async <ResultType>(
     route: string,
 ): Promise<ResultType | null | undefined> => {

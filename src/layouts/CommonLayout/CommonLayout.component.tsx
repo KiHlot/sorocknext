@@ -5,6 +5,7 @@ import {
     CommonLayoutPropsIF,
     CommonLayoutSidebarPropsIF,
 } from '@/layouts/CommonLayout/CommonLayout.types';
+import layoutStyles from '@/layouts/Layout/Layout.module.scss';
 import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
 import LeftMenu from '@/components/menus/LeftMenu/LeftMenu.component';
 import TopMenu from '@/components/menus/TopMenu/TopMenu.component';
@@ -14,13 +15,13 @@ const CommonLayout: FC<CommonLayoutPropsIF> = ({ children }) => {
     return (
         <>
             <TopMenu />
-            <MainWrapper>
-                <div className={styles.mainWrapperLayout}>
-                    <div className={styles.menu}>
-                        <LeftMenu />
-                    </div>
-                    {children}
+            <MainWrapper
+                className={`${layoutStyles.layout} ${styles.mainWrapperLayout}`}
+            >
+                <div className={styles.menu}>
+                    <LeftMenu />
                 </div>
+                {children}
             </MainWrapper>
             <Footer />
         </>
@@ -31,7 +32,9 @@ export const Content: FC<CommonLayoutContentPropsIF> = ({
     children,
     className = '',
 }) => {
-    return <div className={`flcol ${styles.content} ${className}`}>{children}</div>;
+    return (
+        <div className={`flcol ${styles.content} ${className}`}>{children}</div>
+    );
 };
 
 export const Sidebar: FC<CommonLayoutSidebarPropsIF> = ({ children }) => {

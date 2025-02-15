@@ -1,6 +1,7 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
+import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
 import MainLogo from '@/components/elems/MainLogo/MainLogo.component';
 import SiteEmail from '@/components/elems/SiteEmail/SiteEmail.component';
 import SearchForm from '@/components/menus/TopMenu/SearchForm/SearchForm.component';
@@ -26,10 +27,12 @@ const TopMenu: FC = () => {
         <div
             className={`hide ${styles.topMenuWrapper} ${isScrolled ? styles.scrolled : ''}`}
         >
-            <MainLogo />
-            <TrendsSlider className={`${styles.ml} ${styles.mr}`} />
-            <SearchForm />
-            <SiteEmail />
+            <MainWrapper className={styles.mainWrapper}>
+                <MainLogo />
+                <TrendsSlider className={`${styles.ml} ${styles.mr}`} />
+                <SearchForm />
+                <SiteEmail />
+            </MainWrapper>
         </div>
     );
 };

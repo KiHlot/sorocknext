@@ -22,12 +22,7 @@
         width: 100%;
         padding: 0 8px;
 
-        &.error {
-            border: $borderError;
-        }
-        
         &.main {
-            border: $border;
             background-color: $bgColor;
             height: 42px;
             border-radius: $borderRadius;
@@ -38,7 +33,7 @@
         input {
             padding-right: 50px;
         }
-        
+
         button {
             position: absolute;
             right: 0;
@@ -46,12 +41,12 @@
             width: 42px;
             height: 100%;
             border-radius: $borderRadius;
-            background-color: $bgColor;
-            box-shadow: $boxShadow;
+            background-color: $color;
 
             svg {
-                width: 20px;
-                height: 20px;
+                width: 24px;
+                height: 24px;
+                fill: $bgColor;
             }
         }
     }
