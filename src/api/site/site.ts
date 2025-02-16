@@ -29,17 +29,17 @@ export const siteApi = createApi({
                 return response?.data;
             },
         }),
-        getCronInfo: builder.query<ResponseIF, string>({
+        getCronInfo: builder.query<ResponseIF<CronInfoIF>, void>({
             query: () => ({
                 url: `/get-cron-info`,
             }),
         }),
-        updateCronInfo: builder.query<ResponseIF<CronInfoIF | null>, void>({
+        updateCronInfo: builder.query<ResponseIF<CronInfoIF>, void>({
             query: () => ({
                 url: `/update-cron-info`,
             }),
         }),
-        updateCronTask: builder.mutation<ResponseIF<CronInfoIF | null>, string>(
+        updateCronTask: builder.mutation<ResponseIF<CronInfoIF>, string>(
             {
                 query: taskName => ({
                     url: `/update-cron-task`,

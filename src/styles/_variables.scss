@@ -2,8 +2,9 @@ $white: #ffffff;
 $black: #000000;
 $color: #a8b6bb;
 $accent: #cf304d;
-$bgColor: #1b2026;
-$bgColorLight: #232a34;
+$bgColor: #303841;
+$bgColorSecondary: #283039;
+$bgColorDark: #21282f;
 $blockQuoteBg: #272a31;
 $greyDark: #1f2426;
 $greyDarkLight: #323232;
@@ -38,7 +39,7 @@ $boxShadow: 0 10px 25px 0 rgba(0, 0, 0, 0.3);
 $textShadow: 1px 1px 2px #000000;
 
 $borderRadius: 12px;
-$border: 1px solid rgba($color, 0.2);
+$border: 1px solid #3d454e;
 $borderError: 1px solid rgba($error, 0.2);
 
 $zIndexPopup: 70;

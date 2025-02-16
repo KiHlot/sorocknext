@@ -18,14 +18,14 @@
         color: $color;
         font-weight: 400;
         text-align: left;
-        background-color: $bgColor;
+        background-color: $bgColorDark;
     }
 }
 
 .tableRowWrapper {
     width: 100%;
     height: auto;
-    background-color: $bgColorLight;
+    background-color: $bgColorSecondary;
 
     &:last-child {
         border-bottom: none;
@@ -47,7 +47,7 @@
 tbody {
     .tableRowWrapper {
         &:nth-child(even) {
-            background-color: rgba($bgColorLight, 0.4);
+            background-color: rgba($bgColorSecondary, 0.4);
         }
 
         &:hover {

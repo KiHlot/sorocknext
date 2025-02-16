@@ -35,7 +35,7 @@ header {
 }
 
 .cvscroll {
-    scrollbar-color: $bgColor $bgColorLight;
+    scrollbar-color: $bgColor $bgColorSecondary;
     scrollbar-width: thin;
 }
 
@@ -60,7 +60,7 @@ header {
 }
 
 .custom_scroll_horizontal::-webkit-scrollbar-thumb {
-    background-color: rgba($bgColorLight, 0.8);
+    background-color: rgba($bgColorSecondary, 0.8);
 }
 
 .marquee {

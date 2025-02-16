@@ -1,7 +1,7 @@
 @use '@/styles/variables' as *;
 
 .loadingWrapper {
-    background-color: rgba($bgColorLight, 0.4);
+    background-color: rgba($bgColorSecondary, 0.4);
 }
 
 .loader {

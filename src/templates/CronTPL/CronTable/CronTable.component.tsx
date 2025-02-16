@@ -15,13 +15,20 @@ import styles from '@/templates/CronTPL/CronTable/CronTable.module.scss';
 import { CronTablePropsIF } from '@/templates/CronTPL/CronTable/CronTable.types';
 
 const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
-    const [updateCronTask, { isLoading }] = siteApi.useUpdateCronTaskMutation();
+    const [updateCronTask, { isLoading: updateCronTaskLoading }] =
+        siteApi.useUpdateCronTaskMutation();
+    const [getCronInfo, { isLoading: cronInfoLoading }] =
+        siteApi.useLazyGetCronInfoQuery();
 
     const updateTask = (taskName: string) => {
         updateCronTask(taskName)
             .unwrap()
-            .then(({ data }) => {
-                setCronInfoData(data || null);
+            .finally(() => {
+                getCronInfo()
+                    .unwrap()
+                    .then(data => {
+                        setCronInfoData(data?.data || null);
+                    });
             });
     };
 
@@ -50,7 +57,7 @@ const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
                             variant="default"
                             clickHandler={() => updateTask(taskName)}
                             className={styles.updateButton}
-                            disabled={isLoading}
+                            disabled={updateCronTaskLoading || cronInfoLoading}
                         >
                             <RxUpdate />
                         </MainButton>
