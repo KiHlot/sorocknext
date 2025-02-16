@@ -1,29 +1,45 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { ResponseIF } from '@/store/types';
 import { siteApi } from '@/api/site/site';
-import adminStyles from '@/app/admin/admin.module.scss';
-import Block from '@/components/blocks/Block/Block.component';
+import { ModifyDataIF, UsersAdminJsonDataIF } from '@/api/site/types';
+import AdminPromoBlock from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.component';
 import styles from '@/templates/UsersAdminTPL/UsersAdminTPL.module.scss';
 import { UsersAdminTPLPropsIF } from '@/templates/UsersAdminTPL/UsersAdminTPL.types';
+import { UserAdminIF } from '@/types/user';
 
-const UsersAdminTPL: FC<UsersAdminTPLPropsIF> = () => {
+const UsersAdminTPL: FC<UsersAdminTPLPropsIF> = ({ data }) => {
     const [updateCronTask, { isLoading }] = siteApi.useUpdateCronTaskMutation();
 
-    const updateTask = () => {
-        updateCronTask('users_info')
-            .unwrap()
-            .then(({ data }) => {
-                console.log(data);
-            });
+    const [modifyData, setModifyData] = useState<ModifyDataIF | null>(null);
+    const [usersList, setUsersList] = useState<UserAdminIF[] | null>(null);
+
+    const updateTask = async () => {
+        const result = (await updateCronTask(
+            'users_info',
+        ).unwrap()) as ResponseIF<UsersAdminJsonDataIF>;
+
+        setModifyData(result?.data?.modifyData || null);
+        setUsersList(result?.data?.data || null);
     };
+
+    useEffect(() => {
+        setModifyData(data?.jsonData?.modifyData || null);
+        setUsersList(data?.jsonData?.data || null);
+    }, [data]);
+
+    //TODO
+    console.log('usersList', usersList);
 
     return (
         <div className={`flcol ${styles.usersAdminTPLWrapper}`}>
-            <Block className={`flcol ${styles.blockWrapper}`}>
-                <h1 className={adminStyles.pageTitle}>Пользователи</h1>
-                <button onClick={updateTask}>update</button>
-            </Block>
+            <AdminPromoBlock
+                title="Пользователи"
+                isLoading={isLoading}
+                modifyData={modifyData}
+                clickHandler={updateTask}
+            />
         </div>
     );
 };

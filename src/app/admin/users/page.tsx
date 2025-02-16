@@ -1,13 +1,10 @@
 import { getApi } from '@/store/functions';
-import { ResponseIF } from '@/store/types';
-import { CronInfoIF } from '@/api/site/types';
 import AdminLayout from '@/layouts/AdminLayout/AdminLayout.component';
 import UsersAdminTPL from '@/templates/UsersAdminTPL/UsersAdminTPL.component';
+import { UsersAdminTPLDataIF } from '@/templates/UsersAdminTPL/UsersAdminTPL.types';
 
 const UserUpdate = async () => {
-    const usersInfo = await getApi<CronInfoIF>(
-        '/site/get-users-info',
-    );
+    const usersInfo = await getApi<UsersAdminTPLDataIF>('/site/get-users-info');
 
     return (
         <AdminLayout>

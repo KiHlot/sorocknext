@@ -6,7 +6,7 @@ import {
     ContactFormIF,
     CronInfoIF,
     SearchIF,
-    SearchResultIF,
+    SearchResultIF, UpdateCronTaskT,
 } from '@/api/site/types';
 
 export const siteApi = createApi({
@@ -39,7 +39,7 @@ export const siteApi = createApi({
                 url: `/update-cron-info`,
             }),
         }),
-        updateCronTask: builder.mutation<ResponseIF<CronInfoIF>, string>(
+        updateCronTask: builder.mutation<ResponseIF<UpdateCronTaskT>, string>(
             {
                 query: taskName => ({
                     url: `/update-cron-task`,
@@ -47,6 +47,13 @@ export const siteApi = createApi({
                     body: {
                         taskName,
                     },
+                }),
+            },
+        ),
+        updateRoles: builder.mutation<ResponseIF, void>(
+            {
+                query: () => ({
+                    url: `/update-roles`,
                 }),
             },
         ),
