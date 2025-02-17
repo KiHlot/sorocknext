@@ -36,3 +36,19 @@ export interface MenuItemIF {
     icon?: ReactElement;
     hasBorder?: boolean;
 }
+
+export interface FilterIF {
+    page: number;
+    offset?: number;
+    sort?: {
+        column: string;
+        direction: 'DESC' | 'ASD';
+    };
+}
+
+export interface FilteredResultIF<DataIF = null> {
+    pagesCount: number;
+    page: number;
+    offset: number;
+    filteredData: DataIF | null;
+}

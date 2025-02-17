@@ -2,6 +2,7 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
     images: { unoptimized: true },
+    reactStrictMode: true,
     webpack: config => {
         const fileLoaderRule = config.module.rules.find(
             (rule: { test: { test: (arg0: string) => any } }) =>

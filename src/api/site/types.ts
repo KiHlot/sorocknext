@@ -1,5 +1,4 @@
 import { TagIF } from '@/types/common';
-import { UserAdminIF } from '@/types/user';
 
 export type UpdateCronTaskT = CronInfoIF | UsersAdminJsonDataIF;
 
@@ -56,5 +55,5 @@ export interface ContactFormIF {
 
 export interface UsersAdminJsonDataIF {
     modifyData: ModifyDataIF;
-    data: UserAdminIF[] | null;
+    data: number[] | null;
 }

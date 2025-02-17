@@ -5,7 +5,7 @@ import {
     ActivateUserIF,
     RegistrationFieldsReqIF,
     ResetPasswordIF,
-} from '@/api/authApi/types';
+} from '@/api/auth/types';
 
 export const authApi = createApi({
     reducerPath: 'authApi',

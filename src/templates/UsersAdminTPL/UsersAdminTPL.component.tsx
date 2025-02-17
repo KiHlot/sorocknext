@@ -7,13 +7,12 @@ import { ModifyDataIF, UsersAdminJsonDataIF } from '@/api/site/types';
 import AdminPromoBlock from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.component';
 import styles from '@/templates/UsersAdminTPL/UsersAdminTPL.module.scss';
 import { UsersAdminTPLPropsIF } from '@/templates/UsersAdminTPL/UsersAdminTPL.types';
-import { UserAdminIF } from '@/types/user';
+import UsersList from '@/templates/UsersAdminTPL/UsersList/UsersList.component';
 
 const UsersAdminTPL: FC<UsersAdminTPLPropsIF> = ({ data }) => {
     const [updateCronTask, { isLoading }] = siteApi.useUpdateCronTaskMutation();
 
     const [modifyData, setModifyData] = useState<ModifyDataIF | null>(null);
-    const [usersList, setUsersList] = useState<UserAdminIF[] | null>(null);
 
     const updateTask = async () => {
         const result = (await updateCronTask(
@@ -21,16 +20,11 @@ const UsersAdminTPL: FC<UsersAdminTPLPropsIF> = ({ data }) => {
         ).unwrap()) as ResponseIF<UsersAdminJsonDataIF>;
 
         setModifyData(result?.data?.modifyData || null);
-        setUsersList(result?.data?.data || null);
     };
 
     useEffect(() => {
         setModifyData(data?.jsonData?.modifyData || null);
-        setUsersList(data?.jsonData?.data || null);
     }, [data]);
-
-    //TODO
-    console.log('usersList', usersList);
 
     return (
         <div className={`flcol ${styles.usersAdminTPLWrapper}`}>
@@ -40,6 +34,7 @@ const UsersAdminTPL: FC<UsersAdminTPLPropsIF> = ({ data }) => {
                 modifyData={modifyData}
                 clickHandler={updateTask}
             />
+            <UsersList filterResult={data?.filterResult} />
         </div>
     );
 };

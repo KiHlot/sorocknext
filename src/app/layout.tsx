@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 const RootLayout: FC<RootLayoutIF> = async ({ children }) => {
     return (
-        <html lang="en">
+        <html lang="ru">
             <body className={inter.className}>
                 <StoreProvider>
                     <Layout>{children}</Layout>

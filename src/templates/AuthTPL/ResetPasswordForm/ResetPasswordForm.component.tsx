@@ -4,7 +4,7 @@ import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '~/@hookform/resolvers/yup';
 import { parseResponse } from '@/store/functions';
-import { authApi } from '@/api/authApi/authApi';
+import { authApi } from '@/api/auth/auth';
 import InfoBlock from '@/components/blocks/InfoBlock/InfoBlock.component';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import { Input } from '@/components/form/Input/Input.component';

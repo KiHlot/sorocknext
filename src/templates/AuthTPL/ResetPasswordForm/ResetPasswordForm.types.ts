@@ -1,4 +1,4 @@
-import { ActivateUserIF } from '@/api/authApi/types';
+import { ActivateUserIF } from '@/api/auth/types';
 
 export type FieldsNames = 'password' | 'passwordConfirm';
 

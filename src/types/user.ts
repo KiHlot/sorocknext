@@ -27,7 +27,3 @@ export interface UserIF {
     contacts: UserContactsIF;
     socLinks: SocLinksIF;
 }
-
-export interface UserAdminIF extends UserIF {
-    emailPrivate: string;
-}
