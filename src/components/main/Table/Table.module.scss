@@ -53,5 +53,9 @@ tbody {
         &:hover {
             background-color: $active;
         }
+
+        td {
+            vertical-align: middle;
+        }
     }
 }

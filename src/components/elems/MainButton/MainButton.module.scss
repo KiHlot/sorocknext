@@ -32,6 +32,25 @@
     border-radius: $borderRadius;
 }
 
+.sq,
+.sq_delete {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $info;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.sq_delete {
+    background-color: $error;
+}
+
 .icon {
     position: absolute;
     width: 30px;

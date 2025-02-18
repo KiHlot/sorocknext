@@ -18,12 +18,19 @@ export interface UserContactsIF {
 
 export type SocLinksIF = { [key in SoclinkT]: string | null }[];
 
+export interface UserActivity {
+    registrationDate: string;
+    lastActivity: string;
+}
+
 export interface UserIF {
     userId: number;
     userLogin: string;
     avatarUrl: string | null;
     role: UserRoleT;
+    userUrl: string;
     metrics: UserMetricsIF;
     contacts: UserContactsIF;
     socLinks: SocLinksIF;
+    activity: UserActivity;
 }

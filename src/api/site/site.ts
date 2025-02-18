@@ -57,6 +57,13 @@ export const siteApi = createApi({
                 }),
             },
         ),
+        updateUsers: builder.mutation<ResponseIF, number[]>(
+            {
+                query: () => ({
+                    url: `/update-users`,
+                }),
+            },
+        ),
         sendContactForm: builder.mutation<ResponseIF<{ isSent: boolean }>, ContactFormIF>({
             query: contactForm => ({
                 url: `/send-contact-form`,
