@@ -2,9 +2,9 @@
 
 import { FC, useState } from 'react';
 import Link from 'next/link';
-import DialogModal from '@/components/elems/MainButton/DialogModal/DialogModal.component';
 import styles from '@/components/elems/MainButton/MainButton.module.scss';
 import { MainButtonPropsIF } from '@/components/elems/MainButton/MainButton.types';
+import DialogModal from '@/components/elems/DialogModal/DialogModal.component';
 
 const MainButton: FC<MainButtonPropsIF> = ({
     children,
@@ -19,7 +19,7 @@ const MainButton: FC<MainButtonPropsIF> = ({
     dialogText,
 }) => {
     const [isDialogModalOpen, setIsDialogModalOpen] = useState<boolean>(false);
-    //TODO сдклвть модалку
+
     const onClick = () => {
         if (dialogText) {
             setIsDialogModalOpen(true);
@@ -53,7 +53,11 @@ const MainButton: FC<MainButtonPropsIF> = ({
     }
 
     return (
-        <button {...commonProps} type={type}>
+        <>
+            <button {...commonProps} type={type}>
+                {icon && <span className={`flc ${styles.icon}`}>{icon}</span>}
+                {children}
+            </button>
             {dialogText && clickHandler ? (
                 <DialogModal
                     dialogText={dialogText}
@@ -61,9 +65,7 @@ const MainButton: FC<MainButtonPropsIF> = ({
                     open={isDialogModalOpen}
                 />
             ) : null}
-            {icon && <span className={`flc ${styles.icon}`}>{icon}</span>}
-            {children}
-        </button>
+        </>
     );
 };
 

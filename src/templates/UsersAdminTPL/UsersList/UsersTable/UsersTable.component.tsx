@@ -21,66 +21,65 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers }) => {
 
     return (
         <div className={`flcol ${styles.usersTableWrapper}`}>
-            <div className="tableWrapper">
-                {usersList?.length ? (
-                    <Table titles={TABLE_TITLES}>
-                        {usersList.map(item => (
-                            <TableRow key={item.userId}>
-                                <RowItem>{item.userId}</RowItem>
-                                <RowItem>
-                                    <div
-                                        className={`bgc ${styles.avatar}`}
-                                        style={{
-                                            backgroundImage: `url(${item.avatarUrl})`,
-                                        }}
-                                    />
-                                </RowItem>
-                                <RowItem>
-                                    <Link
-                                        className={styles.link}
-                                        href={item.userUrl}
-                                    >{`${item.metrics.firstName} ${item.metrics.lastName}`}</Link>
-                                </RowItem>
-                                <RowItem>{item.role}</RowItem>
-                                <RowItem>
-                                    {item.activity.registrationDate}
-                                </RowItem>
-                                <RowItem>{item.activity.lastActivity}</RowItem>
-                                <RowItem>
-                                    <UserDetailModal
-                                        disabled={isUsersUpdating}
-                                    />
-                                </RowItem>
-                                <RowItem>
-                                    <MainButton
-                                        clickHandler={() =>
-                                            updateOldUsers([item.userId])
-                                        }
-                                        variant="sq"
-                                        disabled={isUsersUpdating}
-                                    >
-                                        <RxUpdate />
-                                    </MainButton>
-                                </RowItem>
-                                <RowItem>
-                                    <MainButton
-                                        clickHandler={() =>
-                                            updateOldUsers([item.userId])
-                                        }
-                                        variant="sq_delete"
-                                        dialogText={<>Удалить?</>}
-                                        disabled={isUsersUpdating}
-                                    >
-                                        <AiOutlineDelete />
-                                    </MainButton>
-                                </RowItem>
-                            </TableRow>
-                        ))}
-                    </Table>
-                ) : (
-                    <NoData />
-                )}
-            </div>
+            {usersList?.length ? (
+                <Table titles={TABLE_TITLES}>
+                    {usersList.map(item => (
+                        <TableRow key={item.userId}>
+                            <RowItem>{item.userId}</RowItem>
+                            <RowItem>
+                                <div
+                                    className={`bgc ${styles.avatar}`}
+                                    style={{
+                                        backgroundImage: `url(${item.avatarUrl})`,
+                                    }}
+                                />
+                            </RowItem>
+                            <RowItem>
+                                <Link
+                                    className={styles.link}
+                                    href={item.userUrl}
+                                >{`${item.metrics.firstName} ${item.metrics.lastName}`}</Link>
+                            </RowItem>
+                            <RowItem>{item.role}</RowItem>
+                            <RowItem>
+                                {item.activity.registrationDate}
+                            </RowItem>
+                            <RowItem>{item.activity.lastActivity}</RowItem>
+                            <RowItem>-=-</RowItem>
+                            <RowItem>
+                                <UserDetailModal
+                                    disabled={isUsersUpdating}
+                                />
+                            </RowItem>
+                            <RowItem>
+                                <MainButton
+                                    clickHandler={() =>
+                                        updateOldUsers([item.userId])
+                                    }
+                                    variant="sq"
+                                    disabled={isUsersUpdating}
+                                >
+                                    <RxUpdate />
+                                </MainButton>
+                            </RowItem>
+                            <RowItem>
+                                <MainButton
+                                    clickHandler={() =>
+                                        updateOldUsers([item.userId])
+                                    }
+                                    variant="sq_delete"
+                                    dialogText={<>Удалить?</>}
+                                    disabled={isUsersUpdating}
+                                >
+                                    <AiOutlineDelete />
+                                </MainButton>
+                            </RowItem>
+                        </TableRow>
+                    ))}
+                </Table>
+            ) : (
+                <NoData />
+            )}
             <div className="pagination">123</div>
         </div>
     );

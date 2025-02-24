@@ -1,6 +1,5 @@
 import { FC, useEffect, useRef } from 'react';
 import { IoClose } from 'react-icons/io5';
-import MainButton from '@/components/elems/MainButton/MainButton.component';
 import styles from '@/components/main/Modal/Modal.module.scss';
 import { ModalPropsIF } from '@/components/main/Modal/Modal.types';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
@@ -44,19 +43,21 @@ const Modal: FC<ModalPropsIF> = ({
                 className={`${styles.modalWrapper} ${styles[size]}`}
                 ref={modalRef}
             >
-                {title && (
-                    <div className={styles.title}>
-                        {title.icon}
-                        <span>{title.label}</span>
-                    </div>
-                )}
-                <MainButton
-                    clickHandler={onClose}
-                    variant="default"
-                    className={`flc ${styles.closeButton}`}
-                >
-                    <IoClose />
-                </MainButton>
+                <div className={styles.modalHeader}>
+                    {title?.label && (
+                        <div className={styles.title}>
+                            {title?.icon && title.icon}
+                            <span>{title.label}</span>
+                        </div>
+                    )}
+                    <button
+                        onClick={onClose}
+                        className={`flc ${styles.closeButton}`}
+                        type="button"
+                    >
+                        <IoClose />
+                    </button>
+                </div>
                 <div className={styles.body}>{children}</div>
             </div>
         </div>
