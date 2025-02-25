@@ -14,9 +14,8 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled }) => {
                 clickHandler={() => setIsOpen(true)}
                 variant="sq"
                 disabled={disabled}
-            >
-                <CgDetailsMore />
-            </MainButton>
+                icon={<CgDetailsMore />}
+            />
             <Modal
                 title={{
                     label: 'Информация о юзере: /username/',

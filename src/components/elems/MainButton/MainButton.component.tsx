@@ -2,9 +2,9 @@
 
 import { FC, useState } from 'react';
 import Link from 'next/link';
+import DialogModal from '@/components/elems/DialogModal/DialogModal.component';
 import styles from '@/components/elems/MainButton/MainButton.module.scss';
 import { MainButtonPropsIF } from '@/components/elems/MainButton/MainButton.types';
-import DialogModal from '@/components/elems/DialogModal/DialogModal.component';
 
 const MainButton: FC<MainButtonPropsIF> = ({
     children,

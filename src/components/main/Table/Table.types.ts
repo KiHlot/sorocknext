@@ -18,6 +18,7 @@ export interface TablePropsIF {
 
 export interface TableRowPropsIF {
     children: ReactNode;
+    isChecked?: boolean;
 }
 
 export interface RowItemPropsIF {

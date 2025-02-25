@@ -12,54 +12,59 @@
 }
 
 .cronInfoWrapper {
-	gap: 20px 0;
+    gap: 20px 0;
 }
 
 .cronInfoBlock {
-	display: flex;
-	gap: 0 20px;
-	font-size: 18px;
-	
-	& > * {
-		position: relative;
-		display: flex;
-		align-items: center;
-		
-		&:after {
-			content: '';
-			width: 1px;
-			height: 60%;
-			position: absolute;
-			right: -10px;
-			top: 20%;
-			display: block;
-			background-color: $white;
-		}
-		
-		&:last-child,
-		&:first-child {
-			&:after {
-				display: none;
-			}
-		}
-	}
-	
-	&.error {
-		.value {
-			color: $error;
-		}
-	}
+    display: flex;
+    gap: 0 20px;
+    font-size: 18px;
+
+    & > * {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        &:after {
+            content: '';
+            width: 1px;
+            height: 60%;
+            position: absolute;
+            right: -10px;
+            top: 20%;
+            display: block;
+            background-color: $white;
+        }
+
+        &:last-child,
+        &:first-child {
+            &:after {
+                display: none;
+            }
+        }
+    }
+
+    &.error {
+        .value {
+            color: $error;
+        }
+    }
 }
 
 .label {
-	font-weight: 600;
+    font-weight: 600;
 }
 
 .value {
-	color: $correct;
+    color: $correct;
 }
 
 .updateCronInfoButton {
-	height: 30px;
-	width: 30px;
+    height: 30px;
+    width: 30px;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
 }

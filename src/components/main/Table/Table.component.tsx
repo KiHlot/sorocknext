@@ -44,8 +44,17 @@ const Table: FC<TablePropsIF> = ({
     );
 };
 
-export const TableRow: FC<TableRowPropsIF> = ({ children }) => {
-    return <tr className={styles.tableRowWrapper}>{children}</tr>;
+export const TableRow: FC<TableRowPropsIF> = ({
+    children,
+    isChecked = false,
+}) => {
+    return (
+        <tr
+            className={`${styles.tableRowWrapper} ${isChecked ? styles.checked : ''}`}
+        >
+            {children}
+        </tr>
+    );
 };
 
 export const RowItem: FC<RowItemPropsIF> = ({ children, className = '' }) => {

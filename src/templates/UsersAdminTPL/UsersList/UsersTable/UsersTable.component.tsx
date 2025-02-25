@@ -45,17 +45,36 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers }) => {
         }
     };
 
-    console.log('selectedUsers', selectedUsers);
-
     return (
         <div className={`flcol ${styles.usersTableWrapper}`}>
+            <div className={styles.buttonsLine}>
+                <MainButton
+                    className={styles.delete}
+                    icon={<AiOutlineDelete />}
+                    disabled={!selectedUsers.length}
+                >
+                    Удалить
+                </MainButton>
+                <MainButton
+                    className={styles.update}
+                    icon={<RxUpdate />}
+                    disabled={!selectedUsers.length}
+                    clickHandler={() => updateOldUsers(selectedUsers)}
+                >
+                    Обновить
+                </MainButton>
+            </div>
+
             {usersList?.length ? (
                 <Table
                     titles={TABLE_TITLES}
                     selectData={{ selectAll, isAllSelected }}
                 >
                     {usersList.map(item => (
-                        <TableRow key={item.userId}>
+                        <TableRow
+                            key={item.userId}
+                            isChecked={selectedUsers.includes(item.userId)}
+                        >
                             <RowItem>
                                 <CheckBoxBase
                                     name={`box_${item.userId}`}
@@ -99,9 +118,8 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers }) => {
                                     }
                                     variant="sq"
                                     disabled={isUsersUpdating}
-                                >
-                                    <RxUpdate />
-                                </MainButton>
+                                    icon={<RxUpdate />}
+                                />
                             </RowItem>
                             <RowItem>
                                 <MainButton
@@ -111,9 +129,8 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers }) => {
                                     variant="sq_delete"
                                     dialogText={<>Удалить?</>}
                                     disabled={isUsersUpdating}
-                                >
-                                    <AiOutlineDelete />
-                                </MainButton>
+                                    icon={<AiOutlineDelete />}
+                                />
                             </RowItem>
                         </TableRow>
                     ))}

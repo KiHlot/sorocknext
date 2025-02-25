@@ -40,13 +40,12 @@ const AdminPromoBlock: FC<AdminPromoBlockPropsIF> = ({
                             {modifyData?.updatedBy || 'error'}
                         </div>
                         <MainButton
-                            variant="default"
+                            variant="sq"
                             className={styles.updateCronInfoButton}
                             disabled={isLoading}
                             clickHandler={clickHandler}
-                        >
-                            <RxUpdate />
-                        </MainButton>
+                            icon={<RxUpdate />}
+                        />
                     </div>
                 </div>
             )}
