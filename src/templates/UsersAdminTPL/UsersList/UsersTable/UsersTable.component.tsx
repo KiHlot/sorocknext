@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { AiOutlineDelete } from 'react-icons/ai';
 import { RxUpdate } from 'react-icons/rx';
 import Link from 'next/link';
 import { siteApi } from '@/api/site/site';
@@ -12,17 +13,22 @@ import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/User
 import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';
 import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.types';
-import { AiOutlineDelete } from "react-icons/ai";
 
 const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers }) => {
     const [, { isLoading: isUsersUpdating }] = siteApi.useUpdateUsersMutation({
         fixedCacheKey: 'updateUsers',
     });
 
+    const [selectedUsers, setSelectedUsers] = useState<number[]>(0);
+
+    const selectUsers = (indexes: number[]) => {
+    
+    }
+    
     return (
         <div className={`flcol ${styles.usersTableWrapper}`}>
             {usersList?.length ? (
-                <Table titles={TABLE_TITLES}>
+                <Table titles={TABLE_TITLES} setSelected={selectUsers}>
                     {usersList.map(item => (
                         <TableRow key={item.userId}>
                             <RowItem>{item.userId}</RowItem>
@@ -41,15 +47,11 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers }) => {
                                 >{`${item.metrics.firstName} ${item.metrics.lastName}`}</Link>
                             </RowItem>
                             <RowItem>{item.role}</RowItem>
-                            <RowItem>
-                                {item.activity.registrationDate}
-                            </RowItem>
+                            <RowItem>{item.activity.registrationDate}</RowItem>
                             <RowItem>{item.activity.lastActivity}</RowItem>
                             <RowItem>-=-</RowItem>
                             <RowItem>
-                                <UserDetailModal
-                                    disabled={isUsersUpdating}
-                                />
+                                <UserDetailModal disabled={isUsersUpdating} />
                             </RowItem>
                             <RowItem>
                                 <MainButton

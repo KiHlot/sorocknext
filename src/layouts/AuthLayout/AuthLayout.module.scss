@@ -1,8 +1,11 @@
 @use '@/styles/variables' as *;
 
 .authLayout {
-    grid-template-columns: 600px 1fr;
-    padding-left: 10vw;
+    grid-template-columns: 10vw 600px 1fr;
+}
+
+.leftSide {
+    background-color: $bgColorDark;
 }
 
 .thumb {

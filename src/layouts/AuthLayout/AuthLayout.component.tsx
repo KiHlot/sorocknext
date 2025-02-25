@@ -7,6 +7,7 @@ import layoutStyles from '@/layouts/Layout/Layout.module.scss';
 const AuthLayout: FC<AuthLayoutPropsIF> = ({ children }) => {
     return (
         <div className={`${styles.authLayout} ${layoutStyles.layout}`}>
+            <div className={styles.leftSide}/>
             <div className={`flcol ${styles.content}`}>{children}</div>
             <div
                 className={`bgc ${styles.thumb}`}

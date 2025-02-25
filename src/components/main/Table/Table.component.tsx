@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import CheckBoxBase from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.component';
 import styles from '@/components/main/Table/Table.module.scss';
 import {
     RowItemPropsIF,
@@ -6,12 +7,23 @@ import {
     TableRowPropsIF,
 } from '@/components/main/Table/Table.types';
 
-const Table: FC<TablePropsIF> = ({ titles, children, className = '' }) => {
+const Table: FC<TablePropsIF> = ({
+    titles,
+    children,
+    setSelected,
+    className = '',
+}) => {
     return (
         <table className={`${styles.tableWrapper} ${className}`}>
             {titles && (
                 <thead className={styles.tableHeader}>
                     <TableRow>
+                        {setSelected && (
+                            <th>
+                                {/*//TODO here checkbox*/}
+                                <CheckBoxBase name="select_all" />
+                            </th>
+                        )}
                         {titles.map(({ title }) => (
                             <th key={title}>{title}</th>
                         ))}
