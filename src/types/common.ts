@@ -30,6 +30,12 @@ export interface PageProps {
     }>;
 }
 
+export interface SearchParamsIF {
+    searchParams: Promise<{
+        [key: string]: string | string[] | undefined;
+    }>;
+}
+
 export interface MenuItemIF {
     url: string;
     label: string;
@@ -39,16 +45,19 @@ export interface MenuItemIF {
 
 export interface FilterIF {
     page: number;
-    offset?: number;
     sort?: {
         column: string;
         direction: 'DESC' | 'ASD';
     };
 }
 
-export interface FilteredResultIF<DataIF = null> {
-    pagesCount: number;
+export interface PaginationIF {
+    pagesCount?: number;
     page: number;
-    offset: number;
+}
+
+export interface FilteredResultIF<DataIF = null> {
+    pagination: PaginationIF;
     filteredData: DataIF | null;
+    isRedirect: boolean;
 }

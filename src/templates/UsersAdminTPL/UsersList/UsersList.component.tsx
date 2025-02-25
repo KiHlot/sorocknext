@@ -6,6 +6,7 @@ import { usersApi } from '@/api/users/users';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersList.module.scss';
 import { UsersListPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersList.types';
 import UsersTable from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.component';
+import { PaginationIF } from '@/types/common';
 import { UserIF } from '@/types/user';
 
 const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
@@ -16,6 +17,7 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     });
 
     const [usersList, setUsersList] = useState<UserIF[] | null>(null);
+    const [pagination, setPagination] = useState<PaginationIF | null>(null);
 
     const updateOldUsers = (usersId: number[]) => {
         updateUsers(usersId)
@@ -29,12 +31,17 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
 
     useEffect(() => {
         setUsersList(filterResult?.filteredData || null);
+        setPagination(filterResult?.pagination || null);
     }, [filterResult]);
 
     return (
         <div className={`flcol ${styles.usersListWrapper}`}>
             <div className="filter"></div>
-            <UsersTable usersList={usersList} updateOldUsers={updateOldUsers} />
+            <UsersTable
+                usersList={usersList}
+                updateOldUsers={updateOldUsers}
+                pagination={pagination}
+            />
         </div>
     );
 };

@@ -14,8 +14,9 @@ import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/User
 import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';
 import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.types';
+import Pagination from '@/components/main/Pagination/Pagination.component';
 
-const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers }) => {
+const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers, pagination }) => {
     const [, { isLoading: isUsersUpdating }] = siteApi.useUpdateUsersMutation({
         fixedCacheKey: 'updateUsers',
     });
@@ -138,7 +139,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers }) => {
             ) : (
                 <NoData />
             )}
-            <div className="pagination">123</div>
+            <Pagination pagination={pagination} />
         </div>
     );
 };

@@ -1,0 +1,27 @@
+@use '@/styles/variables' as *;
+
+.paginationWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0 16px;
+}
+
+.paginationBlock {
+    gap: 0 8px;
+}
+
+.paginationButton {
+    width: fit-content;
+    height: 36px;
+    padding: 0 12px;
+    cursor: pointer;
+    background-color: $bgColorDark;
+    border-radius: 4px;
+}
+
+.current {
+    opacity: 0.6;
+    cursor: default;
+    background-color: $bgColor;
+}
