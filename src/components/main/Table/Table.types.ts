@@ -10,7 +10,10 @@ export interface TablePropsIF {
     className?: string;
     titles?: TableTitlesIF[];
     children: ReactNode;
-    setSelected?: (indexes: number[]) => void
+    selectData?: {
+        selectAll: (isAllSelected: boolean) => void;
+        isAllSelected: boolean;
+    };
 }
 
 export interface TableRowPropsIF {

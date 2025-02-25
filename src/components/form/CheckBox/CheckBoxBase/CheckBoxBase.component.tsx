@@ -1,5 +1,5 @@
-import { ChangeEvent, ChangeEventHandler, FC, useState } from 'react';
-import { IoCheckmark } from 'react-icons/io5';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { FaCheck } from 'react-icons/fa6';
 import styles from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.module.scss';
 import { CheckBoxBaseIF } from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.types';
 import FieldError from '@/components/form/FieldError/FieldError.component';
@@ -10,17 +10,21 @@ const CheckBoxBase: FC<CheckBoxBaseIF> = ({
     value,
     error,
     isDisabled = false,
-    defaultChecked = false,
+    isChecked = false,
     className = '',
     onChange,
 }) => {
-    const [isChecked, setIsChecked] = useState<boolean>(defaultChecked);
+    const [checked, setChecked] = useState<boolean>(false);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (isDisabled) return;
-        setIsChecked(e.target.checked);
+        setChecked(e.target.checked);
         onChange?.(e);
     };
+
+    useEffect(() => {
+        setChecked(isChecked);
+    }, [isChecked]);
 
     return (
         <div className={`${styles.inputBlock} ${className}`}>
@@ -30,13 +34,13 @@ const CheckBoxBase: FC<CheckBoxBaseIF> = ({
                         type="checkbox"
                         className={styles.checkbox}
                         id={name}
-                        checked={isChecked}
+                        checked={checked}
                         onChange={handleChange}
                         value={value}
                         disabled={isDisabled}
                     />
-                    <span className={styles.customCheckBox}>
-                        {isChecked && <IoCheckmark />}
+                    <span className={`flc ${styles.customCheckBox}`}>
+                        {isChecked && <FaCheck />}
                     </span>
                     {label && label}
                 </label>

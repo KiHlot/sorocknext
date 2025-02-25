@@ -29,8 +29,15 @@
 }
 
 .customCheckBox {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 2px;
     border: $border;
+
+    svg {
+        fill: $color;
+        stroke: $color;
+        width: 14px;
+        height: 14px;
+    }
 }

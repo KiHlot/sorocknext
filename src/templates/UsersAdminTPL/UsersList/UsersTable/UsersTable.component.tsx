@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { siteApi } from '@/api/site/site';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import NoData from '@/components/elems/NoData/NoData.component';
+import CheckBoxBase from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.component';
 import Table, {
     RowItem,
     TableRow,
@@ -19,18 +20,56 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers }) => {
         fixedCacheKey: 'updateUsers',
     });
 
-    const [selectedUsers, setSelectedUsers] = useState<number[]>(0);
+    const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
+    const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
-    const selectUsers = (indexes: number[]) => {
-    
-    }
-    
+    const selectUsers = (userId: number, isAdd: boolean) => {
+        const result = isAdd
+            ? [...selectedUsers, userId]
+            : selectedUsers.filter(id => id !== userId);
+
+        setIsAllSelected(usersList?.length === result.length);
+
+        setSelectedUsers(result);
+    };
+
+    const selectAll = (isAllSelected: boolean) => {
+        if (!usersList) return;
+
+        setIsAllSelected(isAllSelected);
+
+        if (isAllSelected) {
+            setSelectedUsers(usersList.map(user => user.userId));
+        } else {
+            setSelectedUsers([]);
+        }
+    };
+
+    console.log('selectedUsers', selectedUsers);
+
     return (
         <div className={`flcol ${styles.usersTableWrapper}`}>
             {usersList?.length ? (
-                <Table titles={TABLE_TITLES} setSelected={selectUsers}>
+                <Table
+                    titles={TABLE_TITLES}
+                    selectData={{ selectAll, isAllSelected }}
+                >
                     {usersList.map(item => (
                         <TableRow key={item.userId}>
+                            <RowItem>
+                                <CheckBoxBase
+                                    name={`box_${item.userId}`}
+                                    isChecked={selectedUsers.includes(
+                                        item.userId,
+                                    )}
+                                    onChange={e =>
+                                        selectUsers(
+                                            item.userId,
+                                            e.target.checked,
+                                        )
+                                    }
+                                />
+                            </RowItem>
                             <RowItem>{item.userId}</RowItem>
                             <RowItem>
                                 <div

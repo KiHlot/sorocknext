@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { ChangeEvent, FC } from 'react';
 import CheckBoxBase from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.component';
 import styles from '@/components/main/Table/Table.module.scss';
 import {
@@ -10,18 +10,27 @@ import {
 const Table: FC<TablePropsIF> = ({
     titles,
     children,
-    setSelected,
     className = '',
+    selectData,
 }) => {
+    const { selectAll, isAllSelected } = selectData || {};
+
+    const selectHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        selectAll?.(e.target.checked);
+    };
+
     return (
         <table className={`${styles.tableWrapper} ${className}`}>
             {titles && (
                 <thead className={styles.tableHeader}>
                     <TableRow>
-                        {setSelected && (
+                        {selectData && (
                             <th>
-                                {/*//TODO here checkbox*/}
-                                <CheckBoxBase name="select_all" />
+                                <CheckBoxBase
+                                    name="select_all"
+                                    isChecked={isAllSelected}
+                                    onChange={selectHandler}
+                                />
                             </th>
                         )}
                         {titles.map(({ title }) => (
