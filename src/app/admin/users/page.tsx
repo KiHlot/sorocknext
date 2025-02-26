@@ -19,7 +19,7 @@ const UserUpdate: FC<SearchParamsIF> = async ({ searchParams }) => {
     }
 
     return (
-        <AdminLayout>
+        <AdminLayout isLoading={!usersInfo}>
             <UsersAdminTPL data={usersInfo} />
         </AdminLayout>
     );

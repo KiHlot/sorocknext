@@ -3,12 +3,13 @@ import styles from '@/layouts/AdminLayout/AdminLayout.module.scss';
 import { AdminLayoutPropsIF } from '@/layouts/AdminLayout/AdminLayout.types';
 import layoutStyles from '@/layouts/Layout/Layout.module.scss';
 import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
+import Loading from '@/components/blocks/Loading/Loading.component';
 import AdminMenu from '@/components/menus/AdminMenu/AdminMenu.component';
 import LeftMenu from '@/components/menus/LeftMenu/LeftMenu.component';
 import TopMenu from '@/components/menus/TopMenu/TopMenu.component';
 import Footer from '@/components/sections/Footer/Footer.component';
 
-const AdminLayout: FC<AdminLayoutPropsIF> = ({ children }) => {
+const AdminLayout: FC<AdminLayoutPropsIF> = ({ children, isLoading }) => {
     return (
         <>
             <TopMenu />
@@ -21,7 +22,9 @@ const AdminLayout: FC<AdminLayoutPropsIF> = ({ children }) => {
                 <div className={styles.adminMenu}>
                     <AdminMenu />
                 </div>
-                <div className={styles.contnet}>{children}</div>
+                <div className={styles.contnet}>
+                    {isLoading ? <Loading height={800} /> : children}
+                </div>
             </MainWrapper>
             <Footer />
         </>

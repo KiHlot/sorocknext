@@ -4,10 +4,9 @@ import { FC, useEffect } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { siteApi } from '@/api/site/site';
 import { LayoutPropsIF } from '@/layouts/Layout/Layout.types';
-import Loading from '@/components/blocks/Loading/Loading.component';
 
 const Layout: FC<LayoutPropsIF> = ({ children }) => {
-    const [getBaseData, { isLoading }] = siteApi.useGetBaseDataMutation({
+    const [getBaseData] = siteApi.useGetBaseDataMutation({
         fixedCacheKey: 'baseData',
     });
 
@@ -17,7 +16,7 @@ const Layout: FC<LayoutPropsIF> = ({ children }) => {
 
     return (
         <>
-            {isLoading ? <Loading /> : children}
+            {children}
 
             <ToastContainer
                 position="bottom-right"
