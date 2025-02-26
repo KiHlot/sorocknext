@@ -1,5 +1,3 @@
-import { FilterIF } from '@/types/common';
-
 const API_DOMAIN =
     process.env.NODE_ENV === 'development'
         ? process.env.NEXT_PUBLIC_API_ENDPOINT_DEV
@@ -14,13 +12,4 @@ export const ADDRESS = {
 export const TIME_FORMAT = {
     common: 'YYYY-MM-DD HH:mm:ss',
     previewWithTime: 'DD-MM-YYYY HH:mm',
-};
-
-export const DEFAULT_FILTER: FilterIF = {
-    page: 1,
-    offset: 20,
-    sort: {
-        column: 'id',
-        direction: 'DESC',
-    },
 };

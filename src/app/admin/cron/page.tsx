@@ -7,7 +7,7 @@ const Help = async () => {
     const cronInfo = await getApi<CronInfoIF>('/site/get-cron-info', 'reload');
 
     return (
-        <AdminLayout>
+        <AdminLayout isLoading={!cronInfo}>
             <CronTPL data={cronInfo} />
         </AdminLayout>
     );

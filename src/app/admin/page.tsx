@@ -5,12 +5,12 @@ import AdminLayout from '@/layouts/AdminLayout/AdminLayout.component';
 import UsersAdminTPL from '@/templates/UsersAdminTPL/UsersAdminTPL.component';
 
 const UserUpdate = async () => {
-    const usersInfo = await getApi<ResponseIF<CronInfoIF | null>>(
-        '/site/get-cron-info',
-    );
+    // const usersInfo = await getApi<ResponseIF<CronInfoIF | null>>(
+    //     '/site/get-cron-info',
+    // );
 
     return (
-        <AdminLayout>
+        <AdminLayout isLoading={false}>
             admin
         </AdminLayout>
     );

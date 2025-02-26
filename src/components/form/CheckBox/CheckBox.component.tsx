@@ -11,7 +11,7 @@ const CheckBox: FC<UseControllerProps & CheckBoxProps> = ({
     ...props
 }) => {
     const {
-        field: { name, value, onChange, onBlur },
+        field: { name, value, onChange },
         fieldState,
     } = useController(props);
 
@@ -21,7 +21,6 @@ const CheckBox: FC<UseControllerProps & CheckBoxProps> = ({
             name={name}
             value={value}
             onChange={onChange}
-            onBlur={onBlur}
             error={fieldState.error?.message || backError}
             isChecked={!!value}
             isDisabled={isDisabled}
