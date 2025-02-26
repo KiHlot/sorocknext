@@ -59,8 +59,12 @@ export const siteApi = createApi({
         ),
         updateUsers: builder.mutation<ResponseIF, number[]>(
             {
-                query: () => ({
+                query: (usersIds) => ({
                     url: `/update-users`,
+                    method: 'POST',
+                    body: {
+                        usersIds,
+                    },
                 }),
             },
         ),

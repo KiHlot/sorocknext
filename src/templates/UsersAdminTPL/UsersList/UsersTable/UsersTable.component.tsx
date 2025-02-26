@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RxUpdate } from 'react-icons/rx';
 import Link from 'next/link';
@@ -6,6 +6,7 @@ import { siteApi } from '@/api/site/site';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import CheckBoxBase from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.component';
+import Pagination from '@/components/main/Pagination/Pagination.component';
 import Table, {
     RowItem,
     TableRow,
@@ -14,15 +15,21 @@ import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/User
 import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';
 import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.types';
-import Pagination from '@/components/main/Pagination/Pagination.component';
 
-const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers, pagination }) => {
+const UsersTable: FC<UsersTablePropsIF> = ({
+    usersList,
+    updateOldUsers,
+    pagination,
+}) => {
     const [, { isLoading: isUsersUpdating }] = siteApi.useUpdateUsersMutation({
         fixedCacheKey: 'updateUsers',
     });
+    const [updateRoles, { isLoading: isRolesUpdating }] =
+        siteApi.useUpdateRolesMutation();
 
     const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+    const [isDataLoading, setIsDataLoading] = useState<boolean>(false);
 
     const selectUsers = (userId: number, isAdd: boolean) => {
         const result = isAdd
@@ -46,23 +53,36 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers, paginati
         }
     };
 
+    useEffect(() => {
+        setIsDataLoading(isUsersUpdating || isRolesUpdating);
+    }, [isUsersUpdating, isRolesUpdating]);
+
     return (
         <div className={`flcol ${styles.usersTableWrapper}`}>
             <div className={styles.buttonsLine}>
                 <MainButton
                     className={styles.delete}
                     icon={<AiOutlineDelete />}
-                    disabled={!selectedUsers.length}
+                    disabled={!selectedUsers.length || isDataLoading}
                 >
                     Удалить
                 </MainButton>
                 <MainButton
                     className={styles.update}
                     icon={<RxUpdate />}
-                    disabled={!selectedUsers.length}
+                    disabled={!selectedUsers.length || isDataLoading}
                     clickHandler={() => updateOldUsers(selectedUsers)}
                 >
-                    Обновить
+                    Обновить юзеров
+                </MainButton>
+                <MainButton
+                    className={styles.update}
+                    icon={<RxUpdate />}
+                    disabled={isDataLoading}
+                    clickHandler={updateRoles}
+                    dialogText={<>Обновить роли всех юзеров?</>}
+                >
+                    Обновить роли
                 </MainButton>
             </div>
 
@@ -110,7 +130,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers, paginati
                             <RowItem>{item.activity.lastActivity}</RowItem>
                             <RowItem>-=-</RowItem>
                             <RowItem>
-                                <UserDetailModal disabled={isUsersUpdating} />
+                                <UserDetailModal disabled={isDataLoading} />
                             </RowItem>
                             <RowItem>
                                 <MainButton
@@ -118,7 +138,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers, paginati
                                         updateOldUsers([item.userId])
                                     }
                                     variant="sq"
-                                    disabled={isUsersUpdating}
+                                    disabled={isDataLoading}
                                     icon={<RxUpdate />}
                                 />
                             </RowItem>
@@ -129,7 +149,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({ usersList, updateOldUsers, paginati
                                     }
                                     variant="sq_delete"
                                     dialogText={<>Удалить?</>}
-                                    disabled={isUsersUpdating}
+                                    disabled={isDataLoading}
                                     icon={<AiOutlineDelete />}
                                 />
                             </RowItem>

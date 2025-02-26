@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, Fragment, useMemo } from 'react';
 import Link from 'next/link';
 import { createPaginationData } from '@/components/main/Pagination/Pagination.config';
 import styles from '@/components/main/Pagination/Pagination.module.scss';
@@ -11,23 +11,17 @@ const Pagination: FC<PaginationPropsIF> = ({ pagination }) => {
             : null;
     }, [pagination]);
 
-    console.log('pagination', pagination)
-    console.log('normalizedPagination', normalizedPagination)
-    
     return normalizedPagination ? (
         <nav className={styles.paginationWrapper} role="pagination">
             {Object.entries(normalizedPagination).map(
                 ([key, paginationData], index) => {
                     return paginationData?.length ? (
-                        <>
+                        <Fragment key={key}>
                             {index !== 0 &&
                                 index < paginationData.length + 1 && (
                                     <span>...</span>
                                 )}
-                            <div
-                                key={key}
-                                className={`flc ${styles.paginationBlock}`}
-                            >
+                            <div className={`flc ${styles.paginationBlock}`}>
                                 {paginationData.map(({ label, isCurrent }) =>
                                     isCurrent ? (
                                         <span
@@ -47,7 +41,7 @@ const Pagination: FC<PaginationPropsIF> = ({ pagination }) => {
                                     ),
                                 )}
                             </div>
-                        </>
+                        </Fragment>
                     ) : null;
                 },
             )}

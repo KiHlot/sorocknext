@@ -20,6 +20,7 @@ export const ERRORS: { [key: string]: string } = {
     er217: 'Недостаточно прав!',
     er218: 'Не удалось загрузить файл!',
     er219: 'Данные не являются числом!',
+    er220: 'Неверный запрос!',
 };
 
 export const SERVER_ERRORS: { [key: string]: string } = {

@@ -19,8 +19,8 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     const [usersList, setUsersList] = useState<UserIF[] | null>(null);
     const [pagination, setPagination] = useState<PaginationIF | null>(null);
 
-    const updateOldUsers = (usersId: number[]) => {
-        updateUsers(usersId)
+    const updateOldUsers = (usersIds: number[]) => {
+        updateUsers(usersIds)
             .unwrap()
             .then(data => {
                 if (data.result === 'ok') {

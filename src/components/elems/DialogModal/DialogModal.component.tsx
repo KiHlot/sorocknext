@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 import { IoShieldCheckmarkOutline } from 'react-icons/io5';
@@ -10,16 +10,11 @@ import Modal from '@/components/main/Modal/Modal.component';
 const DialogModal: FC<DialogModalPropsIF> = ({
     dialogText,
     clickHandler,
-    open,
+    isOpen,
+    setIsOpen,
 }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-
-    useEffect(() => {
-        setIsOpen(open);
-    }, [open]);
-
     const accept = () => {
-        clickHandler;
+        clickHandler();
         setIsOpen(false);
     };
 

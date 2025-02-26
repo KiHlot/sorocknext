@@ -62,7 +62,8 @@ const MainButton: FC<MainButtonPropsIF> = ({
                 <DialogModal
                     dialogText={dialogText}
                     clickHandler={clickHandler}
-                    open={isDialogModalOpen}
+                    isOpen={isDialogModalOpen}
+                    setIsOpen={setIsDialogModalOpen}
                 />
             ) : null}
         </>
