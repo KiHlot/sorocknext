@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import Link from 'next/link';
+import { normalizeImage } from '@/helpers/utils';
 import styles from '@/components/elems/Author/Author.module.scss';
 import { AuthorPropsIF } from '@/components/elems/Author/Author.types';
-import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
 
 const Author: FC<AuthorPropsIF> = ({ data, type = 'full', className = '' }) => {
     return data ? (
@@ -14,7 +14,7 @@ const Author: FC<AuthorPropsIF> = ({ data, type = 'full', className = '' }) => {
                 <span
                     className={styles.thumb}
                     style={{
-                        backgroundImage: `url(${data.img80 || empty_user_80_80})`,
+                        backgroundImage: `url(${normalizeImage(data.img80, 'user80')})`,
                     }}
                 />
             )}

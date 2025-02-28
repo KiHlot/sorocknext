@@ -1,7 +1,5 @@
 import { TagIF } from '@/types/common';
 
-export type UpdateCronTaskT = CronInfoIF | UsersAdminJsonDataIF;
-
 export interface SearchIF {
     phrase: string;
     postTypes?: string[] | null;
@@ -41,11 +39,6 @@ export interface ModifyDataIF {
 }
 
 export type JsonStatusesT = Record<string, ModifyDataIF | null>;
-
-export interface CronInfoIF {
-    modifyData: ModifyDataIF;
-    jsonStatuses: JsonStatusesT;
-}
 
 export interface ContactFormIF {
     email: string;

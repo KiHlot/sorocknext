@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
-import { siteApi } from '@/api/site/site';
+import { adminApi } from '@/api/admin/admin';
 import { usersApi } from '@/api/users/users';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersList.module.scss';
 import { UsersListPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersList.types';
@@ -12,7 +12,7 @@ import { UserIF } from '@/types/user';
 const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     const [filter, { data: filteredData, isLoading, isSuccess }] =
         usersApi.useFilterMutation();
-    const [updateUsers] = siteApi.useUpdateUsersMutation({
+    const [updateUsers] = adminApi.useUpdateUsersMutation({
         fixedCacheKey: 'updateUsers',
     });
 

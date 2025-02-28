@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
 export type HTMLString = string;
+export type NormalizeImageTypeT = 'user80';
 
 export type CookieOptionsT = {
     expires?: Date | string | number;

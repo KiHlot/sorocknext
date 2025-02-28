@@ -10,7 +10,7 @@ const UserUpdate: FC<SearchParamsIF> = async ({ searchParams }) => {
     const { page } = await searchParams;
 
     const usersInfo = await getApi<UsersAdminTPLDataIF>(
-        `/site/get-users-info?page=${page || 1}`,
+        `/admin/get-users-info?page=${page || 1}`,
     );
 
     if (usersInfo?.filterResult?.isRedirect) {

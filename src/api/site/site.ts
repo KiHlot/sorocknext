@@ -4,9 +4,8 @@ import { ResponseIF } from '@/store/types';
 import {
     BaseData,
     ContactFormIF,
-    CronInfoIF,
     SearchIF,
-    SearchResultIF, UpdateCronTaskT,
+    SearchResultIF,
 } from '@/api/site/types';
 
 export const siteApi = createApi({
@@ -29,46 +28,10 @@ export const siteApi = createApi({
                 return response?.data;
             },
         }),
-        getCronInfo: builder.query<ResponseIF<CronInfoIF>, void>({
-            query: () => ({
-                url: `/get-cron-info`,
-            }),
-        }),
-        updateCronInfo: builder.query<ResponseIF<CronInfoIF>, void>({
-            query: () => ({
-                url: `/update-cron-info`,
-            }),
-        }),
-        updateCronTask: builder.mutation<ResponseIF<UpdateCronTaskT>, string>(
-            {
-                query: taskName => ({
-                    url: `/update-cron-task`,
-                    method: 'POST',
-                    body: {
-                        taskName,
-                    },
-                }),
-            },
-        ),
-        updateRoles: builder.mutation<ResponseIF, void>(
-            {
-                query: () => ({
-                    url: `/update-roles`,
-                }),
-            },
-        ),
-        updateUsers: builder.mutation<ResponseIF, number[]>(
-            {
-                query: (usersIds) => ({
-                    url: `/update-users`,
-                    method: 'POST',
-                    body: {
-                        usersIds,
-                    },
-                }),
-            },
-        ),
-        sendContactForm: builder.mutation<ResponseIF<{ isSent: boolean }>, ContactFormIF>({
+        sendContactForm: builder.mutation<
+            ResponseIF<{ isSent: boolean }>,
+            ContactFormIF
+        >({
             query: contactForm => ({
                 url: `/send-contact-form`,
                 method: 'POST',

@@ -3,7 +3,7 @@
 import { FC } from 'react';
 import dayjs from '~/dayjs';
 import { RxUpdate } from '~/react-icons/rx';
-import { siteApi } from '@/api/site/site';
+import { adminApi } from '@/api/admin/admin';
 import { TIME_FORMAT } from '@/helpers/config';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import Table, {
@@ -16,9 +16,9 @@ import { CronTablePropsIF } from '@/templates/CronTPL/CronTable/CronTable.types'
 
 const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
     const [updateCronTask, { isLoading: updateCronTaskLoading }] =
-        siteApi.useUpdateCronTaskMutation();
+        adminApi.useUpdateCronTaskMutation();
     const [getCronInfo, { isLoading: cronInfoLoading }] =
-        siteApi.useLazyGetCronInfoQuery();
+        adminApi.useLazyGetCronInfoQuery();
 
     const updateTask = (taskName: string) => {
         updateCronTask(taskName)

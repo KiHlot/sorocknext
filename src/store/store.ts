@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { globalDataSlice } from '@/store/slices/globalDataSlice';
+import { adminApi } from '@/api/admin/admin';
 import { authApi } from '@/api/auth/auth';
 import { jwtApi } from '@/api/jwt/jwt';
 import { siteApi } from '@/api/site/site';
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     [globalDataSlice.reducerPath]: globalDataSlice.reducer,
     [jwtApi.reducerPath]: jwtApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    [adminApi.reducerPath]: adminApi.reducer,
 });
 
 export const makeStore = () => {
@@ -25,6 +27,7 @@ export const makeStore = () => {
                 jwtApi.middleware,
                 authApi.middleware,
                 usersApi.middleware,
+                adminApi.middleware,
             ]),
     });
 };

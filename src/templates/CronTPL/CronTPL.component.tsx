@@ -1,8 +1,8 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
-import { siteApi } from '@/api/site/site';
-import { CronInfoIF } from '@/api/site/types';
+import { adminApi } from '@/api/admin/admin';
+import { CronInfoIF } from '@/api/admin/types';
 import AdminPromoBlock from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import styles from '@/templates/CronTPL/CronTPL.module.scss';
@@ -12,7 +12,7 @@ import CronTable from '@/templates/CronTPL/CronTable/CronTable.component';
 const CronTPL: FC<CronTPLPropsIF> = ({ data }) => {
     const [cronInfoData, setCronInfoData] = useState<CronInfoIF | null>(null);
     const [updateCronInfo, { isLoading }] =
-        siteApi.useLazyUpdateCronInfoQuery();
+        adminApi.useLazyUpdateCronInfoQuery();
 
     const clickHandler = () => {
         updateCronInfo()

@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RxUpdate } from 'react-icons/rx';
 import Link from 'next/link';
-import { siteApi } from '@/api/site/site';
+import { adminApi } from '@/api/admin/admin';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import CheckBoxBase from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.component';
@@ -15,17 +15,18 @@ import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/User
 import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';
 import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.types';
+import { normalizeImage } from '@/helpers/utils';
 
 const UsersTable: FC<UsersTablePropsIF> = ({
     usersList,
     updateOldUsers,
     pagination,
 }) => {
-    const [, { isLoading: isUsersUpdating }] = siteApi.useUpdateUsersMutation({
+    const [, { isLoading: isUsersUpdating }] = adminApi.useUpdateUsersMutation({
         fixedCacheKey: 'updateUsers',
     });
     const [updateRoles, { isLoading: isRolesUpdating }] =
-        siteApi.useUpdateRolesMutation();
+        adminApi.useUpdateRolesMutation();
 
     const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
@@ -115,7 +116,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                 <div
                                     className={`bgc ${styles.avatar}`}
                                     style={{
-                                        backgroundImage: `url(${item.avatarUrl})`,
+                                        backgroundImage: `url(${normalizeImage(item.avatarUrl, 'user80')})`,
                                     }}
                                 />
                             </RowItem>

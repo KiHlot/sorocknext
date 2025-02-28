@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
+import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
 import { TIME_FORMAT } from '@/helpers/config';
-import { CookieOptionsT } from '@/types/common';
+import { CookieOptionsT, NormalizeImageTypeT } from '@/types/common';
 
 export const shuffle = <T>(array: T[]): T[] => {
     const arrayCopy = [...array];
@@ -94,4 +95,18 @@ export const deleteSearchParams = () => {
         document.title,
         `${window.location.origin}${window.location.pathname}`,
     );
+};
+
+export const normalizeImage = (
+    url: string | null | undefined,
+    type: NormalizeImageTypeT,
+) => {
+    if (url) return url;
+
+    switch (type) {
+        case 'user80':
+            return empty_user_80_80.src;
+        default:
+            return '';
+    }
 };
