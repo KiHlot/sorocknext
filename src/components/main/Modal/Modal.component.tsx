@@ -3,6 +3,7 @@ import { IoClose } from 'react-icons/io5';
 import styles from '@/components/main/Modal/Modal.module.scss';
 import { ModalPropsIF } from '@/components/main/Modal/Modal.types';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
+import Loading from '@/components/blocks/Loading/Loading.component';
 
 const Modal: FC<ModalPropsIF> = ({
     isOpen,
@@ -10,6 +11,7 @@ const Modal: FC<ModalPropsIF> = ({
     title,
     closeHandler,
     blockOutsideClick = false,
+    isLoading,
     size = 'default',
 }) => {
     const modalRef = useRef<HTMLDivElement>(null);
@@ -58,7 +60,7 @@ const Modal: FC<ModalPropsIF> = ({
                         <IoClose />
                     </button>
                 </div>
-                <div className={styles.body}>{children}</div>
+                <div className={styles.body}>{isLoading ? <Loading/> : children}</div>
             </div>
         </div>
     ) : null;

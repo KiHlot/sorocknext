@@ -18,5 +18,14 @@ export const usersApi = createApi({
                 body,
             }),
         }),
+        getUserData: builder.mutation<ResponseIF<UserIF>, number>({
+            query: userId => ({
+                url: `/get-user-data`,
+                method: 'POST',
+                body: {
+                    userId,
+                },
+            }),
+        }),
     }),
 });

@@ -3,6 +3,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { RxUpdate } from 'react-icons/rx';
 import Link from 'next/link';
 import { adminApi } from '@/api/admin/admin';
+import { normalizeImage } from '@/helpers/utils';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import CheckBoxBase from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.component';
@@ -15,7 +16,6 @@ import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/User
 import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';
 import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.types';
-import { normalizeImage } from '@/helpers/utils';
 
 const UsersTable: FC<UsersTablePropsIF> = ({
     usersList,
@@ -131,7 +131,10 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                             <RowItem>{item.activity.lastActivity}</RowItem>
                             <RowItem>-=-</RowItem>
                             <RowItem>
-                                <UserDetailModal disabled={isDataLoading} />
+                                <UserDetailModal
+                                    disabled={isDataLoading}
+                                    useId={item.userId}
+                                />
                             </RowItem>
                             <RowItem>
                                 <MainButton

@@ -4,6 +4,7 @@ export interface ModalPropsIF {
     isOpen: boolean;
     closeHandler: () => void;
     children: ReactNode;
+    isLoading?: boolean;
     blockOutsideClick?: boolean;
     title?: {
         label: string;
