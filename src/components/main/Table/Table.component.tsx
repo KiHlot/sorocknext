@@ -25,7 +25,11 @@ const Table: FC<TablePropsIF> = ({
                 <thead className={styles.tableHeader}>
                     <TableRow>
                         {selectData && (
-                            <th>
+                            <th
+                                style={{
+                                    width: '46px',
+                                }}
+                            >
                                 <CheckBoxBase
                                     name="select_all"
                                     isChecked={isAllSelected}
@@ -33,8 +37,15 @@ const Table: FC<TablePropsIF> = ({
                                 />
                             </th>
                         )}
-                        {titles.map(({ title }) => (
-                            <th key={title}>{title}</th>
+                        {titles.map(({ title, width }) => (
+                            <th
+                                key={title}
+                                style={
+                                    width ? { width: `${width}px` } : undefined
+                                }
+                            >
+                                {title}
+                            </th>
                         ))}
                     </TableRow>
                 </thead>
@@ -57,8 +68,25 @@ export const TableRow: FC<TableRowPropsIF> = ({
     );
 };
 
-export const RowItem: FC<RowItemPropsIF> = ({ children, className = '' }) => {
-    return <td className={className}>{children}</td>;
+export const RowItem: FC<RowItemPropsIF> = ({
+    width,
+    children,
+    className = '',
+}) => {
+    return (
+        <td
+            style={
+                width
+                    ? {
+                          width: `${width}px`,
+                      }
+                    : undefined
+            }
+            className={className}
+        >
+            {children}
+        </td>
+    );
 };
 
 export default Table;

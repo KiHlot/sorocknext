@@ -16,7 +16,7 @@ const AdminLayout: FC<AdminLayoutPropsIF> = ({ children, isLoading }) => {
             <MainWrapper
                 className={`${layoutStyles.layout} ${styles.adminLayoutWrapper}`}
             >
-                <div className={styles.menu}>
+                <div className={`cvscroll ${styles.menu}`}>
                     <LeftMenu />
                 </div>
                 <div className={styles.adminMenu}>

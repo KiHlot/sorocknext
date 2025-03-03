@@ -21,7 +21,7 @@ const VerticalMenuItem: FC<VerticalMenuItemPropsIF> = ({ data }) => {
     }, [pathname, url]);
     
     return (
-        <div
+        <li
             className={`${styles.verticalMenuItemWrapper} ${hasBorder ? styles.border : ''}`}
         >
             <Link
@@ -32,7 +32,7 @@ const VerticalMenuItem: FC<VerticalMenuItemPropsIF> = ({ data }) => {
                 <span className={`flc ${styles.icon}`}>{icon}</span>
                 <span>{label}</span>
             </Link>
-        </div>
+        </li>
     );
 };
 

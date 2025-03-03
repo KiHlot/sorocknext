@@ -8,13 +8,13 @@ const VerticalMenu: FC<VerticalMenuPropsIF> = ({
     menuList,
 }) => {
     return (
-        <div className={`cvscroll ${styles.verticalMenuWrapper} ${className}`}>
+        <nav role="left menu" className={`${styles.verticalMenuWrapper} ${className}`}>
             <ul className="flcol">
                 {menuList.map(item => (
                     <VerticalMenuItem key={item.url} data={item} />
                 ))}
             </ul>
-        </div>
+        </nav>
     );
 };
 

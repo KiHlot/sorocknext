@@ -2,8 +2,10 @@ import { FC, useEffect, useState } from 'react';
 import { CgDetailsMore } from 'react-icons/cg';
 import { IoAlertCircleOutline } from '~/react-icons/io5';
 import { usersApi } from '@/api/users/users';
+import Block from '@/components/blocks/Block/Block.component';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import Modal from '@/components/main/Modal/Modal.component';
+import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.module.scss';
 import { UserDetailModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.types';
 
 const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
@@ -19,7 +21,7 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
 
         getUserData(useId);
     }, [useId, isOpen]);
-    //TODO metrics
+
     return useId ? (
         <>
             <MainButton
@@ -38,7 +40,14 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
                 size="large"
                 isLoading={isLoading}
             >
-                {metrics?.lastName}
+                <div className={styles.modalLayout}>
+                    <Block>Фото</Block>
+                    <Block>Метрики</Block>
+                    <Block>Метрики</Block>
+                    <Block>Инфа1</Block>
+                    <Block>Инфа2</Block>
+                    <Block>Инфа3</Block>
+                </div>
             </Modal>
         </>
     ) : null;

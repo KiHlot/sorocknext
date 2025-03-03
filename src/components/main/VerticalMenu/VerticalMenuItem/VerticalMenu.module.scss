@@ -53,6 +53,10 @@
         text-decoration: unset;
         border-radius: $borderRadius;
 
+        @include media(desctop) {
+            padding: 0 16px 0 40px;
+        }
+
         &.current {
             background-color: rgb($accent, 0.6);
 
@@ -70,10 +74,19 @@
             z-index: 1;
             padding-right: 4px;
 
+            @include media(desctop) {
+                width: 40px;
+            }
+
             svg {
                 width: 20px;
                 height: 20px;
                 fill: $color;
+
+                @include media(desctop) {
+                    position: relative;
+                    top: -1px;
+                }
             }
         }
     }

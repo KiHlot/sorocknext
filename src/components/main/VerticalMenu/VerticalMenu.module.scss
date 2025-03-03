@@ -3,19 +3,11 @@
 
 .verticalMenuWrapper {
     width: 100%;
-    height: fit-content;
-    position: relative;
-    overflow: auto;
-
-    &.cvscroll::-webkit-scrollbar {
-        @include media(lg) {
-            width: 0;
-        }
-    }
 
     ul {
         width: 100%;
         height: fit-content;
+        min-height: fit-content;
         position: relative;
         margin-bottom: 0;
         gap: 6px 0;

@@ -4,6 +4,7 @@ export interface TableTitlesIF {
     title: string;
     sort?: boolean;
     isDefaultSort?: boolean;
+    width?: number;
 }
 
 export interface TablePropsIF {
@@ -24,4 +25,5 @@ export interface TableRowPropsIF {
 export interface RowItemPropsIF {
     children: ReactNode;
     className?: string;
+    width?: number;
 }
