@@ -21,6 +21,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
     usersList,
     updateOldUsers,
     pagination,
+    isFilterLoading,
 }) => {
     const [, { isLoading: isUsersUpdating }] = adminApi.useUpdateUsersMutation({
         fixedCacheKey: 'updateUsers',
@@ -55,8 +56,8 @@ const UsersTable: FC<UsersTablePropsIF> = ({
     };
 
     useEffect(() => {
-        setIsDataLoading(isUsersUpdating || isRolesUpdating);
-    }, [isUsersUpdating, isRolesUpdating]);
+        setIsDataLoading(isUsersUpdating || isRolesUpdating || isFilterLoading);
+    }, [isUsersUpdating, isRolesUpdating, isFilterLoading]);
 
     return (
         <div className={`flcol ${styles.usersTableWrapper}`}>

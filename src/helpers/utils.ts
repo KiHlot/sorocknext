@@ -1,7 +1,13 @@
 import dayjs from 'dayjs';
+import { ReadonlyURLSearchParams } from '~/next/dist/client/components/navigation.react-server';
 import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
 import { TIME_FORMAT } from '@/helpers/config';
-import { CookieOptionsT, NormalizeImageTypeT } from '@/types/common';
+import {
+    CookieOptionsT,
+    FilterIF,
+    NormalizeFilterIF,
+    NormalizeImageTypeT,
+} from '@/types/common';
 
 export const shuffle = <T>(array: T[]): T[] => {
     const arrayCopy = [...array];
@@ -109,4 +115,21 @@ export const normalizeImage = (
         default:
             return '';
     }
+};
+
+export const normalizeFilter = ({
+    page = 1,
+    column = 'id',
+    direction = 'desc',
+}: NormalizeFilterIF): string => {
+    return Object.entries(<FilterIF>{
+        page: Number(page),
+        column,
+        direction,
+    })
+        .map(
+            ([key, value]) =>
+                `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+        )
+        .join('&');
 };

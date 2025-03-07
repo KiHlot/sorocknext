@@ -33,7 +33,7 @@ export interface PageProps {
 
 export interface SearchParamsIF {
     searchParams: Promise<{
-        [key: string]: string | string[] | undefined;
+        [key: string]: string | undefined;
     }>;
 }
 
@@ -44,12 +44,18 @@ export interface MenuItemIF {
     hasBorder?: boolean;
 }
 
+export type DirectionT = 'desc' | 'asd';
+
 export interface FilterIF {
     page: number;
-    sort?: {
-        column: string;
-        direction: 'DESC' | 'ASD';
-    };
+    column: string;
+    direction: DirectionT;
+}
+
+export interface NormalizeFilterIF {
+    page?: number | string | null;
+    column?: string | null;
+    direction?: string | DirectionT | null;
 }
 
 export interface PaginationIF {

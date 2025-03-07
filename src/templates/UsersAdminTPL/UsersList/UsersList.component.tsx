@@ -1,8 +1,11 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { redirect } from '~/next/navigation';
 import { adminApi } from '@/api/admin/admin';
 import { usersApi } from '@/api/users/users';
+import { normalizeFilter } from '@/helpers/utils';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersList.module.scss';
 import { UsersListPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersList.types';
 import UsersTable from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.component';
@@ -10,8 +13,11 @@ import { PaginationIF } from '@/types/common';
 import { UserIF } from '@/types/user';
 
 const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
-    const [filter, { data: filteredData, isLoading, isSuccess }] =
-        usersApi.useFilterMutation();
+    const searchParams = useSearchParams();
+    const router = useRouter();
+
+    const [filter, { isLoading: isFilterLoading }] =
+        usersApi.useLazyFilterQuery();
     const [updateUsers] = adminApi.useUpdateUsersMutation({
         fixedCacheKey: 'updateUsers',
     });
@@ -24,7 +30,30 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
             .unwrap()
             .then(data => {
                 if (data.result === 'ok') {
-                    //TODO get updated users data
+                    filter(
+                        normalizeFilter({
+                            page: searchParams.get('page'),
+                            column: searchParams.get('column'),
+                            direction: searchParams.get('direction'),
+                        }),
+                    )
+                        .unwrap()
+                        .then(({ result, data }) => {
+                            if (result === 'ok') {
+                                if (data?.isRedirect) {
+                                    redirect(
+                                        `?${normalizeFilter({ page: data.pagination.page })}`,
+                                    );
+                                    return;
+                                }
+
+                                setUsersList(data?.filteredData || null);
+                                setPagination(data?.pagination || null);
+                            }
+                        })
+                        .catch(() => {
+                            router.refresh();
+                        });
                 }
             });
     };
@@ -41,6 +70,7 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
                 usersList={usersList}
                 updateOldUsers={updateOldUsers}
                 pagination={pagination}
+                isFilterLoading={isFilterLoading}
             />
         </div>
     );

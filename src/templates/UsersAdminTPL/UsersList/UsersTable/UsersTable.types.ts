@@ -5,4 +5,5 @@ export interface UsersTablePropsIF {
     usersList: UserIF[] | null;
     updateOldUsers: (usersId: number[]) => void;
     pagination: PaginationIF | null;
+    isFilterLoading: boolean;
 }

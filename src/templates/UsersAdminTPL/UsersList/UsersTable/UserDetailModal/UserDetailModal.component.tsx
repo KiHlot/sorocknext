@@ -16,8 +16,6 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
 
     const { metrics } = userData?.data || {};
 
-    console.log('userData', userData)
-    
     useEffect(() => {
         if (!isOpen || !useId) return;
 
