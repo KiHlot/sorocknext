@@ -7,7 +7,6 @@ export const TABLE_TITLES: TableTitlesIF[] = [
     { title: 'Роль' },
     { title: 'Рег' },
     { title: 'Акт' },
-    { title: 'Обновлен' },
     { title: 'Дет', width: 60 },
     { title: 'Обн', width: 60 },
     { title: 'Удл', width: 60 },

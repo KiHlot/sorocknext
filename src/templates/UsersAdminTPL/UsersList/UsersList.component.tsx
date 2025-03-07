@@ -46,7 +46,6 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
                                     );
                                     return;
                                 }
-
                                 setUsersList(data?.filteredData || null);
                                 setPagination(data?.pagination || null);
                             }

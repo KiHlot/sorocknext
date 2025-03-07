@@ -4,6 +4,7 @@ import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
 import { TIME_FORMAT } from '@/helpers/config';
 import {
     CookieOptionsT,
+    DirectionT,
     FilterIF,
     NormalizeFilterIF,
     NormalizeImageTypeT,
@@ -118,15 +119,17 @@ export const normalizeImage = (
 };
 
 export const normalizeFilter = ({
-    page = 1,
-    column = 'id',
-    direction = 'desc',
+    page,
+    column,
+    direction,
 }: NormalizeFilterIF): string => {
-    return Object.entries(<FilterIF>{
-        page: Number(page),
-        column,
-        direction,
-    })
+    const filter: FilterIF = {
+        page: Number(page) || 1,
+        column: column || 'id',
+        direction: (direction || 'desc') as DirectionT,
+    };
+
+    return Object.entries(filter)
         .map(
             ([key, value]) =>
                 `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,

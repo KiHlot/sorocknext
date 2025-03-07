@@ -21,6 +21,8 @@ export type SocLinksIF = { [key in SoclinkT]: string | null }[];
 export interface UserActivity {
     registrationDate: string;
     lastActivity: string;
+    isActivated: boolean;
+    isCookieAccepted: boolean;
 }
 
 export interface UserIF {

@@ -1,7 +1,9 @@
+import dayjs from 'dayjs';
 import { FC, useEffect, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RxUpdate } from 'react-icons/rx';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { adminApi } from '@/api/admin/admin';
 import { normalizeImage } from '@/helpers/utils';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
@@ -23,6 +25,8 @@ const UsersTable: FC<UsersTablePropsIF> = ({
     pagination,
     isFilterLoading,
 }) => {
+    const router = useRouter();
+
     const [, { isLoading: isUsersUpdating }] = adminApi.useUpdateUsersMutation({
         fixedCacheKey: 'updateUsers',
     });
@@ -55,9 +59,20 @@ const UsersTable: FC<UsersTablePropsIF> = ({
         }
     };
 
+    const updateUserRoles = async () => {
+        updateRoles().finally(() => {
+            router.refresh();
+        });
+    };
+
     useEffect(() => {
         setIsDataLoading(isUsersUpdating || isRolesUpdating || isFilterLoading);
     }, [isUsersUpdating, isRolesUpdating, isFilterLoading]);
+
+    useEffect(() => {
+        setIsAllSelected(false);
+        setSelectedUsers([]);
+    }, [usersList]);
 
     return (
         <div className={`flcol ${styles.usersTableWrapper}`}>
@@ -81,7 +96,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                     className={styles.update}
                     icon={<RxUpdate />}
                     disabled={isDataLoading}
-                    clickHandler={updateRoles}
+                    clickHandler={updateUserRoles}
                     dialogText={<>Обновить роли всех юзеров?</>}
                 >
                     Обновить роли
@@ -128,9 +143,20 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                 >{`${item.metrics.firstName} ${item.metrics.lastName}`}</Link>
                             </RowItem>
                             <RowItem>{item.role}</RowItem>
-                            <RowItem>{item.activity.registrationDate}</RowItem>
-                            <RowItem>{item.activity.lastActivity}</RowItem>
-                            <RowItem>-=-</RowItem>
+                            <RowItem>
+                                {item.activity.registrationDate
+                                    ? dayjs(
+                                          item.activity.registrationDate,
+                                      ).format('DD.MM.YYYY')
+                                    : '-'}
+                            </RowItem>
+                            <RowItem>
+                                {item.activity.lastActivity
+                                    ? dayjs(item.activity.lastActivity).format(
+                                          'DD.MM.YYYY',
+                                      )
+                                    : '-'}
+                            </RowItem>
                             <RowItem>
                                 <UserDetailModal
                                     disabled={isDataLoading}
