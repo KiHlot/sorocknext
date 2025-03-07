@@ -129,16 +129,17 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                             </RowItem>
                             <RowItem>{item.userId}</RowItem>
                             <RowItem>
-                                <div
-                                    className={`bgc ${styles.avatar}`}
-                                    style={{
-                                        backgroundImage: `url(${normalizeImage(item.avatarUrl, 'user80')})`,
-                                    }}
-                                />
+                                <Link href={item.userUrl}>
+                                    <div
+                                        className={`bgc ${styles.avatar}`}
+                                        style={{
+                                            backgroundImage: `url(${normalizeImage(item.avatarUrl, 'user80')})`,
+                                        }}
+                                    />
+                                </Link>
                             </RowItem>
                             <RowItem>
                                 <Link
-                                    className={styles.link}
                                     href={item.userUrl}
                                 >{`${item.metrics.firstName} ${item.metrics.lastName}`}</Link>
                             </RowItem>
