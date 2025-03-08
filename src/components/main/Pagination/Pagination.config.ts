@@ -1,10 +1,14 @@
-import { PaginationButtonIF } from '@/components/main/Pagination/PaginationButton/PaginationButton.types';
-
 export const createPaginationData = (
     currentPage: number,
     pagesCount: number,
 ) => {
-    const result: Record<string, PaginationButtonIF[]> = {
+    const result: Record<
+        string,
+        {
+            label: number;
+            isCurrent: boolean;
+        }[]
+    > = {
         firstBlock: [],
         centralBlock: [],
         lastBlock: [],

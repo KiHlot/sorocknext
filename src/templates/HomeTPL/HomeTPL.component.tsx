@@ -5,9 +5,7 @@ import CommonLayout, {
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import { HomeTPLPropsIF } from '@/templates/HomeTPL/HomeTPL.types';
 
-const HomeTPL: FC<HomeTPLPropsIF> = ({ props }) => {
-    const temp = 'remove_this';
-
+const HomeTPL: FC<HomeTPLPropsIF> = () => {
     return (
         <CommonLayout>
             <Content>content</Content>
