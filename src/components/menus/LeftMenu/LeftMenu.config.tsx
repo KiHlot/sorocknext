@@ -1,4 +1,3 @@
-import { FiActivity } from 'react-icons/fi';
 import { HiOutlineMicrophone } from 'react-icons/hi';
 import { IoNewspaperOutline } from 'react-icons/io5';
 import { IoCalendarOutline } from 'react-icons/io5';
