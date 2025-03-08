@@ -48,10 +48,9 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
             .then(({ result, data }) => {
                 if (result === 'ok') {
                     if (data?.isRedirect) {
-                        redirect(
+                        return redirect(
                             `?${normalizeFilter({ page: data.pagination.page })}`,
                         );
-                        return;
                     }
                     setUsersList(data?.filteredData || null);
                     setPagination(data?.pagination || null);
