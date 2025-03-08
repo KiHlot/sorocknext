@@ -8,7 +8,6 @@ import { DeleteUsersResultIF } from '@/api/admin/types';
 import { usersApi } from '@/api/users/users';
 import { normalizeFilter } from '@/helpers/utils';
 import DeleteSuccessModal from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.component';
-import styles from '@/templates/UsersAdminTPL/UsersList/UsersList.module.scss';
 import { UsersListPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersList.types';
 import UsersTable from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.component';
 import { PaginationIF } from '@/types/common';
@@ -105,7 +104,7 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     }, [isUsersUpdating, isRolesUpdating, isFilterLoading, isUsersDeleting]);
 
     return (
-        <div className={`flcol ${styles.usersListWrapper}`}>
+        <div className="flcol gap">
             <UsersTable
                 usersList={usersList}
                 callbacks={{

@@ -33,7 +33,7 @@ export const Content: FC<CommonLayoutContentPropsIF> = ({
     className = '',
 }) => {
     return (
-        <div className={`flcol ${styles.content} ${className}`}>{children}</div>
+        <div className={`flcol gap ${styles.content} ${className}`}>{children}</div>
     );
 };
 
