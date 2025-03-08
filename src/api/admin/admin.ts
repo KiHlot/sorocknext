@@ -41,5 +41,14 @@ export const adminApi = createApi({
                 },
             }),
         }),
+        deleteUser: builder.mutation<ResponseIF, number[]>({
+            query: usersIds => ({
+                url: `/delete-users`,
+                method: 'POST',
+                body: {
+                    usersIds,
+                },
+            }),
+        }),
     }),
 });

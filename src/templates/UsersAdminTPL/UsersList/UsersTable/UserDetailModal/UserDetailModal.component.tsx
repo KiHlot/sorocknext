@@ -36,8 +36,6 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
         getUserData(useId);
     }, [useId, isOpen]);
 
-    console.log('activity', activity);
-
     return useId ? (
         <>
             <MainButton
