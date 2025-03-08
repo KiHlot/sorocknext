@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef } from 'react';
 import { IoClose } from 'react-icons/io5';
+import Loading from '@/components/blocks/Loading/Loading.component';
 import styles from '@/components/main/Modal/Modal.module.scss';
 import { ModalPropsIF } from '@/components/main/Modal/Modal.types';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
-import Loading from '@/components/blocks/Loading/Loading.component';
 
 const Modal: FC<ModalPropsIF> = ({
     isOpen,
@@ -47,10 +47,16 @@ const Modal: FC<ModalPropsIF> = ({
             >
                 <div className={styles.modalHeader}>
                     {title?.label && (
-                        <div className={styles.title}>
-                            {title?.icon && title.icon}
-                            <span>{title.label}</span>
-                        </div>
+                        <>
+                            {!isLoading ? (
+                                <div className={styles.title}>
+                                    {title?.icon && title.icon}
+                                    <span>{title.label}</span>
+                                </div>
+                            ) : (
+                                <div>Загружаем...</div>
+                            )}
+                        </>
                     )}
                     <button
                         onClick={onClose}
@@ -60,7 +66,9 @@ const Modal: FC<ModalPropsIF> = ({
                         <IoClose />
                     </button>
                 </div>
-                <div className={styles.body}>{isLoading ? <Loading/> : children}</div>
+                <div className={styles.body}>
+                    {isLoading ? <Loading /> : children}
+                </div>
             </div>
         </div>
     ) : null;

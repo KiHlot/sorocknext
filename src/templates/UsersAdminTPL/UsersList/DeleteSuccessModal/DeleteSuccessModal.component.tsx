@@ -6,7 +6,6 @@ import Table, {
     TableRow,
 } from '@/components/main/Table/Table.component';
 import { DELETE_SUCCESS_MODAL_TITLES } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.config';
-import styles from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.module.scss';
 import { DeleteSuccessModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.types';
 
 const DeleteSuccessModal: FC<DeleteSuccessModalPropsIF> = ({
@@ -26,14 +25,16 @@ const DeleteSuccessModal: FC<DeleteSuccessModalPropsIF> = ({
             }}
             isLoading={!data}
         >
-            <div className={`flcol gap`}>
+            <div className="flcol gap">
                 {result?.length && (
                     <Table titles={DELETE_SUCCESS_MODAL_TITLES}>
                         {result.map(({ isDeleted, userId, fullName }) => (
                             <TableRow key={userId}>
                                 <RowItem>{userId}</RowItem>
                                 <RowItem>{fullName}</RowItem>
-                                <RowItem>{isDeleted}</RowItem>
+                                <RowItem>
+                                    {isDeleted ? 'Успешно' : 'Ошибка'}
+                                </RowItem>
                             </TableRow>
                         ))}
                     </Table>
