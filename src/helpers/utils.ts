@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
-import { ReadonlyURLSearchParams } from '~/next/dist/client/components/navigation.react-server';
 import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
+import empty_user_250_250 from '@/images/img/empty_user_250_250.png';
+import empty_user_500_500 from '@/images/img/empty_user_500_500.png';
 import { TIME_FORMAT } from '@/helpers/config';
 import {
     CookieOptionsT,
@@ -113,6 +114,10 @@ export const normalizeImage = (
     switch (type) {
         case 'user80':
             return empty_user_80_80.src;
+        case 'user250':
+            return empty_user_250_250.src;
+        case 'user500':
+            return empty_user_500_500.src;
         default:
             return '';
     }

@@ -62,6 +62,10 @@ tbody {
         &:nth-child(even) {
             &:not(.checked) {
                 background-color: rgba($bgColorSecondary, 0.4);
+
+                &:hover {
+                    background-color: $active;
+                }
             }
         }
 

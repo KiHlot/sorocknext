@@ -3,8 +3,12 @@ import { CgDetailsMore } from 'react-icons/cg';
 import { IoAlertCircleOutline } from '~/react-icons/io5';
 import { usersApi } from '@/api/users/users';
 import Block from '@/components/blocks/Block/Block.component';
+import Author from '@/components/elems/Author/Author.component';
+import Country from '@/components/elems/Country/Country.component';
+import Img from '@/components/elems/Img/Img.component';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import Modal from '@/components/main/Modal/Modal.component';
+import DetailRow from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/DetailRow/DetailRow.component';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.module.scss';
 import { UserDetailModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.types';
 
@@ -14,13 +18,24 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const { metrics } = userData?.data || {};
+    const {
+        metrics,
+        contacts,
+        avatarUrl,
+        userId,
+        userUrl,
+        userLogin,
+        role,
+        socLinks,
+    } = userData?.data || {};
 
     useEffect(() => {
         if (!isOpen || !useId) return;
 
         getUserData(useId);
     }, [useId, isOpen]);
+
+    console.log('socLinks', socLinks);
 
     return useId ? (
         <>
@@ -38,15 +53,68 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
                 isOpen={isOpen}
                 closeHandler={() => setIsOpen(false)}
                 size="large"
-                isLoading={isLoading}
+                isLoading={isLoading || !userData?.data}
             >
-                <div className={styles.modalLayout}>
-                    <Block>Фото</Block>
-                    <Block>Метрики</Block>
-                    <Block>Метрики</Block>
-                    <Block>Инфа1</Block>
-                    <Block>Инфа2</Block>
-                    <Block>Инфа3</Block>
+                <div className={`flcol ${styles.modalLayout}`}>
+                    <div className={styles.row}>
+                        <Block
+                            className={`flcol ${styles.block} ${styles.avatarBlock}`}
+                        >
+                            <Img
+                                className={styles.avatar}
+                                url={avatarUrl}
+                                type="user500"
+                            />
+                            <Author
+                                type="name"
+                                data={{
+                                    url: userUrl,
+                                    fullName: `${metrics?.firstName} ${metrics?.lastName}`,
+                                }}
+                            />
+                            <Country
+                                className={styles.country}
+                                value={metrics?.country}
+                            />
+                        </Block>
+                        <Block className={`flcol ${styles.block}`}>
+                            <DetailRow label="ID">{userId}</DetailRow>
+                            <DetailRow label="Роль">{role}</DetailRow>
+                            <DetailRow label="Логин">{userLogin}</DetailRow>
+                            <DetailRow label="Город">{metrics?.city}</DetailRow>
+                            <DetailRow label="Дата рождения">
+                                {metrics?.birthdate}
+                            </DetailRow>
+                        </Block>
+                        <Block className={`flcol ${styles.block}`}>
+                            <DetailRow label="Публичный email">
+                                {contacts?.emailPublic}
+                            </DetailRow>
+                            <DetailRow label="Телефон">
+                                {contacts?.phone}
+                            </DetailRow>
+                            <DetailRow label="Телеграм">
+                                {contacts?.tgLogin}
+                            </DetailRow>
+                            <DetailRow label="Whatsapp">
+                                {contacts?.waLogin}
+                            </DetailRow>
+                            {socLinks &&
+                                Object.entries(socLinks).map(([key, value]) => (
+                                    <DetailRow
+                                        key={key}
+                                        label={`Соцсеть ${key}`}
+                                    >
+                                        <>{value}</>
+                                    </DetailRow>
+                                ))}
+                        </Block>
+                    </div>
+                    <div className={styles.row}>
+                        <Block className={`flcol ${styles.block}`}>Инфа1</Block>
+                        <Block className={`flcol ${styles.block}`}>Инфа2</Block>
+                        <Block className={`flcol ${styles.block}`}>Инфа3</Block>
+                    </div>
                 </div>
             </Modal>
         </>

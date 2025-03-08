@@ -1,7 +1,7 @@
 export interface AuthorIF {
-    img80: string | null;
+    img80?: string | null;
     fullName: string;
-    url: string;
+    url?: string;
 }
 
 export interface AuthorPropsIF {

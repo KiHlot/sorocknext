@@ -5,7 +5,7 @@ export interface UserMetricsIF {
     firstName: string;
     lastName: string;
     birthdate: string | null;
-    country: string | null;
+    country: string;
     city: string | null;
 }
 

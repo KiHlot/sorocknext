@@ -1,14 +1,14 @@
 import { FC } from 'react';
+import { getFlagIcon } from '@/images/flags/_getFlagIcon';
 import styles from '@/components/elems/Country/Country.module.scss';
 import { CountryPropsIF } from '@/components/elems/Country/Country.types';
-import { getFlagIcon } from '@/images/flags/_getFlagIcon';
 
 const Country: FC<CountryPropsIF> = ({ value, className = '' }) => {
-    return (
+    return value ? (
         <div className={`${styles.countryWrapper} ${className}`}>
             {getFlagIcon(value)}
         </div>
-    );
+    ) : null;
 };
 
 export default Country;

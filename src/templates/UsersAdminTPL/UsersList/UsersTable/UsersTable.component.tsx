@@ -5,7 +5,7 @@ import { RxUpdate } from 'react-icons/rx';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { adminApi } from '@/api/admin/admin';
-import { normalizeImage } from '@/helpers/utils';
+import Img from '@/components/elems/Img/Img.component';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import CheckBoxBase from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.component';
@@ -130,11 +130,9 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                             <RowItem>{item.userId}</RowItem>
                             <RowItem>
                                 <Link href={item.userUrl}>
-                                    <div
-                                        className={`bgc ${styles.avatar}`}
-                                        style={{
-                                            backgroundImage: `url(${normalizeImage(item.avatarUrl, 'user80')})`,
-                                        }}
+                                    <Img
+                                        className={styles.avatar}
+                                        url={item.avatarUrl}
                                     />
                                 </Link>
                             </RowItem>

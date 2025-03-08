@@ -1,4 +1,4 @@
 export interface CountryPropsIF {
-    value: string;
+    value?: string;
     className?: string;
 }
