@@ -27,6 +27,7 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
         userLogin,
         role,
         socLinks,
+        activity,
     } = userData?.data || {};
 
     useEffect(() => {
@@ -35,7 +36,7 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
         getUserData(useId);
     }, [useId, isOpen]);
 
-    console.log('socLinks', socLinks);
+    console.log('activity', activity);
 
     return useId ? (
         <>
@@ -111,7 +112,20 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
                         </Block>
                     </div>
                     <div className={styles.row}>
-                        <Block className={`flcol ${styles.block}`}>Инфа1</Block>
+                        <Block className={`flcol ${styles.block}`}>
+                            <DetailRow label="Зарегистрирован">
+                                {activity?.registrationDate}
+                            </DetailRow>
+                            <DetailRow label="Активирован">
+                                {activity?.isActivated ? 'Да' : 'Нет'}
+                            </DetailRow>
+                            <DetailRow label="Активность">
+                                {activity?.lastActivity}
+                            </DetailRow>
+                            <DetailRow label="Куки">
+                                {activity?.isCookieAccepted ? 'Да' : 'Нет'}
+                            </DetailRow>
+                        </Block>
                         <Block className={`flcol ${styles.block}`}>Инфа2</Block>
                         <Block className={`flcol ${styles.block}`}>Инфа3</Block>
                     </div>
