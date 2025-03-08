@@ -4,8 +4,10 @@ import { FC, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { redirect } from '~/next/navigation';
 import { adminApi } from '@/api/admin/admin';
+import { DeleteUsersResultIF } from '@/api/admin/types';
 import { usersApi } from '@/api/users/users';
 import { normalizeFilter } from '@/helpers/utils';
+import DeleteSuccessModal from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.component';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersList.module.scss';
 import { UsersListPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersList.types';
 import UsersTable from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.component';
@@ -16,45 +18,76 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    const [filter, { isLoading: isFilterLoading }] =
+    const [filterUsersReq, { isLoading: isFilterLoading }] =
         usersApi.useLazyFilterQuery();
-    const [updateUsers] = adminApi.useUpdateUsersMutation({
-        fixedCacheKey: 'updateUsers',
-    });
+    const [updateUsersReq, { isLoading: isUsersUpdating }] =
+        adminApi.useUpdateUsersMutation({
+            fixedCacheKey: 'updateUsers',
+        });
+    const [deleteUsersReq, { isLoading: isUsersDeleting }] =
+        adminApi.useDeleteUsersMutation({
+            fixedCacheKey: 'deleteUsers',
+        });
+    const [updateRolesReq, { isLoading: isRolesUpdating }] =
+        adminApi.useUpdateRolesMutation();
 
     const [usersList, setUsersList] = useState<UserIF[] | null>(null);
     const [pagination, setPagination] = useState<PaginationIF | null>(null);
+    const [deletedUsersData, setDeletedUsersData] =
+        useState<DeleteUsersResultIF | null>(null);
+    const [isDataLoading, setIsDataLoading] = useState<boolean>(false);
 
-    const updateOldUsers = (usersIds: number[]) => {
-        updateUsers(usersIds)
+    const filterUsers = () => {
+        filterUsersReq(
+            normalizeFilter({
+                page: searchParams.get('page'),
+                column: searchParams.get('column'),
+                direction: searchParams.get('direction'),
+            }),
+        )
+            .unwrap()
+            .then(({ result, data }) => {
+                if (result === 'ok') {
+                    if (data?.isRedirect) {
+                        redirect(
+                            `?${normalizeFilter({ page: data.pagination.page })}`,
+                        );
+                        return;
+                    }
+                    setUsersList(data?.filteredData || null);
+                    setPagination(data?.pagination || null);
+                }
+            })
+            .catch(() => {
+                router.refresh();
+            });
+    };
+
+    const deleteUsers = (usersIds: number[]) => {
+        deleteUsersReq(usersIds)
+            .unwrap()
+            .then(({ result, data }) => {
+                if (result === 'ok') {
+                    setDeletedUsersData(data);
+                    filterUsers();
+                }
+            });
+    };
+
+    const updateUsers = (usersIds: number[]) => {
+        updateUsersReq(usersIds)
             .unwrap()
             .then(data => {
                 if (data.result === 'ok') {
-                    filter(
-                        normalizeFilter({
-                            page: searchParams.get('page'),
-                            column: searchParams.get('column'),
-                            direction: searchParams.get('direction'),
-                        }),
-                    )
-                        .unwrap()
-                        .then(({ result, data }) => {
-                            if (result === 'ok') {
-                                if (data?.isRedirect) {
-                                    redirect(
-                                        `?${normalizeFilter({ page: data.pagination.page })}`,
-                                    );
-                                    return;
-                                }
-                                setUsersList(data?.filteredData || null);
-                                setPagination(data?.pagination || null);
-                            }
-                        })
-                        .catch(() => {
-                            router.refresh();
-                        });
+                    filterUsers();
                 }
             });
+    };
+
+    const updateRoles = async () => {
+        updateRolesReq().finally(() => {
+            router.refresh();
+        });
     };
 
     useEffect(() => {
@@ -62,14 +95,31 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
         setPagination(filterResult?.pagination || null);
     }, [filterResult]);
 
+    useEffect(() => {
+        setIsDataLoading(
+            isUsersUpdating ||
+                isRolesUpdating ||
+                isFilterLoading ||
+                isUsersDeleting,
+        );
+    }, [isUsersUpdating, isRolesUpdating, isFilterLoading, isUsersDeleting]);
+
     return (
         <div className={`flcol ${styles.usersListWrapper}`}>
-            <div className="filter"></div>
             <UsersTable
                 usersList={usersList}
-                updateOldUsers={updateOldUsers}
+                callbacks={{
+                    deleteUsers,
+                    updateUsers,
+                    updateRoles,
+                }}
                 pagination={pagination}
-                isFilterLoading={isFilterLoading}
+                isDataLoading={isDataLoading}
+            />
+            <DeleteSuccessModal
+                isOpen={!!deletedUsersData}
+                data={deletedUsersData}
+                onClose={() => setDeletedUsersData(null)}
             />
         </div>
     );

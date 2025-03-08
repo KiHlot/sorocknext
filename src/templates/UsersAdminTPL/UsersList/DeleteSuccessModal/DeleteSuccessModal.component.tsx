@@ -1,0 +1,47 @@
+import { FC } from 'react';
+import { TiUserDeleteOutline } from 'react-icons/ti';
+import Modal from '@/components/main/Modal/Modal.component';
+import Table, {
+    RowItem,
+    TableRow,
+} from '@/components/main/Table/Table.component';
+import { DELETE_SUCCESS_MODAL_TITLES } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.config';
+import styles from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.module.scss';
+import { DeleteSuccessModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.types';
+
+const DeleteSuccessModal: FC<DeleteSuccessModalPropsIF> = ({
+    data,
+    onClose,
+    isOpen,
+}) => {
+    const { result, reAssignedUser } = data || {};
+
+    return (
+        <Modal
+            isOpen={isOpen}
+            closeHandler={onClose}
+            title={{
+                icon: <TiUserDeleteOutline />,
+                label: 'Пользователи удалены',
+            }}
+            isLoading={!data}
+        >
+            <div className={`flcol gap`}>
+                {result?.length && (
+                    <Table titles={DELETE_SUCCESS_MODAL_TITLES}>
+                        {result.map(({ isDeleted, userId, fullName }) => (
+                            <TableRow key={userId}>
+                                <RowItem>{userId}</RowItem>
+                                <RowItem>{fullName}</RowItem>
+                                <RowItem>{isDeleted}</RowItem>
+                            </TableRow>
+                        ))}
+                    </Table>
+                )}
+                <span>Посты переасайнены на юзера {reAssignedUser}</span>
+            </div>
+        </Modal>
+    );
+};
+
+export default DeleteSuccessModal;

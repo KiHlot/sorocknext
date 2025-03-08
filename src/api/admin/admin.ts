@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchRestApiQuery } from '@/store/functions';
 import { ResponseIF } from '@/store/types';
-import { CronInfoIF, UpdateCronTaskT } from '@/api/admin/types';
+import { CronInfoIF, DeleteUsersResultIF, UpdateCronTaskT } from '@/api/admin/types';
 
 export const adminApi = createApi({
     reducerPath: 'adminApi',
@@ -41,7 +41,7 @@ export const adminApi = createApi({
                 },
             }),
         }),
-        deleteUser: builder.mutation<ResponseIF, number[]>({
+        deleteUsers: builder.mutation<ResponseIF<DeleteUsersResultIF>, number[]>({
             query: usersIds => ({
                 url: `/delete-users`,
                 method: 'POST',

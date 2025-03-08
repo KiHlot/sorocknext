@@ -3,8 +3,6 @@ import { FC, useEffect, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RxUpdate } from 'react-icons/rx';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { adminApi } from '@/api/admin/admin';
 import Img from '@/components/elems/Img/Img.component';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import NoData from '@/components/elems/NoData/NoData.component';
@@ -21,21 +19,14 @@ import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTabl
 
 const UsersTable: FC<UsersTablePropsIF> = ({
     usersList,
-    updateOldUsers,
     pagination,
-    isFilterLoading,
+    isDataLoading,
+    callbacks,
 }) => {
-    const router = useRouter();
-
-    const [, { isLoading: isUsersUpdating }] = adminApi.useUpdateUsersMutation({
-        fixedCacheKey: 'updateUsers',
-    });
-    const [updateRoles, { isLoading: isRolesUpdating }] =
-        adminApi.useUpdateRolesMutation();
+    const { deleteUsers, updateUsers, updateRoles } = callbacks;
 
     const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
-    const [isDataLoading, setIsDataLoading] = useState<boolean>(false);
 
     const selectUsers = (userId: number, isAdd: boolean) => {
         const result = isAdd
@@ -59,28 +50,19 @@ const UsersTable: FC<UsersTablePropsIF> = ({
         }
     };
 
-    const updateUserRoles = async () => {
-        updateRoles().finally(() => {
-            router.refresh();
-        });
-    };
-
-    useEffect(() => {
-        setIsDataLoading(isUsersUpdating || isRolesUpdating || isFilterLoading);
-    }, [isUsersUpdating, isRolesUpdating, isFilterLoading]);
-
     useEffect(() => {
         setIsAllSelected(false);
         setSelectedUsers([]);
     }, [usersList]);
 
     return (
-        <div className={`flcol ${styles.usersTableWrapper}`}>
+        <div className="flcol gap">
             <div className={styles.buttonsLine}>
                 <MainButton
                     className={styles.delete}
                     icon={<AiOutlineDelete />}
                     disabled={!selectedUsers.length || isDataLoading}
+                    clickHandler={() => deleteUsers(selectedUsers)}
                 >
                     Удалить
                 </MainButton>
@@ -88,7 +70,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                     className={styles.update}
                     icon={<RxUpdate />}
                     disabled={!selectedUsers.length || isDataLoading}
-                    clickHandler={() => updateOldUsers(selectedUsers)}
+                    clickHandler={() => updateUsers(selectedUsers)}
                 >
                     Обновить юзеров
                 </MainButton>
@@ -96,7 +78,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                     className={styles.update}
                     icon={<RxUpdate />}
                     disabled={isDataLoading}
-                    clickHandler={updateUserRoles}
+                    clickHandler={updateRoles}
                     dialogText={<>Обновить роли всех юзеров?</>}
                 >
                     Обновить роли
@@ -165,7 +147,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                             <RowItem>
                                 <MainButton
                                     clickHandler={() =>
-                                        updateOldUsers([item.userId])
+                                        updateUsers([item.userId])
                                     }
                                     variant="sq"
                                     disabled={isDataLoading}
@@ -175,7 +157,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                             <RowItem>
                                 <MainButton
                                     clickHandler={() =>
-                                        updateOldUsers([item.userId])
+                                        deleteUsers([item.userId])
                                     }
                                     variant="sq_delete"
                                     dialogText={<>Удалить?</>}

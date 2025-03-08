@@ -3,7 +3,11 @@ import { UserIF } from '@/types/user';
 
 export interface UsersTablePropsIF {
     usersList: UserIF[] | null;
-    updateOldUsers: (usersId: number[]) => void;
+    callbacks: {
+        updateUsers: (usersId: number[]) => void;
+        deleteUsers: (usersId: number[]) => void;
+        updateRoles: () => void
+    };
     pagination: PaginationIF | null;
-    isFilterLoading: boolean;
+    isDataLoading: boolean;
 }
