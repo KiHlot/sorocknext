@@ -33,7 +33,7 @@ const LoginForm: FC = () => {
 
                     setTimeout(() => {
                         //TODO href
-                        window.location.href = '';
+                        window.location.href = '/profile';
                     }, 2000);
                 }
             });

@@ -1,6 +1,7 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ErrorOption } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { cookies } from 'next/dist/server/request/cookies';
 import { ResponseErrorIF, ResponseIF } from '@/store/types';
 import { logout } from '@/helpers/auth/logout';
 import { ADDRESS } from '@/helpers/config';
@@ -82,10 +83,21 @@ export const getApi = async <ResultType>(
     route: string,
     cache: RequestCache = 'force-cache',
 ): Promise<ResultType | null | undefined> => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value || null;
+
     try {
         console.log('fetch route:', `${ADDRESS.WP_API_URL}${route}`);
         const response = await fetch(`${ADDRESS.WP_API_URL}${route}`, {
             cache,
+            ...(token
+                ? {
+                      credentials: 'include',
+                      headers: {
+                          Authorization: `Bearer ${token}`,
+                      },
+                  }
+                : {}),
         });
 
         const { result, data }: ResponseIF<ResultType> = await response.json();

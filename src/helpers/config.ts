@@ -6,7 +6,7 @@ const API_DOMAIN =
 export const ADDRESS = {
     WP_AJAX_URL: `${API_DOMAIN}${process.env.NEXT_PUBLIC_AJAX_BASE}`,
     WP_API_URL: `${API_DOMAIN}${process.env.NEXT_PUBLIC_REST_BASE}`,
-    WP_JWT_API_URL: `${API_DOMAIN}${process.env.NEXT_PUBLIC_REST_BASE}/jwt-auth/v1`,
+    WP_JWT_API_URL: `${API_DOMAIN}${process.env.NEXT_PUBLIC_JWT_BASE}/jwt-auth/v1`,
 };
 
 export const TIME_FORMAT = {
