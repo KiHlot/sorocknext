@@ -7,6 +7,7 @@ import SiteEmail from '@/components/elems/SiteEmail/SiteEmail.component';
 import SearchForm from '@/components/menus/TopMenu/SearchForm/SearchForm.component';
 import styles from '@/components/menus/TopMenu/TopMenu.module.scss';
 import TrendsSlider from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.component';
+import UserMenu from '@/components/menus/TopMenu/UserMenu/UserMenu.component';
 
 const TopMenu: FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -32,6 +33,7 @@ const TopMenu: FC = () => {
                 <TrendsSlider className={`${styles.ml} ${styles.mr}`} />
                 <SearchForm />
                 <SiteEmail />
+                <UserMenu />
             </MainWrapper>
         </div>
     );

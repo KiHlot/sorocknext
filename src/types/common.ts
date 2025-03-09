@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 
 export type HTMLString = string;
 export type NormalizeImageTypeT = 'user80' | 'user250' | 'user500';
+export type CallBackTypeT = 'logout';
 
 export type CookieOptionsT = {
     expires?: Date | string | number;
@@ -42,6 +43,7 @@ export interface MenuItemIF {
     label: string;
     icon?: ReactElement;
     hasBorder?: boolean;
+    callBackType?: CallBackTypeT;
 }
 
 export type DirectionT = 'desc' | 'asd';

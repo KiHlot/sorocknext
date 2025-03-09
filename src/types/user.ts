@@ -1,4 +1,4 @@
-export type UserRoleT = 'lobby' | 'member' | 'editor' | 'admin';
+export type UserRoleT = 'lobby' | 'member' | 'editor' | 'admin' | 'administrator';
 export type SoclinkT = 'vk' | 'in' | 'fb' | 'tt' | 'yt';
 
 export interface UserMetricsIF {
@@ -35,4 +35,10 @@ export interface UserIF {
     contacts: UserContactsIF;
     socLinks: SocLinksIF;
     activity: UserActivity;
+}
+
+export interface UserMenuIF {
+    userId: number;
+    userUrl: string;
+    role: UserRoleT;
 }

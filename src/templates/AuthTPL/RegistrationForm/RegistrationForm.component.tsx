@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { redirect } from 'next/navigation';
 import { yupResolver } from '~/@hookform/resolvers/yup';
 import { toast } from '~/react-toastify';
 import { parseResponse } from '@/store/functions';
@@ -33,7 +34,7 @@ const RegistrationForm: FC = () => {
                             'Вы успешно зарегистрировались! Войдите в аккаунт, используя электронную почту и пароль, указанные при регистрации.',
                         );
                         setTimeout(() => {
-                            window.location.href = '/auth';
+                            return redirect('/auth');
                         }, 2000);
                     },
                     setError,

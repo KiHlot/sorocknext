@@ -123,6 +123,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                     href={item.userUrl}
                                 >{`${item.metrics.firstName} ${item.metrics.lastName}`}</Link>
                             </RowItem>
+                            <RowItem>{item.contacts.emailPublic}</RowItem>
                             <RowItem>{item.role}</RowItem>
                             <RowItem>
                                 {item.activity.registrationDate

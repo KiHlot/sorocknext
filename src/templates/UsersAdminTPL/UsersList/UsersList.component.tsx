@@ -1,8 +1,7 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { redirect } from '~/next/navigation';
+import { useRouter, useSearchParams, redirect } from 'next/navigation';
 import { adminApi } from '@/api/admin/admin';
 import { DeleteUsersResultIF } from '@/api/admin/types';
 import { usersApi } from '@/api/users/users';

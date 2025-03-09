@@ -27,7 +27,7 @@ const Table: FC<TablePropsIF> = ({
                         {selectData && (
                             <th
                                 style={{
-                                    width: '46px',
+                                    width: '56px',
                                 }}
                             >
                                 <CheckBoxBase

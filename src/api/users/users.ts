@@ -22,5 +22,14 @@ export const usersApi = createApi({
                 },
             }),
         }),
+        getProfileData: builder.mutation<ResponseIF<UserIF>, number>({
+            query: userId => ({
+                url: `/get-profile-data`,
+                method: 'POST',
+                body: {
+                    userId,
+                },
+            }),
+        }),
     }),
 });
