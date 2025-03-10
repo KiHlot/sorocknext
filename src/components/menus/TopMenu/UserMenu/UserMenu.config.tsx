@@ -1,14 +1,26 @@
-import { SlSocialYoutube } from 'react-icons/sl';
+import {
+    IoPersonCircleOutline,
+    IoExitOutline,
+    IoEnterOutline,
+    IoPersonAddOutline,
+} from 'react-icons/io5';
+import { RiChatPrivateLine } from 'react-icons/ri';
+import { TbPasswordFingerprint } from 'react-icons/tb';
+import { getStorageItem } from '@/helpers/utils';
 import { MenuItemIF } from '@/types/common';
-import { UserMenuIF } from '@/types/user';
-
-export const COMMON_MENU: MenuItemIF[] = [];
+import { ProfileIF } from '@/types/user';
 
 export const MENU_USER: MenuItemIF[] = [
     {
-        url: '/auth',
-        label: 'Вход',
-        icon: <SlSocialYoutube />,
+        url: '/profile',
+        label: 'Профиль',
+        icon: <IoPersonCircleOutline />,
+    },
+    {
+        url: '',
+        label: 'Выход',
+        icon: <IoExitOutline />,
+        callBackType: 'logout',
     },
 ];
 
@@ -16,46 +28,34 @@ export const MENU_GUEST: MenuItemIF[] = [
     {
         url: '/auth',
         label: 'Вход',
-        icon: <SlSocialYoutube />,
+        icon: <IoEnterOutline />,
     },
     {
         url: '/auth/registration',
         label: 'Регистрация',
-        icon: <SlSocialYoutube />,
+        icon: <IoPersonAddOutline />,
     },
     {
         url: '/auth/reset-password',
         label: 'Забыли пароль?',
-        icon: <SlSocialYoutube />,
+        icon: <TbPasswordFingerprint />,
     },
 ];
 
-export const getUserMenu = (userData?: UserMenuIF) => {
+const ADMIN_MENU: MenuItemIF[] = [
+    {
+        url: '/admin',
+        label: 'Админка',
+        icon: <RiChatPrivateLine />,
+    },
+];
 
-    return [
-        ...(userData
-            ? [
-                  {
-                      url: userData?.userUrl,
-                      label: 'Профиль',
-                      icon: <SlSocialYoutube />,
-                  },
-                  {
-                      url: '',
-                      label: 'Выход',
-                      icon: <SlSocialYoutube />,
-                      callBackType: 'logout',
-                  },
-              ]
-            : MENU_GUEST),
-        ...(userData?.role === 'administrator'
-            ? [
-                  {
-                      url: '/admin',
-                      label: 'Админка',
-                      icon: <SlSocialYoutube />,
-                  },
-              ]
-            : []),
-    ];
+export const getUserMenu = (): MenuItemIF[] => {
+    const profileData = getStorageItem<ProfileIF>('profileData');
+
+    const baseMenu = profileData ? MENU_USER : MENU_GUEST;
+
+    const adminMenu = profileData?.role === 'administrator' ? ADMIN_MENU : [];
+
+    return [...baseMenu, ...adminMenu];
 };

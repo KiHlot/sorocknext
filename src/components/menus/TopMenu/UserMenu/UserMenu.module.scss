@@ -1,2 +1,67 @@
+@use '@/styles/variables' as *;
+
 .userMenuWrapper {
+    width: auto;
+    height: auto;
+    position: relative;
+}
+
+.toggleMenu {
+    width: 60px;
+    height: 100%;
+
+    &.opened {
+        background-color: $bgColorDark;
+    }
+
+    &:hover {
+        &:not(.opened) {
+            background-color: rgba($bgColorDark, 0.6);
+        }
+    }
+
+    span {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: $border;
+    }
+}
+
+.menuList {
+    width: 220px;
+    height: auto;
+    position: absolute;
+    right: 0;
+    top: 59px;
+    background-color: $bgColorDark;
+    padding: 8px 0;
+    border-radius: $borderRadius 0 $borderRadius $borderRadius;
+    box-shadow: $boxShadow;
+}
+
+.menuItem {
+    width: 100%;
+    height: 42px;
+    background-color: $bgColorDark;
+    padding: 0 16px;
+
+    &:hover {
+        background-color: rgba($bgColor, 0.6);
+    }
+
+    button,
+    a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0 10px;
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
 }

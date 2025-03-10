@@ -74,21 +74,35 @@ export const deleteCookie = (name: string) => {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 };
 
-export const getLocalStorageItem = <ReturnType>(
-    name: string,
-): ReturnType | null => {
-    const storageData: string | null = window.sessionStorage.getItem(name);
+export const getStorageItem = <ReturnType = string>(name: string): ReturnType | null => {
+    if (typeof window === 'undefined') return null;
 
-    if (!storageData || storageData === 'undefined') {
+    const storageData: string | null = sessionStorage.getItem(name);
+
+    if (
+        !storageData ||
+        ['null', 'undefined', '', '{}', 'false'].includes(storageData)
+    ) {
         return null;
     }
 
-    const parsedStorageData: ReturnType | {} | boolean =
-        !!storageData && JSON.parse(storageData);
+    try {
+        return JSON.parse(storageData);
+    } catch (error) {
+        return null;
+    }
+};
 
-    return parsedStorageData && Object.values(parsedStorageData).length
-        ? (parsedStorageData as ReturnType)
-        : null;
+export const setStorageItem = <T>(data: T, itemName: string): boolean => {
+    if (typeof window === 'undefined') return false;
+
+    try {
+        sessionStorage.setItem(itemName, JSON.stringify(data));
+        return true;
+    } catch (error) {
+        sessionStorage.removeItem(itemName);
+        return false;
+    }
 };
 
 export const getFormattedPathName = (pathname: string) => {

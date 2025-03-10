@@ -1,33 +1,56 @@
-import { FC, useMemo } from 'react';
-import { usersApi } from '@/api/users/users';
+'use client';
+
+import { FC, useRef, useState } from 'react';
+import Link from 'next/link';
+import { getStorageItem } from '@/helpers/utils';
 import Img from '@/components/elems/Img/Img.component';
 import { getUserMenu } from '@/components/menus/TopMenu/UserMenu/UserMenu.config';
 import styles from '@/components/menus/TopMenu/UserMenu/UserMenu.module.scss';
-import { UserIF } from '@/types/user';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
+import { ProfileIF } from '@/types/user';
 
 const UserMenu: FC = () => {
-    // const [, { data: userData }] = usersApi.useGetUserDataMutation();
+    const menuWrapperRef = useRef<HTMLDivElement>(null);
 
-    // const userMenu = useMemo(() => {
-    //     return getUserMenu(userData);
-    // }, [userData]);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    const profileData = getStorageItem<ProfileIF>('profileData');
+
+    useOutsideClick(menuWrapperRef, setIsOpen);
+    //TODO справить ошибки в меню
     return (
-        <div className={styles.userMenuWrapper}>
-            <button type="button">
-                {/*<Img url={userData?.avatarUrl} />*/}
+        <div className={styles.userMenuWrapper} ref={menuWrapperRef}>
+            <button
+                type="button"
+                className={`flc ${styles.toggleMenu} ${isOpen ? styles.opened : ''}`}
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                <Img url={profileData?.avatarUrl} />
             </button>
-            <ul>
-                {/*{userMenu.map(({ label, icon, callBackType, url }) => {*/}
-                {/*    return callBackType ? (*/}
-                {/*        <li>{callBackType}</li>*/}
-                {/*    ) : (*/}
-                {/*        <li key={`${url}${callBackType}`} className="asd">*/}
-                {/*            {label}*/}
-                {/*        </li>*/}
-                {/*    );*/}
-                {/*})}*/}
-            </ul>
+            {isOpen && (
+                <ul className={`flcol ${styles.menuList}`}>
+                    {getUserMenu().map(({ label, icon, callBackType, url }) => {
+                        return callBackType ? (
+                            <li className={styles.menuItem}>
+                                <button>
+                                    {icon}
+                                    <span>{label}</span>
+                                </button>
+                            </li>
+                        ) : (
+                            <li
+                                key={`${url}${callBackType}`}
+                                className={styles.menuItem}
+                            >
+                                <Link href={url}>
+                                    {icon}
+                                    <span>{label}</span>
+                                </Link>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
         </div>
     );
 };
