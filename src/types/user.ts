@@ -47,4 +47,6 @@ export interface ProfileIF {
     role: UserRoleT;
     fullName: string;
     avatarUrl: string | null;
+    isActivated: boolean;
+    isCookieAccepted: boolean;
 }

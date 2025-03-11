@@ -25,10 +25,6 @@ const AuthTPL: FC = () => {
 
     return slug ? (
         <AuthLayout>
-            <Link href={'/'} className={styles.backButton}>
-                <IoArrowBackOutline />
-                На главную
-            </Link>
             <ButtonsGroup
                 config={AUTH_TPL_CONFIG}
                 controls={{
@@ -43,6 +39,7 @@ const AuthTPL: FC = () => {
                 {slug === 'auth' && <LoginForm />}
                 {slug === 'registration' && <RegistrationForm />}
                 {slug === 'reset-password' && (
+                    //todo
                     <ResetPasswordForm
                         creeds={{
                             userId: 1,

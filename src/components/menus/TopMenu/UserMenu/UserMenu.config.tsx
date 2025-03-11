@@ -4,6 +4,7 @@ import {
     IoEnterOutline,
     IoPersonAddOutline,
 } from 'react-icons/io5';
+import { PiUserCheck } from 'react-icons/pi';
 import { RiChatPrivateLine } from 'react-icons/ri';
 import { TbPasswordFingerprint } from 'react-icons/tb';
 import { getStorageItem } from '@/helpers/utils';
@@ -50,6 +51,14 @@ const ADMIN_MENU: MenuItemIF[] = [
     },
 ];
 
+const ACTIVATE_MENU: MenuItemIF[] = [
+    {
+        url: '/auth/confirm-account',
+        label: 'Подтверждение',
+        icon: <PiUserCheck />,
+    },
+];
+
 export const getUserMenu = (): MenuItemIF[] => {
     const profileData = getStorageItem<ProfileIF>('profileData');
 
@@ -57,5 +66,8 @@ export const getUserMenu = (): MenuItemIF[] => {
 
     const adminMenu = profileData?.role === 'administrator' ? ADMIN_MENU : [];
 
-    return [...adminMenu, ...baseMenu];
+    const activateMenu =
+        profileData && !profileData.isActivated ? ACTIVATE_MENU : [];
+
+    return [...adminMenu, ...activateMenu, ...baseMenu];
 };
