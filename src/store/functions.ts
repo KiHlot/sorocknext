@@ -3,10 +3,10 @@ import { ErrorOption } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { cookies } from 'next/dist/server/request/cookies';
 import { ResponseErrorIF, ResponseIF } from '@/store/types';
-import { logout } from '@/helpers/auth/logout';
 import { ADDRESS } from '@/helpers/config';
 import { ERRORS, SERVER_ERRORS } from '@/helpers/errors';
 import { getCookie } from '@/helpers/utils';
+import { useLogout } from '@/hooks/useLogout';
 
 export const fetchRestApiQuery = (baseUrl: string) => {
     return fetchBaseQuery({
@@ -28,7 +28,7 @@ export const fetchRestApiQuery = (baseUrl: string) => {
                 );
 
                 if ([401, 403].includes(response?.status)) {
-                    logout();
+                    useLogout();
                 }
 
                 return null;
@@ -52,7 +52,7 @@ export const fetchRestApiQuery = (baseUrl: string) => {
             }
 
             if (data.result === 'logout') {
-                logout();
+                useLogout();
             }
 
             return data;
@@ -68,7 +68,7 @@ export const fetchJWTTokenQuery = () => {
                 toast.error(ERRORS.er209);
 
                 if ([401, 403].includes(response?.status)) {
-                    logout();
+                    useLogout();
                 }
 
                 return null;

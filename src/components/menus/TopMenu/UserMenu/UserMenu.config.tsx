@@ -57,5 +57,5 @@ export const getUserMenu = (): MenuItemIF[] => {
 
     const adminMenu = profileData?.role === 'administrator' ? ADMIN_MENU : [];
 
-    return [...baseMenu, ...adminMenu];
+    return [...adminMenu, ...baseMenu];
 };

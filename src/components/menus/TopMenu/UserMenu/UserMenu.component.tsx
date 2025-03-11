@@ -6,7 +6,9 @@ import { getStorageItem } from '@/helpers/utils';
 import Img from '@/components/elems/Img/Img.component';
 import { getUserMenu } from '@/components/menus/TopMenu/UserMenu/UserMenu.config';
 import styles from '@/components/menus/TopMenu/UserMenu/UserMenu.module.scss';
+import { useLogout } from '@/hooks/useLogout';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
+import { CallBackTypeT } from '@/types/common';
 import { ProfileIF } from '@/types/user';
 
 const UserMenu: FC = () => {
@@ -14,10 +16,20 @@ const UserMenu: FC = () => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    useOutsideClick(menuWrapperRef, setIsOpen);
+
     const profileData = getStorageItem<ProfileIF>('profileData');
 
-    useOutsideClick(menuWrapperRef, setIsOpen);
-    //TODO справить ошибки в меню
+    const clickHandler = (callBackType: CallBackTypeT) => {
+        switch (callBackType) {
+            case 'logout':
+                useLogout();
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
         <div className={styles.userMenuWrapper} ref={menuWrapperRef}>
             <button
@@ -31,8 +43,14 @@ const UserMenu: FC = () => {
                 <ul className={`flcol ${styles.menuList}`}>
                     {getUserMenu().map(({ label, icon, callBackType, url }) => {
                         return callBackType ? (
-                            <li className={styles.menuItem}>
-                                <button>
+                            <li
+                                key={`${url}${callBackType}`}
+                                className={styles.menuItem}
+                            >
+                                <button
+                                    type="button"
+                                    onClick={() => clickHandler(callBackType)}
+                                >
                                     {icon}
                                     <span>{label}</span>
                                 </button>
