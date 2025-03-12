@@ -1,15 +1,11 @@
-'use client';
-
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { PiUserCheck } from 'react-icons/pi';
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout.component';
 import Block from '@/components/blocks/Block/Block.component';
-import SendCode from '@/components/form/SendCode/SendCode.component';
 import styles from '@/templates/ConfirmAccountTPL/ConfirmAccountTPL.module.scss';
+import SendConfirmCodeForm from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.component';
 
 const ConfirmAccountTPL: FC = () => {
-    const [isCodeSended, setIsCodeSended] = useState<boolean>(false);
-
     return (
         <AuthLayout>
             <Block className={`flcol ${styles.block}`}>
@@ -17,7 +13,7 @@ const ConfirmAccountTPL: FC = () => {
                     <PiUserCheck />
                     Подтверждение аккаунта
                 </div>
-                <SendCode digitsCount={4} />
+                <SendConfirmCodeForm />
             </Block>
         </AuthLayout>
     );

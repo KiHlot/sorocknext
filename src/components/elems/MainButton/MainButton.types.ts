@@ -8,7 +8,14 @@ export interface MainButtonPropsIF {
     clickHandler?: () => void;
     className?: string;
     type?: 'button' | 'submit' | 'reset';
-    variant?: 'accent' | 'light' | 'default' | 'sq' | 'sq_delete';
+    variant?:
+        | 'accent'
+        | 'light'
+        | 'default'
+        | 'sq'
+        | 'sq_delete'
+        | 'green'
+        | 'info';
     icon?: ReactElement;
     dialogText?: ReactElement;
 }

@@ -1,52 +1,67 @@
-import { FC, useEffect, useState } from 'react';
+'use client';
+
+import { createRef, FC, FormEvent, RefObject, useState } from 'react';
 import styles from '@/components/form/SendCode/SendCode.module.scss';
 import { SendCodePropsIF } from '@/components/form/SendCode/SendCode.types';
 
-const SendCode: FC<SendCodePropsIF> = ({ digitsCount = 4, className = '' }) => {
-    const [itemsMap, setItemsMap] = useState<string[]>([]);
+const SendCode: FC<SendCodePropsIF> = ({
+    isDisabled,
+    hasError,
+    callback,
+    names,
+    className = '',
+}) => {
+    const [code, setCode] = useState<string>('');
+    const [inputRefsArray] = useState<RefObject<HTMLInputElement | null>[]>(
+        () => Array.from(names, () => createRef()),
+    );
 
-    useEffect(() => {
-        setItemsMap(
-            Array.from(
-                { length: digitsCount },
-                (_, index) => `digit-input-${index + 1}`,
-            ),
-        );
-    }, [digitsCount]);
-    //TODO доделать
-    const [digits, setDigits] = useState(['', '', '', '']);
-    const [combinedValue, setCombinedValue] = useState('');
+    const inputHandler = (event: FormEvent, currentIndex: number): void => {
+        event.preventDefault();
+        if (isDisabled) {
+            return;
+        }
 
-    const handleInputChange = (index, value) => {
-        if (/^\d*$/.test(value) && value.length <= 1) {
-            const newDigits = [...digits];
-            newDigits[index] = value;
-            setDigits(newDigits);
+        const target = event.target as HTMLInputElement;
+        target.select();
+        target.focus();
 
-            // Обновляем объединенное значение
-            setCombinedValue(newDigits.join(''));
+        const newCode = [...code];
+        newCode[currentIndex] = target.value.slice(-1).replace(/[^0-9]/g, '');
 
-            // Автоматически переходим к следующему инпуту, если введена цифра
-            if (value && index < 3) {
-                document.getElementById(`digit-input-${index}`).focus();
+        // setCode(newCode);
+
+        for (let i = 0; i < newCode.length; i += 1) {
+            if (!newCode[i]) {
+                const nextInput = inputRefsArray?.[i]?.current;
+                if (nextInput) {
+                    nextInput.focus();
+                    nextInput.select();
+                    return;
+                }
             }
         }
+
+        callback(newCode.join(''));
     };
+
     return (
-        <div className={`${styles.SendCodeWrapper} ${className}`}>
+        <div className={`${styles.sendCodeWrapper} ${className}`}>
             <div className={styles.digitsWrapper}>
-                {itemsMap.map((name, index) => (
+                {names.map((name, index) => (
                     <div key={name}>
                         <input
-                            id={name}
-                            name={name}
+                            key={name}
+                            ref={inputRefsArray[index]}
                             type="text"
-                            value=""
-                            onChange={e =>
-                                handleInputChange(index, e.target.value)
-                            }
-                            maxLength={1}
-                            style={{ width: '30px', marginRight: '5px' }}
+                            name={name}
+                            placeholder="-"
+                            onInput={event => {
+                                inputHandler(event, index);
+                            }}
+                            value={code[index]}
+                            className={`${code[index] ? styles.filled : ''} ${hasError ? styles.error : ''}`}
+                            inputMode="numeric"
                         />
                     </div>
                 ))}

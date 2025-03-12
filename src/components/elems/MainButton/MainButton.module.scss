@@ -23,6 +23,31 @@
 .accent {
     background-color: $accent;
     color: $white;
+
+    svg {
+        fill: $white;
+        stroke: $white;
+    }
+}
+
+.green {
+    background-color: $correct;
+    color: $white;
+
+    svg {
+        fill: $white;
+        stroke: $white;
+    }
+}
+
+.info {
+    background-color: $info;
+    color: $white;
+
+    svg {
+        fill: $white;
+        stroke: $white;
+    }
 }
 
 .light {
