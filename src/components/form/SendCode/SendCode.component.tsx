@@ -11,18 +11,22 @@ const SendCode: FC<SendCodePropsIF> = ({
     names,
     className = '',
 }) => {
-    const [code, setCode] = useState<string>('');
+    const [code, setCode] = useState<string[]>(Array.from(names, () => ''));
     const [inputRefsArray] = useState<RefObject<HTMLInputElement | null>[]>(
         () => Array.from(names, () => createRef()),
     );
 
     const inputHandler = (event: FormEvent, currentIndex: number): void => {
         event.preventDefault();
+
         if (isDisabled) {
             return;
         }
 
-        const target = event.target as HTMLInputElement;
+        if (!(event.target instanceof HTMLInputElement)) return;
+
+        const target = event.target;
+
         target.select();
         target.focus();
 
@@ -46,26 +50,22 @@ const SendCode: FC<SendCodePropsIF> = ({
     };
 
     return (
-        <div className={`${styles.sendCodeWrapper} ${className}`}>
-            <div className={styles.digitsWrapper}>
-                {names.map((name, index) => (
-                    <div key={name}>
-                        <input
-                            key={name}
-                            ref={inputRefsArray[index]}
-                            type="text"
-                            name={name}
-                            placeholder="-"
-                            onInput={event => {
-                                inputHandler(event, index);
-                            }}
-                            value={code[index]}
-                            className={`${code[index] ? styles.filled : ''} ${hasError ? styles.error : ''}`}
-                            inputMode="numeric"
-                        />
-                    </div>
-                ))}
-            </div>
+        <div className={`flc ${styles.sendCodeWrapper} ${className}`}>
+            {names.map((name, index) => (
+                <input
+                    key={name}
+                    ref={inputRefsArray[index]}
+                    type="text"
+                    name={name}
+                    placeholder="-"
+                    onInput={event => {
+                        inputHandler(event, index);
+                    }}
+                    value={code[index]}
+                    className={`${code[index] ? styles.filled : ''} ${hasError ? styles.error : ''}`}
+                    inputMode="numeric"
+                />
+            ))}
         </div>
     );
 };

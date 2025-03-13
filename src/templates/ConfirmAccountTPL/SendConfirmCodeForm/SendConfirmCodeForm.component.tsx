@@ -2,6 +2,7 @@
 
 import { FC, useState } from 'react';
 import { IoCheckmark, IoMailOutline } from 'react-icons/io5';
+import InfoBlock from '@/components/blocks/InfoBlock/InfoBlock.component';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import SendCode from '@/components/form/SendCode/SendCode.component';
 import { INPUT_NAMES } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.config';
@@ -12,6 +13,9 @@ const SendConfirmCodeForm: FC = () => {
 
     return (
         <form className="flcol gap">
+            <InfoBlock variant="info">
+                Введите код подтверждения,который был отправлен на вашу почту.
+            </InfoBlock>
             <SendCode names={INPUT_NAMES} callback={() => null} />
             <div className={styles.buttonsLine}>
                 <MainButton
