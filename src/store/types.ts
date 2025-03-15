@@ -11,7 +11,7 @@ export type ResponseRedirectToIF = {
     text?: string;
 };
 
-export interface ResponseIF<DataIF = any> {
+export interface ResponseIF<DataIF = null> {
     result: ResponseResultT;
     data: DataIF | null;
     errors?: ResponseErrorIF[];

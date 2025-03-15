@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { cookies } from 'next/dist/server/request/cookies';
 import { ResponseErrorIF, ResponseIF } from '@/store/types';
 import { ADDRESS } from '@/helpers/config';
-import { ERRORS, SERVER_ERRORS } from '@/helpers/errors';
+import { ERRORS, SERVER_ERRORS } from '@/helpers/codes';
 import { getCookie } from '@/helpers/utils';
 import { useLogout } from '@/hooks/useLogout';
 

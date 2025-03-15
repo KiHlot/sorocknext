@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import { yupResolver } from '~/@hookform/resolvers/yup';
 import { jwtApi } from '@/api/jwt/jwt';
 import { LoginFieldsReqIF } from '@/api/jwt/types';
-import { SERVER_ERRORS } from '@/helpers/errors';
+import { SERVER_ERRORS } from '@/helpers/codes';
 import { setCookie, setStorageItem } from '@/helpers/utils';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import { Input } from '@/components/form/Input/Input.component';

@@ -5,10 +5,9 @@ import styles from '@/components/form/SendCode/SendCode.module.scss';
 import { SendCodePropsIF } from '@/components/form/SendCode/SendCode.types';
 
 const SendCode: FC<SendCodePropsIF> = ({
-    isDisabled,
-    hasError,
     callback,
     names,
+    isDisabled,
     className = '',
 }) => {
     const [code, setCode] = useState<string[]>(Array.from(names, () => ''));
@@ -33,9 +32,10 @@ const SendCode: FC<SendCodePropsIF> = ({
         const newCode = [...code];
         newCode[currentIndex] = target.value.slice(-1).replace(/[^0-9]/g, '');
 
-        // setCode(newCode);
+        setCode(newCode);
+        callback(newCode.join(''));
 
-        for (let i = 0; i < newCode.length; i += 1) {
+        for (let i = 0; i < newCode.length; i++) {
             if (!newCode[i]) {
                 const nextInput = inputRefsArray?.[i]?.current;
                 if (nextInput) {
@@ -45,8 +45,28 @@ const SendCode: FC<SendCodePropsIF> = ({
                 }
             }
         }
+    };
 
-        callback(newCode.join(''));
+    const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+        event.preventDefault();
+
+        if (isDisabled) {
+            return;
+        }
+
+        const pastedData = event.clipboardData.getData('text');
+
+        if (pastedData.length !== names.length) {
+            return;
+        }
+
+        if (!/^\d+$/.test(pastedData)) {
+            return;
+        }
+
+        setCode(Array.from(pastedData));
+        event.currentTarget.blur();
+        callback(pastedData);
     };
 
     return (
@@ -62,8 +82,10 @@ const SendCode: FC<SendCodePropsIF> = ({
                         inputHandler(event, index);
                     }}
                     value={code[index]}
-                    className={`${code[index] ? styles.filled : ''} ${hasError ? styles.error : ''}`}
                     inputMode="numeric"
+                    onPaste={handlePaste}
+                    className={isDisabled ? styles.disabled : ''}
+                    disabled={isDisabled}
                 />
             ))}
         </div>

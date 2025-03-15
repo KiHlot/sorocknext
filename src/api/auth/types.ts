@@ -8,7 +8,6 @@ export interface RegistrationFieldsReqIF {
 
 export interface ActivateUserIF {
     activateCode: string;
-    userId: number;
 }
 
 export interface ResetPasswordIF extends ActivateUserIF {

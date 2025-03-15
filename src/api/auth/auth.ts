@@ -2,7 +2,6 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchRestApiQuery } from '@/store/functions';
 import { ResponseIF } from '@/store/types';
 import {
-    ActivateUserIF,
     RegistrationFieldsReqIF,
     ResetPasswordIF,
 } from '@/api/auth/types';
@@ -21,9 +20,18 @@ export const authApi = createApi({
                 body: data,
             }),
         }),
-        activateUser: builder.mutation<ResponseIF<null>, ActivateUserIF>({
+        sendConfirmUserCodeMail: builder.mutation<ResponseIF, void>({
+            query: () => ({
+                url: `/send-confirm-user-mail`,
+                method: 'POST',
+            }),
+        }),
+        confirmUser: builder.mutation<
+            ResponseIF,
+            string
+        >({
             query: data => ({
-                url: `/activate-user`,
+                url: `/confirm-user`,
                 method: 'POST',
                 body: data,
             }),
@@ -38,7 +46,7 @@ export const authApi = createApi({
                 body: data,
             }),
         }),
-        resetPassword: builder.mutation<ResponseIF<null>, ResetPasswordIF>({
+        resetPassword: builder.mutation<ResponseIF, ResetPasswordIF>({
             query: data => ({
                 url: `/reset-password`,
                 method: 'POST',

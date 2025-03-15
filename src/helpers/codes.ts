@@ -36,5 +36,6 @@ export const SERVER_ERRORS: { [key: string]: string } = {
 };
 
 export const SUCCESS_NOTIFY: { [key: string]: string } = {
-    s101: 'Аватар успешно обновлен!',
+    s102: 'Письмо успешо отправлено!',
+    s103: 'Пользователь успешно подтвержден!',
 };

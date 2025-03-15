@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { ERRORS } from '@/helpers/errors';
+import { ERRORS } from '@/helpers/codes';
 import { VALIDATORS } from '@/helpers/validator';
 
 export const schema = yup.object().shape({
