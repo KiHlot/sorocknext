@@ -1,10 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchRestApiQuery } from '@/store/functions';
 import { ResponseIF } from '@/store/types';
-import {
-    RegistrationFieldsReqIF,
-    ResetPasswordIF,
-} from '@/api/auth/types';
+import { RegistrationFieldsReqIF, ResetPasswordIF } from '@/api/auth/types';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -26,24 +23,20 @@ export const authApi = createApi({
                 method: 'POST',
             }),
         }),
-        confirmUser: builder.mutation<
-            ResponseIF,
-            string
-        >({
-            query: data => ({
+        confirmUser: builder.mutation<ResponseIF, string>({
+            query: confirmCode => ({
                 url: `/confirm-user`,
                 method: 'POST',
-                body: data,
+                body: {
+                    confirmCode,
+                },
             }),
         }),
-        sendResetPasswordCode: builder.mutation<
-            ResponseIF<{ isSent: boolean }>,
-            { email: string }
-        >({
-            query: data => ({
+        sendResetPasswordCodeMail: builder.mutation<ResponseIF, string>({
+            query: email => ({
                 url: `/send-reset-pass-code`,
                 method: 'POST',
-                body: data,
+                body: { email },
             }),
         }),
         resetPassword: builder.mutation<ResponseIF, ResetPasswordIF>({

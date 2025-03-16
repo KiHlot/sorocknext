@@ -1,8 +1,6 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
-import { IoArrowBackOutline } from 'react-icons/io5';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout.component';
 import Block from '@/components/blocks/Block/Block.component';
@@ -11,7 +9,7 @@ import { AUTH_TPL_CONFIG } from '@/templates/AuthTPL/AuthTPL.config';
 import styles from '@/templates/AuthTPL/AuthTPL.module.scss';
 import LoginForm from '@/templates/AuthTPL/LoginForm/LoginForm.component';
 import RegistrationForm from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.component';
-import ResetPasswordForm from '@/templates/AuthTPL/ResetPasswordForm/ResetPasswordForm.component';
+import ResetPassword from '@/templates/AuthTPL/ResetPassword/ResetPassword.component';
 
 const AuthTPL: FC = () => {
     const pathname = usePathname();
@@ -38,15 +36,7 @@ const AuthTPL: FC = () => {
                 </div>
                 {slug === 'auth' && <LoginForm />}
                 {slug === 'registration' && <RegistrationForm />}
-                {slug === 'reset-password' && (
-                    //todo
-                    <ResetPasswordForm
-                        creeds={{
-                            userId: 1,
-                            activateCode: 'todo',
-                        }}
-                    />
-                )}
+                {slug === 'reset-password' && <ResetPassword />}
             </Block>
         </AuthLayout>
     ) : null;

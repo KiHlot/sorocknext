@@ -9,7 +9,7 @@ import { SUCCESS_NOTIFY } from '@/helpers/codes';
 import { getStorageItem, setStorageItem } from '@/helpers/utils';
 import InfoBlock from '@/components/blocks/InfoBlock/InfoBlock.component';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
-import SendCode from '@/components/form/SendCode/SendCode.component';
+import CodeInput from '@/components/form/CodeInput/CodeInput.component';
 import { INPUT_NAMES } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.config';
 import styles from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.module.scss';
 import { ProfileIF } from '@/types/user';
@@ -41,7 +41,7 @@ const SendConfirmCodeForm: FC = () => {
 
     const submitHandler = async (e: FormEvent) => {
         e.preventDefault();
-
+        //TODO переключение + формы с кодами
         const { result } = await confirmUser(code).unwrap();
 
         if (result === 'ok') {
@@ -62,7 +62,7 @@ const SendConfirmCodeForm: FC = () => {
             <InfoBlock variant="info">
                 Введите код подтверждения,который был отправлен на вашу почту.
             </InfoBlock>
-            <SendCode names={INPUT_NAMES} callback={setCode} />
+            <CodeInput names={INPUT_NAMES} callback={setCode} />
             <div className={styles.buttonsLine}>
                 <MainButton
                     type="submit"

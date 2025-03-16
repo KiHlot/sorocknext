@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
-export interface ButtonGroupIF {
-    key: string;
+export interface ButtonGroupIF<T = string> {
+    key: T;
     label: ReactElement;
     href?: string;
 }

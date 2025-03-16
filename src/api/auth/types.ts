@@ -6,11 +6,9 @@ export interface RegistrationFieldsReqIF {
     passwordConfirm: string;
 }
 
-export interface ActivateUserIF {
-    activateCode: string;
-}
-
-export interface ResetPasswordIF extends ActivateUserIF {
+export interface ResetPasswordIF {
+    confirmCode: string;
+    email: string;
     password: string;
     passwordConfirm: string;
 }

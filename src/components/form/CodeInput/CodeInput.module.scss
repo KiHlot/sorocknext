@@ -1,8 +1,23 @@
 @use '@/styles/variables' as *;
 
-.sendCodeWrapper {
+.codeInputWrapper {
+    width: 100%;
+    position: relative;
+}
+
+.inputsList {
     width: 100%;
     gap: 0 20px;
+
+    &.error {
+        input {
+            border: $borderError;
+
+            &::placeholder {
+                color: $error;
+            }
+        }
+    }
 
     input {
         width: 40px;
@@ -16,4 +31,8 @@
             opacity: 0.2;
         }
     }
+}
+.errorInfo {
+    text-align: center;
+    margin-top: 8px;
 }
