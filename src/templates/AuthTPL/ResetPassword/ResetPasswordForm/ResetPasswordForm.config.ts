@@ -51,5 +51,5 @@ export const schema = yup.object().shape({
     confirmCode: yup
         .string()
         .required(ERRORS.er200)
-        .length(INPUT_NAMES.length, `Введите ${INPUT_NAMES.length} символов!`),
+        .length(INPUT_NAMES.length, `Введите ${INPUT_NAMES.length} цифр!`),
 });

@@ -1,7 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
@@ -26,17 +26,28 @@ const ResetPasswordForm: FC = () => {
     const [resetPassword, { isLoading, isSuccess }] =
         authApi.useResetPasswordMutation();
 
-    const { handleSubmit, control, reset, setError, setValue, clearErrors } =
-        useForm<ResetPasswordIF>({
-            mode: 'onSubmit',
-            resolver: yupResolver(schema),
-        });
+    const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+    const {
+        handleSubmit,
+        control,
+        reset,
+        setError,
+        setValue,
+        clearErrors,
+        watch,
+    } = useForm<ResetPasswordIF>({
+        mode: 'onSubmit',
+        resolver: yupResolver(schema),
+    });
+
+    const confirmCode = watch('confirmCode');
 
     const onSubmit = async (values: ResetPasswordIF): Promise<void> => {
         await resetPassword(values)
             .unwrap()
             .then(result => {
-                parseResponse<FieldsNames, null>(
+                parseResponse<FieldsNames>(
                     result,
                     () => {
                         reset();
@@ -55,10 +66,11 @@ const ResetPasswordForm: FC = () => {
             });
     };
 
-    const codeChangeHandler = (code: string) => {
-        clearErrors('confirmCode');
-        setValue('confirmCode', code);
-    };
+    useEffect(() => {
+        setIsDisabled(
+            isLoading || confirmCode?.length !== INPUT_NAMES.length || isSuccess,
+        );
+    }, [confirmCode, isLoading, isSuccess]);
 
     return (
         <form
@@ -84,7 +96,9 @@ const ResetPasswordForm: FC = () => {
                 names={INPUT_NAMES}
                 name="confirmCode"
                 control={control}
-                callback={codeChangeHandler}
+                clearErrors={clearErrors}
+                setValue={(name, code) => setValue(name, code)}
+                isDisabled={isLoading}
             />
             <Input name="email" label="Email" control={control} isRequired />
             <Input
@@ -105,9 +119,9 @@ const ResetPasswordForm: FC = () => {
             />
             <MainButton
                 type="submit"
-                variant="light"
+                variant="green"
                 className={styles.button}
-                disabled={isLoading || isSuccess}
+                disabled={isDisabled}
             >
                 Изменить
             </MainButton>

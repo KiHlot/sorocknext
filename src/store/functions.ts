@@ -3,8 +3,8 @@ import { ErrorOption } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { cookies } from 'next/dist/server/request/cookies';
 import { ResponseErrorIF, ResponseIF } from '@/store/types';
-import { ADDRESS } from '@/helpers/config';
 import { ERRORS, SERVER_ERRORS } from '@/helpers/codes';
+import { ADDRESS } from '@/helpers/config';
 import { getCookie } from '@/helpers/utils';
 import { useLogout } from '@/hooks/useLogout';
 
@@ -124,7 +124,7 @@ export const setCustomError = <FieldsNames>(
     });
 };
 
-export const parseResponse = <FieldsNames, DataT>(
+export const parseResponse = <FieldsNames, DataT = null>(
     data: ResponseIF<DataT>,
     callback: (data: DataT | null) => void,
     setError?: (name: FieldsNames, error: ErrorOption) => void,

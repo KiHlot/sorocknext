@@ -26,7 +26,7 @@ const RegistrationForm: FC = () => {
         await registerUser(values)
             .unwrap()
             .then(data => {
-                parseResponse<FieldsNames, void>(
+                parseResponse<FieldsNames>(
                     data,
                     () => {
                         reset();

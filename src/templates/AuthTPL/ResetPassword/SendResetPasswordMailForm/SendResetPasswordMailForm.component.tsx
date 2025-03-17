@@ -32,7 +32,7 @@ const SendResetPasswordMailForm: FC<SendResetPasswordMailFormPropsIF> = ({
         await sendResetPasswordCodeMail(email)
             .unwrap()
             .then(data => {
-                parseResponse<FieldsNames, void>(
+                parseResponse<FieldsNames>(
                     data,
                     () => {
                         reset();

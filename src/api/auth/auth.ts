@@ -8,7 +8,7 @@ export const authApi = createApi({
     baseQuery: fetchRestApiQuery('/auth'),
     endpoints: builder => ({
         registerUser: builder.mutation<
-            ResponseIF<null>,
+            ResponseIF,
             RegistrationFieldsReqIF
         >({
             query: data => ({

@@ -14,20 +14,23 @@ import { CodeInputPropsIF } from '@/components/form/CodeInput/CodeInput.types';
 import FieldError from '@/components/form/FieldError/FieldError.component';
 
 const CodeInput = <T extends FieldValues>({
-    callback,
+    setValue,
     names,
     isDisabled,
     className = '',
     name,
     control,
+    clearErrors,
 }: CodeInputPropsIF<T>): ReactElement => {
     const [code, setCode] = useState<string[]>(Array.from(names, () => ''));
     const [inputRefsArray] = useState<RefObject<HTMLInputElement | null>[]>(
         () => Array.from(names, () => createRef()),
     );
 
-    const { field, fieldState } =
-        name && control ? useController({ name, control }) : {};
+    const {
+        field: { onChange },
+        fieldState: { error },
+    } = useController({ name, control });
 
     const inputHandler = (event: FormEvent, currentIndex: number): void => {
         event.preventDefault();
@@ -47,7 +50,7 @@ const CodeInput = <T extends FieldValues>({
         newCode[currentIndex] = target.value.slice(-1).replace(/[^0-9]/g, '');
 
         setCode(newCode);
-        callback?.(newCode.join(''));
+        setValue(name, newCode.join(''));
 
         for (let i = 0; i < newCode.length; i++) {
             if (!newCode[i]) {
@@ -77,24 +80,22 @@ const CodeInput = <T extends FieldValues>({
         if (!/^\d+$/.test(pastedData)) {
             return;
         }
-
+        clearErrors();
         setCode(Array.from(pastedData));
         event.currentTarget.blur();
-        callback?.(pastedData);
+        setValue(name, pastedData);
     };
 
     return (
         <div className={`flcol ${styles.codeInputWrapper} ${className}`}>
-            {name && (
-                <input
-                    type="hidden"
-                    name={name}
-                    value={code.join('') || ''}
-                    onChange={field?.onChange}
-                />
-            )}
+            <input
+                type="hidden"
+                name={name}
+                value={code.join('') || ''}
+                onChange={onChange}
+            />
             <div
-                className={`flc ${styles.inputsList} ${fieldState?.error?.message ? styles.error : ''}`}
+                className={`flc ${styles.inputsList} ${error?.message ? styles.error : ''}`}
             >
                 {names.map((inputName, index) => (
                     <input
@@ -114,10 +115,7 @@ const CodeInput = <T extends FieldValues>({
                     />
                 ))}
             </div>
-            <FieldError
-                message={fieldState?.error?.message}
-                className={styles.errorInfo}
-            />
+            <FieldError message={error?.message} className={styles.errorInfo} />
         </div>
     );
 };

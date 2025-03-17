@@ -1,10 +1,11 @@
-import { FieldValues, Path, Control } from 'react-hook-form';
+import { FieldValues, Path, Control, UseFormClearErrors } from 'react-hook-form';
 
 export interface CodeInputPropsIF<T extends FieldValues = FieldValues> {
     className?: string;
     names: string[];
-    isDisabled?: boolean;
-    callback?: (code: string) => void;
-    name?: Path<T>;
-    control?: Control<T>;
+    isDisabled: boolean;
+    setValue: (name: Path<T>, newVal: string) => void;
+    name: Path<T>;
+    control: Control<T>;
+    clearErrors:  UseFormClearErrors<T>;
 }

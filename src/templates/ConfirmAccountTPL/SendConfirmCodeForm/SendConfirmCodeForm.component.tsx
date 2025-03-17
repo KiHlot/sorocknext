@@ -1,25 +1,27 @@
 'use client';
 
-import { FC, FormEvent, useEffect, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FC, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { IoCheckmark, IoMailOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { parseResponse } from '@/store/functions';
 import { authApi } from '@/api/auth/auth';
 import { SUCCESS_NOTIFY } from '@/helpers/codes';
 import { getStorageItem, setStorageItem } from '@/helpers/utils';
 import InfoBlock from '@/components/blocks/InfoBlock/InfoBlock.component';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import CodeInput from '@/components/form/CodeInput/CodeInput.component';
-import { INPUT_NAMES } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.config';
+import {
+    INPUT_NAMES,
+    schema,
+} from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.config';
 import styles from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.module.scss';
+import { FieldsNames } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.types';
 import { ProfileIF } from '@/types/user';
 
 const SendConfirmCodeForm: FC = () => {
-    const router = useRouter();
-
-    const [code, setCode] = useState<string>('');
-    const [isDisabled, setIsDisabled] = useState<boolean>(false);
-
     const [
         sendConfirmUserCodeMail,
         { isLoading: isSendConfirmUserCodeMail, isSuccess },
@@ -27,10 +29,23 @@ const SendConfirmCodeForm: FC = () => {
     const [confirmUser, { isLoading: isConfirmUserLoading }] =
         authApi.useConfirmUserMutation();
 
-    useEffect(() => {
-        setIsDisabled(isSendConfirmUserCodeMail || isConfirmUserLoading);
-    }, [isSendConfirmUserCodeMail, isConfirmUserLoading]);
+    const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
+    const {
+        handleSubmit,
+        control,
+        reset,
+        setError,
+        setValue,
+        clearErrors,
+        watch,
+    } = useForm<{ confirmCode: string }>({
+        mode: 'onSubmit',
+        resolver: yupResolver(schema),
+    });
+
+    const confirmCode = watch('confirmCode')
+    
     const sendMail = async () => {
         const { result } = await sendConfirmUserCodeMail().unwrap();
 
@@ -39,36 +54,53 @@ const SendConfirmCodeForm: FC = () => {
         }
     };
 
-    const submitHandler = async (e: FormEvent) => {
-        e.preventDefault();
-        //TODO переключение + формы с кодами
-        const { result } = await confirmUser(code).unwrap();
+    const onSubmit = async ({ confirmCode }: { confirmCode: string }) => {
+        const data = await confirmUser(confirmCode).unwrap();
 
-        if (result === 'ok') {
-            setStorageItem(
-                {
-                    ...getStorageItem<ProfileIF>('profileData'),
-                    isActivated: true,
-                },
-                'profileData',
-            );
-            toast.success(SUCCESS_NOTIFY.s103);
-            router.refresh();
-        }
+        parseResponse<FieldsNames>(
+            data,
+            () => {
+                setStorageItem(
+                    {
+                        ...getStorageItem<ProfileIF>('profileData'),
+                        isActivated: true,
+                    },
+                    'profileData',
+                );
+                reset();
+                toast.success(SUCCESS_NOTIFY.s103);
+                redirect('/profile');
+            },
+            setError,
+        );
     };
 
+    useEffect(() => {
+        setIsDisabled(isSendConfirmUserCodeMail || isConfirmUserLoading);
+    }, [isSendConfirmUserCodeMail, isConfirmUserLoading, confirmCode]);
+
     return (
-        <form className="flcol gap" onSubmit={submitHandler}>
+        <form className="flcol gap" onSubmit={handleSubmit(onSubmit)}>
             <InfoBlock variant="info">
                 Введите код подтверждения,который был отправлен на вашу почту.
             </InfoBlock>
-            <CodeInput names={INPUT_NAMES} callback={setCode} />
+            <CodeInput
+                names={INPUT_NAMES}
+                setValue={(name, code) => setValue(name, code)}
+                name="confirmCode"
+                control={control}
+                isDisabled={isDisabled}
+                clearErrors={clearErrors}
+            />
             <div className={styles.buttonsLine}>
                 <MainButton
                     type="submit"
                     icon={<IoCheckmark />}
                     variant="green"
-                    disabled={code.length !== INPUT_NAMES.length || isDisabled}
+                    disabled={
+                        confirmCode.length !== INPUT_NAMES.length ||
+                        isDisabled
+                    }
                 >
                     Подтвеодить
                 </MainButton>
