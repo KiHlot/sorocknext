@@ -41,6 +41,8 @@ const CodeInput = <T extends FieldValues>({
 
         if (!(event.target instanceof HTMLInputElement)) return;
 
+        clearErrors();
+
         const target = event.target;
 
         target.select();

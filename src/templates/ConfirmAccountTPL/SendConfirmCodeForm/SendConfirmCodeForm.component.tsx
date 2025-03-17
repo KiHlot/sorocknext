@@ -82,7 +82,7 @@ const SendConfirmCodeForm: FC = () => {
     return (
         <form className="flcol gap" onSubmit={handleSubmit(onSubmit)}>
             <InfoBlock variant="info">
-                Введите код подтверждения,который был отправлен на вашу почту.
+                Введите код подтверждения, который был отправлен на вашу почту.
             </InfoBlock>
             <CodeInput
                 names={INPUT_NAMES}
@@ -98,7 +98,7 @@ const SendConfirmCodeForm: FC = () => {
                     icon={<IoCheckmark />}
                     variant="green"
                     disabled={
-                        confirmCode.length !== INPUT_NAMES.length ||
+                        confirmCode?.length !== INPUT_NAMES.length ||
                         isDisabled
                     }
                 >
