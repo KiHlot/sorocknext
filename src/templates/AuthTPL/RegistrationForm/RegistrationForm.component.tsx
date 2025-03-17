@@ -90,7 +90,7 @@ const RegistrationForm: FC = () => {
             <MainButton
                 type="submit"
                 disabled={isLoading || isSuccess}
-                variant="light"
+                variant="green"
                 className={styles.button}
             >
                 Регистрация

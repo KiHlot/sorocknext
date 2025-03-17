@@ -66,7 +66,7 @@ const LoginForm: FC = () => {
             />
             <MainButton
                 type="submit"
-                variant="light"
+                variant="green"
                 disabled={isLoading || isSuccess}
                 className={styles.button}
             >
