@@ -1,5 +1,5 @@
-export interface SendResetPasswordMailFormPropsIF {
-    className?: string;
-}
-
 export type FieldsNames = 'email';
+
+export interface SendResetPasswordMailFormPropsIF {
+    callback: () => void;
+}

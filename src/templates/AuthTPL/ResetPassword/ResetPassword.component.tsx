@@ -26,7 +26,9 @@ const ResetPassword: FC<ResetPasswordPropsIF> = ({ className = '' }) => {
             />
 
             {activeTab === 'mail' ? (
-                <SendResetPasswordMailForm />
+                <SendResetPasswordMailForm
+                    callback={() => setActiveTab('code')}
+                />
             ) : (
                 <ResetPasswordForm />
             )}

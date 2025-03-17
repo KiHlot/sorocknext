@@ -2,7 +2,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { redirect } from 'next/navigation';
 import { parseResponse } from '@/store/functions';
 import { authApi } from '@/api/auth/auth';
 import { SUCCESS_NOTIFY } from '@/helpers/codes';
@@ -17,7 +16,7 @@ import {
 } from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.types';
 
 const SendResetPasswordMailForm: FC<SendResetPasswordMailFormPropsIF> = ({
-    className = '',
+    callback,
 }) => {
     const [sendResetPasswordCodeMail, { isLoading, isSuccess }] =
         authApi.useSendResetPasswordCodeMailMutation();
@@ -38,9 +37,7 @@ const SendResetPasswordMailForm: FC<SendResetPasswordMailFormPropsIF> = ({
                     () => {
                         reset();
                         toast.success(SUCCESS_NOTIFY.s102);
-                        setTimeout(() => {
-                            return redirect('/auth');
-                        }, 2000);
+                        callback();
                     },
                     setError,
                 );

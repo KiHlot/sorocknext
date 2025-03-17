@@ -68,7 +68,7 @@ export const fetchJWTTokenQuery = () => {
                 toast.error(ERRORS.er209);
 
                 if ([401, 403].includes(response?.status)) {
-                    useLogout();
+                    useLogout(true);
                 }
 
                 return null;
