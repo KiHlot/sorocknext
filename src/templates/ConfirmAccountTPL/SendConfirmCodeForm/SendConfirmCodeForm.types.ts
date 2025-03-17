@@ -1,1 +1,1 @@
-export type FieldsNames = 'confirmCode'
+export type FieldsNames = 'confirmCode';

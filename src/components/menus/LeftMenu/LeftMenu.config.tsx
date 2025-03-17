@@ -43,7 +43,7 @@ export const LEFT_MENU: MenuItemIF[] = [
         url: '/nocommerce',
         label: 'Новый рок',
         icon: <IoMegaphoneOutline />,
-        hasBorder: true
+        hasBorder: true,
     },
     {
         url: '/alboms',
@@ -74,7 +74,7 @@ export const LEFT_MENU: MenuItemIF[] = [
         url: '/okolorock',
         label: 'Вокруг рока',
         icon: <IoEarthOutline />,
-        hasBorder: true
+        hasBorder: true,
     },
     {
         url: '/about',

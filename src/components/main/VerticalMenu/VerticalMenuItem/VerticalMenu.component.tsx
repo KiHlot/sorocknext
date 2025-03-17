@@ -9,17 +9,20 @@ import { VerticalMenuItemPropsIF } from '@/components/main/VerticalMenu/Vertical
 const VerticalMenuItem: FC<VerticalMenuItemPropsIF> = ({ data }) => {
     const { label, url, icon, hasBorder } = data;
     const pathname = usePathname();
-    
+
     const isCurrent = useMemo(() => {
         if (!pathname) return false;
-        
+
         const pathSegments = pathname.split('/').filter(Boolean);
         const urlSegments = url.split('/').filter(Boolean);
-        
+
         // Сравниваем последний сегмент пути
-        return pathSegments[pathSegments.length - 1] === urlSegments[urlSegments.length - 1];
+        return (
+            pathSegments[pathSegments.length - 1] ===
+            urlSegments[urlSegments.length - 1]
+        );
     }, [pathname, url]);
-    
+
     return (
         <li
             className={`${styles.verticalMenuItemWrapper} ${hasBorder ? styles.border : ''}`}

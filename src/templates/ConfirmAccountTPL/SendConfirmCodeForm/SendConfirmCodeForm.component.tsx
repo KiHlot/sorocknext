@@ -44,8 +44,8 @@ const SendConfirmCodeForm: FC = () => {
         resolver: yupResolver(schema),
     });
 
-    const confirmCode = watch('confirmCode')
-    
+    const confirmCode = watch('confirmCode');
+
     const sendMail = async () => {
         const { result } = await sendConfirmUserCodeMail().unwrap();
 
@@ -98,8 +98,7 @@ const SendConfirmCodeForm: FC = () => {
                     icon={<IoCheckmark />}
                     variant="green"
                     disabled={
-                        confirmCode?.length !== INPUT_NAMES.length ||
-                        isDisabled
+                        confirmCode?.length !== INPUT_NAMES.length || isDisabled
                     }
                 >
                     Подтвеодить

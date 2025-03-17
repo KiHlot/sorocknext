@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { FC } from 'react';
 import { Autoplay } from 'swiper/modules';
@@ -8,7 +8,7 @@ import { siteApi } from '@/api/site/site';
 import styles from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.module.scss';
 import { TrendsSliderPropsIF } from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.types';
 
-const TrendsSlider: FC<TrendsSliderPropsIF> = ({className}) => {
+const TrendsSlider: FC<TrendsSliderPropsIF> = ({ className }) => {
     const [, { data: baseData }] = siteApi.useGetBaseDataMutation({
         fixedCacheKey: 'baseData',
     });

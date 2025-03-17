@@ -1,4 +1,9 @@
-import { FieldValues, Path, Control, UseFormClearErrors } from 'react-hook-form';
+import {
+    FieldValues,
+    Path,
+    Control,
+    UseFormClearErrors,
+} from 'react-hook-form';
 
 export interface CodeInputPropsIF<T extends FieldValues = FieldValues> {
     className?: string;
@@ -7,5 +12,5 @@ export interface CodeInputPropsIF<T extends FieldValues = FieldValues> {
     setValue: (name: Path<T>, newVal: string) => void;
     name: Path<T>;
     control: Control<T>;
-    clearErrors:  UseFormClearErrors<T>;
+    clearErrors: UseFormClearErrors<T>;
 }

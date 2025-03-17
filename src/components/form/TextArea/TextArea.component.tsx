@@ -23,7 +23,11 @@ export const TextArea = <T extends FieldValues>({
 
     return (
         <div className={`${styles.textAreaBlock} ${className}`}>
-            <FieldLabel label={label} isRequired={isRequired} isError={!!fieldState.error?.message}/>
+            <FieldLabel
+                label={label}
+                isRequired={isRequired}
+                isError={!!fieldState.error?.message}
+            />
             <div className={styles.textAreaWrapper}>
                 <textarea
                     name={name}

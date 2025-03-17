@@ -7,7 +7,10 @@ export const taxonomyApi = createApi({
     reducerPath: 'taxonomyApi',
     baseQuery: fetchRestApiQuery('/taxonomy'),
     endpoints: builder => ({
-        searchPostsByTag: builder.mutation<ResponseIF<Record<string, TagSearchIF[]>>, number>({
+        searchPostsByTag: builder.mutation<
+            ResponseIF<Record<string, TagSearchIF[]>>,
+            number
+        >({
             query: tagId => ({
                 url: `/search-posts-by-tag`,
                 method: 'POST',

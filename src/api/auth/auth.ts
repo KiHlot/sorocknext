@@ -7,10 +7,7 @@ export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchRestApiQuery('/auth'),
     endpoints: builder => ({
-        registerUser: builder.mutation<
-            ResponseIF,
-            RegistrationFieldsReqIF
-        >({
+        registerUser: builder.mutation<ResponseIF, RegistrationFieldsReqIF>({
             query: data => ({
                 url: `/registration`,
                 method: 'POST',

@@ -34,12 +34,7 @@ $bronzeGradient: linear-gradient(
     rgba(163, 54, 27, 1) 84%,
     rgba(216, 129, 61, 1) 95%
 );
-$loadingGradient: linear-gradient(
-		90deg,
-    $bgColor,
-    $bgColorSecondary,
-    $bgColor
-);
+$loadingGradient: linear-gradient(90deg, $bgColor, $bgColorSecondary, $bgColor);
 $boxShadow: 0 10px 25px 0 rgba(0, 0, 0, 0.3);
 $textShadow: 1px 1px 2px #000000;
 

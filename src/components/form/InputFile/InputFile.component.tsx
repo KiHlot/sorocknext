@@ -5,8 +5,8 @@ import { FieldValues } from 'react-hook-form';
 import { VALIDATORS } from '@/helpers/validator';
 import MainButton from '@/components/elems/MainButton/MainButton.component';
 import buttonStyles from '@/components/elems/MainButton/MainButton.module.scss';
-import styles from '@/components/form/InputFile/inputFile.module.scss';
 import { InputFilePropsIF } from '@/components/form/InputFile/InputFile.types';
+import styles from '@/components/form/InputFile/inputFile.module.scss';
 
 export const InputFile = <T extends FieldValues>({
     isDisabled,

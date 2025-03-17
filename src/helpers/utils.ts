@@ -74,7 +74,9 @@ export const deleteCookie = (name: string) => {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 };
 
-export const getStorageItem = <ReturnType = string>(name: string): ReturnType | null => {
+export const getStorageItem = <ReturnType = string>(
+    name: string,
+): ReturnType | null => {
     if (typeof window === 'undefined') return null;
 
     const storageData: string | null = sessionStorage.getItem(name);

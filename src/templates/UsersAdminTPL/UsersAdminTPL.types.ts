@@ -5,7 +5,7 @@ import { UserIF } from '@/types/user';
 export interface UsersAdminTPLDataIF {
     jsonData: UsersAdminJsonDataIF;
     siteRoles: string[];
-    filterResult: FilteredResultIF<UserIF[]>
+    filterResult: FilteredResultIF<UserIF[]>;
 }
 
 export interface UsersAdminTPLPropsIF {

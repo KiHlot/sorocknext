@@ -1,5 +1,5 @@
-import { HTMLString, OptionIF } from '@/types/common';
 import { AuthorIF } from '@/components/elems/Author/Author.types';
+import { HTMLString, OptionIF } from '@/types/common';
 
 export interface PromoSectionIF {
     innerImg: string | null;

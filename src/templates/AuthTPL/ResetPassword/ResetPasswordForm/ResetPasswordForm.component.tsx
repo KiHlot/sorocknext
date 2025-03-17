@@ -68,7 +68,9 @@ const ResetPasswordForm: FC = () => {
 
     useEffect(() => {
         setIsDisabled(
-            isLoading || confirmCode?.length !== INPUT_NAMES.length || isSuccess,
+            isLoading ||
+                confirmCode?.length !== INPUT_NAMES.length ||
+                isSuccess,
         );
     }, [confirmCode, isLoading, isSuccess]);
 

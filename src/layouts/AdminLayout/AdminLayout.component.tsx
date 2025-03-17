@@ -22,9 +22,7 @@ const AdminLayout: FC<AdminLayoutPropsIF> = ({ children, isLoading }) => {
                 <div className={`cvscroll ${layoutStyles.menu}`}>
                     <AdminMenu />
                 </div>
-                <div>
-                    {isLoading ? <Loading height={800} /> : children}
-                </div>
+                <div>{isLoading ? <Loading height={800} /> : children}</div>
             </MainWrapper>
             <Footer />
         </>

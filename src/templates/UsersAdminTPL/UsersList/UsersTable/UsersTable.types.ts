@@ -6,7 +6,7 @@ export interface UsersTablePropsIF {
     callbacks: {
         updateUsers: (usersId: number[]) => void;
         deleteUsers: (usersId: number[]) => void;
-        updateRoles: () => void
+        updateRoles: () => void;
     };
     pagination: PaginationIF | null;
     isDataLoading: boolean;

@@ -1,9 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
+import { useRouter } from 'next/navigation';
 import { parseResponse } from '@/store/functions';
 import { siteApi } from '@/api/site/site';
 import { SearchIF, SearchResultIF } from '@/api/site/types';
