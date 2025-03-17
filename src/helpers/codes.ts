@@ -21,6 +21,7 @@ export const ERRORS: { [key: string]: string } = {
     er218: 'Не удалось загрузить файл!',
     er219: 'Данные не являются числом!',
     er220: 'Неверный запрос!',
+    er221: 'Неверная длинна значения!',
 };
 
 export const SERVER_ERRORS: { [key: string]: string } = {
