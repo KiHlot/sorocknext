@@ -107,20 +107,6 @@ export const setStorageItem = <T>(data: T, itemName: string): boolean => {
     }
 };
 
-export const getFormattedPathName = (pathname: string) => {
-    return pathname.length > 1 && pathname.endsWith('/')
-        ? pathname.slice(0, -1)
-        : pathname;
-};
-
-export const deleteSearchParams = () => {
-    window.history.replaceState(
-        {},
-        document.title,
-        `${window.location.origin}${window.location.pathname}`,
-    );
-};
-
 export const normalizeImage = (
     url: string | null | undefined,
     type: NormalizeImageTypeT,
