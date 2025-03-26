@@ -24,7 +24,6 @@ export const Input = <T extends FieldValues>({
     isPassword,
     className = '',
     styleType = 'main',
-    backError,
 }: InputProps<T>): ReactElement => {
     const {
         field: { value, onChange },
@@ -88,7 +87,7 @@ export const Input = <T extends FieldValues>({
                     </button>
                 )}
             </div>
-            <FieldError message={fieldState.error?.message || backError} />
+            <FieldError message={fieldState.error?.message} />
         </div>
     );
 };
