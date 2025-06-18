@@ -6,13 +6,13 @@ import { yupResolver } from '~/@hookform/resolvers/yup';
 import { parseResponse } from '@/store/functions';
 import { siteApi } from '@/api/site/site';
 import { ContactFormIF } from '@/api/site/types';
-import InfoBlock from '@/components/blocks/InfoBlock/InfoBlock.component';
-import MainButton from '@/components/elems/MainButton/MainButton.component';
-import { Input } from '@/components/form/Input/Input.component';
-import TextArea from '@/components/form/TextArea/TextArea.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
+import { Input } from '@/components/controls/Input/Input.component';
 import { schema } from '@/components/sections/Footer/TopFooter/ContactForm/ContactForm.config';
 import styles from '@/components/sections/Footer/TopFooter/ContactForm/ContactForm.module.scss';
 import { FieldsNames } from '@/components/sections/Footer/TopFooter/ContactForm/ContactForm.types';
+import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
+import TextArea from '@/components/controls/TextArea/TextArea.component';
 
 const ContactForm: FC = () => {
     const [sendContactForm, { data: result, isLoading, isSuccess }] =

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Loading from '@/components/blocks/Loading/Loading.component';
+import Loading from '@/components/elems/Loading/Loading.component';
 import styles from '@/components/sections/PostContentSection/PostContentSection.module.scss';
 import { PostContentSectionPropsIF } from '@/components/sections/PostContentSection/PostContentSection.types';
 

@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import { parseResponse } from '@/store/functions';
 import { authApi } from '@/api/auth/auth';
 import { SUCCESS_NOTIFY } from '@/helpers/codes';
-import InfoBlock from '@/components/blocks/InfoBlock/InfoBlock.component';
-import MainButton from '@/components/elems/MainButton/MainButton.component';
-import { Input } from '@/components/form/Input/Input.component';
+import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
+import { Input } from '@/components/controls/Input/Input.component';
 import { schema } from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.config';
 import styles from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.module.scss';
 import {

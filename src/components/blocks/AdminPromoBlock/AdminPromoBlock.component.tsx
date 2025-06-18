@@ -5,7 +5,7 @@ import { TIME_FORMAT } from '@/helpers/config';
 import styles from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.module.scss';
 import { AdminPromoBlockPropsIF } from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.types';
 import Block from '@/components/blocks/Block/Block.component';
-import MainButton from '@/components/elems/MainButton/MainButton.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
 
 const AdminPromoBlock: FC<AdminPromoBlockPropsIF> = ({
     title,

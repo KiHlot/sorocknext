@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 import { parseResponse } from '@/store/functions';
 import { siteApi } from '@/api/site/site';
 import { SearchIF, SearchResultIF } from '@/api/site/types';
-import MainButton from '@/components/elems/MainButton/MainButton.component';
-import { Input } from '@/components/form/Input/Input.component';
+import { Input } from '@/components/controls/Input/Input.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
 import styles from '@/components/menus/TopMenu/SearchForm/SearchForm.module.scss';
 import {
     FieldsNames,

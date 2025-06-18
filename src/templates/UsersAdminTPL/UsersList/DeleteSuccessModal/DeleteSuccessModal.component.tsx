@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { TiUserDeleteOutline } from 'react-icons/ti';
-import Modal from '@/components/main/Modal/Modal.component';
+import Modal from '@/components/interactive/Modal/Modal.component';
 import Table, {
     RowItem,
     TableRow,

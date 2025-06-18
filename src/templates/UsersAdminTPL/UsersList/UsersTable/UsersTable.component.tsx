@@ -3,15 +3,15 @@ import { FC, useEffect, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RxUpdate } from 'react-icons/rx';
 import Link from 'next/link';
-import Img from '@/components/elems/Img/Img.component';
-import MainButton from '@/components/elems/MainButton/MainButton.component';
-import NoData from '@/components/elems/NoData/NoData.component';
-import CheckBoxBase from '@/components/form/CheckBox/CheckBoxBase/CheckBoxBase.component';
-import Pagination from '@/components/main/Pagination/Pagination.component';
 import Table, {
     RowItem,
     TableRow,
-} from '@/components/main/Table/Table.component';
+} from '@/components/blocks/Table/Table.component';
+import CheckBoxBase from '@/components/controls/CheckBox/CheckBoxBase/CheckBoxBase.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Img from '@/components/elems/Img/Img.component';
+import NoData from '@/components/elems/NoData/NoData.component';
+import Pagination from '@/components/interactive/Pagination/Pagination.component';
 import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.component';
 import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';

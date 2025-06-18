@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout.component';
 import Block from '@/components/blocks/Block/Block.component';
-import ButtonsGroup from '@/components/main/ButtonsGroup/ButtonsGroup.component';
+import ButtonsGroup from '@/components/interactive/ButtonsGroup/ButtonsGroup.component';
 import { AUTH_TPL_CONFIG } from '@/templates/AuthTPL/AuthTPL.config';
 import styles from '@/templates/AuthTPL/AuthTPL.module.scss';
 import LoginForm from '@/templates/AuthTPL/LoginForm/LoginForm.component';

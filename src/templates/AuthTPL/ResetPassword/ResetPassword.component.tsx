@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useState } from 'react';
-import ButtonsGroup from '@/components/main/ButtonsGroup/ButtonsGroup.component';
+import ButtonsGroup from '@/components/interactive/ButtonsGroup/ButtonsGroup.component';
 import { RESET_PASS_BUTTONS } from '@/templates/AuthTPL/ResetPassword/ResetPassword.config';
 import {
     ActiveTabT,

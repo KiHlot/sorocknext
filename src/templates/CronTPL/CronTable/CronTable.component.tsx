@@ -5,11 +5,11 @@ import dayjs from '~/dayjs';
 import { RxUpdate } from '~/react-icons/rx';
 import { adminApi } from '@/api/admin/admin';
 import { TIME_FORMAT } from '@/helpers/config';
-import MainButton from '@/components/elems/MainButton/MainButton.component';
 import Table, {
     RowItem,
     TableRow,
-} from '@/components/main/Table/Table.component';
+} from '@/components/blocks/Table/Table.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
 import { TABLE_TITLES } from '@/templates/CronTPL/CronTable/CronTable.config';
 import styles from '@/templates/CronTPL/CronTable/CronTable.module.scss';
 import { CronTablePropsIF } from '@/templates/CronTPL/CronTable/CronTable.types';
