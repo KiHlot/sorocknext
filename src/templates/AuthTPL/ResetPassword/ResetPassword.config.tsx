@@ -1,6 +1,6 @@
 import { IoMailOutline } from 'react-icons/io5';
 import { PiPassword } from 'react-icons/pi';
-import { ButtonGroupIF } from '@/components/main/ButtonsGroup/ButtonsGroup.types';
+import { ButtonGroupIF } from '@/components/interactive/ButtonsGroup/ButtonsGroup.types';
 import { ActiveTabT } from '@/templates/AuthTPL/ResetPassword/ResetPassword.types';
 
 export const RESET_PASS_BUTTONS: ButtonGroupIF<ActiveTabT>[] = [

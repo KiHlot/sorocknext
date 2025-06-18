@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { LEFT_MENU } from '@/components/menus/LeftMenu/LeftMenu.config';
 import VerticalMenu from '@/components/blocks/VerticalMenu/VerticalMenu.component';
+import { LEFT_MENU } from '@/components/menus/LeftMenu/LeftMenu.config';
 
 const LeftMenu: FC = () => {
     return <VerticalMenu menuList={LEFT_MENU} />;

@@ -1,7 +1,7 @@
 import { IoEnterOutline } from 'react-icons/io5';
 import { LuUserRoundPlus } from 'react-icons/lu';
 import { TbArrowBackUp } from 'react-icons/tb';
-import { ButtonGroupIF } from '@/components/main/ButtonsGroup/ButtonsGroup.types';
+import { ButtonGroupIF } from '@/components/interactive/ButtonsGroup/ButtonsGroup.types';
 
 export const AUTH_TPL_CONFIG: ButtonGroupIF[] = [
     {

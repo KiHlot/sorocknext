@@ -1,4 +1,4 @@
-import { TableTitlesIF } from '@/components/main/Table/Table.types';
+import { TableTitlesIF } from '@/components/blocks/Table/Table.types';
 
 export const TABLE_TITLES: TableTitlesIF[] = [
     { title: 'Название' },

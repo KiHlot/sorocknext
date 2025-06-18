@@ -4,12 +4,12 @@ import { IoTimerOutline } from 'react-icons/io5';
 import { IoCalendarOutline } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
 import { TIME_FORMAT } from '@/helpers/config';
-import Loading from '@/components/elems/Loading/Loading.component';
 import Author from '@/components/elems/Author/Author.component';
 import Country from '@/components/elems/Country/Country.component';
+import Loading from '@/components/elems/Loading/Loading.component';
+import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 import styles from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.module.scss';
 import { SinglePostPromoSectionPropsIF } from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.types';
-import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 
 const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
     data,
