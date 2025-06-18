@@ -1,11 +1,10 @@
-import dayjs from 'dayjs';
 import { FC } from 'react';
 import { RxUpdate } from 'react-icons/rx';
+import { formatDate } from '@/helpers/utils';
 import styles from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.module.scss';
 import { AdminPromoBlockPropsIF } from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.types';
 import Block from '@/components/blocks/Block/Block.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import { TIME_FORMAT } from '@/configs/config';
 
 const AdminPromoBlock: FC<AdminPromoBlockPropsIF> = ({
     title,
@@ -26,12 +25,7 @@ const AdminPromoBlock: FC<AdminPromoBlockPropsIF> = ({
                             Последнее обновление:
                         </div>
                         <div className={styles.value}>
-                            {modifyData?.lastUpdate
-                                ? dayjs(
-                                      modifyData.lastUpdate,
-                                      TIME_FORMAT.common,
-                                  ).format(TIME_FORMAT.previewWithTime)
-                                : 'no date'}
+                            {formatDate(modifyData?.lastUpdate, 'withTime')}
                         </div>
                         <div className={`${styles.value} `}>
                             {modifyData?.lastUpdateStatus || 'error'}

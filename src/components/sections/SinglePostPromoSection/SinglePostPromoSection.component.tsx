@@ -1,15 +1,14 @@
-import dayjs from 'dayjs';
 import { FC } from 'react';
 import { IoTimerOutline } from 'react-icons/io5';
 import { IoCalendarOutline } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
+import { formatDate } from '@/helpers/utils';
 import Author from '@/components/elems/Author/Author.component';
 import Country from '@/components/elems/Country/Country.component';
 import Loading from '@/components/elems/Loading/Loading.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 import styles from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.module.scss';
 import { SinglePostPromoSectionPropsIF } from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.types';
-import { TIME_FORMAT } from '@/configs/config';
 
 const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
     data,
@@ -31,10 +30,7 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
                 <ul>
                     <li title="Дата публикации">
                         <IoCalendarOutline />
-                        {dayjs(data.postDate, TIME_FORMAT.common).format(
-                            'DD.MM.YYYY',
-                        )}
-                        г.
+                        {formatDate(data.postDate)}
                     </li>
                     <li title="Время на прочтение">
                         <IoTimerOutline />

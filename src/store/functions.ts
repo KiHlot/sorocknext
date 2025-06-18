@@ -113,12 +113,12 @@ export const setCustomError = <FieldsNames>(
     setError?: (name: FieldsNames, error: ErrorOption) => void,
 ) => {
     if (!errors?.length || !setError) return;
-
-    errors?.forEach(error => {
+    
+    errors?.forEach((error) => {
         if (error.fieldName) {
             setError(error.fieldName as FieldsNames, {
-                type: 'manual',
-                message: ERRORS[error.code],
+                type: 'server',
+                message: `${ERRORS[error.code]}${error?.addInfo ? ` ${error.addInfo}` : ''}`,
             });
         }
     });

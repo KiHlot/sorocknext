@@ -10,6 +10,8 @@ export const ADDRESS = {
 };
 
 export const TIME_FORMAT = {
-    common: 'YYYY-MM-DD HH:mm:ss',
-    previewWithTime: 'DD-MM-YYYY HH:mm',
+    backDateWithTime: 'YYYY-MM-DD HH:mm:ss',
+    dateUi: 'DD.MM.YYYY',
+    dateWithTime: 'DD-MM-YYYY HH:mm',
+    cookie: 'DD.MM.YYYY HH:mm:ss',
 };

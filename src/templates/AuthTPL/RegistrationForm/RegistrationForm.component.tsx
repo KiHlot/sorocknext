@@ -10,12 +10,10 @@ import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import { SUCCESS_NOTIFY } from '@/configs/codes';
 import { schema } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
-import styles from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.module.scss';
 import { FieldsNames } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.types';
 
 const RegistrationForm: FC = () => {
-    const [registerUser, { isLoading, isSuccess }] =
-        authApi.useRegisterUserMutation();
+    const [registerUser, { isLoading }] = authApi.useRegisterUserMutation();
 
     const { handleSubmit, control, setError, reset } = useForm({
         mode: 'onSubmit',
@@ -41,10 +39,7 @@ const RegistrationForm: FC = () => {
     };
 
     return (
-        <form
-            className={`flcol ${styles.registrationFormWrapper}`}
-            onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="flcol gapBlock" onSubmit={handleSubmit(onSubmit)}>
             <Input
                 name="name"
                 label="Имя"
@@ -85,11 +80,7 @@ const RegistrationForm: FC = () => {
                 isPassword
             />
 
-            <MainButton
-                type="submit"
-                isLoading={isLoading}
-                className={styles.button}
-            >
+            <MainButton type="submit" isLoading={isLoading}>
                 Регистрация
             </MainButton>
         </form>

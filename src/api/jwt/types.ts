@@ -1,9 +1,9 @@
-import { ProfileIF } from '@/types/user';
+import { CurrentUserIF } from '@/types/user';
 
 export interface UserLoginResponseIF {
     token: string;
     expired: string;
-    profileData: ProfileIF;
+    currentUser: CurrentUserIF;
 }
 
 export interface LoginFieldsReqIF {

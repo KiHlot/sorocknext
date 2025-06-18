@@ -34,7 +34,7 @@ export const setCookie = (
         ...options,
     };
     if (options.expires) {
-        options.expires = dayjs(options.expires, TIME_FORMAT.common).toDate();
+        options.expires = dayjs(options.expires, TIME_FORMAT.cookie).toDate();
     }
 
     let updatedCookie =
@@ -51,7 +51,7 @@ export const setCookie = (
     for (const key of optionKeys) {
         const optionValue = options[key];
         if (optionValue !== undefined) {
-            updatedCookie += '; ' + (key as string);
+            updatedCookie += '; ' + key;
             if (optionValue !== true) {
                 updatedCookie += '=' + optionValue;
             }
@@ -59,6 +59,17 @@ export const setCookie = (
     }
 
     document.cookie = updatedCookie;
+};
+
+export const formatDate = (backDate?: string, type?: 'withTime') => {
+    if (!backDate) {
+        return 'Нет даты';
+    }
+
+    const uiFormat =
+        type === 'withTime' ? TIME_FORMAT.dateWithTime : TIME_FORMAT.dateUi;
+
+    return `${dayjs(backDate, TIME_FORMAT.backDateWithTime).format(uiFormat)}${type ? '' : 'г.'}`;
 };
 
 export const getCookie = (name: string): string | null => {
@@ -95,10 +106,17 @@ export const getStorageItem = <ReturnType = string>(
     }
 };
 
-export const setStorageItem = <T>(data: T, itemName: string): boolean => {
+export const setStorageItem = <T>(
+    data: T | null | undefined,
+    itemName: string,
+): boolean => {
     if (typeof window === 'undefined') return false;
 
     try {
+        if (!data) {
+            sessionStorage.removeItem(itemName);
+        }
+
         sessionStorage.setItem(itemName, JSON.stringify(data));
         return true;
     } catch (error) {

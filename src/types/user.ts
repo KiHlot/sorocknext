@@ -42,7 +42,7 @@ export interface UserIF {
     activity: UserActivity;
 }
 
-export interface ProfileIF {
+export interface CurrentUserIF {
     userId: number;
     role: UserRoleT;
     fullName: string;

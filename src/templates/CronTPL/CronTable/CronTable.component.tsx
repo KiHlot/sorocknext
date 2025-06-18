@@ -4,6 +4,7 @@ import { FC } from 'react';
 import dayjs from '~/dayjs';
 import { RxUpdate } from '~/react-icons/rx';
 import { adminApi } from '@/api/admin/admin';
+import { formatDate } from '@/helpers/utils';
 import Table, {
     RowItem,
     TableRow,
@@ -38,12 +39,7 @@ const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
                 <TableRow key={taskName}>
                     <RowItem>{value?.label || 'Нет названия'}</RowItem>
                     <RowItem>
-                        {value?.lastUpdate
-                            ? dayjs(
-                                  value.lastUpdate,
-                                  TIME_FORMAT.common,
-                              ).format(TIME_FORMAT.previewWithTime)
-                            : 'Нет даты'}
+                        {formatDate(value?.lastUpdate, 'withTime')}
                     </RowItem>
                     <RowItem
                         className={styles[value?.lastUpdateStatus || 'error']}

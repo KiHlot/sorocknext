@@ -10,14 +10,14 @@ import { LoginFieldsReqIF } from '@/api/jwt/types';
 import { setCookie, setStorageItem } from '@/helpers/utils';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import { SERVER_ERRORS } from '@/configs/codes';
+import { SERVER_ERRORS, SUCCESS_NOTIFY } from '@/configs/codes';
 import { schema } from '@/templates/AuthTPL/LoginForm/LoginForm.config';
-import styles from '@/templates/AuthTPL/LoginForm/LoginForm.module.scss';
+import { CurrentUserIF } from '@/types/user';
 
 const LoginForm: FC = () => {
-    const [loginUser, { isLoading, isSuccess }] = jwtApi.useLoginUserMutation();
+    const [loginUser, { isLoading }] = jwtApi.useLoginUserMutation();
 
-    const { handleSubmit, control } = useForm<LoginFieldsReqIF>({
+    const { handleSubmit, control, reset } = useForm<LoginFieldsReqIF>({
         mode: 'onSubmit',
         resolver: yupResolver(schema),
     });
@@ -25,16 +25,15 @@ const LoginForm: FC = () => {
     const onSubmit = async (values: LoginFieldsReqIF): Promise<void> => {
         await loginUser(values)
             .unwrap()
-            .then(({ token, expired, profileData }) => {
-                if (token && expired && profileData) {
+            .then(({ token, expired, currentUser }) => {
+                if (token && expired && currentUser) {
                     setCookie('token', token, {
                         expires: expired,
                     });
+                    reset();
 
-                    setStorageItem(profileData, 'profileData');
-
-                    toast.success('Вы успешно авторизовались!');
-
+                    setStorageItem<CurrentUserIF>(currentUser, 'currentUser');
+                    toast.success(SUCCESS_NOTIFY.s105);
                     setTimeout(() => {
                         redirect('/profile');
                     }, 2000);
@@ -45,10 +44,7 @@ const LoginForm: FC = () => {
     };
 
     return (
-        <form
-            className={`flcol ${styles.loginFormWrapper}`}
-            onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="flcol gapBlock" onSubmit={handleSubmit(onSubmit)}>
             <Input
                 name="username"
                 label="Email"
@@ -64,12 +60,7 @@ const LoginForm: FC = () => {
                 isRequired
                 isPassword
             />
-            <MainButton
-                type="submit"
-                variant="green"
-                disabled={isLoading || isSuccess}
-                className={styles.button}
-            >
+            <MainButton type="submit" isLoading={isLoading}>
                 Вход
             </MainButton>
         </form>
