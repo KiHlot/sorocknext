@@ -19,7 +19,7 @@
     max-width: 90%;
     height: fit-content;
     margin-top: 10vh;
-    background-color: $greyDark;
+    background-color: $grayDark;
     border-radius: $borderRadius;
     box-shadow: $boxShadow;
     overflow: hidden;
@@ -72,7 +72,7 @@
         width: 26px;
         height: 26px;
         min-width: 26px;
-        fill: $color;
+        fill: $textColor;
     }
 }
 

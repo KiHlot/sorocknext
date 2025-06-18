@@ -8,6 +8,7 @@ import { authApi } from '@/api/auth/auth';
 import { RegistrationFieldsReqIF } from '@/api/auth/types';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
+import { SUCCESS_NOTIFY } from '@/configs/codes';
 import { schema } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
 import styles from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.module.scss';
 import { FieldsNames } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.types';
@@ -16,11 +17,10 @@ const RegistrationForm: FC = () => {
     const [registerUser, { isLoading, isSuccess }] =
         authApi.useRegisterUserMutation();
 
-    const { handleSubmit, control, setError, reset } =
-        useForm<RegistrationFieldsReqIF>({
-            mode: 'onSubmit',
-            resolver: yupResolver(schema),
-        });
+    const { handleSubmit, control, setError, reset } = useForm({
+        mode: 'onSubmit',
+        resolver: yupResolver(schema),
+    });
 
     const onSubmit = async (values: RegistrationFieldsReqIF): Promise<void> => {
         await registerUser(values)
@@ -30,9 +30,7 @@ const RegistrationForm: FC = () => {
                     data,
                     () => {
                         reset();
-                        toast.success(
-                            'Вы успешно зарегистрировались! Войдите в аккаунт, используя электронную почту и пароль, указанные при регистрации.',
-                        );
+                        toast.success(SUCCESS_NOTIFY.s104);
                         setTimeout(() => {
                             return redirect('/auth');
                         }, 2000);
@@ -89,8 +87,7 @@ const RegistrationForm: FC = () => {
 
             <MainButton
                 type="submit"
-                disabled={isLoading || isSuccess}
-                variant="green"
+                isLoading={isLoading}
                 className={styles.button}
             >
                 Регистрация

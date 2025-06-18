@@ -31,12 +31,12 @@
     svg {
         width: 20px;
         height: 20px;
-        stroke: $color;
+        stroke: $textColor;
     }
 }
 
 .active {
-    color: rgba($color, 0.6);
+    color: rgba($textColor, 0.6);
     background-color: $active;
     cursor: default;
 

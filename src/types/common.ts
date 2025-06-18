@@ -6,6 +6,13 @@ export type CallBackTypeT = 'logout';
 export type ValidatorT = {
     [index: string]: Partial<ValidatorModeIF>;
 };
+export type ElemVariantT =
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'danger';
 
 interface ValidatorModeIF {
     accept: string[];

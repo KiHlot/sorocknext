@@ -13,9 +13,11 @@ const MainButton: FC<MainButtonPropsIF> = ({
     clickHandler,
     className = '',
     type = 'button',
-    variant = '',
+    variant = 'primary',
     htmlFor,
     icon,
+    isLoading,
+    isCustom,
     dialogText,
 }) => {
     const [isDialogModalOpen, setIsDialogModalOpen] = useState<boolean>(false);
@@ -29,9 +31,11 @@ const MainButton: FC<MainButtonPropsIF> = ({
     };
 
     const commonProps = {
-        disabled,
+        disabled: disabled || isLoading,
         onClick,
-        className: `flc ${styles.button} ${styles[variant]} ${className}`,
+        className: isCustom
+            ? `${className}`
+            : `flc ${styles.button} ${styles[variant]} ${className} ${isLoading ? styles.loading : ''}`,
     };
 
     if (href) {
@@ -55,7 +59,14 @@ const MainButton: FC<MainButtonPropsIF> = ({
     return (
         <>
             <button {...commonProps} type={type}>
-                {icon && <span className={`flc ${styles.icon}`}>{icon}</span>}
+                {isLoading && ['primary', 'secondary'].includes(variant) && (
+                    <span className={styles.spinnerWrapper}>
+                        <span className="spinner"></span>
+                    </span>
+                )}
+                {icon && !isLoading && variant !== 'link' && (
+                    <span className={`flc ${styles.icon}`}>{icon}</span>
+                )}
                 {children}
             </button>
             {dialogText && clickHandler ? (

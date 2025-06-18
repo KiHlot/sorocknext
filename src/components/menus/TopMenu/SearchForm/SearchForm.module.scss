@@ -30,7 +30,7 @@
 }
 
 .button {
-    border: 1px solid rgba($color, 0.5);
+    border: 1px solid rgba($textColor, 0.5);
     border-radius: $borderRadius;
     width: 40px;
     height: 35px;
@@ -50,7 +50,7 @@
     svg {
         width: 16px;
         height: 16px;
-        fill: rgba($color, 0.5);
+        fill: rgba($textColor, 0.5);
         transition: fill 0.3s ease-in-out;
     }
 }
