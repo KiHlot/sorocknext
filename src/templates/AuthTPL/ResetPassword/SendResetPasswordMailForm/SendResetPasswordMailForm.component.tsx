@@ -4,10 +4,10 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { parseResponse } from '@/store/functions';
 import { authApi } from '@/api/auth/auth';
-import { SUCCESS_NOTIFY } from '@/helpers/codes';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
+import { SUCCESS_NOTIFY } from '@/configs/codes';
 import { schema } from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.config';
 import styles from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.module.scss';
 import {

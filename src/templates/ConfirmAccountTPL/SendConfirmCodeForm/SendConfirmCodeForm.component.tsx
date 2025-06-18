@@ -8,11 +8,11 @@ import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
 import { parseResponse } from '@/store/functions';
 import { authApi } from '@/api/auth/auth';
-import { SUCCESS_NOTIFY } from '@/helpers/codes';
 import { getStorageItem, setStorageItem } from '@/helpers/utils';
 import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
+import { SUCCESS_NOTIFY } from '@/configs/codes';
 import {
     INPUT_NAMES,
     schema,

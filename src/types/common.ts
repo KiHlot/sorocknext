@@ -3,6 +3,16 @@ import { ReactElement } from 'react';
 export type HTMLString = string;
 export type NormalizeImageTypeT = 'user80' | 'user250' | 'user500';
 export type CallBackTypeT = 'logout';
+export type ValidatorT = {
+    [index: string]: Partial<ValidatorModeIF>;
+};
+
+interface ValidatorModeIF {
+    accept: string[];
+    maxSize: number;
+    minLength: number;
+    maxLength: number;
+}
 
 export type CookieOptionsT = {
     expires?: Date | string | number;

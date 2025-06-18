@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
 import empty_user_250_250 from '@/images/img/empty_user_250_250.png';
 import empty_user_500_500 from '@/images/img/empty_user_500_500.png';
-import { TIME_FORMAT } from '@/helpers/config';
+import { TIME_FORMAT } from '@/configs/config';
 import {
     CookieOptionsT,
     DirectionT,

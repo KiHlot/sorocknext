@@ -3,9 +3,9 @@ import { ErrorOption } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { cookies } from 'next/dist/server/request/cookies';
 import { ResponseErrorIF, ResponseIF } from '@/store/types';
-import { ERRORS, SERVER_ERRORS } from '@/helpers/codes';
-import { ADDRESS } from '@/helpers/config';
 import { getCookie } from '@/helpers/utils';
+import { ERRORS, SERVER_ERRORS } from '@/configs/codes';
+import { ADDRESS } from '@/configs/config';
 import { useLogout } from '@/hooks/useLogout';
 
 export const fetchRestApiQuery = (baseUrl: string) => {

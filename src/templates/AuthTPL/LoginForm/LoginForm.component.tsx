@@ -7,10 +7,10 @@ import { redirect } from 'next/navigation';
 import { yupResolver } from '~/@hookform/resolvers/yup';
 import { jwtApi } from '@/api/jwt/jwt';
 import { LoginFieldsReqIF } from '@/api/jwt/types';
-import { SERVER_ERRORS } from '@/helpers/codes';
 import { setCookie, setStorageItem } from '@/helpers/utils';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
+import { SERVER_ERRORS } from '@/configs/codes';
 import { schema } from '@/templates/AuthTPL/LoginForm/LoginForm.config';
 import styles from '@/templates/AuthTPL/LoginForm/LoginForm.module.scss';
 

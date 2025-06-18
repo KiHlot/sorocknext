@@ -1,6 +1,6 @@
 import * as yup from 'yup';
-import { ERRORS } from '@/helpers/codes';
 import { VALIDATORS } from '@/helpers/validator';
+import { ERRORS } from '@/configs/codes';
 
 export const schema = yup.object().shape({
     username: yup

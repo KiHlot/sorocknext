@@ -1,6 +1,6 @@
 import * as yup from 'yup';
-import { ERRORS } from '@/helpers/codes';
 import { VALIDATORS } from '@/helpers/validator';
+import { ERRORS } from '@/configs/codes';
 
 export const INPUT_NAMES = ['i0', 'i1', 'i2', 'i3', 'i4', 'i5'];
 

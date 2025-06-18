@@ -1,11 +1,11 @@
+import dayjs from 'dayjs';
 import { FC } from 'react';
-import dayjs from '~/dayjs';
-import { RxUpdate } from '~/react-icons/rx';
-import { TIME_FORMAT } from '@/helpers/config';
+import { RxUpdate } from 'react-icons/rx';
 import styles from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.module.scss';
 import { AdminPromoBlockPropsIF } from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.types';
 import Block from '@/components/blocks/Block/Block.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
+import { TIME_FORMAT } from '@/configs/config';
 
 const AdminPromoBlock: FC<AdminPromoBlockPropsIF> = ({
     title,
