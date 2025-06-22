@@ -1,5 +1,5 @@
-import { ProfileIF } from '@/types/user';
+import { CurrentUserIF } from '@/types/user';
 
 export interface ConfirmAccountTPLPropsIF {
-    profileData: ProfileIF;
+    profileData: CurrentUserIF;
 }

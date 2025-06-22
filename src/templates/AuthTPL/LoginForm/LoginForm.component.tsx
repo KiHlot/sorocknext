@@ -15,7 +15,7 @@ import { schema } from '@/templates/AuthTPL/LoginForm/LoginForm.config';
 import { CurrentUserIF } from '@/types/user';
 
 const LoginForm: FC = () => {
-    const [loginUser, { isLoading }] = jwtApi.useLoginUserMutation();
+    const [loginUser, { isLoading, data }] = jwtApi.useLoginUserMutation();
 
     const { handleSubmit, control, reset } = useForm<LoginFieldsReqIF>({
         mode: 'onSubmit',
@@ -60,7 +60,11 @@ const LoginForm: FC = () => {
                 isRequired
                 isPassword
             />
-            <MainButton type="submit" isLoading={isLoading}>
+            <MainButton
+                type="submit"
+                isLoading={isLoading}
+                disabled={!!data?.currentUser}
+            >
                 Вход
             </MainButton>
         </form>

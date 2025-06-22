@@ -3,7 +3,7 @@ import { BaseDataIF } from '@/templates/NewsTPL/NewsTPL.types';
 import ProfileTPL from '@/templates/ProfileTPL/ProfileTPL.component';
 
 const Profile = async () => {
-    const data = await getApi<BaseDataIF>('/users/get-profile-data');
+    const data = await getApi<BaseDataIF>('/users/get-current-user');
 
     return <ProfileTPL data={data} />;
 };

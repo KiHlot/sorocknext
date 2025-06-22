@@ -1,7 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
@@ -18,15 +18,12 @@ import {
     INPUT_NAMES,
     schema,
 } from '@/templates/AuthTPL/ResetPassword/ResetPasswordForm/ResetPasswordForm.config';
-import styles from '@/templates/AuthTPL/ResetPassword/ResetPasswordForm/ResetPasswordForm.module.scss';
 import { FieldsNames } from '@/templates/AuthTPL/ResetPassword/ResetPasswordForm/ResetPasswordForm.types';
-import { ProfileIF } from '@/types/user';
+import { CurrentUserIF } from '@/types/user';
 
 const ResetPasswordForm: FC = () => {
-    const [resetPassword, { isLoading, isSuccess }] =
+    const [resetPassword, { isLoading, data }] =
         authApi.useResetPasswordMutation();
-
-    const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
     const {
         handleSubmit,
@@ -53,10 +50,10 @@ const ResetPasswordForm: FC = () => {
                         reset();
                         setStorageItem(
                             {
-                                ...getStorageItem<ProfileIF>('profileData'),
+                                ...getStorageItem<CurrentUserIF>('currentUser'),
                                 isActivated: true,
                             },
-                            'profileData',
+                            'currentUser',
                         );
                         toast.success(SUCCESS_NOTIFY.s101);
                         redirect('/auth');
@@ -66,19 +63,8 @@ const ResetPasswordForm: FC = () => {
             });
     };
 
-    useEffect(() => {
-        setIsDisabled(
-            isLoading ||
-                confirmCode?.length !== INPUT_NAMES.length ||
-                isSuccess,
-        );
-    }, [confirmCode, isLoading, isSuccess]);
-
     return (
-        <form
-            className={`flcol ${styles.resetPasswordFormWrapper}`}
-            onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="flcol gapBlock" onSubmit={handleSubmit(onSubmit)}>
             <InfoBlock title="Ввод нового пароля" variant="info">
                 Для обеспечения безопасности вашего аккаунта, вам необходимо
                 создать новый пароль. Убедитесь, что он соответствует следующим
@@ -100,7 +86,7 @@ const ResetPasswordForm: FC = () => {
                 control={control}
                 clearErrors={clearErrors}
                 setValue={(name, code) => setValue(name, code)}
-                isDisabled={isLoading}
+                isDisabled={isLoading || !!data}
             />
             <Input name="email" label="Email" control={control} isRequired />
             <Input
@@ -121,9 +107,12 @@ const ResetPasswordForm: FC = () => {
             />
             <MainButton
                 type="submit"
-                variant="green"
-                className={styles.button}
-                disabled={isDisabled}
+                isLoading={isLoading}
+                disabled={
+                    isLoading ||
+                    confirmCode?.length !== INPUT_NAMES.length ||
+                    !!data
+                }
             >
                 Изменить
             </MainButton>

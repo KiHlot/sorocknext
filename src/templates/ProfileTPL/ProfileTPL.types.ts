@@ -1,3 +1,1 @@
-export interface ProfileTPLPropsIF {
-    data: any;
-}
+export interface ProfileTPLPropsIF {}

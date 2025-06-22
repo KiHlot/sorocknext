@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchRestApiQuery } from '@/store/functions';
 import { ResponseIF } from '@/store/types';
 import { FilteredResultIF } from '@/types/common';
-import { ProfileIF, UserIF } from '@/types/user';
+import { CurrentUserIF, UserIF } from '@/types/user';
 
 export const usersApi = createApi({
     reducerPath: 'usersApi',
@@ -22,7 +22,7 @@ export const usersApi = createApi({
                 },
             }),
         }),
-        getProfileData: builder.query<ResponseIF<ProfileIF | null>, void>({
+        getProfileData: builder.query<ResponseIF<CurrentUserIF | null>, void>({
             query: () => ({
                 url: `/get-profile-data`,
             }),

@@ -99,7 +99,9 @@ export const getApi = async <ResultType>(
                   }
                 : {}),
         });
-
+        
+        console.log('response', response)
+        
         const { result, data }: ResponseIF<ResultType> = await response.json();
 
         return result === 'ok' ? data : null;

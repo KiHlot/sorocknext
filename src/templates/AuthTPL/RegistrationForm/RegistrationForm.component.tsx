@@ -13,7 +13,8 @@ import { schema } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.co
 import { FieldsNames } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.types';
 
 const RegistrationForm: FC = () => {
-    const [registerUser, { isLoading }] = authApi.useRegisterUserMutation();
+    const [registerUser, { isLoading, data }] =
+        authApi.useRegisterUserMutation();
 
     const { handleSubmit, control, setError, reset } = useForm({
         mode: 'onSubmit',
@@ -80,7 +81,11 @@ const RegistrationForm: FC = () => {
                 isPassword
             />
 
-            <MainButton type="submit" isLoading={isLoading}>
+            <MainButton
+                type="submit"
+                isLoading={isLoading}
+                disabled={!!data?.data}
+            >
                 Регистрация
             </MainButton>
         </form>

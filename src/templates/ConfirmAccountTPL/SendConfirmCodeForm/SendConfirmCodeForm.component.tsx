@@ -19,7 +19,7 @@ import {
 } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.config';
 import styles from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.module.scss';
 import { FieldsNames } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.types';
-import { ProfileIF } from '@/types/user';
+import { CurrentUserIF } from '@/types/user';
 
 const SendConfirmCodeForm: FC = () => {
     const [
@@ -62,7 +62,7 @@ const SendConfirmCodeForm: FC = () => {
             () => {
                 setStorageItem(
                     {
-                        ...getStorageItem<ProfileIF>('profileData'),
+                        ...getStorageItem<CurrentUserIF>('profileData'),
                         isActivated: true,
                     },
                     'profileData',

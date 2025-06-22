@@ -6,7 +6,7 @@ import CommonLayout, {
 import styles from '@/templates/ProfileTPL/ProfileTPL.module.scss';
 import { ProfileTPLPropsIF } from '@/templates/ProfileTPL/ProfileTPL.types';
 
-const ProfileTPL: FC<ProfileTPLPropsIF> = ({ data }) => {
+const ProfileTPL: FC<ProfileTPLPropsIF> = () => {
     return (
         <CommonLayout>
             <Content className={styles.ProfileTPLWrapper}>Profile</Content>

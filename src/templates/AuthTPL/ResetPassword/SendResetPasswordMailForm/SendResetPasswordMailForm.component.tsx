@@ -9,7 +9,6 @@ import MainButton from '@/components/controls/MainButton/MainButton.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import { SUCCESS_NOTIFY } from '@/configs/codes';
 import { schema } from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.config';
-import styles from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.module.scss';
 import {
     FieldsNames,
     SendResetPasswordMailFormPropsIF,
@@ -18,12 +17,10 @@ import {
 const SendResetPasswordMailForm: FC<SendResetPasswordMailFormPropsIF> = ({
     callback,
 }) => {
-    const [sendResetPasswordCodeMail, { isLoading, isSuccess }] =
+    const [sendResetPasswordCodeMail, { isLoading, data }] =
         authApi.useSendResetPasswordCodeMailMutation();
 
-    const { handleSubmit, control, setError, reset } = useForm<{
-        email: string;
-    }>({
+    const { handleSubmit, control, setError, reset } = useForm({
         mode: 'onSubmit',
         resolver: yupResolver(schema),
     });
@@ -45,18 +42,13 @@ const SendResetPasswordMailForm: FC<SendResetPasswordMailFormPropsIF> = ({
     };
 
     return (
-        <form className="flcol gap" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flcol gapBlock" onSubmit={handleSubmit(onSubmit)}>
             <InfoBlock title="Отправка проверочного кода" variant="info">
                 Введите email который вы указали при регистрации, мы вышлем
                 проверочный код
             </InfoBlock>
             <Input name="email" label="Email" control={control} isRequired />
-            <MainButton
-                type="submit"
-                variant="green"
-                className={styles.button}
-                disabled={isLoading || isSuccess}
-            >
+            <MainButton type="submit" disabled={!!data} isLoading={isLoading}>
                 Отправить
             </MainButton>
         </form>

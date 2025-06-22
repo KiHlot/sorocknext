@@ -9,7 +9,7 @@ import styles from '@/components/menus/TopMenu/UserMenu/UserMenu.module.scss';
 import { useLogout } from '@/hooks/useLogout';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { CallBackTypeT } from '@/types/common';
-import { ProfileIF } from '@/types/user';
+import { CurrentUserIF } from '@/types/user';
 
 const UserMenu: FC = () => {
     const menuWrapperRef = useRef<HTMLDivElement>(null);
@@ -18,7 +18,7 @@ const UserMenu: FC = () => {
 
     useOutsideClick(menuWrapperRef, setIsOpen);
 
-    const profileData = getStorageItem<ProfileIF>('profileData');
+    const profileData = getStorageItem<CurrentUserIF>('profileData');
 
     const clickHandler = (callBackType: CallBackTypeT) => {
         switch (callBackType) {

@@ -14,10 +14,18 @@ export const authApi = createApi({
                 body: data,
             }),
         }),
-        sendConfirmUserCodeMail: builder.mutation<ResponseIF, void>({
-            query: () => ({
-                url: `/send-confirm-user-mail`,
+        resetPassword: builder.mutation<ResponseIF, ResetPasswordIF>({
+            query: data => ({
+                url: `/reset-password`,
                 method: 'POST',
+                body: data,
+            }),
+        }),
+        sendResetPasswordCodeMail: builder.mutation<ResponseIF, string>({
+            query: email => ({
+                url: `/send-reset-pass-code-mail`,
+                method: 'POST',
+                body: { email },
             }),
         }),
         confirmUser: builder.mutation<ResponseIF, string>({
@@ -29,18 +37,10 @@ export const authApi = createApi({
                 },
             }),
         }),
-        sendResetPasswordCodeMail: builder.mutation<ResponseIF, string>({
-            query: email => ({
-                url: `/send-reset-pass-code`,
+        sendConfirmUserCodeMail: builder.mutation<ResponseIF, void>({
+            query: () => ({
+                url: `/send-confirm-user-mail`,
                 method: 'POST',
-                body: { email },
-            }),
-        }),
-        resetPassword: builder.mutation<ResponseIF, ResetPasswordIF>({
-            query: data => ({
-                url: `/reset-password`,
-                method: 'POST',
-                body: data,
             }),
         }),
     }),
