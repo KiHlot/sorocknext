@@ -60,14 +60,14 @@ const ACTIVATE_MENU: MenuItemIF[] = [
 ];
 
 export const getUserMenu = (): MenuItemIF[] => {
-    const profileData = getStorageItem<CurrentUserIF>('profileData');
+    const currentUser = getStorageItem<CurrentUserIF>('currentUser');
 
-    const baseMenu = profileData ? MENU_USER : MENU_GUEST;
+    const baseMenu = currentUser ? MENU_USER : MENU_GUEST;
 
-    const adminMenu = profileData?.role === 'administrator' ? ADMIN_MENU : [];
+    const adminMenu = currentUser?.role === 'administrator' ? ADMIN_MENU : [];
 
     const activateMenu =
-        profileData && !profileData.isActivated ? ACTIVATE_MENU : [];
+        currentUser && !currentUser.isActivated ? ACTIVATE_MENU : [];
 
     return [...adminMenu, ...activateMenu, ...baseMenu];
 };

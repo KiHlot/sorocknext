@@ -3,9 +3,8 @@ import CommonLayout, {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
-import { HomeTPLPropsIF } from '@/templates/HomeTPL/HomeTPL.types';
 
-const HomeTPL: FC<HomeTPLPropsIF> = () => {
+const HomeTPL: FC = () => {
     return (
         <CommonLayout>
             <Content>content</Content>

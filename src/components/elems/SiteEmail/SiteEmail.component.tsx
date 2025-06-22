@@ -4,9 +4,7 @@ import styles from '@/components/elems/SiteEmail/SiteEmail.module.scss';
 import { SiteEmailPropsIF } from '@/components/elems/SiteEmail/SiteEmail.types';
 
 const SiteEmail: FC<SiteEmailPropsIF> = ({ className = '' }) => {
-    const [, { data: baseData }] = siteApi.useGetBaseDataMutation({
-        fixedCacheKey: 'baseData',
-    });
+    const { data: baseData } = siteApi.useGetCommonDataQuery();
 
     const { supportEmail } = baseData?.base || {};
 

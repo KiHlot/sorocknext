@@ -1,7 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoCheckmark, IoMailOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
@@ -24,12 +24,13 @@ import { CurrentUserIF } from '@/types/user';
 const SendConfirmCodeForm: FC = () => {
     const [
         sendConfirmUserCodeMail,
-        { isLoading: isSendConfirmUserCodeMail, isSuccess },
+        {
+            data: sendConfirmUserCodeMailData,
+            isLoading: isSendConfirmUserCodeMail,
+        },
     ] = authApi.useSendConfirmUserCodeMailMutation();
     const [confirmUser, { isLoading: isConfirmUserLoading }] =
         authApi.useConfirmUserMutation();
-
-    const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
     const {
         handleSubmit,
@@ -62,10 +63,10 @@ const SendConfirmCodeForm: FC = () => {
             () => {
                 setStorageItem(
                     {
-                        ...getStorageItem<CurrentUserIF>('profileData'),
+                        ...getStorageItem<CurrentUserIF>('currentUser'),
                         isActivated: true,
                     },
-                    'profileData',
+                    'currentUser',
                 );
                 reset();
                 toast.success(SUCCESS_NOTIFY.s103);
@@ -75,12 +76,8 @@ const SendConfirmCodeForm: FC = () => {
         );
     };
 
-    useEffect(() => {
-        setIsDisabled(isSendConfirmUserCodeMail || isConfirmUserLoading);
-    }, [isSendConfirmUserCodeMail, isConfirmUserLoading, confirmCode]);
-
     return (
-        <form className="flcol gap" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flcol gapBlock" onSubmit={handleSubmit(onSubmit)}>
             <InfoBlock variant="info">
                 Введите код подтверждения, который был отправлен на вашу почту.
             </InfoBlock>
@@ -89,26 +86,23 @@ const SendConfirmCodeForm: FC = () => {
                 setValue={(name, code) => setValue(name, code)}
                 name="confirmCode"
                 control={control}
-                isDisabled={isDisabled}
+                isDisabled={isConfirmUserLoading}
                 clearErrors={clearErrors}
             />
             <div className={styles.buttonsLine}>
                 <MainButton
                     type="submit"
                     icon={<IoCheckmark />}
-                    variant="green"
-                    disabled={
-                        confirmCode?.length !== INPUT_NAMES.length || isDisabled
-                    }
+                    isLoading={isConfirmUserLoading}
+                    disabled={confirmCode?.length !== INPUT_NAMES.length}
                 >
-                    Подтвеодить
+                    Подтвердить
                 </MainButton>
-                {!isSuccess && (
+                {!sendConfirmUserCodeMailData && (
                     <MainButton
                         icon={<IoMailOutline />}
-                        variant="info"
                         clickHandler={sendMail}
-                        disabled={isDisabled}
+                        isLoading={isSendConfirmUserCodeMail}
                     >
                         Отправить код на почту
                     </MainButton>

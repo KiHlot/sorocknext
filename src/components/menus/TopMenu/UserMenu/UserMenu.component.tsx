@@ -18,7 +18,7 @@ const UserMenu: FC = () => {
 
     useOutsideClick(menuWrapperRef, setIsOpen);
 
-    const profileData = getStorageItem<CurrentUserIF>('profileData');
+    const currentUser = getStorageItem<CurrentUserIF>('currentUser');
 
     const clickHandler = (callBackType: CallBackTypeT) => {
         switch (callBackType) {
@@ -37,7 +37,7 @@ const UserMenu: FC = () => {
                 className={`flc ${styles.toggleMenu} ${isOpen ? styles.opened : ''}`}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <Img url={profileData?.avatarUrl} />
+                <Img url={currentUser?.avatarUrl} />
             </button>
             {isOpen && (
                 <ul className={`flcol ${styles.menuList}`}>

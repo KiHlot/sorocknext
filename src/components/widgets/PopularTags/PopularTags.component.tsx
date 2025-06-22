@@ -7,9 +7,7 @@ import PopularTagModal from '@/components/widgets/PopularTags/PopularTagModal/Po
 import styles from '@/components/widgets/PopularTags/PopularTags.module.scss';
 
 const PopularTags: FC = () => {
-    const [, { data: baseData }] = siteApi.useGetBaseDataMutation({
-        fixedCacheKey: 'baseData',
-    });
+    const { data: baseData } = siteApi.useGetCommonDataQuery();
 
     return baseData?.popularTags?.length ? (
         <div className={styles.popularTagsWrapper}>

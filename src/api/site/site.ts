@@ -19,10 +19,9 @@ export const siteApi = createApi({
                 body,
             }),
         }),
-        getBaseData: builder.mutation<BaseData | null, void>({
+        getCommonData: builder.query<BaseData | null, void>({
             query: () => ({
-                url: `/base-data`,
-                method: 'POST',
+                url: `/common-data`,
             }),
             transformResponse(response: ResponseIF<BaseData>) {
                 return response?.data;

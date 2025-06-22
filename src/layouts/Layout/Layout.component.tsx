@@ -1,19 +1,10 @@
 'use client';
 
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
-import { siteApi } from '@/api/site/site';
 import { LayoutPropsIF } from '@/layouts/Layout/Layout.types';
 
 const Layout: FC<LayoutPropsIF> = ({ children }) => {
-    const [getBaseData] = siteApi.useGetBaseDataMutation({
-        fixedCacheKey: 'baseData',
-    });
-
-    useEffect(() => {
-        getBaseData();
-    }, []);
-
     return (
         <>
             {children}
