@@ -1,25 +1,25 @@
 'use client';
 
-import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
-import { parseResponse } from '@/store/functions';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { CurrentUserIF } from '@/types/user';
 import { authApi } from '@/api/auth/auth';
 import { ResetPasswordIF } from '@/api/auth/types';
 import { getStorageItem, setStorageItem } from '@/helpers/utils';
-import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
-import { Input } from '@/components/controls/Input/Input.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
-import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
-import { SUCCESS_NOTIFY } from '@/configs/codes';
 import {
     INPUT_NAMES,
     schema,
 } from '@/templates/AuthTPL/ResetPassword/ResetPasswordForm/ResetPasswordForm.config';
 import { FieldsNames } from '@/templates/AuthTPL/ResetPassword/ResetPasswordForm/ResetPasswordForm.types';
-import { CurrentUserIF } from '@/types/user';
+import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
+import { Input } from '@/components/controls/Input/Input.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
+import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
+import { SUCCESS_NOTIFY } from '@/configs/codes';
+import { parseResponse } from '@/store/functions';
 
 const ResetPasswordForm: FC = () => {
     const [resetPassword, { isLoading, data }] =

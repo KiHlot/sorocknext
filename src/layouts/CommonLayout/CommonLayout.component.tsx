@@ -33,14 +33,14 @@ export const Content: FC<CommonLayoutContentPropsIF> = ({
     className = '',
 }) => {
     return (
-        <div className={`flcol gap ${styles.content} ${className}`}>
+        <main className={`flcol gapLayout ${styles.content} ${className}`}>
             {children}
-        </div>
+        </main>
     );
 };
 
 export const Sidebar: FC<CommonLayoutSidebarPropsIF> = ({ children }) => {
-    return <div className={styles.content}>{children}</div>;
+    return <aside className="flcol gapLayout">{children}</aside>;
 };
 
 export default CommonLayout;

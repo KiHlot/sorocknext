@@ -14,7 +14,7 @@ const ButtonsGroup: FC<ButtonsGroupPropsIF> = ({
     const { activeTab, setActiveTab } = controls;
 
     const clickHandler = (key: string) => {
-        setActiveTab && setActiveTab(key);
+        setActiveTab?.(key);
     };
 
     return (
