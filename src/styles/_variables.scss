@@ -2,11 +2,6 @@ $white: #ffffff;
 $black: #000000;
 $textColor: #a8b6bb;
 $colorPrimary: #0bb197;
-
-
-$colorLight: #f8f9fa;
-$colorDark: #1d222e;
-
 $colorSecondary: #74788d;
 $accent: #cf304d;
 $bgColor: #303841;
@@ -14,12 +9,9 @@ $bgColorSecondary: #283039;
 $bgColorDark: #21282f;
 $blockQuoteBg: #272a31;
 $grayDark: #1f2426;
-$grayDarkLight: #323232;
 $error: #8a4139;
 $correct: #267873;
-$success: #0ac074;
-$warning: #fcb92c;
-$info: #28384a;
+$info: #21495a;
 $active: #1f2329;
 
 $goldGradient: linear-gradient(
@@ -49,7 +41,7 @@ $elemShadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 $textShadow: 1px 1px 2px #000000;
 
 $borderRadius: 8px;
-$border: 1px solid #3d454e;
+$border: 1px solid rgba($textColor, .05);
 $borderError: 1px solid rgba($error, 0.6);
 
 $zIndexPopup: 70;
