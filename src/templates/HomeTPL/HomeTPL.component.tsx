@@ -3,13 +3,13 @@ import CommonLayout, {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
-import LastNewsPromoWidget from '@/components/widgets/LastNewsPromoWidget/LastNewsPromoWidget.component';
+import HomePagePromoSection from '@/components/sections/HomePagePromoSection/HomePagePromoSection.component';
 
 const HomeTPL: FC = () => {
     return (
         <CommonLayout>
             <Content>
-                <LastNewsPromoWidget />
+                <HomePagePromoSection data={{}} />
             </Content>
             <Sidebar>sidebar</Sidebar>
         </CommonLayout>

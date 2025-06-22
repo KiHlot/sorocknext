@@ -1,3 +1,3 @@
 export interface HomePagePromoSectionPropsIF {
-    className: string;
+    data: any;
 }

@@ -25,7 +25,7 @@ const TopMenu: FC = () => {
     }, []);
 
     return (
-        <div
+        <header
             className={`hide ${styles.topMenuWrapper} ${isScrolled ? styles.scrolled : ''}`}
         >
             <MainWrapper className={styles.mainWrapper}>
@@ -35,7 +35,7 @@ const TopMenu: FC = () => {
                 <SiteEmail />
                 <UserMenu />
             </MainWrapper>
-        </div>
+        </header>
     );
 };
 

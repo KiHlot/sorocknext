@@ -5,16 +5,12 @@ import { HomePagePromoSectionPropsIF } from '@/components/sections/HomePagePromo
 import PromoSiteInfo from '@/components/sections/HomePagePromoSection/PromoSiteInfo/PromoSiteInfo.component';
 import LastNewsPromoWidget from '@/components/widgets/LastNewsPromoWidget/LastNewsPromoWidget.component';
 
-const HomePagePromoSection: FC<HomePagePromoSectionPropsIF> = ({
-    className,
-}) => {
+const HomePagePromoSection: FC<HomePagePromoSectionPropsIF> = ({ data }) => {
     return (
-        <Section
-            className={`${styles.homePagePromoSectionWrapper} ${className}`}
-        >
-            <div className="backGround" />
-            <PromoSiteInfo />
-            <LastNewsPromoWidget data={{}} />
+        <Section className={styles.homePagePromoSectionWrapper}>
+            <div className={styles.background} />
+            <PromoSiteInfo className={styles.promo} />
+            <LastNewsPromoWidget className={styles.latestNews} data={{}} />
         </Section>
     );
 };

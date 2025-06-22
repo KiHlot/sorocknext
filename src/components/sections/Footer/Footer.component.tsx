@@ -5,9 +5,9 @@ import TopFooter from '@/components/sections/Footer/TopFooter/TopFooter.componen
 
 const Footer: FC<FooterPropsIF> = ({ className }) => {
     return (
-        <div className={`${styles.footerWrapper} ${className || ''}`}>
+        <footer className={`${styles.footerWrapper} ${className || ''}`}>
             <TopFooter />
-        </div>
+        </footer>
     );
 };
 

@@ -18,9 +18,9 @@ const CommonLayout: FC<CommonLayoutPropsIF> = ({ children }) => {
             <MainWrapper
                 className={`${layoutStyles.layout} ${styles.commonLayoutWrapper}`}
             >
-                <div className={styles.menu}>
+                <aside className={styles.menu}>
                     <LeftMenu />
-                </div>
+                </aside>
                 {children}
             </MainWrapper>
             <Footer />

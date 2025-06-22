@@ -1,3 +1,3 @@
 export interface PromoSiteInfoPropsIF {
-    className?: string;
+    className: string;
 }

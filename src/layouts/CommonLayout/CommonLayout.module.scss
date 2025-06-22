@@ -1,9 +1,9 @@
 @use '@/styles/variables' as *;
 
 .commonLayoutWrapper {
-    grid-template-columns: 260px 1fr 500px;
-    gap: $gapDesctop;
-    padding: 90px 0 $gapDesctop;
+    grid-template-columns: 200px 1fr 360px;
+    gap: $gapDesktop;
+    padding: 90px 0 $gapDesktop;
 }
 
 .menu {
