@@ -27,7 +27,7 @@ const UsersAdminTPL: FC<UsersAdminTPLPropsIF> = ({ data }) => {
     }, [data]);
 
     return (
-        <div className="flcol gap">
+        <div className="flcol gapLayout">
             <AdminPromoBlock
                 title="Пользователи"
                 isLoading={isLoading}

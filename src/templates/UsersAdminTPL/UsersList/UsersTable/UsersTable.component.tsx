@@ -56,7 +56,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
     }, [usersList]);
 
     return (
-        <div className="flcol gap">
+        <div className="flcol gapLayout">
             <div className={styles.buttonsLine}>
                 <MainButton
                     className={styles.delete}

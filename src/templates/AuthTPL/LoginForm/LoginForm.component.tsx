@@ -5,14 +5,14 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
 import { yupResolver } from '~/@hookform/resolvers/yup';
+import { CurrentUserIF } from '@/types/user';
 import { jwtApi } from '@/api/jwt/jwt';
 import { LoginFieldsReqIF } from '@/api/jwt/types';
 import { setCookie, setStorageItem } from '@/helpers/utils';
+import { schema } from '@/templates/AuthTPL/LoginForm/LoginForm.config';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import { SERVER_ERRORS, SUCCESS_NOTIFY } from '@/configs/codes';
-import { schema } from '@/templates/AuthTPL/LoginForm/LoginForm.config';
-import { CurrentUserIF } from '@/types/user';
+import { SUCCESS_NOTIFY } from '@/configs/codes';
 
 const LoginForm: FC = () => {
     const [loginUser, { isLoading, data }] = jwtApi.useLoginUserMutation();
@@ -37,8 +37,6 @@ const LoginForm: FC = () => {
                     setTimeout(() => {
                         redirect('/profile');
                     }, 2000);
-                } else {
-                    toast.error(SERVER_ERRORS.e405);
                 }
             });
     };

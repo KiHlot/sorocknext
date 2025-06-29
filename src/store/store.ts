@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { globalDataSlice } from '@/store/slices/globalDataSlice';
 import { adminApi } from '@/api/admin/admin';
 import { authApi } from '@/api/auth/auth';
 import { jwtApi } from '@/api/jwt/jwt';
+import { pageApi } from '@/api/page/page';
 import { siteApi } from '@/api/site/site';
 import { taxonomyApi } from '@/api/taxonomy/taxonomy';
 import { usersApi } from '@/api/users/users';
+import { globalDataSlice } from '@/store/slices/globalDataSlice';
 
 const rootReducer = combineReducers({
     [usersApi.reducerPath]: usersApi.reducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     [jwtApi.reducerPath]: jwtApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [adminApi.reducerPath]: adminApi.reducer,
+    [pageApi.reducerPath]: pageApi.reducer,
 });
 
 export const makeStore = () => {
@@ -28,6 +30,7 @@ export const makeStore = () => {
                 authApi.middleware,
                 usersApi.middleware,
                 adminApi.middleware,
+                pageApi.middleware,
             ]),
     });
 };

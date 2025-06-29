@@ -1,3 +1,5 @@
+import { HomePageDataIF } from '@/api/page/types';
+
 export interface HomeTPLPropsIF {
-    props: any;
+    data?: HomePageDataIF | null;
 }

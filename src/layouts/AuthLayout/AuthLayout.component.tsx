@@ -10,7 +10,7 @@ const AuthLayout: FC<AuthLayoutPropsIF> = ({ children }) => {
     return (
         <div className={`${styles.authLayout} ${layoutStyles.layout}`}>
             <div className={styles.leftSide} />
-            <div className={`flcol gap ${styles.content}`}>
+            <div className={`flcol gapLayout ${styles.content}`}>
                 <Link href={'/'} className={styles.backButton}>
                     <IoArrowBackOutline />
                     На главную

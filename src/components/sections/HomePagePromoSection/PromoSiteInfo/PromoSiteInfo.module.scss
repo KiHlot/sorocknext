@@ -1,3 +1,57 @@
-.promoSiteInfoWrapper{
+@use '@/styles/variables' as *;
 
+.promoSiteInfoWrapper {
+    position: relative;
+    padding-top: 60px;
+}
+
+.logoWrapper {
+    height: auto;
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 51px);
+    background-color: $bgColorSecondary;
+    width: fit-content;
+    border-radius: 50%;
+    padding: 6px;
+}
+
+.logo {
+    width: 90px;
+    height: 90px;
+    position: relative;
+    margin: 0 auto;
+    border-radius: 50%;
+
+    svg {
+        width: 78px;
+        height: 78px;
+        filter: $svgShadow;
+    }
+}
+
+.titleWrapper {
+    width: 100%;
+    display: flex;
+    gap: 4px 0;
+    text-align: center;
+
+    .title {
+        font-size: 16px;
+        font-weight: 600;
+        color: $white;
+    }
+
+    .subTitle {
+        color: $accent;
+    }
+}
+
+.content {
+    font-size: 13px;
+    color: rgba($textColor, 0.8);
+}
+
+.button {
+    padding-bottom: 4px;
 }

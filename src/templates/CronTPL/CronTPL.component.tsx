@@ -26,7 +26,7 @@ const CronTPL: FC<CronTPLPropsIF> = ({ data }) => {
     }, [data]);
 
     return (
-        <div className="flcol gap">
+        <div className="flcol gapLayout">
             <AdminPromoBlock
                 title="Настройки крона"
                 clickHandler={clickHandler}

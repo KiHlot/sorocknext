@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode } from 'react';
 
-type ButtonVariantT = 'primary' | 'secondary' | 'sq' | 'link';
+type ButtonVariantT = 'primary' | 'secondary' | 'sq' | 'link' | 'accent';
 
 export interface MainButtonPropsIF {
     children?: ReactNode;

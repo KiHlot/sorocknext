@@ -2,36 +2,40 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ErrorOption } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { cookies } from 'next/dist/server/request/cookies';
-import { ResponseErrorIF, ResponseIF } from '@/store/types';
+import { UserLoginResponseIF } from '@/api/jwt/types';
+import { useLogout } from '@/hooks/useLogout';
 import { getCookie } from '@/helpers/utils';
 import { ERRORS, SERVER_ERRORS } from '@/configs/codes';
 import { ADDRESS } from '@/configs/config';
-import { useLogout } from '@/hooks/useLogout';
+import { ResponseErrorIF, ResponseIF } from '@/store/types';
+
+const handleAuthError = (status: number, immediate = true) => {
+    if ([401, 403].includes(status)) {
+        useLogout(immediate);
+    }
+};
+
+const showErrorToast = (status: number, statusText?: string) => {
+    toast.error(
+        SERVER_ERRORS[`e${status}`] || `Ошибка ${statusText || status}`,
+    );
+};
 
 export const fetchRestApiQuery = (baseUrl: string) => {
     return fetchBaseQuery({
         baseUrl: `${ADDRESS.WP_API_URL}${baseUrl}`,
         prepareHeaders: headers => {
             const token = getCookie('token');
-
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
-
             return headers;
         },
-        responseHandler: async (response): Promise<ResponseIF | null> => {
+        responseHandler: async (response): Promise<ResponseIF | void> => {
             if (response?.status !== 200) {
-                toast.error(
-                    SERVER_ERRORS[`e${response.status}`] ||
-                        `Ошибка ${response.statusText || response.status}`,
-                );
-
-                if ([401, 403].includes(response?.status)) {
-                    useLogout();
-                }
-
-                return null;
+                showErrorToast(response.status, response.statusText);
+                handleAuthError(response.status);
+                return;
             }
 
             const data: ResponseIF = await response.json();
@@ -47,12 +51,16 @@ export const fetchRestApiQuery = (baseUrl: string) => {
                 });
             }
 
-            if (data.result === 'redirect' && data.redirectTo?.text) {
-                toast.warning(`${data.redirectTo?.text} Готовим редирект!`);
+            if (data.result === 'redirect') {
+                if (data.redirectUrl) {
+                    window.location.href = data.redirectUrl;
+                } else {
+                    showErrorToast(500);
+                }
             }
 
             if (data.result === 'logout') {
-                useLogout();
+                useLogout(true);
             }
 
             return data;
@@ -63,18 +71,12 @@ export const fetchRestApiQuery = (baseUrl: string) => {
 export const fetchJWTTokenQuery = () => {
     return fetchBaseQuery({
         baseUrl: ADDRESS.WP_JWT_API_URL,
-        responseHandler: async (response): Promise<ResponseIF | null> => {
+        responseHandler: async response => {
             if (response?.status !== 200) {
                 toast.error(ERRORS.er209);
-
-                if ([401, 403].includes(response?.status)) {
-                    useLogout(true);
-                }
-
                 return null;
             }
-
-            return await response.json();
+            return response.json();
         },
     });
 };
@@ -99,9 +101,7 @@ export const getApi = async <ResultType>(
                   }
                 : {}),
         });
-        
-        console.log('response', response)
-        
+
         const { result, data }: ResponseIF<ResultType> = await response.json();
 
         return result === 'ok' ? data : null;
@@ -115,8 +115,8 @@ export const setCustomError = <FieldsNames>(
     setError?: (name: FieldsNames, error: ErrorOption) => void,
 ) => {
     if (!errors?.length || !setError) return;
-    
-    errors?.forEach((error) => {
+
+    errors?.forEach(error => {
         if (error.fieldName) {
             setError(error.fieldName as FieldsNames, {
                 type: 'server',

@@ -6,14 +6,9 @@ export type ResponseErrorIF = {
     addInfo?: string;
 };
 
-export type ResponseRedirectToIF = {
-    url: string;
-    text?: string;
-};
-
 export interface ResponseIF<DataIF = null> {
     result: ResponseResultT;
     data: DataIF | null;
     errors?: ResponseErrorIF[];
-    redirectTo?: ResponseRedirectToIF;
+    redirectUrl?: string;
 }

@@ -9,7 +9,10 @@ const HomePagePromoSection: FC<HomePagePromoSectionPropsIF> = ({ data }) => {
     return (
         <Section className={styles.homePagePromoSectionWrapper}>
             <div className={styles.background} />
-            <PromoSiteInfo className={styles.promo} />
+            <PromoSiteInfo
+                className={styles.promo}
+                promoSiteInfo={data.promoSiteInfo}
+            />
             <LastNewsPromoWidget className={styles.latestNews} data={{}} />
         </Section>
     );

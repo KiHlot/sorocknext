@@ -7,7 +7,7 @@ body {
     min-height: 100vh;
     position: relative;
     background: $bgColor;
-    font-size: 16px;
+    font-size: 14px;
     color: $textColor;
     line-height: normal;
     overflow-x: hidden;
@@ -253,22 +253,6 @@ header {
     }
 }
 
-.cl_30 {
-    width: 30%;
-}
-
-.cl_48 {
-    width: 48%;
-}
-
-.cl_68 {
-    width: 68%;
-}
-
-.cl_100 {
-    width: 100%;
-}
-
 .bgc {
     background-repeat: no-repeat;
     background-size: cover;
@@ -287,18 +271,9 @@ header {
     align-items: center;
 }
 
-.flcol,
-.form {
+.flcol {
     display: flex;
     flex-direction: column;
-}
-
-.form {
-    gap: 20px 0;
-}
-
-.gap {
-    gap: $gapDesktop 0;
 }
 
 .gapLayout {

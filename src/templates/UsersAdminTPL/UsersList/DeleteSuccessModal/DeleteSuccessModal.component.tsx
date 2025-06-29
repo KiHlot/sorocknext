@@ -25,7 +25,7 @@ const DeleteSuccessModal: FC<DeleteSuccessModalPropsIF> = ({
             }}
             isLoading={!data}
         >
-            <div className="flcol gap">
+            <div className="flcol gapLayout">
                 {result?.length && (
                     <Table titles={DELETE_SUCCESS_MODAL_TITLES}>
                         {result.map(({ isDeleted, userId, fullName }) => (

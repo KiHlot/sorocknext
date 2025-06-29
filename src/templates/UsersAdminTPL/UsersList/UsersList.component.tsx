@@ -102,7 +102,7 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     }, [isUsersUpdating, isRolesUpdating, isFilterLoading, isUsersDeleting]);
 
     return (
-        <div className="flcol gap">
+        <div className="flcol gapLayout">
             <UsersTable
                 usersList={usersList}
                 callbacks={{

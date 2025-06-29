@@ -14,7 +14,7 @@ const ResetPassword: FC<ResetPasswordPropsIF> = ({ className = '' }) => {
     const [activeTab, setActiveTab] = useState<ActiveTabT>('mail');
 
     return (
-        <div className={`flcol gap ${className}`}>
+        <div className={`flcol gapLayout ${className}`}>
             <ButtonsGroup
                 config={RESET_PASS_BUTTONS}
                 controls={{
