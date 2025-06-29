@@ -1,19 +1,19 @@
 'use client';
 
-import { FC } from 'react';
 import dayjs from '~/dayjs';
+import { FC } from 'react';
 import { RxUpdate } from '~/react-icons/rx';
 import { adminApi } from '@/api/admin/admin';
 import { formatDate } from '@/helpers/utils';
+import { TABLE_TITLES } from '@/templates/CronTPL/CronTable/CronTable.config';
+import styles from '@/templates/CronTPL/CronTable/CronTable.module.scss';
+import { CronTablePropsIF } from '@/templates/CronTPL/CronTable/CronTable.types';
 import Table, {
     RowItem,
     TableRow,
 } from '@/components/blocks/Table/Table.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import { TIME_FORMAT } from '@/configs/config';
-import { TABLE_TITLES } from '@/templates/CronTPL/CronTable/CronTable.config';
-import styles from '@/templates/CronTPL/CronTable/CronTable.module.scss';
-import { CronTablePropsIF } from '@/templates/CronTPL/CronTable/CronTable.types';
 
 const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
     const [updateCronTask, { isLoading: updateCronTaskLoading }] =
@@ -50,12 +50,12 @@ const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
                     <RowItem>{value?.itemsCount || '-'}</RowItem>
                     <RowItem>
                         <MainButton
-                            variant="default"
                             clickHandler={() => updateTask(taskName)}
                             className={styles.updateButton}
                             disabled={updateCronTaskLoading || cronInfoLoading}
-                            icon={<RxUpdate />}
-                        />
+                        >
+                            <RxUpdate />
+                        </MainButton>
                     </RowItem>
                 </TableRow>
             ))}

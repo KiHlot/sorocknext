@@ -35,7 +35,7 @@ const MainButton: FC<MainButtonPropsIF> = ({
         onClick,
         className: isCustom
             ? `${className}`
-            : `flc ${styles.button} ${styles[variant]} ${className} ${isLoading ? styles.loading : ''}`,
+            : `flc ${styles.button} ${icon ? styles.hasIcon : ''} ${styles[variant]} ${className} ${isLoading ? styles.loading : ''}`,
     };
 
     if (href) {

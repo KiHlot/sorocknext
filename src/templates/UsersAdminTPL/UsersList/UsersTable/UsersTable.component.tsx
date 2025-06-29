@@ -3,6 +3,10 @@ import { FC, useEffect, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RxUpdate } from 'react-icons/rx';
 import Link from 'next/link';
+import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.component';
+import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
+import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';
+import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.types';
 import Table, {
     RowItem,
     TableRow,
@@ -12,10 +16,6 @@ import MainButton from '@/components/controls/MainButton/MainButton.component';
 import Img from '@/components/elems/Img/Img.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import Pagination from '@/components/interactive/Pagination/Pagination.component';
-import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.component';
-import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
-import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';
-import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.types';
 
 const UsersTable: FC<UsersTablePropsIF> = ({
     usersList,
@@ -152,19 +152,21 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                     }
                                     variant="sq"
                                     disabled={isDataLoading}
-                                    icon={<RxUpdate />}
-                                />
+                                >
+                                    <RxUpdate />
+                                </MainButton>
                             </RowItem>
                             <RowItem>
                                 <MainButton
                                     clickHandler={() =>
                                         deleteUsers([item.userId])
                                     }
-                                    variant="sq_delete"
+                                    variant="sq_error"
                                     dialogText={<>Удалить?</>}
                                     disabled={isDataLoading}
-                                    icon={<AiOutlineDelete />}
-                                />
+                                >
+                                    <AiOutlineDelete />
+                                </MainButton>
                             </RowItem>
                         </TableRow>
                     ))}

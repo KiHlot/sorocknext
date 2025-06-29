@@ -4,7 +4,6 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
-import { parseResponse } from '@/store/functions';
 import { siteApi } from '@/api/site/site';
 import { SearchIF, SearchResultIF } from '@/api/site/types';
 import { Input } from '@/components/controls/Input/Input.component';
@@ -14,6 +13,7 @@ import {
     FieldsNames,
     SearchFormPropsIF,
 } from '@/components/menus/TopMenu/SearchForm/SearchForm.types';
+import { parseResponse } from '@/store/functions';
 
 const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
     const router = useRouter();
@@ -61,8 +61,8 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
                     phraseValue.length < 5 ||
                     phraseValue.length > 30
                 }
-                className={styles.button}
-                variant="default"
+                className={`flc ${styles.button}`}
+                isCustom
             >
                 <IoSearch />
             </MainButton>

@@ -2,15 +2,15 @@ import { FC, useEffect, useState } from 'react';
 import { CgDetailsMore } from 'react-icons/cg';
 import { IoAlertCircleOutline } from '~/react-icons/io5';
 import { usersApi } from '@/api/users/users';
+import DetailRow from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/DetailRow/DetailRow.component';
+import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.module.scss';
+import { UserDetailModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.types';
 import Block from '@/components/blocks/Block/Block.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import Author from '@/components/elems/Author/Author.component';
 import Country from '@/components/elems/Country/Country.component';
 import Img from '@/components/elems/Img/Img.component';
 import Modal from '@/components/interactive/Modal/Modal.component';
-import DetailRow from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/DetailRow/DetailRow.component';
-import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.module.scss';
-import { UserDetailModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.types';
 
 const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
     const [getUserData, { data: userData, isLoading }] =
@@ -42,8 +42,9 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
                 clickHandler={() => setIsOpen(true)}
                 variant="sq"
                 disabled={disabled || isLoading}
-                icon={<CgDetailsMore />}
-            />
+            >
+                <CgDetailsMore />
+            </MainButton>
             <Modal
                 title={{
                     label: `${metrics?.firstName} ${metrics?.lastName}`,
