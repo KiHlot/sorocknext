@@ -7,6 +7,7 @@ import { siteApi } from '@/api/site/site';
 import { taxonomyApi } from '@/api/taxonomy/taxonomy';
 import { usersApi } from '@/api/users/users';
 import { globalDataSlice } from '@/store/slices/globalDataSlice';
+import { videoApi } from '@/api/video/video';
 
 const rootReducer = combineReducers({
     [usersApi.reducerPath]: usersApi.reducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [adminApi.reducerPath]: adminApi.reducer,
     [pageApi.reducerPath]: pageApi.reducer,
+    [videoApi.reducerPath]: videoApi.reducer,
 });
 
 export const makeStore = () => {
@@ -31,6 +33,7 @@ export const makeStore = () => {
                 usersApi.middleware,
                 adminApi.middleware,
                 pageApi.middleware,
+                videoApi.middleware,
             ]),
     });
 };

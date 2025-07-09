@@ -1,4 +1,5 @@
+import { HTMLString } from '@/types/common';
+
 export interface PostContentSectionPropsIF {
-    className?: string;
-    content?: string;
+    content: HTMLString;
 }

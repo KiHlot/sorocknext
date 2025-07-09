@@ -1,5 +1,5 @@
-import { PromoSectionIF } from '@/types/post';
+import { PostBaseIF } from '@/types/post';
 
 export interface SinglePostPromoSectionPropsIF {
-    data?: PromoSectionIF | null;
+    postBase: PostBaseIF;
 }

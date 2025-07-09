@@ -29,6 +29,11 @@ export type CookieOptionsT = {
     samesite?: 'Strict' | 'Lax' | 'None';
 };
 
+export interface LinkIF {
+    label: string;
+    url: string;
+}
+
 export interface OptionIF {
     label: string;
     value: string;

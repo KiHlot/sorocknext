@@ -1,22 +1,24 @@
 import { FC } from 'react';
+import { PostTPLPropsIF } from '@/templates/PostTPL/PostTPL.types';
 import CommonLayout, {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import PostContentSection from '@/components/sections/PostContentSection/PostContentSection.component';
 import SinglePostPromoSection from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.component';
-import { NewsSingleTPLPropsIF } from '@/templates/NewsSingleTPL/NewsSingleTPL.types';
 
-const NewsSingleTPL: FC<NewsSingleTPLPropsIF> = ({ data }) => {
+const PostTPL: FC<PostTPLPropsIF> = ({ data }) => {
+    const { postBase } = data;
+
     return (
         <CommonLayout>
             <Content>
-                <SinglePostPromoSection data={data?.promoSection} />
-                <PostContentSection content={data?.content} />
+                <SinglePostPromoSection postBase={postBase} />
+                <PostContentSection content={postBase.main.content} />
             </Content>
             <Sidebar>sidebar</Sidebar>
         </CommonLayout>
     );
 };
 
-export default NewsSingleTPL;
+export default PostTPL;

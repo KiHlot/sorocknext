@@ -22,7 +22,7 @@ const Breadcrumbs: FC<BreadcrumbsPropsIF> = ({ className = '', title }) => {
                 itemScope
                 itemType="https://schema.org/ListItem"
             >
-                <Link href="/public" itemProp="item">
+                <Link href="/" itemProp="item">
                     <span itemProp="name">Главная</span>
                     <meta itemProp="position" content="1" />
                 </Link>
@@ -47,7 +47,7 @@ const Breadcrumbs: FC<BreadcrumbsPropsIF> = ({ className = '', title }) => {
                                 </span>
                                 <meta
                                     itemProp="position"
-                                    content={(index + 1).toString()}
+                                    content={(index + 2).toString()}
                                 />
                             </span>
                         ) : (
@@ -57,7 +57,7 @@ const Breadcrumbs: FC<BreadcrumbsPropsIF> = ({ className = '', title }) => {
                                 </span>
                                 <meta
                                     itemProp="position"
-                                    content={(index + 1).toString()}
+                                    content={(index + 2).toString()}
                                 />
                             </Link>
                         )}

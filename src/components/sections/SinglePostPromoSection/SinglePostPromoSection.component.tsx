@@ -11,9 +11,12 @@ import styles from '@/components/sections/SinglePostPromoSection/SinglePostPromo
 import { SinglePostPromoSectionPropsIF } from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.types';
 
 const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
-    data,
+    postBase,
 }) => {
-    return data ? (
+
+    const { main, country, settings, innerImg, author } = postBase;
+
+    return postBase ? (
         <section className={`flcol ${styles.singlePostPromoSectionWrapper}`}>
             <div
                 className={`bgc ${styles.bg}`}
@@ -21,27 +24,27 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
                     backgroundImage: `linear-gradient(
         		to left,
         		rgba(35, 42, 52, 0.6),
-        		rgba(35, 42, 52, 1)), url(${data.innerImg}`,
+        		rgba(35, 42, 52, 1)), url(${innerImg}`,
                 }}
             />
-            <Breadcrumbs title={data.titleSeo} />
-            <h1 className={styles.title}>{data.titleH1}</h1>
+            <Breadcrumbs title={main.titleSeo} />
+            <h1 className={styles.title}>{main.titleH1}</h1>
             <div className={styles.perks}>
                 <ul>
                     <li title="Дата публикации">
                         <IoCalendarOutline />
-                        {formatDate(data.postDate)}
+                        {formatDate(main.postDate)}
                     </li>
                     <li title="Время на прочтение">
                         <IoTimerOutline />
-                        {data.readingTime}мин.
+                        {settings.readingTime}мин.
                     </li>
                     <li title="Автор">
                         <IoPersonOutline />
-                        <Author data={data.author} type="name" />
+                        <Author data={author} type="name" />
                     </li>
                 </ul>
-                <Country value={data.country} />
+                <Country value={country} />
             </div>
         </section>
     ) : (
