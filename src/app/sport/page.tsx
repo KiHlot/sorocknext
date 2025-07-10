@@ -1,10 +1,10 @@
-import { GetApiResponseIF } from '@/templates/NewsTPL/NewsTPL.types';
-import { getApi } from '@/store/functions';
-import SportArchiveTPL from '@/templates/SportArchiveTPL/SportArchiveTPL.component';
+import { PostArchiveIF } from '@/types/post';
 import { getSportArchiveUrl } from '@/api/sport/urls';
+import SportArchiveTPL from '@/templates/SportArchiveTPL/SportArchiveTPL.component';
+import { getApi } from '@/store/functions';
 
 const Sport = async () => {
-    const data = await getApi<GetApiResponseIF>(getSportArchiveUrl);
+    const data = await getApi<PostArchiveIF>(getSportArchiveUrl);
 
     return <SportArchiveTPL data={data} />;
 };

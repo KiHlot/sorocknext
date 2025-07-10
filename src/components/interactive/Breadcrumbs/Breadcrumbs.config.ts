@@ -8,6 +8,10 @@ export const getArchiveLabel = (slug: string, title?: string) => {
             return 'Календарь';
         case 'music':
             return 'Музыка';
+        case 'publications':
+            return 'Публикации';
+        case 'sport':
+            return 'Спорт';
         default:
             return title || 'Архив';
     }

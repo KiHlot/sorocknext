@@ -1,7 +1,5 @@
-import { LinkIF } from '@/types/common';
+import { PostArchiveIF } from '@/types/post';
 
 export interface MusicArchiveTPLPropsIF {
-    data?: {
-        defaultData: LinkIF[];
-    } | null;
+    data?: PostArchiveIF | null;
 }

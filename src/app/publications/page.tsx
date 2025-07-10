@@ -1,13 +1,12 @@
-import { getCalendarArchiveUrl } from '@/api/calendar/urls';
-import CalendarArchiveTPL from '@/templates/CalendarArchiveTPL/CalendarArchiveTPL.component';
-import { GetApiResponseIF } from '@/templates/NewsTPL/NewsTPL.types';
-import { getApi } from '@/store/functions';
+import { PostArchiveIF } from '@/types/post';
 import { getPublicationsArchiveUrl } from '@/api/publications/urls';
+import PublicationsArchiveTPL from '@/templates/PublicationsArchiveTPL/PublicationsArchiveTPL.component';
+import { getApi } from '@/store/functions';
 
 const Publications = async () => {
-    const data = await getApi<GetApiResponseIF>(getPublicationsArchiveUrl);
+    const data = await getApi<PostArchiveIF>(getPublicationsArchiveUrl);
 
-    return <CalendarArchiveTPL data={data} />;
+    return <PublicationsArchiveTPL data={data} />;
 };
 
 export default Publications;

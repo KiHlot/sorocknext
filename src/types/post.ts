@@ -1,15 +1,8 @@
-import { HTMLString, OptionIF } from '@/types/common';
+import { HTMLString, LinkIF, OptionIF } from '@/types/common';
 import { AuthorIF } from '@/components/elems/Author/Author.types';
 
-export interface PromoSectionIF {
-    innerImg: string | null;
-    titleH1: string;
-    titleSeo: string;
-    postDate: string;
-    author: AuthorIF;
-    country: string;
-    tagsList: OptionIF[] | null;
-    readingTime: number;
+export interface PostArchiveIF {
+    defaultData: LinkIF[];
 }
 
 export interface PostBaseIF {
@@ -32,7 +25,5 @@ export interface PostBaseIF {
 }
 
 export interface PostIF {
-    promoSection: PromoSectionIF | null; //todo remove
-    content: HTMLString; //todo remove
     postBase: PostBaseIF;
 }

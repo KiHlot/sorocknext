@@ -1,19 +1,18 @@
 import { FC } from 'react';
 import Link from 'next/link';
+import { NewsArchiveTPLPropsIF } from '@/templates/NewsArchiveTPL/NewsArchiveTPL.types';
 import CommonLayout, {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
-import styles from '@/templates/NewsTPL/NewsTPL.module.scss';
-import { NewsTPLPropsIF } from '@/templates/NewsTPL/NewsTPL.types';
 
-const NewsTPL: FC<NewsTPLPropsIF> = ({ data }) => {
+const NewsArchiveTPL: FC<NewsArchiveTPLPropsIF> = ({ data }) => {
     return (
         <CommonLayout>
-            <Content className={styles.newsTPLWrapper}>
+            <Content>
                 <Breadcrumbs />
-                <div>
+                <div className="flcol gapBlock">
                     {data?.defaultData.map(({ url, label }) => (
                         <Link key={url} href={url}>
                             {label}
@@ -26,4 +25,4 @@ const NewsTPL: FC<NewsTPLPropsIF> = ({ data }) => {
     );
 };
 
-export default NewsTPL;
+export default NewsArchiveTPL;

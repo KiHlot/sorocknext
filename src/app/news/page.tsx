@@ -1,11 +1,12 @@
+import { PostArchiveIF } from '@/types/post';
+import { getNewsArchiveUrl } from '@/api/news/urls';
+import NewsArchiveTPL from '@/templates/NewsArchiveTPL/NewsArchiveTPL.component';
 import { getApi } from '@/store/functions';
-import NewsTPL from '@/templates/NewsTPL/NewsTPL.component';
-import { GetApiResponseIF } from '@/templates/NewsTPL/NewsTPL.types';
 
 const News = async () => {
-    const data = await getApi<GetApiResponseIF>('/news/archive/base/data');
+    const data = await getApi<PostArchiveIF>(getNewsArchiveUrl);
 
-    return <NewsTPL data={data} />;
+    return <NewsArchiveTPL data={data} />;
 };
 
 export default News;

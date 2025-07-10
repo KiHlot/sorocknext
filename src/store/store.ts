@@ -11,6 +11,7 @@ import { videoApi } from '@/api/video/endpoints';
 import { calendarApi } from '@/api/calendar/endpoints';
 import { publicationsApi } from '@/api/publications/endpoints';
 import { sportApi } from '@/api/sport/endpoints';
+import { newsApi } from '@/api/news/endpoints';
 
 const rootReducer = combineReducers({
     [usersApi.reducerPath]: usersApi.reducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
     [calendarApi.reducerPath]: calendarApi.reducer,
     [publicationsApi.reducerPath]: publicationsApi.reducer,
     [sportApi.reducerPath]: sportApi.reducer,
+    [newsApi.reducerPath]: newsApi.reducer,
 });
 
 export const makeStore = () => {
@@ -43,6 +45,7 @@ export const makeStore = () => {
                 calendarApi.middleware,
                 publicationsApi.middleware,
                 sportApi.middleware,
+                newsApi.middleware,
             ]),
     });
 };

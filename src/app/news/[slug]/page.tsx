@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
-import { getApi } from '@/store/functions';
-import NewsSingleTPL from '@/templates/NewsSingleTPL/NewsSingleTPL.component';
 import { PageProps } from '@/types/common';
 import { PostIF } from '@/types/post';
+import PostTPL from '@/templates/PostTPL/PostTPL.component';
+import { getApi } from '@/store/functions';
 
 const NewsSingle = async ({ params }: PageProps) => {
     const { slug } = await params;
@@ -14,7 +14,7 @@ const NewsSingle = async ({ params }: PageProps) => {
             notFound();
         }
 
-        return <NewsSingleTPL data={data} />;
+        return <PostTPL data={data} />;
     } catch (error) {
         notFound();
     }
