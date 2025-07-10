@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { PageProps } from '@/types/common';
 import { PostIF } from '@/types/post';
+import { getNewsSingleUrl } from '@/api/news/urls';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
 import { getApi } from '@/store/functions';
 
@@ -8,7 +9,7 @@ const NewsSingle = async ({ params }: PageProps) => {
     const { slug } = await params;
 
     try {
-        const data = await getApi<PostIF>(`/news/${slug}`);
+        const data = await getApi<PostIF>(`${getNewsSingleUrl}/${slug}`);
 
         if (!data) {
             notFound();
