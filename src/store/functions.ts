@@ -21,9 +21,9 @@ const showErrorToast = (status: number, statusText?: string) => {
     );
 };
 
-export const fetchRestApiQuery = (baseUrl: string) => {
+export const fetchRestApiQuery = (baseUrl?: string) => {
     return fetchBaseQuery({
-        baseUrl: `${ADDRESS.WP_API_URL}${baseUrl}`,
+        baseUrl: `${ADDRESS.WP_API_URL}${baseUrl || ''}`,
         prepareHeaders: headers => {
             const token = getCookie('token');
             if (token) {

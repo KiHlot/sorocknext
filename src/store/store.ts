@@ -7,7 +7,10 @@ import { siteApi } from '@/api/site/site';
 import { taxonomyApi } from '@/api/taxonomy/taxonomy';
 import { usersApi } from '@/api/users/users';
 import { globalDataSlice } from '@/store/slices/globalDataSlice';
-import { videoApi } from '@/api/video/video';
+import { videoApi } from '@/api/video/endpoints';
+import { calendarApi } from '@/api/calendar/endpoints';
+import { publicationsApi } from '@/api/publications/endpoints';
+import { sportApi } from '@/api/sport/endpoints';
 
 const rootReducer = combineReducers({
     [usersApi.reducerPath]: usersApi.reducer,
@@ -19,6 +22,9 @@ const rootReducer = combineReducers({
     [adminApi.reducerPath]: adminApi.reducer,
     [pageApi.reducerPath]: pageApi.reducer,
     [videoApi.reducerPath]: videoApi.reducer,
+    [calendarApi.reducerPath]: calendarApi.reducer,
+    [publicationsApi.reducerPath]: publicationsApi.reducer,
+    [sportApi.reducerPath]: sportApi.reducer,
 });
 
 export const makeStore = () => {
@@ -34,6 +40,9 @@ export const makeStore = () => {
                 adminApi.middleware,
                 pageApi.middleware,
                 videoApi.middleware,
+                calendarApi.middleware,
+                publicationsApi.middleware,
+                sportApi.middleware,
             ]),
     });
 };

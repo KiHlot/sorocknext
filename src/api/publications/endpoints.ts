@@ -1,9 +1,9 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchRestApiQuery } from '@/store/functions';
 
-export const videoApi = createApi({
-    reducerPath: 'videoApi',
-    baseQuery: fetchRestApiQuery(''),
+export const publicationsApi = createApi({
+    reducerPath: 'publicationsApi',
+    baseQuery: fetchRestApiQuery(),
     endpoints: builder => ({
     }),
 });

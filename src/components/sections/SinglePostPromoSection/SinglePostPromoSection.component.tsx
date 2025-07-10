@@ -13,18 +13,17 @@ import { SinglePostPromoSectionPropsIF } from '@/components/sections/SinglePostP
 const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
     postBase,
 }) => {
-
     const { main, country, settings, innerImg, author } = postBase;
 
-    return postBase ? (
+    return (
         <section className={`flcol ${styles.singlePostPromoSectionWrapper}`}>
             <div
                 className={`bgc ${styles.bg}`}
                 style={{
                     backgroundImage: `linear-gradient(
         		to left,
-        		rgba(35, 42, 52, 0.6),
-        		rgba(35, 42, 52, 1)), url(${innerImg}`,
+        		rgba(40, 48, 57, 0.6),
+        		rgba(40, 48, 57, 1)), url(${innerImg}`,
                 }}
             />
             <Breadcrumbs title={main.titleSeo} />
@@ -47,8 +46,6 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
                 <Country value={country} />
             </div>
         </section>
-    ) : (
-        <Loading />
     );
 };
 

@@ -1,4 +1,4 @@
-export interface BaseDataIF {
+export interface GetApiResponseIF {
     defaultData: {
         label: string;
         url: string;
@@ -6,5 +6,5 @@ export interface BaseDataIF {
 }
 
 export interface NewsTPLPropsIF {
-    data?: BaseDataIF | null;
+    data?: GetApiResponseIF | null;
 }

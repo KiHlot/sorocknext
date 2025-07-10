@@ -45,7 +45,7 @@ export const LEFT_MENU: MenuItemIF[] = [
         icon: <IoFilmOutline />,
     },
     {
-        url: '/dates',
+        url: '/calendar',
         label: 'Календарь',
         icon: <IoCalendarOutline />,
         hasBorder: true,
