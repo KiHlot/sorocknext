@@ -12,6 +12,8 @@ export const getArchiveLabel = (slug: string, title?: string) => {
             return 'Публикации';
         case 'sport':
             return 'Спорт';
+        case 'shorts':
+            return 'Шортс';
         default:
             return title || 'Архив';
     }

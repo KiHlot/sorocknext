@@ -1,3 +1,3 @@
 import { PostIF } from '@/types/post';
 
-export interface SportSingleIF extends PostIF {}
+export interface ShortsSingleIF extends PostIF {}
