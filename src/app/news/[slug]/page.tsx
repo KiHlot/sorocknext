@@ -1,14 +1,14 @@
 import { notFound } from 'next/navigation';
 import { PageProps } from '@/types/common';
+import { NewsIF } from '@/api/news/types';
+import { getNewsMetadataUrl, getNewsSingleUrl } from '@/api/news/urls';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
 import { getApi } from '@/store/functions';
-import { getNewsSingleUrl } from '@/api/news/urls';
-import { NewsIF } from '@/api/news/types';
 
 export async function generateMetadata({ params }: PageProps) {
     const { slug } = await params;
 
-    // const product = await fetchProduct(params.id);
+    const data = await getApi<NewsIF>(`${getNewsMetadataUrl}/${slug}`);
 
     const product = {
         name: 'name',
