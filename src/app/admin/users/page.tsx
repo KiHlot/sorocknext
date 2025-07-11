@@ -5,9 +5,9 @@ import { normalizeFilter } from '@/helpers/utils';
 import AdminLayout from '@/layouts/AdminLayout/AdminLayout.component';
 import UsersAdminTPL from '@/templates/UsersAdminTPL/UsersAdminTPL.component';
 import { UsersAdminTPLDataIF } from '@/templates/UsersAdminTPL/UsersAdminTPL.types';
-import { SearchParamsIF } from '@/types/common';
+import { PageProps } from '@/types/common';
 
-const UserUpdate: FC<SearchParamsIF> = async ({ searchParams }) => {
+const UserUpdate: FC<PageProps> = async ({ searchParams }) => {
     const { page, column, direction } = await searchParams;
 
     const usersInfo = await getApi<UsersAdminTPLDataIF>(

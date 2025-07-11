@@ -1,3 +1,3 @@
-import { PostIF } from '@/types/post';
+import { PostIF } from '@/api/post/types';
 
-export interface MusicSingleIF extends PostIF {}
+export interface MusicIF extends PostIF {}

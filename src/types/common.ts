@@ -52,9 +52,6 @@ export interface PageProps {
     params: Promise<{
         slug: string;
     }>;
-}
-
-export interface SearchParamsIF {
     searchParams: Promise<{
         [key: string]: string | undefined;
     }>;

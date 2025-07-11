@@ -13,6 +13,7 @@ import { taxonomyApi } from '@/api/taxonomy/taxonomy';
 import { usersApi } from '@/api/users/users';
 import { videoApi } from '@/api/video/endpoints';
 import { globalDataSlice } from '@/store/slices/globalDataSlice';
+import { postApi } from '@/api/post/endpoints';
 
 const rootReducer = combineReducers({
     [usersApi.reducerPath]: usersApi.reducer,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
     [newsApi.reducerPath]: newsApi.reducer,
     [shortsApi.reducerPath]: shortsApi.reducer,
     [globalDataSlice.reducerPath]: globalDataSlice.reducer,
+    [postApi.reducerPath]: postApi.reducer,
 });
 
 export const makeStore = () => {
@@ -49,6 +51,7 @@ export const makeStore = () => {
                 sportApi.middleware,
                 newsApi.middleware,
                 shortsApi.middleware,
+                postApi.middleware,
             ]),
     });
 };

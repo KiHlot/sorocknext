@@ -1,4 +1,4 @@
-import { PostBaseIF } from '@/types/post';
+import { PostBaseIF } from '@/api/post/types';
 
 export interface SinglePostPromoSectionPropsIF {
     postBase: PostBaseIF;
