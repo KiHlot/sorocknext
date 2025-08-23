@@ -4,6 +4,7 @@ export type UserRoleT =
     | 'editor'
     | 'admin'
     | 'administrator';
+
 export type SoclinkT = 'vk' | 'in' | 'fb' | 'tt' | 'yt';
 
 export interface UserMetricsIF {
