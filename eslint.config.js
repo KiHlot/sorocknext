@@ -143,6 +143,17 @@ export default [
             'unicorn/template-indent': 'off',
             'unicorn/prefer-add-event-listener': 'warn',
             'react-hooks/set-state-in-effect': 'off',
+            'import/no-unresolved': [
+                'error',
+                {
+                    ignore: [
+                        String.raw`\.css$`,
+                        String.raw`\.min.css$`,
+                        String.raw`\.scss$`,
+                        String.raw`\.sass$`,
+                    ], // игнорировать CSS/SCSS
+                },
+            ],
         },
     },
 ];

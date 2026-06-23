@@ -1,8 +1,8 @@
 'use client';
 
-import dayjs from 'dayjs';
 import { FC } from 'react';
 import { RxUpdate } from 'react-icons/rx';
+import dayjs from 'dayjs';
 import { adminApi } from '@/api/admin/admin';
 import { formatDate } from '@/helpers/utils';
 import { TABLE_TITLES } from '@/templates/CronTPL/CronTable/CronTable.config';

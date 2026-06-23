@@ -1,9 +1,9 @@
 'use client';
 
-import { Autoplay } from 'swiper/modules';
 import { FC } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import Link from 'next/link';
+import { Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { siteApi } from '@/api/site/site';
 import styles from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.module.scss';
 import { TrendsSliderPropsIF } from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.types';
