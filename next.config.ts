@@ -3,35 +3,14 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
     images: { unoptimized: true },
     reactStrictMode: true,
-    webpack: config => {
-        const fileLoaderRule = config.module.rules.find(
-            (rule: { test: { test: (arg0: string) => any } }) =>
-                rule.test?.test?.('.svg'),
-        );
-
-        config.module.rules.push(
-            {
-                ...fileLoaderRule,
-                test: /\.svg$/i,
-                resourceQuery: /url/,
-            },
-
-            {
-                test: /\.svg$/i,
-                issuer: fileLoaderRule.issuer,
-                resourceQuery: {
-                    not: [...fileLoaderRule.resourceQuery.not, /url/],
-                },
-                use: ['@svgr/webpack'],
-            },
-        );
-
-        fileLoaderRule.exclude = /\.svg$/i;
-        
-        return config;
-    },
     turbopack: {
         rules: {
+            // Импорты с ?url — возвращаем URL строку
+            '*.svg?url': {
+                loaders: ['file-loader'], // можно заменить на встроенный asset
+                as: '*.js',
+            },
+            // Обычные SVG — превращаем в React-компоненты через @svgr/webpack
             '*.svg': {
                 loaders: ['@svgr/webpack'],
                 as: '*.js',
