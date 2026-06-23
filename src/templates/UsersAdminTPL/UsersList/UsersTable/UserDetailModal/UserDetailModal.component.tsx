@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { CgDetailsMore } from 'react-icons/cg';
-import { IoAlertCircleOutline } from '~/react-icons/io5';
+import { IoAlertCircleOutline } from 'react-icons/io5';
 import { usersApi } from '@/api/users/users';
 import DetailRow from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/DetailRow/DetailRow.component';
 import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.module.scss';
@@ -31,7 +31,9 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
     } = userData?.data || {};
 
     useEffect(() => {
-        if (!isOpen || !useId) return;
+        if (!isOpen || !useId) {
+            return;
+        }
 
         getUserData(useId);
     }, [useId, isOpen]);

@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { fetchJWTTokenQuery } from '@/store/functions';
 import { LoginFieldsReqIF, UserLoginResponseIF } from '@/api/jwt/types';
+import { fetchJWTTokenQuery } from '@/store/functions';
 
 export const jwtApi = createApi({
     reducerPath: 'jwtApi',

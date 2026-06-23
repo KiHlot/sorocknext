@@ -2,8 +2,7 @@
 
 import { ReactElement, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
-import { RiLockPasswordFill } from 'react-icons/ri';
-import { RiLockPasswordLine } from 'react-icons/ri';
+import { RiLockPasswordFill, RiLockPasswordLine } from 'react-icons/ri';
 import styles from '@/components/controls/Input/Input.module.scss';
 import {
     InputProps,
@@ -39,7 +38,7 @@ export const Input = <T extends FieldValues>({
 
     const normalizeValue = (value: string | null): string => {
         let newValue: string | null | undefined =
-            isRemoveSpaces && value ? value.replace(/\s+/g, '') : value;
+            isRemoveSpaces && value ? value.replaceAll(/\s+/g, '') : value;
 
         newValue = isNumbersOnly ? newValue?.replace(/\D/g, '') : newValue;
         newValue = isTextsOnly

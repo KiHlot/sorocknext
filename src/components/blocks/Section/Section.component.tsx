@@ -7,18 +7,16 @@ const Section: FC<SectionPropsIF> = ({
     className = '',
     ariaLabel,
     title,
-}) => {
-    return (
-        <section
-            itemScope
-            itemType="https://schema.org/WebPageElement"
-            aria-label={ariaLabel}
-            className={`${styles.sectionWrapper} ${className}`}
-        >
-            {title && <h2>{title}</h2>}
-            {children}
-        </section>
-    );
-};
+}) => (
+    <section
+        itemScope
+        itemType="https://schema.org/WebPageElement"
+        aria-label={ariaLabel}
+        className={`${styles.sectionWrapper} ${className}`}
+    >
+        {title && <h2>{title}</h2>}
+        {children}
+    </section>
+);
 
 export default Section;

@@ -1,12 +1,12 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
-import { ResponseIF } from '@/store/types';
 import { adminApi } from '@/api/admin/admin';
 import { ModifyDataIF, UsersAdminJsonDataIF } from '@/api/site/types';
-import AdminPromoBlock from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.component';
 import { UsersAdminTPLPropsIF } from '@/templates/UsersAdminTPL/UsersAdminTPL.types';
 import UsersList from '@/templates/UsersAdminTPL/UsersList/UsersList.component';
+import AdminPromoBlock from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.component';
+import { ResponseIF } from '@/store/types';
 
 const UsersAdminTPL: FC<UsersAdminTPLPropsIF> = ({ data }) => {
     const [updateCronTask, { isLoading }] =

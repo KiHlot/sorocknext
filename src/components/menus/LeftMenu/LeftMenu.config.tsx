@@ -1,10 +1,12 @@
 import { GiUnderwearShorts } from 'react-icons/gi';
-import { IoNewspaperOutline } from 'react-icons/io5';
-import { IoCalendarOutline } from 'react-icons/io5';
-import { IoLibraryOutline } from 'react-icons/io5';
-import { IoFilmOutline } from 'react-icons/io5';
-import { IoHeadsetOutline } from 'react-icons/io5';
-import { IoFingerPrintOutline } from 'react-icons/io5';
+import {
+    IoNewspaperOutline,
+    IoCalendarOutline,
+    IoLibraryOutline,
+    IoFilmOutline,
+    IoHeadsetOutline,
+    IoFingerPrintOutline,
+} from 'react-icons/io5';
 import { MdOutlineSportsSoccer } from 'react-icons/md';
 import { MenuItemIF } from '@/types/common';
 

@@ -1,7 +1,9 @@
 import { FC } from 'react';
 import { CgClose } from 'react-icons/cg';
-import { IoAlertCircleOutline } from 'react-icons/io5';
-import { IoShieldCheckmarkOutline } from 'react-icons/io5';
+import {
+    IoAlertCircleOutline,
+    IoShieldCheckmarkOutline,
+} from 'react-icons/io5';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import styles from '@/components/interactive/DialogModal/DialogModal.module.scss';
 import { DialogModalPropsIF } from '@/components/interactive/DialogModal/DialogModal.types';

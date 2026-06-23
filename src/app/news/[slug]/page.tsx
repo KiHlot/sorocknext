@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { PageProps } from '@/types/common';
-import {  SeoData } from '@/types/post';
+import { SeoData } from '@/types/post';
 import { NewsIF } from '@/api/news/types';
 import { getNewsMetadataUrl, getNewsSingleUrl } from '@/api/news/urls';
 import { setSeo } from '@/helpers/seo';
@@ -26,7 +26,7 @@ const NewsSingle = async ({ params }: PageProps) => {
         }
 
         return <PostTPL data={data} />;
-    } catch (error) {
+    } catch {
         notFound();
     }
 };

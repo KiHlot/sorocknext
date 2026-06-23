@@ -11,16 +11,15 @@ const VerticalMenuItem: FC<VerticalMenuItemPropsIF> = ({ data }) => {
     const pathname = usePathname();
 
     const isCurrent = useMemo(() => {
-        if (!pathname) return false;
+        if (!pathname) {
+            return false;
+        }
 
         const pathSegments = pathname.split('/').filter(Boolean);
         const urlSegments = url.split('/').filter(Boolean);
 
         // Сравниваем последний сегмент пути
-        return (
-            pathSegments[pathSegments.length - 1] ===
-            urlSegments[urlSegments.length - 1]
-        );
+        return pathSegments.at(-1) === urlSegments.at(-1);
     }, [pathname, url]);
 
     return (

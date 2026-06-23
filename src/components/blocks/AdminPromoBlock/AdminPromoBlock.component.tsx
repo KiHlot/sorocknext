@@ -12,41 +12,37 @@ const AdminPromoBlock: FC<AdminPromoBlockPropsIF> = ({
     modifyData,
     isLoading,
     clickHandler,
-}) => {
-    return (
-        <Block className={`flcol ${styles.blockWrapper}`}>
-            <h1 className={styles.pageTitle}>{title}</h1>
-            {modifyData && (
-                <div className={`flcol ${styles.cronInfoWrapper}`}>
-                    <div
-                        className={`${styles.cronInfoBlock} ${styles[modifyData?.lastUpdateStatus || 'error']}`}
-                    >
-                        <div className={styles.label}>
-                            Последнее обновление:
-                        </div>
-                        <div className={styles.value}>
-                            {formatDate(modifyData?.lastUpdate, 'withTime')}
-                        </div>
-                        <div className={`${styles.value} `}>
-                            {modifyData?.lastUpdateStatus || 'error'}
-                        </div>
-                        <div className={styles.value}>
-                            {modifyData?.updatedBy || 'error'}
-                        </div>
-                        <MainButton
-                            variant="sq"
-                            className={styles.updateCronInfoButton}
-                            disabled={isLoading}
-                            clickHandler={clickHandler}
-                        >
-                            <RxUpdate />
-                        </MainButton>
+}) => (
+    <Block className={`flcol ${styles.blockWrapper}`}>
+        <h1 className={styles.pageTitle}>{title}</h1>
+        {modifyData && (
+            <div className={`flcol ${styles.cronInfoWrapper}`}>
+                <div
+                    className={`${styles.cronInfoBlock} ${styles[modifyData?.lastUpdateStatus || 'error']}`}
+                >
+                    <div className={styles.label}>Последнее обновление:</div>
+                    <div className={styles.value}>
+                        {formatDate(modifyData?.lastUpdate, 'withTime')}
                     </div>
+                    <div className={`${styles.value} `}>
+                        {modifyData?.lastUpdateStatus || 'error'}
+                    </div>
+                    <div className={styles.value}>
+                        {modifyData?.updatedBy || 'error'}
+                    </div>
+                    <MainButton
+                        variant="sq"
+                        className={styles.updateCronInfoButton}
+                        disabled={isLoading}
+                        clickHandler={clickHandler}
+                    >
+                        <RxUpdate />
+                    </MainButton>
                 </div>
-            )}
-            {children}
-        </Block>
-    );
-};
+            </div>
+        )}
+        {children}
+    </Block>
+);
 
 export default AdminPromoBlock;

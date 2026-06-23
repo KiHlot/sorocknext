@@ -1,25 +1,25 @@
 'use client';
 
-import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoCheckmark, IoMailOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
-import { parseResponse } from '@/store/functions';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { CurrentUserIF } from '@/types/user';
 import { authApi } from '@/api/auth/auth';
 import { getStorageItem, setStorageItem } from '@/helpers/utils';
-import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
-import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
-import { SUCCESS_NOTIFY } from '@/configs/codes';
 import {
     INPUT_NAMES,
     schema,
 } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.config';
 import styles from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.module.scss';
 import { FieldsNames } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.types';
-import { CurrentUserIF } from '@/types/user';
+import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
+import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
+import { SUCCESS_NOTIFY } from '@/configs/codes';
+import { parseResponse } from '@/store/functions';
 
 const SendConfirmCodeForm: FC = () => {
     const [

@@ -1,8 +1,5 @@
 import ProfileTPL from '@/templates/ProfileTPL/ProfileTPL.component';
 
-const Profile = async () => {
-
-    return <ProfileTPL/>;
-};
+const Profile = async () => <ProfileTPL />;
 
 export default Profile;

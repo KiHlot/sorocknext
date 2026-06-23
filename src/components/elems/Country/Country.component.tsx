@@ -3,12 +3,11 @@ import { getFlagIcon } from '@/images/flags/_getFlagIcon';
 import styles from '@/components/elems/Country/Country.module.scss';
 import { CountryPropsIF } from '@/components/elems/Country/Country.types';
 
-const Country: FC<CountryPropsIF> = ({ value, className = '' }) => {
-    return value ? (
+const Country: FC<CountryPropsIF> = ({ value, className = '' }) =>
+    value ? (
         <div className={`${styles.countryWrapper} ${className}`}>
             {getFlagIcon(value)}
         </div>
     ) : null;
-};
 
 export default Country;

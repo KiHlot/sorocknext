@@ -1,20 +1,28 @@
 export const getArchiveLabel = (slug: string, title?: string) => {
     switch (slug) {
-        case 'news':
+        case 'news': {
             return 'Новости';
-        case 'video':
+        }
+        case 'video': {
             return 'Видео';
-        case 'calendar':
+        }
+        case 'calendar': {
             return 'Календарь';
-        case 'music':
+        }
+        case 'music': {
             return 'Музыка';
-        case 'publications':
+        }
+        case 'publications': {
             return 'Публикации';
-        case 'sport':
+        }
+        case 'sport': {
             return 'Спорт';
-        case 'shorts':
+        }
+        case 'shorts': {
             return 'Шортс';
-        default:
+        }
+        default: {
             return title || 'Архив';
+        }
     }
 };

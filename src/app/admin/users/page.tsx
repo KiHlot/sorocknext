@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { redirect } from 'next/navigation';
-import { getApi } from '@/store/functions';
+import { PageProps } from '@/types/common';
 import { normalizeFilter } from '@/helpers/utils';
-import AdminLayout from '@/layouts/AdminLayout/AdminLayout.component';
 import UsersAdminTPL from '@/templates/UsersAdminTPL/UsersAdminTPL.component';
 import { UsersAdminTPLDataIF } from '@/templates/UsersAdminTPL/UsersAdminTPL.types';
-import { PageProps } from '@/types/common';
+import AdminLayout from '@/layouts/AdminLayout/AdminLayout.component';
+import { getApi } from '@/store/functions';
 
 const UserUpdate: FC<PageProps> = async ({ searchParams }) => {
     const { page, column, direction } = await searchParams;

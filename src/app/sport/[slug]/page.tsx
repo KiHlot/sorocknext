@@ -9,16 +9,14 @@ const SportSingle = async ({ params }: PageProps) => {
     const { slug } = await params;
 
     try {
-        const data = await getApi<SportIF>(
-            `${getSportSingleUrl}/${slug}`,
-        );
+        const data = await getApi<SportIF>(`${getSportSingleUrl}/${slug}`);
 
         if (!data) {
             notFound();
         }
 
         return <PostTPL data={data} />;
-    } catch (error) {
+    } catch {
         notFound();
     }
 };

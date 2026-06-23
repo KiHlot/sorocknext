@@ -17,7 +17,9 @@ const CheckBoxBase: FC<CheckBoxBaseIF> = ({
     const [checked, setChecked] = useState<boolean>(false);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (isDisabled) return;
+        if (isDisabled) {
+            return;
+        }
         setChecked(e.target.checked);
         onChange?.(e);
     };

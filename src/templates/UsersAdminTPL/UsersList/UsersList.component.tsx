@@ -2,6 +2,8 @@
 
 import { FC, useEffect, useState } from 'react';
 import { useRouter, useSearchParams, redirect } from 'next/navigation';
+import { PaginationIF } from '@/types/common';
+import { UserIF } from '@/types/user';
 import { adminApi } from '@/api/admin/admin';
 import { DeleteUsersResultIF } from '@/api/admin/types';
 import { usersApi } from '@/api/users/users';
@@ -9,24 +11,22 @@ import { normalizeFilter } from '@/helpers/utils';
 import DeleteSuccessModal from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.component';
 import { UsersListPropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersList.types';
 import UsersTable from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.component';
-import { PaginationIF } from '@/types/common';
-import { UserIF } from '@/types/user';
 
 const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
-    const searchParams = useSearchParams();
+    const searchParameters = useSearchParams();
     const router = useRouter();
 
-    const [filterUsersReq, { isLoading: isFilterLoading }] =
+    const [filterUsersRequest, { isLoading: isFilterLoading }] =
         usersApi.useLazyFilterQuery();
-    const [updateUsersReq, { isLoading: isUsersUpdating }] =
+    const [updateUsersRequest, { isLoading: isUsersUpdating }] =
         adminApi.useUpdateUsersMutation({
             fixedCacheKey: 'updateUsers',
         });
-    const [deleteUsersReq, { isLoading: isUsersDeleting }] =
+    const [deleteUsersRequest, { isLoading: isUsersDeleting }] =
         adminApi.useDeleteUsersMutation({
             fixedCacheKey: 'deleteUsers',
         });
-    const [updateRolesReq, { isLoading: isRolesUpdating }] =
+    const [updateRolesRequest, { isLoading: isRolesUpdating }] =
         adminApi.useUpdateRolesMutation();
 
     const [usersList, setUsersList] = useState<UserIF[] | null>(null);
@@ -36,11 +36,11 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     const [isDataLoading, setIsDataLoading] = useState<boolean>(false);
 
     const filterUsers = () => {
-        filterUsersReq(
+        filterUsersRequest(
             normalizeFilter({
-                page: searchParams.get('page'),
-                column: searchParams.get('column'),
-                direction: searchParams.get('direction'),
+                page: searchParameters.get('page'),
+                column: searchParameters.get('column'),
+                direction: searchParameters.get('direction'),
             }),
         )
             .unwrap()
@@ -61,7 +61,7 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     };
 
     const deleteUsers = (usersIds: number[]) => {
-        deleteUsersReq(usersIds)
+        deleteUsersRequest(usersIds)
             .unwrap()
             .then(({ result, data }) => {
                 if (result === 'ok') {
@@ -72,7 +72,7 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     };
 
     const updateUsers = (usersIds: number[]) => {
-        updateUsersReq(usersIds)
+        updateUsersRequest(usersIds)
             .unwrap()
             .then(data => {
                 if (data.result === 'ok') {
@@ -82,7 +82,7 @@ const UsersList: FC<UsersListPropsIF> = ({ filterResult }) => {
     };
 
     const updateRoles = async () => {
-        updateRolesReq().finally(() => {
+        updateRolesRequest().finally(() => {
             router.refresh();
         });
     };

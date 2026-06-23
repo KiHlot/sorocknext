@@ -1,12 +1,12 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { fetchRestApiQuery } from '@/store/functions';
-import { ResponseIF } from '@/store/types';
 import {
     BaseData,
     ContactFormIF,
     SearchIF,
     SearchResultIF,
 } from '@/api/site/types';
+import { fetchRestApiQuery } from '@/store/functions';
+import { ResponseIF } from '@/store/types';
 
 export const siteApi = createApi({
     reducerPath: 'siteApi',

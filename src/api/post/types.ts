@@ -1,5 +1,5 @@
-import { AuthorIF } from '@/components/elems/Author/Author.types';
 import { HTMLString, OptionIF } from '@/types/common';
+import { AuthorIF } from '@/components/elems/Author/Author.types';
 
 export interface PostBaseIF {
     author: AuthorIF;

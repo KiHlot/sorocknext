@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
-import { yupResolver } from '~/@hookform/resolvers/yup';
-import { toast } from '~/react-toastify';
-import { parseResponse } from '@/store/functions';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { authApi } from '@/api/auth/auth';
 import { RegistrationFieldsReqIF } from '@/api/auth/types';
+import { schema } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
+import { FieldsNames } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.types';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import { SUCCESS_NOTIFY } from '@/configs/codes';
-import { schema } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
-import { FieldsNames } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.types';
+import { parseResponse } from '@/store/functions';
 
 const RegistrationForm: FC = () => {
     const [registerUser, { isLoading, data }] =
@@ -30,9 +30,7 @@ const RegistrationForm: FC = () => {
                     () => {
                         reset();
                         toast.success(SUCCESS_NOTIFY.s104);
-                        setTimeout(() => {
-                            return redirect('/auth');
-                        }, 2000);
+                        setTimeout(() => redirect('/auth'), 2000);
                     },
                     setError,
                 );

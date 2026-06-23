@@ -15,10 +15,10 @@ export const createPaginationData = (
     };
 
     if (pagesCount <= 10) {
-        for (let i = 1; i <= pagesCount; i++) {
+        for (let index = 1; index <= pagesCount; index++) {
             result.firstBlock.push({
-                label: i,
-                isCurrent: i === currentPage,
+                label: index,
+                isCurrent: index === currentPage,
             });
         }
 
@@ -26,10 +26,14 @@ export const createPaginationData = (
     }
 
     if (currentPage <= 5) {
-        for (let i = 1; i <= Math.min(currentPage + 2, pagesCount); i++) {
+        for (
+            let index = 1;
+            index <= Math.min(currentPage + 2, pagesCount);
+            index++
+        ) {
             result.firstBlock.push({
-                label: i,
-                isCurrent: i === currentPage,
+                label: index,
+                isCurrent: index === currentPage,
             });
         }
     } else {
@@ -40,10 +44,10 @@ export const createPaginationData = (
     }
 
     if (currentPage >= pagesCount - 1) {
-        for (let i = pagesCount - 1; i <= pagesCount; i++) {
+        for (let index = pagesCount - 1; index <= pagesCount; index++) {
             result.lastBlock.push({
-                label: i,
-                isCurrent: i === currentPage,
+                label: index,
+                isCurrent: index === currentPage,
             });
         }
     } else {

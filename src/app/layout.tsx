@@ -1,7 +1,7 @@
+import 'swiper/swiper.min.css';
 import { FC } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import '~/swiper/swiper.min.css';
 import '@/styles/global.scss';
 import Layout from '@/layouts/Layout/Layout.component';
 import StoreProvider from '@/app/StoreProvider';
@@ -20,16 +20,14 @@ export const metadata: Metadata = {
     },
 };
 
-const RootLayout: FC<RootLayoutIF> = async ({ children }) => {
-    return (
-        <html lang="ru">
-            <body className={inter.className}>
-                <StoreProvider>
-                    <Layout>{children}</Layout>
-                </StoreProvider>
-            </body>
-        </html>
-    );
-};
+const RootLayout: FC<RootLayoutIF> = async ({ children }) => (
+    <html lang="ru">
+        <body className={inter.className}>
+            <StoreProvider>
+                <Layout>{children}</Layout>
+            </StoreProvider>
+        </body>
+    </html>
+);
 
 export default RootLayout;

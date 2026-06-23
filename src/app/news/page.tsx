@@ -5,7 +5,7 @@ import { getApi } from '@/store/functions';
 
 const News = async () => {
     const data = await getApi<PostArchiveIF>(getNewsArchiveUrl);
-    
+
     return <NewsArchiveTPL data={data} />;
 };
 

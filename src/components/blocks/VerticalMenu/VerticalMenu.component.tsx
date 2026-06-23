@@ -6,19 +6,17 @@ import VerticalMenuItem from '@/components/blocks/VerticalMenu/VerticalMenuItem/
 const VerticalMenu: FC<VerticalMenuPropsIF> = ({
     className = '',
     menuList,
-}) => {
-    return (
-        <nav
-            role="left menu"
-            className={`${styles.verticalMenuWrapper} ${className}`}
-        >
-            <ul className="flcol">
-                {menuList.map(item => (
-                    <VerticalMenuItem key={item.url} data={item} />
-                ))}
-            </ul>
-        </nav>
-    );
-};
+}) => (
+    <nav
+        role="left menu"
+        className={`${styles.verticalMenuWrapper} ${className}`}
+    >
+        <ul className="flcol">
+            {menuList.map(item => (
+                <VerticalMenuItem key={item.url} data={item} />
+            ))}
+        </ul>
+    </nav>
+);
 
 export default VerticalMenu;

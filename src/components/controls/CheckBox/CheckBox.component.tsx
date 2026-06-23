@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useController, UseControllerProps } from '~/react-hook-form';
+import { useController, UseControllerProps } from 'react-hook-form';
 import { CheckBoxPropsIF } from '@/components/controls/CheckBox/CheckBox.types';
 import CheckBoxBase from '@/components/controls/CheckBox/CheckBoxBase/CheckBoxBase.component';
 

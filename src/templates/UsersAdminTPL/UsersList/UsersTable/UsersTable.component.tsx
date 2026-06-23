@@ -39,7 +39,9 @@ const UsersTable: FC<UsersTablePropsIF> = ({
     };
 
     const selectAll = (isAllSelected: boolean) => {
-        if (!usersList) return;
+        if (!usersList) {
+            return;
+        }
 
         setIsAllSelected(isAllSelected);
 
@@ -61,7 +63,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                 <MainButton
                     className={styles.delete}
                     icon={<AiOutlineDelete />}
-                    disabled={!selectedUsers.length || isDataLoading}
+                    disabled={selectedUsers.length === 0 || isDataLoading}
                     clickHandler={() => deleteUsers(selectedUsers)}
                 >
                     Удалить
@@ -69,7 +71,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                 <MainButton
                     className={styles.update}
                     icon={<RxUpdate />}
-                    disabled={!selectedUsers.length || isDataLoading}
+                    disabled={selectedUsers.length === 0 || isDataLoading}
                     clickHandler={() => updateUsers(selectedUsers)}
                 >
                     Обновить юзеров

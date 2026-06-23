@@ -4,6 +4,5 @@ import { fetchRestApiQuery } from '@/store/functions';
 export const calendarApi = createApi({
     reducerPath: 'calendarApi',
     baseQuery: fetchRestApiQuery(),
-    endpoints: builder => ({
-    }),
+    endpoints: builder => ({}),
 });

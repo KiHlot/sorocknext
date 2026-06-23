@@ -1,8 +1,7 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { IoPricetagOutline } from 'react-icons/io5';
-import { IoCalendarOutline } from 'react-icons/io5';
+import { IoPricetagOutline, IoCalendarOutline } from 'react-icons/io5';
 import { taxonomyApi } from '@/api/taxonomy/taxonomy';
 import Loading from '@/components/elems/Loading/Loading.component';
 import Modal from '@/components/interactive/Modal/Modal.component';
@@ -27,7 +26,9 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
     };
 
     const sortedYears = data
-        ? Object.keys(data).sort((a, b) => parseInt(b) - parseInt(a))
+        ? Object.keys(data).sort(
+              (a, b) => Number.parseInt(b) - Number.parseInt(a),
+          )
         : [];
 
     return (

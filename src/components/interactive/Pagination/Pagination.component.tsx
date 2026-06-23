@@ -5,17 +5,19 @@ import styles from '@/components/interactive/Pagination/Pagination.module.scss';
 import { PaginationPropsIF } from '@/components/interactive/Pagination/Pagination.types';
 
 const Pagination: FC<PaginationPropsIF> = ({ pagination }) => {
-    const normalizedPagination = useMemo(() => {
-        return pagination?.pagesCount && pagination.pagesCount > 1
-            ? createPaginationData(pagination.page, pagination.pagesCount)
-            : null;
-    }, [pagination]);
+    const normalizedPagination = useMemo(
+        () =>
+            pagination?.pagesCount && pagination.pagesCount > 1
+                ? createPaginationData(pagination.page, pagination.pagesCount)
+                : null,
+        [pagination],
+    );
 
     return normalizedPagination ? (
         <nav className={styles.paginationWrapper} role="pagination">
             {Object.entries(normalizedPagination).map(
-                ([key, paginationData], index) => {
-                    return paginationData?.length ? (
+                ([key, paginationData], index) =>
+                    paginationData?.length ? (
                         <Fragment key={key}>
                             {index !== 0 &&
                                 index < paginationData.length + 1 && (
@@ -42,8 +44,7 @@ const Pagination: FC<PaginationPropsIF> = ({ pagination }) => {
                                 )}
                             </div>
                         </Fragment>
-                    ) : null;
-                },
+                    ) : null,
             )}
         </nav>
     ) : null;

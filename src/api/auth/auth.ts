@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { RegistrationFieldsReqIF, ResetPasswordIF } from '@/api/auth/types';
 import { fetchRestApiQuery } from '@/store/functions';
 import { ResponseIF } from '@/store/types';
-import { RegistrationFieldsReqIF, ResetPasswordIF } from '@/api/auth/types';
 
 export const authApi = createApi({
     reducerPath: 'authApi',

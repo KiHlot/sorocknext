@@ -6,13 +6,11 @@ const DetailRow: FC<DetailRowPropsIF> = ({
     label,
     children,
     className = '',
-}) => {
-    return (
-        <div className={`${styles.detailRowWrapper} ${className}`}>
-            {label && <div className={styles.label}>{label}:</div>}
-            <div className={styles.content}>{children || '-'}</div>
-        </div>
-    );
-};
+}) => (
+    <div className={`${styles.detailRowWrapper} ${className}`}>
+        {label && <div className={styles.label}>{label}:</div>}
+        <div className={styles.content}>{children || '-'}</div>
+    </div>
+);
 
 export default DetailRow;

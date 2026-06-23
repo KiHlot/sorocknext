@@ -1,8 +1,4 @@
 import dayjs from 'dayjs';
-import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
-import empty_user_250_250 from '@/images/img/empty_user_250_250.png';
-import empty_user_500_500 from '@/images/img/empty_user_500_500.png';
-import { TIME_FORMAT } from '@/configs/config';
 import {
     CookieOptionsT,
     DirectionT,
@@ -10,15 +6,19 @@ import {
     NormalizeFilterIF,
     NormalizeImageTypeT,
 } from '@/types/common';
+import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
+import empty_user_250_250 from '@/images/img/empty_user_250_250.png';
+import empty_user_500_500 from '@/images/img/empty_user_500_500.png';
+import { TIME_FORMAT } from '@/configs/config';
 
 export const shuffle = <T>(array: T[]): T[] => {
     const arrayCopy = [...array];
 
-    for (let i = arrayCopy.length - 1; i > 0; i--) {
-        const randomIndex = Math.floor(Math.random() * (i + 1));
-        [arrayCopy[i], arrayCopy[randomIndex]] = [
+    for (let index = arrayCopy.length - 1; index > 0; index--) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [arrayCopy[index], arrayCopy[randomIndex]] = [
             arrayCopy[randomIndex],
-            arrayCopy[i],
+            arrayCopy[index],
         ];
     }
     return arrayCopy;
@@ -37,8 +37,7 @@ export const setCookie = (
         options.expires = dayjs(options.expires, TIME_FORMAT.cookie).toDate();
     }
 
-    let updatedCookie =
-        encodeURIComponent(name) + '=' + encodeURIComponent(value);
+    let updatedCookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
 
     const optionKeys: (keyof CookieOptionsT)[] = [
         'expires',
@@ -51,9 +50,9 @@ export const setCookie = (
     for (const key of optionKeys) {
         const optionValue = options[key];
         if (optionValue !== undefined) {
-            updatedCookie += '; ' + key;
+            updatedCookie += `; ${key}`;
             if (optionValue !== true) {
-                updatedCookie += '=' + optionValue;
+                updatedCookie += `=${optionValue}`;
             }
         }
     }
@@ -75,7 +74,7 @@ export const formatDate = (backDate?: string, type?: 'withTime') => {
 export const getCookie = (name: string): string | null => {
     const matches = document.cookie.match(
         new RegExp(
-            '(?:^|; )' + name.replace(/([.$?*|{}()+^])/g, '\\$1') + '=([^;]*)',
+            `(?:^|; )${name.replaceAll(/([.$?*|{}()+^])/g, String.raw`\$1`)}=([^;]*)`,
         ),
     );
     return matches ? decodeURIComponent(matches[1]) : null;
@@ -88,7 +87,9 @@ export const deleteCookie = (name: string) => {
 export const getStorageItem = <ReturnType = string>(
     name: string,
 ): ReturnType | null => {
-    if (typeof window === 'undefined') return null;
+    if (typeof window === 'undefined') {
+        return null;
+    }
 
     const storageData: string | null = sessionStorage.getItem(name);
 
@@ -101,7 +102,7 @@ export const getStorageItem = <ReturnType = string>(
 
     try {
         return JSON.parse(storageData);
-    } catch (error) {
+    } catch {
         return null;
     }
 };
@@ -110,7 +111,9 @@ export const setStorageItem = <T>(
     data: T | null | undefined,
     itemName: string,
 ): boolean => {
-    if (typeof window === 'undefined') return false;
+    if (typeof window === 'undefined') {
+        return false;
+    }
 
     try {
         if (!data) {
@@ -119,7 +122,7 @@ export const setStorageItem = <T>(
 
         sessionStorage.setItem(itemName, JSON.stringify(data));
         return true;
-    } catch (error) {
+    } catch {
         sessionStorage.removeItem(itemName);
         return false;
     }
@@ -129,17 +132,23 @@ export const normalizeImage = (
     url: string | null | undefined,
     type: NormalizeImageTypeT,
 ) => {
-    if (url) return url;
+    if (url) {
+        return url;
+    }
 
     switch (type) {
-        case 'user80':
+        case 'user80': {
             return empty_user_80_80.src;
-        case 'user250':
+        }
+        case 'user250': {
             return empty_user_250_250.src;
-        case 'user500':
+        }
+        case 'user500': {
             return empty_user_500_500.src;
-        default:
+        }
+        default: {
             return '';
+        }
     }
 };
 

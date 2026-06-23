@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef } from 'react';
 import { IoClose } from 'react-icons/io5';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 import Loading from '@/components/elems/Loading/Loading.component';
 import styles from '@/components/interactive/Modal/Modal.module.scss';
 import { ModalPropsIF } from '@/components/interactive/Modal/Modal.types';
-import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 const Modal: FC<ModalPropsIF> = ({
     isOpen,
@@ -25,7 +25,9 @@ const Modal: FC<ModalPropsIF> = ({
     };
 
     const onClose = () => {
-        if (blockOutsideClick) return;
+        if (blockOutsideClick) {
+            return;
+        }
         normalizeHtml(false);
         closeHandler();
     };
@@ -48,13 +50,13 @@ const Modal: FC<ModalPropsIF> = ({
                 <div className={styles.modalHeader}>
                     {title?.label && (
                         <>
-                            {!isLoading ? (
+                            {isLoading ? (
+                                <div>Загружаем...</div>
+                            ) : (
                                 <div className={styles.title}>
                                     {title?.icon && title.icon}
                                     <span>{title.label}</span>
                                 </div>
-                            ) : (
-                                <div>Загружаем...</div>
                             )}
                         </>
                     )}

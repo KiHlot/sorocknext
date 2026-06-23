@@ -6,7 +6,7 @@ export interface UserLoginResponseIF {
     currentUser: CurrentUserIF;
 }
 
-export interface LoginFieldsReqIF {
+export interface LoginFieldsRequestIF {
     username: string;
     password: string;
 }

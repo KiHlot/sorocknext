@@ -4,6 +4,5 @@ import { fetchRestApiQuery } from '@/store/functions';
 export const newsApi = createApi({
     reducerPath: 'newsApi',
     baseQuery: fetchRestApiQuery(),
-    endpoints: builder => ({
-    }),
+    endpoints: builder => ({}),
 });

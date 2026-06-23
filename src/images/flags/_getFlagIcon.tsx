@@ -113,230 +113,342 @@ import ZaIcon from '@/images/flags/za.svg';
 
 export const getFlagIcon = (country: string): ReactElement => {
     switch (country) {
-        case 'sf':
+        case 'sf': {
             return <SfIcon />;
-        case 'us':
+        }
+        case 'us': {
             return <UsIcon />;
-        case 'gb':
+        }
+        case 'gb': {
             return <GbIcon />;
-        case 'ua':
+        }
+        case 'ua': {
             return <UaIcon />;
-        case 'ru':
+        }
+        case 'ru': {
             return <RuIcon />;
-        case 'pl':
+        }
+        case 'pl': {
             return <PlIcon />;
-        case 'ae':
+        }
+        case 'ae': {
             return <AeIcon />;
-        case 'af':
+        }
+        case 'af': {
             return <AfIcon />;
-        case 'am':
+        }
+        case 'am': {
             return <AmIcon />;
-        case 'ar':
+        }
+        case 'ar': {
             return <ArIcon />;
-        case 'at':
+        }
+        case 'at': {
             return <AtIcon />;
-        case 'au':
+        }
+        case 'au': {
             return <AuIcon />;
-        case 'az':
+        }
+        case 'az': {
             return <AzIcon />;
-        case 'ba':
+        }
+        case 'ba': {
             return <BaIcon />;
-        case 'bd':
+        }
+        case 'bd': {
             return <BdIcon />;
-        case 'be':
+        }
+        case 'be': {
             return <BeIcon />;
-        case 'bg':
+        }
+        case 'bg': {
             return <BgIcon />;
-        case 'bh':
+        }
+        case 'bh': {
             return <BhIcon />;
-        case 'bo':
+        }
+        case 'bo': {
             return <BoIcon />;
-        case 'br':
+        }
+        case 'br': {
             return <BrIcon />;
-        case 'bs':
+        }
+        case 'bs': {
             return <BsIcon />;
-        case 'by':
+        }
+        case 'by': {
             return <ByIcon />;
-        case 'bw':
+        }
+        case 'bw': {
             return <BwIcon />;
-        case 'ca':
+        }
+        case 'ca': {
             return <CaIcon />;
-        case 'cg':
+        }
+        case 'cg': {
             return <CgIcon />;
-        case 'ch':
+        }
+        case 'ch': {
             return <ChIcon />;
-        case 'ci':
+        }
+        case 'ci': {
             return <CiIcon />;
-        case 'cl':
+        }
+        case 'cl': {
             return <ClIcon />;
-        case 'cm':
+        }
+        case 'cm': {
             return <CmIcon />;
-        case 'cn':
+        }
+        case 'cn': {
             return <CnIcon />;
-        case 'co':
+        }
+        case 'co': {
             return <CoIcon />;
-        case 'cr':
+        }
+        case 'cr': {
             return <CrIcon />;
-        case 'cu':
+        }
+        case 'cu': {
             return <CuIcon />;
-        case 'cz':
+        }
+        case 'cz': {
             return <CzIcon />;
-        case 'de':
+        }
+        case 'de': {
             return <DeIcon />;
-        case 'dk':
+        }
+        case 'dk': {
             return <DkIcon />;
-        case 'dz':
+        }
+        case 'dz': {
             return <DzIcon />;
-        case 'ee':
+        }
+        case 'ee': {
             return <EeIcon />;
-        case 'eg':
+        }
+        case 'eg': {
             return <EgIcon />;
-        case 'es':
+        }
+        case 'es': {
             return <EsIcon />;
-        case 'fi':
+        }
+        case 'fi': {
             return <FiIcon />;
-        case 'fr':
+        }
+        case 'fr': {
             return <FrIcon />;
-        case 'ge':
+        }
+        case 'ge': {
             return <GeIcon />;
-        case 'gl':
+        }
+        case 'gl': {
             return <GlIcon />;
-        case 'gr':
+        }
+        case 'gr': {
             return <GrIcon />;
-        case 'hk':
+        }
+        case 'hk': {
             return <HkIcon />;
-        case 'hr':
+        }
+        case 'hr': {
             return <HrIcon />;
-        case 'hu':
+        }
+        case 'hu': {
             return <HuIcon />;
-        case 'id':
+        }
+        case 'id': {
             return <IdIcon />;
-        case 'ie':
+        }
+        case 'ie': {
             return <IeIcon />;
-        case 'il':
+        }
+        case 'il': {
             return <IlIcon />;
-        case 'in':
+        }
+        case 'in': {
             return <InIcon />;
-        case 'iq':
+        }
+        case 'iq': {
             return <IqIcon />;
-        case 'is':
+        }
+        case 'is': {
             return <IsIcon />;
-        case 'it':
+        }
+        case 'it': {
             return <ItIcon />;
-        case 'jm':
+        }
+        case 'jm': {
             return <JmIcon />;
-        case 'jp':
+        }
+        case 'jp': {
             return <JpIcon />;
-        case 'kh':
+        }
+        case 'kh': {
             return <KhIcon />;
-        case 'kp':
+        }
+        case 'kp': {
             return <KpIcon />;
-        case 'kr':
+        }
+        case 'kr': {
             return <KrIcon />;
-        case 'kz':
+        }
+        case 'kz': {
             return <KzIcon />;
-        case 'li':
+        }
+        case 'li': {
             return <LiIcon />;
-        case 'lt':
+        }
+        case 'lt': {
             return <LtIcon />;
-        case 'lu':
+        }
+        case 'lu': {
             return <LuIcon />;
-        case 'lv':
+        }
+        case 'lv': {
             return <LvIcon />;
-        case 'ma':
+        }
+        case 'ma': {
             return <MaIcon />;
-        case 'mc':
+        }
+        case 'mc': {
             return <McIcon />;
-        case 'md':
+        }
+        case 'md': {
             return <MdIcon />;
-        case 'me':
+        }
+        case 'me': {
             return <MeIcon />;
-        case 'mg':
+        }
+        case 'mg': {
             return <MgIcon />;
-        case 'mk':
+        }
+        case 'mk': {
             return <MkIcon />;
-        case 'mn':
+        }
+        case 'mn': {
             return <MnIcon />;
-        case 'mt':
+        }
+        case 'mt': {
             return <MtIcon />;
-        case 'mx':
+        }
+        case 'mx': {
             return <MxIcon />;
-        case 'my':
+        }
+        case 'my': {
             return <MyIcon />;
-        case 'ne':
+        }
+        case 'ne': {
             return <NeIcon />;
-        case 'ng':
+        }
+        case 'ng': {
             return <NgIcon />;
-        case 'nl':
+        }
+        case 'nl': {
             return <NlIcon />;
-        case 'no':
+        }
+        case 'no': {
             return <NoIcon />;
-        case 'np':
+        }
+        case 'np': {
             return <NpIcon />;
-        case 'nz':
+        }
+        case 'nz': {
             return <NzIcon />;
-        case 'pa':
+        }
+        case 'pa': {
             return <PaIcon />;
-        case 'pe':
+        }
+        case 'pe': {
             return <PeIcon />;
-        case 'ph':
+        }
+        case 'ph': {
             return <PhIcon />;
-        case 'pr':
+        }
+        case 'pr': {
             return <PrIcon />;
-        case 'ps':
+        }
+        case 'ps': {
             return <PsIcon />;
-        case 'pt':
+        }
+        case 'pt': {
             return <PtIcon />;
-        case 'py':
+        }
+        case 'py': {
             return <PyIcon />;
-        case 'qa':
+        }
+        case 'qa': {
             return <QaIcon />;
-        case 'ro':
+        }
+        case 'ro': {
             return <RoIcon />;
-        case 'rs':
+        }
+        case 'rs': {
             return <RsIcon />;
-        case 'se':
+        }
+        case 'se': {
             return <SeIcon />;
-        case 'sg':
+        }
+        case 'sg': {
             return <SgIcon />;
-        case 'si':
+        }
+        case 'si': {
             return <SiIcon />;
-        case 'sk':
+        }
+        case 'sk': {
             return <SkIcon />;
-        case 'sn':
+        }
+        case 'sn': {
             return <SnIcon />;
-        case 'so':
+        }
+        case 'so': {
             return <SoIcon />;
-        case 'sy':
+        }
+        case 'sy': {
             return <SyIcon />;
-        case 'th':
+        }
+        case 'th': {
             return <ThIcon />;
-        case 'tj':
+        }
+        case 'tj': {
             return <TjIcon />;
-        case 'tn':
+        }
+        case 'tn': {
             return <TnIcon />;
-        case 'tr':
+        }
+        case 'tr': {
             return <TrIcon />;
-        case 'tt':
+        }
+        case 'tt': {
             return <TtIcon />;
-        case 'tw':
+        }
+        case 'tw': {
             return <TwIcon />;
-        case 'tz':
+        }
+        case 'tz': {
             return <TzIcon />;
-        case 'ug':
+        }
+        case 'ug': {
             return <UgIcon />;
-        case 'uy':
+        }
+        case 'uy': {
             return <UyIcon />;
-        case 'uz':
+        }
+        case 'uz': {
             return <UzIcon />;
-        case 've':
+        }
+        case 've': {
             return <VeIcon />;
-        case 'vn':
+        }
+        case 'vn': {
             return <VnIcon />;
-        case 'za':
+        }
+        case 'za': {
             return <ZaIcon />;
-        default:
+        }
+        default: {
             return <SfIcon />;
+        }
     }
 };
 

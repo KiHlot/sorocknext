@@ -3,13 +3,11 @@ import CommonLayout, {
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 
-const ProfileTPL = () => {
-    return (
-        <CommonLayout>
-            <Content>Profile</Content>
-            <Sidebar>sidebar</Sidebar>
-        </CommonLayout>
-    );
-};
+const ProfileTPL = () => (
+    <CommonLayout>
+        <Content>Profile</Content>
+        <Sidebar>sidebar</Sidebar>
+    </CommonLayout>
+);
 
 export default ProfileTPL;

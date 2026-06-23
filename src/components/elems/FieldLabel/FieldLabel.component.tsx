@@ -2,8 +2,8 @@ import { FC } from 'react';
 import styles from '@/components/elems/FieldLabel/FieldLabel.module.scss';
 import { FieldLabelPropsIF } from '@/components/elems/FieldLabel/FieldLabel.types';
 
-const FieldLabel: FC<FieldLabelPropsIF> = ({ label, isRequired, isError }) => {
-    return label ? (
+const FieldLabel: FC<FieldLabelPropsIF> = ({ label, isRequired, isError }) =>
+    label ? (
         <div
             className={`${styles.fieldLabelWrapper} ${isError ? styles.error : ''}`}
         >
@@ -11,6 +11,5 @@ const FieldLabel: FC<FieldLabelPropsIF> = ({ label, isRequired, isError }) => {
             {isRequired && <span>*</span>}
         </div>
     ) : null;
-};
 
 export default FieldLabel;

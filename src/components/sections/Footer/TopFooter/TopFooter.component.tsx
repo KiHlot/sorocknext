@@ -7,37 +7,35 @@ import styles from '@/components/sections/Footer/TopFooter/TopFooter.module.scss
 import { TopFooterPropsIF } from '@/components/sections/Footer/TopFooter/TopFooter.types';
 import PopularTags from '@/components/widgets/PopularTags/PopularTags.component';
 
-const TopFooter: FC<TopFooterPropsIF> = () => {
-    return (
-        <div className={styles.topFooterWrapper}>
-            <MainWrapper className={styles.fullWrapper}>
-                <div className={styles.footerCol}>
-                    <div className={styles.title}>Теги</div>
-                    <PopularTags />
-                </div>
+const TopFooter: FC<TopFooterPropsIF> = () => (
+    <div className={styles.topFooterWrapper}>
+        <MainWrapper className={styles.fullWrapper}>
+            <div className={styles.footerCol}>
+                <div className={styles.title}>Теги</div>
+                <PopularTags />
+            </div>
 
-                <div className={`${styles.footerCol} ${styles.menu}`}>
-                    <div className={styles.title}>Категории</div>
-                    <FooterMenuColumn menuItems={FOOTER_MENU[947]} />
-                </div>
+            <div className={`${styles.footerCol} ${styles.menu}`}>
+                <div className={styles.title}>Категории</div>
+                <FooterMenuColumn menuItems={FOOTER_MENU[947]} />
+            </div>
 
-                <div className={`${styles.footerCol} ${styles.menu}`}>
-                    <div className={styles.title}>Разделы сайта</div>
-                    <FooterMenuColumn menuItems={FOOTER_MENU[948]} />
-                </div>
+            <div className={`${styles.footerCol} ${styles.menu}`}>
+                <div className={styles.title}>Разделы сайта</div>
+                <FooterMenuColumn menuItems={FOOTER_MENU[948]} />
+            </div>
 
-                <div className={`${styles.footerCol} ${styles.menu}`}>
-                    <div className={styles.title}>Инфо</div>
-                    <FooterMenuColumn menuItems={FOOTER_MENU[949]} />
-                </div>
+            <div className={`${styles.footerCol} ${styles.menu}`}>
+                <div className={styles.title}>Инфо</div>
+                <FooterMenuColumn menuItems={FOOTER_MENU[949]} />
+            </div>
 
-                <div className={styles.footerCol}>
-                    <div className={styles.title}>Обратная связь</div>
-                    <ContactForm />
-                </div>
-            </MainWrapper>
-        </div>
-    );
-};
+            <div className={styles.footerCol}>
+                <div className={styles.title}>Обратная связь</div>
+                <ContactForm />
+            </div>
+        </MainWrapper>
+    </div>
+);
 
 export default TopFooter;

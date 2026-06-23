@@ -1,11 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { fetchRestApiQuery } from '@/store/functions';
-import { ResponseIF } from '@/store/types';
 import {
     CronInfoIF,
     DeleteUsersResultIF,
     UpdateCronTaskT,
 } from '@/api/admin/types';
+import { fetchRestApiQuery } from '@/store/functions';
+import { ResponseIF } from '@/store/types';
 
 export const adminApi = createApi({
     reducerPath: 'adminApi',

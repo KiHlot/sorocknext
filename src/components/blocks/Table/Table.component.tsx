@@ -58,35 +58,31 @@ const Table: FC<TablePropsIF> = ({
 export const TableRow: FC<TableRowPropsIF> = ({
     children,
     isChecked = false,
-}) => {
-    return (
-        <tr
-            className={`${styles.tableRowWrapper} ${isChecked ? styles.checked : ''}`}
-        >
-            {children}
-        </tr>
-    );
-};
+}) => (
+    <tr
+        className={`${styles.tableRowWrapper} ${isChecked ? styles.checked : ''}`}
+    >
+        {children}
+    </tr>
+);
 
 export const RowItem: FC<RowItemPropsIF> = ({
     width,
     children,
     className = '',
-}) => {
-    return (
-        <td
-            style={
-                width
-                    ? {
-                          width: `${width}px`,
-                      }
-                    : undefined
-            }
-            className={className}
-        >
-            {children}
-        </td>
-    );
-};
+}) => (
+    <td
+        style={
+            width
+                ? {
+                      width: `${width}px`,
+                  }
+                : undefined
+        }
+        className={className}
+    >
+        {children}
+    </td>
+);
 
 export default Table;

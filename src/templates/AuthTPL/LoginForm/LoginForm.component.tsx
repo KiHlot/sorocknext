@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
-import { yupResolver } from '~/@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { CurrentUserIF } from '@/types/user';
 import { jwtApi } from '@/api/jwt/jwt';
 import { LoginFieldsReqIF } from '@/api/jwt/types';

@@ -1,6 +1,6 @@
-import { UsersAdminJsonDataIF } from '@/api/site/types';
 import { FilteredResultIF } from '@/types/common';
 import { UserIF } from '@/types/user';
+import { UsersAdminJsonDataIF } from '@/api/site/types';
 
 export interface UsersAdminTPLDataIF {
     jsonData: UsersAdminJsonDataIF;

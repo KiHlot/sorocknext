@@ -8,7 +8,7 @@ import {
     ClipboardEvent,
     ReactElement,
 } from 'react';
-import { FieldValues, useController } from '~/react-hook-form';
+import { FieldValues, useController } from 'react-hook-form';
 import styles from '@/components/controls/CodeInput/CodeInput.module.scss';
 import { CodeInputPropsIF } from '@/components/controls/CodeInput/CodeInput.types';
 import FieldError from '@/components/elems/FieldError/FieldError.component';
@@ -23,9 +23,9 @@ const CodeInput = <T extends FieldValues>({
     clearErrors,
 }: CodeInputPropsIF<T>): ReactElement => {
     const [code, setCode] = useState<string[]>(Array.from(names, () => ''));
-    const [inputRefsArray] = useState<RefObject<HTMLInputElement | null>[]>(
-        () => Array.from(names, () => createRef()),
-    );
+    const [inputReferencesArray] = useState<
+        RefObject<HTMLInputElement | null>[]
+    >(() => Array.from(names, () => createRef()));
 
     const {
         field: { onChange },
@@ -39,7 +39,9 @@ const CodeInput = <T extends FieldValues>({
             return;
         }
 
-        if (!(event.target instanceof HTMLInputElement)) return;
+        if (!(event.target instanceof HTMLInputElement)) {
+            return;
+        }
 
         clearErrors();
 
@@ -49,14 +51,16 @@ const CodeInput = <T extends FieldValues>({
         target.focus();
 
         const newCode = [...code];
-        newCode[currentIndex] = target.value.slice(-1).replace(/[^0-9]/g, '');
+        newCode[currentIndex] = target.value
+            .slice(-1)
+            .replaceAll(/[^0-9]/g, '');
 
         setCode(newCode);
         setValue(name, newCode.join(''));
 
-        for (let i = 0; i < newCode.length; i++) {
-            if (!newCode[i]) {
-                const nextInput = inputRefsArray?.[i]?.current;
+        for (const [index, element] of newCode.entries()) {
+            if (!element) {
+                const nextInput = inputReferencesArray?.[index]?.current;
                 if (nextInput) {
                     nextInput.focus();
                     nextInput.select();
@@ -102,7 +106,7 @@ const CodeInput = <T extends FieldValues>({
                 {names.map((inputName, index) => (
                     <input
                         key={inputName}
-                        ref={inputRefsArray[index]}
+                        ref={inputReferencesArray[index]}
                         type="text"
                         name={inputName}
                         placeholder="-"

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { FieldValues, useController } from '~/react-hook-form';
+import { FieldValues, useController } from 'react-hook-form';
 import styles from '@/components/controls/TextArea/TextArea.module.scss';
 import { TextAreaPropsIF } from '@/components/controls/TextArea/TextArea.types';
 import FieldError from '@/components/elems/FieldError/FieldError.component';

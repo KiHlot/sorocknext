@@ -3,10 +3,10 @@
 import { FC, useEffect, useState } from 'react';
 import { adminApi } from '@/api/admin/admin';
 import { CronInfoIF } from '@/api/admin/types';
-import AdminPromoBlock from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.component';
-import NoData from '@/components/elems/NoData/NoData.component';
 import { CronTPLPropsIF } from '@/templates/CronTPL/CronTPL.types';
 import CronTable from '@/templates/CronTPL/CronTable/CronTable.component';
+import AdminPromoBlock from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.component';
+import NoData from '@/components/elems/NoData/NoData.component';
 
 const CronTPL: FC<CronTPLPropsIF> = ({ data }) => {
     const [cronInfoData, setCronInfoData] = useState<CronInfoIF | null>(null);

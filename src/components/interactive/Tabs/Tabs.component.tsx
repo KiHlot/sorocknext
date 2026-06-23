@@ -27,10 +27,7 @@ const Tabs: FC<TabsPropsIF> = ({
                 ))}
             </div>
             <div className={styles.bodyLine}>
-                {
-                    config.filter(({ key: tabKey }) => tabKey === activeTab)[0]
-                        ?.elem
-                }
+                {config.find(({ key: tabKey }) => tabKey === activeTab)?.elem}
             </div>
         </div>
     );

@@ -21,8 +21,8 @@ const showErrorToast = (status: number, statusText?: string) => {
     );
 };
 
-export const fetchRestApiQuery = (baseUrl?: string) => {
-    return fetchBaseQuery({
+export const fetchRestApiQuery = (baseUrl?: string) =>
+    fetchBaseQuery({
         baseUrl: `${ADDRESS.WP_API_URL}${baseUrl || ''}`,
         prepareHeaders: headers => {
             const token = getCookie('token');
@@ -66,10 +66,9 @@ export const fetchRestApiQuery = (baseUrl?: string) => {
             return data;
         },
     });
-};
 
-export const fetchJWTTokenQuery = () => {
-    return fetchBaseQuery({
+export const fetchJWTTokenQuery = () =>
+    fetchBaseQuery({
         baseUrl: ADDRESS.WP_JWT_API_URL,
         responseHandler: async response => {
             if (response?.status !== 200) {
@@ -79,7 +78,6 @@ export const fetchJWTTokenQuery = () => {
             return response.json();
         },
     });
-};
 
 export const getApi = async <ResultType>(
     route: string,
@@ -105,8 +103,8 @@ export const getApi = async <ResultType>(
         const { result, data }: ResponseIF<ResultType> = await response.json();
 
         return result === 'ok' ? data : null;
-    } catch (e) {
-        console.error('error', e);
+    } catch (error) {
+        console.error('error', error);
     }
 };
 
@@ -114,7 +112,9 @@ export const setCustomError = <FieldsNames>(
     errors?: ResponseErrorIF[],
     setError?: (name: FieldsNames, error: ErrorOption) => void,
 ) => {
-    if (!errors?.length || !setError) return;
+    if (!errors?.length || !setError) {
+        return;
+    }
 
     errors?.forEach(error => {
         if (error.fieldName) {
@@ -132,16 +132,20 @@ export const parseResponse = <FieldsNames, DataT = null>(
     setError?: (name: FieldsNames, error: ErrorOption) => void,
 ): void => {
     switch (data?.result) {
-        case 'ok':
+        case 'ok': {
             callback(data?.data || null);
             break;
-        case 'errors':
+        }
+        case 'errors': {
             setCustomError<FieldsNames>(data.errors, setError);
             break;
-        case 'redirect':
+        }
+        case 'redirect': {
             console.log('redirect');
             break;
-        default:
+        }
+        default: {
             break;
+        }
     }
 };

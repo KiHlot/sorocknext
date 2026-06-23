@@ -9,24 +9,22 @@ const InfoBlock: FC<InfoBlockPropsIF> = ({
     onClose,
     variant = 'info',
     className = '',
-}) => {
-    return (
-        <div
-            className={`flcol ${styles.infoBlockWrapper} ${styles[variant]} ${className}`}
-        >
-            {onClose && (
-                <button
-                    type="button"
-                    onClick={onClose}
-                    className={`flc ${styles.button}`}
-                >
-                    <IoClose />
-                </button>
-            )}
-            {title && <div className={styles.title}>{title}</div>}
-            <div className={styles.content}>{children}</div>
-        </div>
-    );
-};
+}) => (
+    <div
+        className={`flcol ${styles.infoBlockWrapper} ${styles[variant]} ${className}`}
+    >
+        {onClose && (
+            <button
+                type="button"
+                onClick={onClose}
+                className={`flc ${styles.button}`}
+            >
+                <IoClose />
+            </button>
+        )}
+        {title && <div className={styles.title}>{title}</div>}
+        <div className={styles.content}>{children}</div>
+    </div>
+);
 
 export default InfoBlock;

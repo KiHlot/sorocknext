@@ -16,7 +16,7 @@ const VideoSingle = async ({ params }: PageProps) => {
         }
 
         return <PostTPL data={data} />;
-    } catch (error) {
+    } catch {
         notFound();
     }
 };

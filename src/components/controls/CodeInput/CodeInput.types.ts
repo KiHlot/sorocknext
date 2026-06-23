@@ -9,7 +9,7 @@ export interface CodeInputPropsIF<T extends FieldValues = FieldValues> {
     className?: string;
     names: string[];
     isDisabled: boolean;
-    setValue: (name: Path<T>, newVal: string) => void;
+    setValue: (name: Path<T>, newValue: string) => void;
     name: Path<T>;
     control: Control<T>;
     clearErrors: UseFormClearErrors<T>;

@@ -1,16 +1,16 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { fetchRestApiQuery } from '@/store/functions';
-import { ResponseIF } from '@/store/types';
 import { FilteredResultIF } from '@/types/common';
 import { CurrentUserIF, UserIF } from '@/types/user';
+import { fetchRestApiQuery } from '@/store/functions';
+import { ResponseIF } from '@/store/types';
 
 export const usersApi = createApi({
     reducerPath: 'usersApi',
     baseQuery: fetchRestApiQuery('/users'),
     endpoints: builder => ({
         filter: builder.query<ResponseIF<FilteredResultIF<UserIF[]>>, string>({
-            query: params => ({
-                url: `/filter?${params}`,
+            query: parameters => ({
+                url: `/filter?${parameters}`,
             }),
         }),
         getUserData: builder.mutation<ResponseIF<UserIF>, number>({

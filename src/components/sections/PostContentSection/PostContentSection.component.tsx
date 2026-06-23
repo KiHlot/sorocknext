@@ -3,8 +3,8 @@ import Loading from '@/components/elems/Loading/Loading.component';
 import styles from '@/components/sections/PostContentSection/PostContentSection.module.scss';
 import { PostContentSectionPropsIF } from '@/components/sections/PostContentSection/PostContentSection.types';
 
-const PostContentSection: FC<PostContentSectionPropsIF> = ({ content }) => {
-    return content ? (
+const PostContentSection: FC<PostContentSectionPropsIF> = ({ content }) =>
+    content ? (
         <section className={styles.postContentSectionWrapper}>
             <div
                 className="the_content"
@@ -16,6 +16,5 @@ const PostContentSection: FC<PostContentSectionPropsIF> = ({ content }) => {
     ) : (
         <Loading height={400} />
     );
-};
 
 export default PostContentSection;

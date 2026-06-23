@@ -11,36 +11,32 @@ import LeftMenu from '@/components/menus/LeftMenu/LeftMenu.component';
 import TopMenu from '@/components/menus/TopMenu/TopMenu.component';
 import Footer from '@/components/sections/Footer/Footer.component';
 
-const CommonLayout: FC<CommonLayoutPropsIF> = ({ children }) => {
-    return (
-        <>
-            <TopMenu />
-            <MainWrapper
-                className={`${layoutStyles.layout} ${styles.commonLayoutWrapper}`}
-            >
-                <aside className={styles.menu}>
-                    <LeftMenu />
-                </aside>
-                {children}
-            </MainWrapper>
-            <Footer />
-        </>
-    );
-};
+const CommonLayout: FC<CommonLayoutPropsIF> = ({ children }) => (
+    <>
+        <TopMenu />
+        <MainWrapper
+            className={`${layoutStyles.layout} ${styles.commonLayoutWrapper}`}
+        >
+            <aside className={styles.menu}>
+                <LeftMenu />
+            </aside>
+            {children}
+        </MainWrapper>
+        <Footer />
+    </>
+);
 
 export const Content: FC<CommonLayoutContentPropsIF> = ({
     children,
     className = '',
-}) => {
-    return (
-        <main className={`flcol gapLayout ${styles.content} ${className}`}>
-            {children}
-        </main>
-    );
-};
+}) => (
+    <main className={`flcol gapLayout ${styles.content} ${className}`}>
+        {children}
+    </main>
+);
 
-export const Sidebar: FC<CommonLayoutSidebarPropsIF> = ({ children }) => {
-    return <aside className="flcol gapLayout">{children}</aside>;
-};
+export const Sidebar: FC<CommonLayoutSidebarPropsIF> = ({ children }) => (
+    <aside className="flcol gapLayout">{children}</aside>
+);
 
 export default CommonLayout;

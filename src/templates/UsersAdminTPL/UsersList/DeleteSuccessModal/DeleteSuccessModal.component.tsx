@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { TiUserDeleteOutline } from 'react-icons/ti';
+import { DELETE_SUCCESS_MODAL_TITLES } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.config';
+import { DeleteSuccessModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.types';
 import Table, {
     RowItem,
     TableRow,
 } from '@/components/blocks/Table/Table.component';
 import Modal from '@/components/interactive/Modal/Modal.component';
-import { DELETE_SUCCESS_MODAL_TITLES } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.config';
-import { DeleteSuccessModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.types';
 
 const DeleteSuccessModal: FC<DeleteSuccessModalPropsIF> = ({
     data,

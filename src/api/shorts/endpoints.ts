@@ -4,6 +4,5 @@ import { fetchRestApiQuery } from '@/store/functions';
 export const shortsApi = createApi({
     reducerPath: 'shortsApi',
     baseQuery: fetchRestApiQuery(),
-    endpoints: builder => ({
-    }),
+    endpoints: builder => ({}),
 });

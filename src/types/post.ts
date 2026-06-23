@@ -26,7 +26,7 @@ export interface Metadata {
         title: string;
         description: string;
         url: string;
-        images?: {url: string}[];
+        images?: { url: string }[];
         type: string;
         publishedTime: string;
         modifiedTime: string;

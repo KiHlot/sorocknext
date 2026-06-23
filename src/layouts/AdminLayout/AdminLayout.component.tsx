@@ -9,24 +9,22 @@ import LeftMenu from '@/components/menus/LeftMenu/LeftMenu.component';
 import TopMenu from '@/components/menus/TopMenu/TopMenu.component';
 import Footer from '@/components/sections/Footer/Footer.component';
 
-const AdminLayout: FC<AdminLayoutPropsIF> = ({ children, isLoading }) => {
-    return (
-        <>
-            <TopMenu />
-            <MainWrapper
-                className={`${layoutStyles.layout} ${styles.adminLayoutWrapper}`}
-            >
-                <div className={`cvscroll ${layoutStyles.menu}`}>
-                    <LeftMenu />
-                </div>
-                <div className={`cvscroll ${layoutStyles.menu}`}>
-                    <AdminMenu />
-                </div>
-                <div>{isLoading ? <Loading height={800} /> : children}</div>
-            </MainWrapper>
-            <Footer />
-        </>
-    );
-};
+const AdminLayout: FC<AdminLayoutPropsIF> = ({ children, isLoading }) => (
+    <>
+        <TopMenu />
+        <MainWrapper
+            className={`${layoutStyles.layout} ${styles.adminLayoutWrapper}`}
+        >
+            <div className={`cvscroll ${layoutStyles.menu}`}>
+                <LeftMenu />
+            </div>
+            <div className={`cvscroll ${layoutStyles.menu}`}>
+                <AdminMenu />
+            </div>
+            <div>{isLoading ? <Loading height={800} /> : children}</div>
+        </MainWrapper>
+        <Footer />
+    </>
+);
 
 export default AdminLayout;

@@ -1,7 +1,7 @@
 'use client';
 
-import { FC } from 'react';
 import { Autoplay } from 'swiper/modules';
+import { FC } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Link from 'next/link';
 import { siteApi } from '@/api/site/site';
@@ -23,7 +23,7 @@ const TrendsSlider: FC<TrendsSliderPropsIF> = ({ className }) => {
                     pauseOnMouseEnter: true,
                     disableOnInteraction: false,
                 }}
-                loop={true}
+                loop
                 className={styles.swiperBlock}
             >
                 {baseData?.trends?.map(({ label, url }) => (

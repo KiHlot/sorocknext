@@ -2,7 +2,7 @@
 
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '~/@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { siteApi } from '@/api/site/site';
 import { ContactFormIF } from '@/api/site/types';
 import { Input } from '@/components/controls/Input/Input.component';

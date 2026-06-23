@@ -7,9 +7,9 @@ import {
 import { PiUserCheck } from 'react-icons/pi';
 import { RiChatPrivateLine } from 'react-icons/ri';
 import { TbPasswordFingerprint } from 'react-icons/tb';
-import { getStorageItem } from '@/helpers/utils';
 import { MenuItemIF } from '@/types/common';
 import { CurrentUserIF } from '@/types/user';
+import { getStorageItem } from '@/helpers/utils';
 
 export const MENU_USER: MenuItemIF[] = [
     {

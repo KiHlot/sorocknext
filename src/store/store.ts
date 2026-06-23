@@ -5,6 +5,7 @@ import { calendarApi } from '@/api/calendar/endpoints';
 import { jwtApi } from '@/api/jwt/jwt';
 import { newsApi } from '@/api/news/endpoints';
 import { pageApi } from '@/api/page/page';
+import { postApi } from '@/api/post/endpoints';
 import { publicationsApi } from '@/api/publications/endpoints';
 import { shortsApi } from '@/api/shorts/endpoints';
 import { siteApi } from '@/api/site/site';
@@ -13,7 +14,6 @@ import { taxonomyApi } from '@/api/taxonomy/taxonomy';
 import { usersApi } from '@/api/users/users';
 import { videoApi } from '@/api/video/endpoints';
 import { globalDataSlice } from '@/store/slices/globalDataSlice';
-import { postApi } from '@/api/post/endpoints';
 
 const rootReducer = combineReducers({
     [usersApi.reducerPath]: usersApi.reducer,
@@ -33,8 +33,8 @@ const rootReducer = combineReducers({
     [postApi.reducerPath]: postApi.reducer,
 });
 
-export const makeStore = () => {
-    return configureStore({
+export const makeStore = () =>
+    configureStore({
         reducer: rootReducer,
         middleware: getDefaultMiddleware =>
             getDefaultMiddleware().concat([
@@ -54,7 +54,6 @@ export const makeStore = () => {
                 postApi.middleware,
             ]),
     });
-};
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore['getState']>;

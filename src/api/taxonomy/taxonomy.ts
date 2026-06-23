@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { TagSearchIF } from '@/api/taxonomy/types';
 import { fetchRestApiQuery } from '@/store/functions';
 import { ResponseIF } from '@/store/types';
-import { TagSearchIF } from '@/api/taxonomy/types';
 
 export const taxonomyApi = createApi({
     reducerPath: 'taxonomyApi',

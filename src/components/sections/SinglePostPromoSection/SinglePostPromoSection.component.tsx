@@ -1,7 +1,9 @@
 import { FC } from 'react';
-import { IoTimerOutline } from 'react-icons/io5';
-import { IoCalendarOutline } from 'react-icons/io5';
-import { IoPersonOutline } from 'react-icons/io5';
+import {
+    IoTimerOutline,
+    IoCalendarOutline,
+    IoPersonOutline,
+} from 'react-icons/io5';
 import { formatDate } from '@/helpers/utils';
 import Author from '@/components/elems/Author/Author.component';
 import Country from '@/components/elems/Country/Country.component';

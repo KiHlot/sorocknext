@@ -2,14 +2,14 @@
 
 import { FC, useRef, useState } from 'react';
 import Link from 'next/link';
+import { CallBackTypeT } from '@/types/common';
+import { CurrentUserIF } from '@/types/user';
+import { useLogout } from '@/hooks/useLogout';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { getStorageItem } from '@/helpers/utils';
 import Img from '@/components/elems/Img/Img.component';
 import { getUserMenu } from '@/components/menus/TopMenu/UserMenu/UserMenu.config';
 import styles from '@/components/menus/TopMenu/UserMenu/UserMenu.module.scss';
-import { useLogout } from '@/hooks/useLogout';
-import { useOutsideClick } from '@/hooks/useOutsideClick';
-import { CallBackTypeT } from '@/types/common';
-import { CurrentUserIF } from '@/types/user';
 
 const UserMenu: FC = () => {
     const menuWrapperRef = useRef<HTMLDivElement>(null);
@@ -22,11 +22,13 @@ const UserMenu: FC = () => {
 
     const clickHandler = (callBackType: CallBackTypeT) => {
         switch (callBackType) {
-            case 'logout':
+            case 'logout': {
                 useLogout();
                 break;
-            default:
+            }
+            default: {
                 break;
+            }
         }
     };
 
@@ -41,8 +43,8 @@ const UserMenu: FC = () => {
             </button>
             {isOpen && (
                 <ul className={`flcol ${styles.menuList}`}>
-                    {getUserMenu().map(({ label, icon, callBackType, url }) => {
-                        return callBackType ? (
+                    {getUserMenu().map(({ label, icon, callBackType, url }) =>
+                        callBackType ? (
                             <li
                                 key={`${url}${callBackType}`}
                                 className={styles.menuItem}
@@ -65,8 +67,8 @@ const UserMenu: FC = () => {
                                     <span>{label}</span>
                                 </Link>
                             </li>
-                        );
-                    })}
+                        ),
+                    )}
                 </ul>
             )}
         </div>
