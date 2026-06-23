@@ -1,7 +1,5 @@
-@use '@/styles/variables' as *;
-
 .blockWrapper {
     padding: 16px;
-    border-radius: $borderRadius;
-    background-color: $bgColorSecondary;
+    border-radius: var(--borderRadius);
+    background-color: var(--bgColorSecondary);
 }

@@ -1,3 +1,9 @@
-@use 'reset';
-@use 'base';
-@use 'components/index';
+@use 'reset' as *;
+@use 'base' as *;
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'components/index' as *;
+
+:root .defaultTheme {
+    @include spread-map($defaultTheme);
+}

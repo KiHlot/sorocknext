@@ -1,7 +1,5 @@
-@use '@/styles/variables' as *;
-
 .footerWrapper {
     position: relative;
     z-index: 10;
-    background-color: $bgColorSecondary;
+    background-color: var(--bgColorSecondary);
 }

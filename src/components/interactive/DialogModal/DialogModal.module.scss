@@ -1,5 +1,3 @@
-@use '@/styles/variables' as *;
-
 .content {
     width: 100%;
     text-align: center;
@@ -29,11 +27,11 @@
         }
 
         &.decline {
-            background-color: $error;
+            background-color: var(--error);
         }
 
         &.accept {
-            background-color: $correct;
+            background-color: var(--correct);
         }
     }
 }

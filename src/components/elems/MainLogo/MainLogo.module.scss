@@ -1,4 +1,3 @@
-@use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
 .mainLogoWrapper {
@@ -16,7 +15,7 @@
     svg {
         width: 40px;
         height: 40px;
-        fill: $accent;
+        fill: var(--accent);
 
         @include media(lg) {
             width: 30px;

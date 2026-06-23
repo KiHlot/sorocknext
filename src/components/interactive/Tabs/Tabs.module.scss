@@ -1,5 +1,3 @@
-@use '@/styles/variables' as *;
-
 .tabsWrapper {
     display: flex;
     flex-direction: column;
@@ -9,8 +7,8 @@
 
 .headLine {
     display: flex;
-    border-bottom: $border;
-    background-color: $bgColorSecondary;
+    border-bottom: var(--border);
+    background-color: var(--bgColorSecondary);
 }
 
 .fullWidth {
@@ -25,10 +23,10 @@
     width: fit-content;
     height: 46px;
     padding: 0 16px;
-    background-color: $bgColorSecondary;
+    background-color: var(--bgColorSecondary);
 
     &.active {
-        background-color: $bgColor;
+        background-color: var(--bgColor);
         cursor: default;
     }
 }

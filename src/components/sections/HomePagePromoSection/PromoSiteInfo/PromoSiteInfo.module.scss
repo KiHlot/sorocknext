@@ -1,5 +1,3 @@
-@use '@/styles/variables' as *;
-
 .promoSiteInfoWrapper {
     position: relative;
     padding-top: 60px;
@@ -10,7 +8,7 @@
     position: absolute;
     top: -50px;
     left: calc(50% - 51px);
-    background-color: $bgColorSecondary;
+    background-color: var(--bgColorSecondary);
     width: fit-content;
     border-radius: 50%;
     padding: 6px;
@@ -26,7 +24,7 @@
     svg {
         width: 78px;
         height: 78px;
-        filter: $svgShadow;
+        filter: var(--svgShadow);
     }
 }
 
@@ -39,17 +37,17 @@
     .title {
         font-size: 16px;
         font-weight: 600;
-        color: $white;
+        color: var(--white);
     }
 
     .subTitle {
-        color: $accent;
+        color: var(--accent);
     }
 }
 
 .content {
     font-size: 13px;
-    color: rgba($textColor, 0.8);
+    color: rgba(var(--textColor), 0.8);
 }
 
 .button {

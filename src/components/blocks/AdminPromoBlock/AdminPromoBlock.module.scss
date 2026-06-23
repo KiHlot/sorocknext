@@ -1,11 +1,9 @@
-@use '@/styles/variables' as *;
-
 .blockWrapper {
     gap: 16px 0;
 }
 
 .pageTitle {
-    color: $accent;
+    color: var(--accent);
     font-size: 20px;
     margin-bottom: 0;
     font-weight: 400;
@@ -33,7 +31,7 @@
             right: -10px;
             top: 20%;
             display: block;
-            background-color: $white;
+            background-color: var(--white);
         }
 
         &:last-child,
@@ -46,7 +44,7 @@
 
     &.error {
         .value {
-            color: $error;
+            color: var(--error);
         }
     }
 }
@@ -56,7 +54,7 @@
 }
 
 .value {
-    color: $correct;
+    color: var(--correct);
 }
 
 .updateCronInfoButton {

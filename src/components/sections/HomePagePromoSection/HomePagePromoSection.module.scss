@@ -1,19 +1,17 @@
-@use '@/styles/variables' as *;
-
 .homePagePromoSectionWrapper {
     display: flex;
     justify-content: space-between;
-    gap: $gapDesktop;
+    gap: var(--gapDesktop);
 }
 
 .background {
     position: absolute;
     z-index: 1;
-    background-color: $accent;
-    width: calc(100% + ($gapBlock * 2));
-    left: -$gapBlock;
+    background-color: var(--accent);
+    width: calc(100% + (var(--gapBlock) * 2));
+    left: -var(--gapBlock);
     height: 100%;
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
 }
 
 .promo {

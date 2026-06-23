@@ -1,23 +1,21 @@
-@use '@/styles/variables' as *;
-
 .buttonsGroupWrapper {
     width: 100%;
     height: auto;
     display: flex;
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     overflow: hidden;
-    border: $border;
+    border: var(--border);
 }
 
 .tabButton {
     width: fit-content;
     height: 42px;
-    background-color: $bgColorSecondary;
+    background-color: var(--bgColorSecondary);
     padding: 0 16px;
     display: flex;
     align-items: center;
     gap: 0 10px;
-    border-right: $border;
+    border-right: var(--border);
 
     &:last-child {
         border-right: none;
@@ -32,13 +30,13 @@
     svg {
         width: 20px;
         height: 20px;
-        stroke: $textColor;
+        stroke: var(--textColor);
     }
 }
 
 .active {
-    color: rgba($textColor, 0.6);
-    background-color: $active;
+    color: rgba(var(--textColor), 0.6);
+    background-color: var(--active);
     cursor: default;
 
     &:hover {

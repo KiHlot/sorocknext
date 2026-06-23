@@ -1,12 +1,11 @@
-@use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
 .tagButtonWrapper {
     height: 40px;
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     word-break: break-word;
     padding: 10px;
-    background-color: rgba($accent, 0.3);
+    background-color: rgba(var(--accent), 0.3);
 
     &:hover {
         opacity: 0.8;
@@ -28,14 +27,14 @@
     width: 100%;
     display: flex;
     align-items: center;
-    color: $white;
+    color: var(--white);
     margin-bottom: 15px;
 
     svg {
         width: 16px;
         height: 16px;
-        stroke: $accent;
-        fill: $accent;
+        stroke: var(--accent);
+        fill: var(--accent);
         margin-right: 8px;
     }
 }
@@ -55,7 +54,7 @@
         top: -8px;
         height: 100%;
         width: 1px;
-        background-color: rgba($accent, 0.6);
+        background-color: rgba(var(--accent), 0.6);
         display: block;
     }
 }

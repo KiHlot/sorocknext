@@ -1,9 +1,8 @@
-@use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
 .postContentSectionWrapper {
     width: 100%;
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     padding: 30px 40px;
-    background-color: $bgColorSecondary;
+    background-color: var(--bgColorSecondary);
 }

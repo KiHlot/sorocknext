@@ -1,55 +1,71 @@
-$white: #ffffff;
-$black: #000000;
-$textColor: #a8b6bb;
-$colorPrimary: #0bb197;
-$colorSecondary: #74788d;
-$accent: #cf304d;
-$bgColor: #303841;
-$bgColorSecondary: #283039;
-$bgColorDark: #21282f;
-$blockQuoteBg: #272a31;
-$grayDark: #1f2426;
-$error: #8a4139;
-$correct: #267873;
-$info: #21495a;
-$active: #1f2329;
+@use 'sass:map';
 
-$goldGradient: linear-gradient(
-    90deg,
-    rgba(230, 174, 68, 1) 16%,
-    rgba(255, 223, 91, 1) 49%,
-    rgba(189, 120, 38, 1) 84%,
-    rgba(231, 181, 69, 1) 95%
+$colors: (
+    white: #ffffff,
+    black: #000000,
+    textColor: #a8b6bb,
+    colorPrimary: #0bb197,
+    colorSecondary: #74788d,
+    accent: #cf304d,
+    bgColor: #303841,
+    bgColorSecondary: #283039,
+    bgColorDark: #21282f,
+    blockQuoteBg: #272a31,
+    grayDark: #1f2426,
+    error: #8a4139,
+    correct: #267873,
+    info: #21495a,
+    active: #1f2329,
 );
-$silverGradient: linear-gradient(
-    90deg,
-    rgba(188, 190, 192, 1) 16%,
-    rgba(241, 242, 242, 1) 49%,
-    rgba(147, 149, 152, 1) 84%,
-    rgba(209, 211, 212, 1) 95%
+
+$gradients: (
+    goldGradient: linear-gradient(
+            90deg,
+            rgba(230, 174, 68, 1) 16%,
+            rgba(255, 223, 91, 1) 49%,
+            rgba(189, 120, 38, 1) 84%,
+            rgba(231, 181, 69, 1) 95%
+        ),
+    silverGradient: linear-gradient(
+            90deg,
+            rgba(188, 190, 192, 1) 16%,
+            rgba(241, 242, 242, 1) 49%,
+            rgba(147, 149, 152, 1) 84%,
+            rgba(209, 211, 212, 1) 95%
+        ),
+    bronzeGradient: linear-gradient(
+            90deg,
+            rgba(176, 81, 44, 1) 16%,
+            rgba(249, 163, 82, 1) 49%,
+            rgba(163, 54, 27, 1) 84%,
+            rgba(216, 129, 61, 1) 95%
+        ),
+    loadingGradient: linear-gradient(
+            90deg,
+            map.get($colors, bgColor),
+            map.get($colors, bgColorSecondary),
+            map.get($colors, bgColor)
+        ),
 );
-$bronzeGradient: linear-gradient(
-    90deg,
-    rgba(176, 81, 44, 1) 16%,
-    rgba(249, 163, 82, 1) 49%,
-    rgba(163, 54, 27, 1) 84%,
-    rgba(216, 129, 61, 1) 95%
+
+$shadows: (
+    boxShadow: 0 5px 12px rgba(map.get($colors, black), 0.1),
+    elemShadow: rgba(map.get($colors, black), 0.24) 0px 3px 8px,
+    textShadow: 1px 1px 2px map.get($colors, black),
+    svgShadow: drop-shadow(1px 1px 0px rgba(map.get($colors, black), 0.5)),
 );
-$loadingGradient: linear-gradient(90deg, $bgColor, $bgColorSecondary, $bgColor);
-$boxShadow: 0 5px 12px rgba(0, 0, 0, 0.1);
-$elemShadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-$textShadow: 1px 1px 2px $black;
-$svgShadow: drop-shadow(1px 1px 0px rgba($black, 0.5));
 
-$borderRadius: 8px;
-$border: 1px solid rgba($textColor, .05);
-$borderError: 1px solid rgba($error, 0.6);
+$other: (
+    borderRadius: 8px,
+    border: 1px solid rgba(map.get($colors, textColor), 0.05),
+    borderError: 1px solid rgba(map.get($colors, error), 0.6),
+    zIndexPopup: 70,
+    zIndexMenu: 50,
+    gapDesktop: 30px,
+    gapBlock: 20px,
+);
 
-$zIndexPopup: 70;
-$zIndexMenu: 50;
-
-$gapDesktop: 30px;
-$gapBlock: 20px;
+$defaultTheme: map.merge($colors, $gradients, $shadows, $other);
 
 $breakpoints: (
     xxs: 340px,
@@ -61,5 +77,5 @@ $breakpoints: (
     xl: 1200px,
     xxl: 1500px,
     xxxl: 1700px,
-    desctop: 2200px,
+    desktop: 2200px,
 );

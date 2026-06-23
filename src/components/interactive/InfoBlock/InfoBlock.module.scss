@@ -1,23 +1,21 @@
-@use '@/styles/variables' as *;
-
 .infoBlockWrapper {
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     padding: 20px 40px 20px 20px;
     gap: 20px;
-    color: $white;
+    color: var(--white);
     position: relative;
 }
 
 .info {
-    background-color: $info;
+    background-color: var(--info);
 }
 
 .error {
-    background-color: $error;
+    background-color: var(--error);
 }
 
 .success {
-    background-color: $correct;
+    background-color: var(--correct);
 }
 
 .title {

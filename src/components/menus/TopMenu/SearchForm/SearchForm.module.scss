@@ -1,4 +1,3 @@
-@use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
 .searchFormWrapper {
@@ -23,15 +22,15 @@
     }
 
     input {
-        border: $border;
-        border-radius: $borderRadius;
+        border: var(--border);
+        border-radius: var(--borderRadius);
         height: 100%;
     }
 }
 
 .button {
-    border: 1px solid rgba($textColor, 0.5);
-    border-radius: $borderRadius;
+    border: 1px solid rgba(var(--textColor), 0.5);
+    border-radius: var(--borderRadius);
     width: 40px;
     height: 35px;
     cursor: pointer;
@@ -39,7 +38,7 @@
 
     &:hover {
         &:not(:disabled) {
-            background-color: $bgColorSecondary;
+            background-color: var(--bgColorSecondary);
         }
     }
 
@@ -50,7 +49,7 @@
     svg {
         width: 20px;
         height: 20px;
-        fill: rgba($textColor, 0.5);
+        fill: rgba(var(--textColor), 0.5);
         transition: fill 0.3s ease-in-out;
     }
 }

@@ -1,5 +1,3 @@
-@use '@/styles/variables' as *;
-
 .inputBlock {
     width: 100%;
     position: relative;
@@ -14,9 +12,9 @@
         padding: 0 8px;
 
         &.main {
-            background-color: $bgColor;
+            background-color: var(--bgColor);
             height: 42px;
-            border-radius: $borderRadius;
+            border-radius: var(--borderRadius);
         }
     }
 
@@ -31,13 +29,13 @@
             top: 0;
             width: 42px;
             height: 100%;
-            border-radius: $borderRadius;
-            background-color: $textColor;
+            border-radius: var(--borderRadius);
+            background-color: var(--textColor);
 
             svg {
                 width: 24px;
                 height: 24px;
-                fill: $bgColor;
+                fill: var(--bgColor);
             }
         }
     }

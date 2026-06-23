@@ -1,13 +1,12 @@
-@use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
 ::placeholder {
-    color: rgba($textColor, 0.5);
+    color: rgba(var(--textColor), 0.5);
 }
 
 ::selection {
-    background-color: $accent;
-    color: $white;
+    background-color: var(--accent);
+    color: var(--white);
 }
 
 * {

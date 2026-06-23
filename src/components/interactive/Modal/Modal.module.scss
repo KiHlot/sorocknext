@@ -1,12 +1,10 @@
-@use '@/styles/variables' as *;
-
 .overlay {
     position: fixed;
-    z-index: $zIndexPopup;
+    z-index: var(--zIndexPopup);
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background-color: rgba($black, 0.9);
+    background-color: rgba(var(--black), 0.9);
     top: 0;
     left: 0;
     display: flex;
@@ -19,9 +17,9 @@
     max-width: 90%;
     height: fit-content;
     margin-top: 10vh;
-    background-color: $grayDark;
-    border-radius: $borderRadius;
-    box-shadow: $boxShadow;
+    background-color: var(--grayDark);
+    border-radius: var(--borderRadius);
+    box-shadow: var(--boxShadow);
     overflow: hidden;
 
     &.small {
@@ -53,7 +51,7 @@
     width: 100%;
     height: auto;
     padding: 20px 50px 20px 20px;
-    background-color: $bgColorSecondary;
+    background-color: var(--bgColorSecondary);
 }
 
 .title {
@@ -72,7 +70,7 @@
         width: 26px;
         height: 26px;
         min-width: 26px;
-        fill: $textColor;
+        fill: var(--textColor);
     }
 }
 

@@ -1,5 +1,3 @@
-@use '@/styles/variables' as *;
-
 .paginationWrapper {
     display: flex;
     align-items: center;
@@ -16,12 +14,12 @@
     height: 36px;
     padding: 0 12px;
     cursor: pointer;
-    background-color: $bgColorDark;
+    background-color: var(--bgColorDark);
     border-radius: 4px;
 }
 
 .current {
     opacity: 0.6;
     cursor: default;
-    background-color: $bgColor;
+    background-color: var(--bgColor);
 }

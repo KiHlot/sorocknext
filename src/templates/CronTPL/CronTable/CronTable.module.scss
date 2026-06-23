@@ -1,17 +1,16 @@
-@use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
 .updateButton {
     width: 32px;
     height: 32px;
-    border-right: $borderRadius;
-    border: $border;
+    border-right: var(--borderRadius);
+    border: var(--border);
 }
 
 .success {
-    color: $correct;
+    color: var(--correct);
 }
 
 .error {
-    color: $error;
+    color: var(--error);
 }

@@ -1,14 +1,12 @@
-@use '@/styles/variables' as *;
-
 .modalLayout {
-    gap: $gapDesktop;
+    gap: var(--gapDesktop);
 }
 
 .row {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 0 $gapDesktop;
+    gap: 0 var(--gapDesktop);
 
     > * {
         width: 100%;
@@ -37,7 +35,7 @@
 
 .avatar {
     height: 100%;
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     overflow: hidden;
     min-height: 200px;
 }

@@ -1,7 +1,5 @@
-@use '@/styles/variables' as *;
-
 .fieldErrorWrapper {
     font-size: 12px;
-    color: $error;
+    color: var(--error);
     margin-top: 3px;
 }

@@ -1,4 +1,3 @@
-@use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
 .trendsSliderWrapper {
@@ -15,7 +14,7 @@
 .swiperTitle {
     width: 65px;
     height: 100%;
-    color: $accent;
+    color: var(--accent);
     font-weight: 600;
 }
 

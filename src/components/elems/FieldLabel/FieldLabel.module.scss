@@ -1,11 +1,9 @@
-@use '@/styles/variables' as *;
-
 .fieldLabelWrapper {
     margin-bottom: 6px;
     font-size: 14px;
 
     &.error {
-        color: $accent;
+        color: var(--accent);
     }
 
     span {

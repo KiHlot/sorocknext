@@ -1,5 +1,3 @@
-@use '@/styles/variables' as *;
-
 .userMenuWrapper {
     width: auto;
     height: auto;
@@ -11,12 +9,12 @@
     height: 100%;
 
     &.opened {
-        background-color: $bgColorDark;
+        background-color: var(--bgColorDark);
     }
 
     &:hover {
         &:not(.opened) {
-            background-color: rgba($bgColorDark, 0.6);
+            background-color: rgba(var(--bgColorDark), 0.6);
         }
     }
 
@@ -25,7 +23,7 @@
         height: 40px;
         border-radius: 50%;
         overflow: hidden;
-        border: $border;
+        border: var(--border);
     }
 }
 
@@ -35,20 +33,20 @@
     position: absolute;
     right: 0;
     top: 59px;
-    background-color: $bgColorDark;
+    background-color: var(--bgColorDark);
     padding: 8px 0;
-    border-radius: $borderRadius 0 $borderRadius $borderRadius;
-    box-shadow: $boxShadow;
+    border-radius: var(--borderRadius) 0 var(--borderRadius) var(--borderRadius);
+    box-shadow: var(--boxShadow);
 }
 
 .menuItem {
     width: 100%;
     height: 42px;
-    background-color: $bgColorDark;
+    background-color: var(--bgColorDark);
     padding: 0 16px;
 
     &:hover {
-        background-color: rgba($bgColor, 0.6);
+        background-color: rgba(var(--bgColor), 0.6);
     }
 
     button,
