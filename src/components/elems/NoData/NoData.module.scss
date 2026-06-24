@@ -6,7 +6,7 @@
     height: 100%;
     min-height: 300px;
     border-radius: var(--borderRadius);
-    background: $loadingGradient;
+    background: var(--loadingGradient);
     color: var(--textColor);
     font-weight: 300;
     font-size: 18px;

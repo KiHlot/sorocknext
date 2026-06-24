@@ -18,44 +18,17 @@ $colors: (
     active: #1f2329,
 );
 
-$gradients: (
-    goldGradient: linear-gradient(
-            90deg,
-            rgba(230, 174, 68, 1) 16%,
-            rgba(255, 223, 91, 1) 49%,
-            rgba(189, 120, 38, 1) 84%,
-            rgba(231, 181, 69, 1) 95%
-        ),
-    silverGradient: linear-gradient(
-            90deg,
-            rgba(188, 190, 192, 1) 16%,
-            rgba(241, 242, 242, 1) 49%,
-            rgba(147, 149, 152, 1) 84%,
-            rgba(209, 211, 212, 1) 95%
-        ),
-    bronzeGradient: linear-gradient(
-            90deg,
-            rgba(176, 81, 44, 1) 16%,
-            rgba(249, 163, 82, 1) 49%,
-            rgba(163, 54, 27, 1) 84%,
-            rgba(216, 129, 61, 1) 95%
-        ),
+$defaultThemeSettings: (
+    boxShadow: 0 5px 12px rgba(map.get($colors, black), 0.1),
+    elemShadow: rgba(map.get($colors, black), 0.24) 0px 3px 8px,
+    textShadow: 1px 1px 2px map.get($colors, black),
+    svgShadow: drop-shadow(1px 1px 0px rgba(map.get($colors, black), 0.5)),
     loadingGradient: linear-gradient(
             90deg,
             map.get($colors, bgColor),
             map.get($colors, bgColorSecondary),
             map.get($colors, bgColor)
         ),
-);
-
-$shadows: (
-    boxShadow: 0 5px 12px rgba(map.get($colors, black), 0.1),
-    elemShadow: rgba(map.get($colors, black), 0.24) 0px 3px 8px,
-    textShadow: 1px 1px 2px map.get($colors, black),
-    svgShadow: drop-shadow(1px 1px 0px rgba(map.get($colors, black), 0.5)),
-);
-
-$other: (
     borderRadius: 8px,
     border: 1px solid rgba(map.get($colors, textColor), 0.05),
     borderError: 1px solid rgba(map.get($colors, error), 0.6),
@@ -65,7 +38,7 @@ $other: (
     gapBlock: 20px,
 );
 
-$defaultTheme: map.merge($colors, $gradients, $shadows, $other);
+$defaultTheme: map.merge($colors, $defaultThemeSettings);
 
 $breakpoints: (
     xxs: 340px,
