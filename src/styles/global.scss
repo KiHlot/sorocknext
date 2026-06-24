@@ -1,9 +1,6 @@
 @use 'reset' as *;
 @use 'base' as *;
-@use '@/styles/variables' as *;
-@use 'mixins' as *;
 @use 'components/index' as *;
+@use 'sass:meta';
 
-:root .defaultTheme {
-    @include spread-map($defaultTheme);
-}
+@include meta.load-css('swiper/swiper.css');

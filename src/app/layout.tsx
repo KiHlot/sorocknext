@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import 'swiper/swiper.css';
 import '@/styles/global.scss';
 import Layout from '@/layouts/Layout/Layout.component';
 import StoreProvider from '@/app/StoreProvider';

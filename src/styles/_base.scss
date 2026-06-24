@@ -1,4 +1,9 @@
-@use '@/styles/mixins' as *;
+@use 'mixins' as *;
+@use 'variables' as *;
+
+:root .defaultTheme {
+    @include spread-map($defaultTheme);
+}
 
 body {
     width: 100%;
