@@ -1,9 +1,9 @@
+import { getApi } from '@/store/functions';
 import { PageProps } from '@/types/common';
 import { HomePageDataIF } from '@/api/page/types';
 import HomeTPL from '@/templates/HomeTPL/HomeTPL.component';
-import { getApi } from '@/store/functions';
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): any {
     const { slug } = await params;
 
     // const product = await fetchProduct(params.id);

@@ -7,12 +7,12 @@
     z-index: 1;
 
     &:hover {
-        svg {
+        img {
             animation: rotate 0.5s linear infinite;
         }
     }
 
-    svg {
+    img {
         width: 40px;
         height: 40px;
         fill: var(--accent);
