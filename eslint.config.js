@@ -3,18 +3,17 @@ import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import noRelativeImports from 'eslint-plugin-no-relative-import-paths';
 import prettier from 'eslint-plugin-prettier';
+import pluginReact from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
 import tsEslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
-import nextPlugin from '@next/eslint-plugin-next';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
     { files: ['**/*.{ts,tsx}'] },
     {
-        ignores: ['public', 'dist', 'build', '.next', 'node_modules'], // добавлен .next
+        ignores: ['public', 'dist', 'build', 'node_modules'],
     },
     { languageOptions: { globals: globals.browser } },
     pluginJs.configs.recommended,
@@ -22,15 +21,6 @@ export default [
     pluginReact.configs.flat.recommended,
     importPlugin.flatConfigs.recommended,
     unicorn.configs['flat/recommended'],
-    // Добавляем плагин Next.js
-    {
-        plugins: {
-            '@next/next': nextPlugin,
-        },
-        rules: {
-            ...nextPlugin.configs.recommended.rules,
-        },
-    },
     {
         settings: {
             react: {
@@ -99,8 +89,13 @@ export default [
                 'error',
                 { allowExpressions: true },
             ],
-            'react-hooks/exhaustive-deps': 'off', // можно включить, если хотите
-            'prettier/prettier': ['error', { endOfLine: 'auto' }],
+            'react-hooks/exhaustive-deps': 'off',
+            'prettier/prettier': [
+                'error',
+                {
+                    endOfLine: 'auto',
+                },
+            ],
             'no-relative-import-paths/no-relative-import-paths': [
                 'warn',
                 {
@@ -120,10 +115,11 @@ export default [
                         pascalCase: true,
                         camelCase: true,
                     },
+                    // upperCamelCase
                     ignore: [
                         /^[A-Z]+[A-Za-z0-9]*\.\w+\.(tsx|ts)$/,
                         'utils.ts',
-                        /\.d\.ts$/,
+                        /\.d\.ts$/, // ← добавляем это
                     ],
                 },
             ],
@@ -143,15 +139,116 @@ export default [
             'unicorn/template-indent': 'off',
             'unicorn/prefer-add-event-listener': 'warn',
             'react-hooks/set-state-in-effect': 'off',
-            'import/no-unresolved': [
+            'import/extensions': [
+                'error',
+                'ignorePackages',
+                {
+                    ts: 'never',
+                    tsx: 'never',
+                    js: 'never',
+                    jsx: 'never',
+                },
+            ],
+            'import/order': [
                 'error',
                 {
-                    ignore: [
-                        String.raw`\.css$`,
-                        String.raw`\.min.css$`,
-                        String.raw`\.scss$`,
-                        String.raw`\.sass$`,
-                    ], // игнорировать CSS/SCSS
+                    groups: [
+                        'builtin',
+                        'object',
+                        'external',
+                        'internal',
+                        'parent',
+                        'sibling',
+                        'index',
+                    ],
+                    pathGroups: [
+                        {
+                            pattern: 'react',
+                            group: 'object',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/App/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/store/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/styles/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/types/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/images/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/routes/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/api/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/configs/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/hooks/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/helpers/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/assets/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/pages/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/layouts/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/components/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@/components/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                    ],
+                    pathGroupsExcludedImportTypes: ['builtin', 'object'],
+                    alphabetize: {
+                        order: 'asc',
+                        caseInsensitive: false,
+                    },
+                    'newlines-between': 'never',
                 },
             ],
         },
