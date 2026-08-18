@@ -49,6 +49,15 @@ return posts.map((post) => ({ slug: post.slug }));
 
 Ответы от API стандартизированы: { result: 'ok' | 'errors', data: ... }. На фронте проверяй result === 'ok'.
 
+## Работа с датами
+Все даты с бэкенда приходят в формате `Y-m-d H:i:s` (например, `2025-03-09 21:54:19`).
+
+Для форматирования используй библиотеку `dayjs`:
+  ```ts
+  import dayjs from 'dayjs';
+  const formatted = dayjs(dateString).format('DD MMM YYYY');
+  ```
+  
 ## Изображения
 
 Используй next/image с указанием width и height.
