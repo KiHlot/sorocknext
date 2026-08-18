@@ -4,7 +4,7 @@ import { getApi } from '@/store/functions';
 import { PageProps } from '@/types/common';
 import { SeoData } from '@/types/post';
 import { NewsIF } from '@/api/news/types';
-import { getNewsMetadataUrl, getNewsSingleUrl } from '@/api/news/urls';
+import { getNewsSingleUrl } from '@/api/news/urls';
 import { setSeo } from '@/helpers/seo';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
 
@@ -13,7 +13,7 @@ export const generateMetadata = async ({
 }: PageProps): Promise<Metadata> => {
     const { slug } = await params;
 
-    const data = await getApi<SeoData>(`${getNewsMetadataUrl}/${slug}`);
+    const data = await getApi<SeoData>(`/news/metadata/${slug}`);
 
     return await setSeo(data);
 };

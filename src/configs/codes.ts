@@ -1,3 +1,10 @@
+export const SERVER_CODES = {
+    C200: 200,
+    C401: 401,
+    C403: 403,
+    C500: 500,
+} as const;
+
 export const ERRORS: { [key: string]: string } = {
     er150: 'Страница музыканта не найдена!',
     er200: 'Поле обязательно для заполнения!',

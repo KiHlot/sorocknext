@@ -1,17 +1,22 @@
-import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
+import { toast } from 'react-toastify';
 import { deleteCookie } from '@/helpers/utils';
 
-export function useLogout(isSilent?: boolean) {
+const DELAY = 2000;
+
+export const useLogout = (isSilent?: boolean): void => {
     if (typeof window === 'undefined') {
-        return null;
+        return;
     }
 
     sessionStorage.removeItem('currentUser');
     deleteCookie('token');
-    !isSilent && toast.warning('Вы вышли из аккаунта!');
+
+    if (!isSilent) {
+        toast.warning('Вы вышли из аккаунта!');
+    }
 
     setTimeout(() => {
         redirect('/auth');
-    }, 2000);
-}
+    }, DELAY);
+};

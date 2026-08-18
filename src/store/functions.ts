@@ -1,18 +1,16 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { cookies } from 'next/dist/server/request/cookies';
 import { ErrorOption } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { cookies } from 'next/dist/server/request/cookies';
-import { UserLoginResponseIF } from '@/api/jwt/types';
-import { useLogout } from '@/hooks/useLogout';
-import { getCookie } from '@/helpers/utils';
-import { ERRORS, SERVER_ERRORS } from '@/configs/codes';
-import { ADDRESS } from '@/configs/config';
 import { ResponseErrorIF, ResponseIF } from '@/store/types';
+import { SERVER_CODES, ERRORS, SERVER_ERRORS } from '@/configs/codes';
+import { ADDRESS } from '@/configs/config';
+import { getCookie } from '@/helpers/utils';
 
 const handleAuthError = (status: number, immediate = true) => {
-    if ([401, 403].includes(status)) {
-        useLogout(immediate);
-    }
+    // if ([SERVER_CODES.C401, SERVER_CODES.C403].includes(status)) {
+    //     useLogout(immediate);
+    // }
 };
 
 const showErrorToast = (status: number, statusText?: string) => {
@@ -24,7 +22,7 @@ const showErrorToast = (status: number, statusText?: string) => {
 export const fetchRestApiQuery = (baseUrl?: string) =>
     fetchBaseQuery({
         baseUrl: `${ADDRESS.WP_API_URL}${baseUrl || ''}`,
-        prepareHeaders: headers => {
+        prepareHeaders: (headers) => {
             const token = getCookie('token');
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
@@ -32,7 +30,7 @@ export const fetchRestApiQuery = (baseUrl?: string) =>
             return headers;
         },
         responseHandler: async (response): Promise<ResponseIF | void> => {
-            if (response?.status !== 200) {
+            if (response?.status !== SERVER_CODES.C200) {
                 showErrorToast(response.status, response.statusText);
                 handleAuthError(response.status);
                 return;
@@ -55,23 +53,23 @@ export const fetchRestApiQuery = (baseUrl?: string) =>
                 if (data.redirectUrl) {
                     window.location.href = data.redirectUrl;
                 } else {
-                    showErrorToast(500);
+                    showErrorToast(SERVER_CODES.C500);
                 }
             }
 
             if (data.result === 'logout') {
-                useLogout(true);
+                // useLogout(true);
             }
 
             return data;
         },
     });
 
-export const fetchJWTTokenQuery = () =>
+export const fetchJWTTokenQuery = async (): Promise<unknown> =>
     fetchBaseQuery({
-        baseUrl: ADDRESS.WP_JWT_API_URL,
-        responseHandler: async response => {
-            if (response?.status !== 200) {
+        baseUrl: `${process.env.NEXT_REST_DOMAIN_URL}${process.env.NEXT_JWT_BASE}`,
+        responseHandler: async (response) => {
+            if (response?.status !== SERVER_CODES.C200) {
                 toast.error(ERRORS.er209);
                 return null;
             }
@@ -87,18 +85,24 @@ export const getApi = async <ResultType>(
     const token = cookieStore.get('token')?.value || null;
 
     try {
-        console.log('fetch route:', `${ADDRESS.WP_API_URL}${route}`);
-        const response = await fetch(`${ADDRESS.WP_API_URL}${route}`, {
-            cache,
-            ...(token
-                ? {
-                      credentials: 'include',
-                      headers: {
-                          Authorization: `Bearer ${token}`,
-                      },
-                  }
-                : {}),
-        });
+        console.log(
+            'fetch route:',
+            `${process.env.NEXT_REST_DOMAIN_URL}${process.env.NEXT_REST_BASE}${route}`,
+        );
+        const response = await fetch(
+            `${process.env.NEXT_REST_DOMAIN_URL}${process.env.NEXT_REST_BASE}${route}`,
+            {
+                cache,
+                ...(token
+                    ? {
+                          credentials: 'include',
+                          headers: {
+                              Authorization: `Bearer ${token}`,
+                          },
+                      }
+                    : {}),
+            },
+        );
 
         const { result, data }: ResponseIF<ResultType> = await response.json();
 
@@ -111,12 +115,12 @@ export const getApi = async <ResultType>(
 export const setCustomError = <FieldsNames>(
     errors?: ResponseErrorIF[],
     setError?: (name: FieldsNames, error: ErrorOption) => void,
-) => {
+): any => {
     if (!errors?.length || !setError) {
         return;
     }
 
-    errors?.forEach(error => {
+    errors?.forEach((error) => {
         if (error.fieldName) {
             setError(error.fieldName as FieldsNames, {
                 type: 'server',
