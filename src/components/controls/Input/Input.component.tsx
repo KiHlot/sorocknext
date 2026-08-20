@@ -13,7 +13,7 @@ import FieldLabel from '@/components/elems/FieldLabel/FieldLabel.component';
 
 export const Input = <T extends FieldValues>({
     label,
-    type,
+    type = 'text',
     placeholder,
     isDisabled,
     name,
@@ -32,9 +32,7 @@ export const Input = <T extends FieldValues>({
         fieldState,
     } = useController({ name, control });
 
-    const [currentType, setCurrentType] = useState<InputTypeT>(
-        type ? type : 'text',
-    );
+    const [currentType, setCurrentType] = useState<InputTypeT>(type);
 
     const normalizeValue = (value: string | null): string => {
         let newValue: string | null | undefined =
@@ -62,13 +60,13 @@ export const Input = <T extends FieldValues>({
                     name={name}
                     type={currentType}
                     value={normalizeValue(value)}
-                    onChange={event =>
+                    onChange={(event) =>
                         onChange(normalizeValue(event.target.value) || '')
                     }
                     placeholder={placeholder}
                     disabled={isDisabled}
                     maxLength={maxLength}
-                    autoComplete={`${name}off`}
+                    autoComplete="off"
                     className={styles[styleType]}
                 />
                 {isPassword && (

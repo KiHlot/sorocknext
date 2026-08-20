@@ -1,4 +1,8 @@
-import { combineReducers, configureStore, Store } from '@reduxjs/toolkit';
+import {
+    combineReducers,
+    configureStore,
+    EnhancedStore,
+} from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { globalDataSlice } from '@/store/slices/globalDataSlice';
 import { adminApi } from '@/api/admin/admin';
@@ -8,11 +12,6 @@ import { pageApi } from '@/api/page/page';
 import { siteApi } from '@/api/site/site';
 import { taxonomyApi } from '@/api/taxonomy/taxonomy';
 import { usersApi } from '@/api/users/users';
-
-export type RootState = ReturnType<typeof rootReducer>;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-export const useAppDispatch: () => ReturnType<typeof useDispatch> = () =>
-    useDispatch();
 
 const rootReducer = combineReducers({
     [usersApi.reducerPath]: usersApi.reducer,
@@ -25,16 +24,24 @@ const rootReducer = combineReducers({
     [globalDataSlice.reducerPath]: globalDataSlice.reducer,
 });
 
-export const store: Store<RootState> = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat([
-            siteApi.middleware,
-            taxonomyApi.middleware,
-            jwtApi.middleware,
-            authApi.middleware,
-            usersApi.middleware,
-            adminApi.middleware,
-            pageApi.middleware,
-        ]),
-});
+export const makeStore = (): EnhancedStore<RootState> =>
+    configureStore({
+        reducer: rootReducer,
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware().concat([
+                siteApi.middleware,
+                taxonomyApi.middleware,
+                jwtApi.middleware,
+                authApi.middleware,
+                usersApi.middleware,
+                adminApi.middleware,
+                pageApi.middleware,
+            ]),
+    });
+
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = AppStore['dispatch'];
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch: () => ReturnType<typeof useDispatch> = () =>
+    useDispatch();

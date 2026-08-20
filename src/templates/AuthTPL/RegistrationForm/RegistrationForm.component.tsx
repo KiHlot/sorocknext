@@ -1,10 +1,12 @@
+'use client';
+
 import { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { redirect } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { authApi } from '@/api/auth/auth';
-import { RegistrationFieldsReqIF } from '@/api/auth/types';
+import { RegistrationFieldsRequestIF } from '@/api/auth/types';
 import { SUCCESS_NOTIFY } from '@/configs/codes';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
@@ -21,7 +23,9 @@ const RegistrationForm: FC = () => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = async (values: RegistrationFieldsReqIF): Promise<void> => {
+    const onSubmit = async (
+        values: RegistrationFieldsRequestIF,
+    ): Promise<void> => {
         await registerUser(values)
             .unwrap()
             .then((data) => {
@@ -78,7 +82,6 @@ const RegistrationForm: FC = () => {
                 isRequired
                 isPassword
             />
-
             <MainButton
                 type="submit"
                 isLoading={isLoading}

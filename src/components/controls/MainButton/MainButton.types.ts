@@ -1,13 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 
 type ButtonVariantT =
-    | 'primary'
-    | 'secondary'
-    | 'sq'
-    | 'sq_error'
-    | 'sq_info'
-    | 'link'
-    | 'accent';
+    'primary' | 'secondary' | 'sq' | 'sq_error' | 'sq_info' | 'link' | 'accent';
 
 export interface MainButtonPropsIF {
     children?: ReactNode;

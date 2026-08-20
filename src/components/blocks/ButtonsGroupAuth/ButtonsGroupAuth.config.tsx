@@ -3,9 +3,9 @@ import { LuUserRoundPlus } from 'react-icons/lu';
 import { TbArrowBackUp } from 'react-icons/tb';
 import { ButtonGroupIF } from '@/components/interactive/ButtonsGroup/ButtonsGroup.types';
 
-export const AUTH_TPL_CONFIG: ButtonGroupIF[] = [
+export const AUTH_BUTTONS_GROUP_CONFIG: ButtonGroupIF[] = [
     {
-        key: 'auth',
+        key: 'login',
         label: (
             <>
                 <IoEnterOutline />

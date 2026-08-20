@@ -22,7 +22,7 @@ const MainButton: FC<MainButtonPropsIF> = ({
 }) => {
     const [isDialogModalOpen, setIsDialogModalOpen] = useState<boolean>(false);
 
-    const onClick = () => {
+    const onClick = (): void => {
         if (dialogText) {
             setIsDialogModalOpen(true);
             return;

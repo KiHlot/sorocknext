@@ -1,5 +1,3 @@
-'use client';
-
 import { FC } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { LayoutPropsIF } from '@/layouts/Layout/Layout.types';
@@ -7,7 +5,6 @@ import { LayoutPropsIF } from '@/layouts/Layout/Layout.types';
 const Layout: FC<LayoutPropsIF> = ({ children }) => (
     <>
         {children}
-
         <ToastContainer
             position="bottom-right"
             autoClose={5000}
