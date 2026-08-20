@@ -1,11 +1,12 @@
 'use client';
 
 import { FC } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
-import { useRouter } from 'next/navigation';
 import { siteApi } from '@/api/site/site';
 import { SearchIF, SearchResultIF } from '@/api/site/types';
+import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import styles from '@/components/menus/TopMenu/SearchForm/SearchForm.module.scss';
@@ -13,7 +14,6 @@ import {
     FieldsNames,
     SearchFormPropsIF,
 } from '@/components/menus/TopMenu/SearchForm/SearchForm.types';
-import { parseResponse } from '@/store/functions';
 
 const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
     const router = useRouter();
@@ -32,7 +32,7 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
     const onSubmit = async (values: SearchIF): Promise<void> => {
         await search(values)
             .unwrap()
-            .then(data => {
+            .then((data) => {
                 parseResponse<FieldsNames, SearchResultIF[]>(data, () => {
                     reset();
                     router.push('/search');

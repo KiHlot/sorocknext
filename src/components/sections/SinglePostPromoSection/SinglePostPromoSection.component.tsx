@@ -7,7 +7,6 @@ import {
 import { formatDate } from '@/helpers/utils';
 import Author from '@/components/elems/Author/Author.component';
 import Country from '@/components/elems/Country/Country.component';
-import Loading from '@/components/elems/Loading/Loading.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 import styles from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.module.scss';
 import { SinglePostPromoSectionPropsIF } from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.types';

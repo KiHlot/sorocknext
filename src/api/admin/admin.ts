@@ -4,8 +4,8 @@ import {
     DeleteUsersResultIF,
     UpdateCronTaskT,
 } from '@/api/admin/types';
-import { fetchRestApiQuery } from '@/store/functions';
-import { ResponseIF } from '@/store/types';
+import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
+import { ResponseIF } from '@/types/api';
 
 export const adminApi = createApi({
     reducerPath: 'adminApi',

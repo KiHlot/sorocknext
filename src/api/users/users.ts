@@ -1,8 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { FilteredResultIF } from '@/types/common';
 import { CurrentUserIF, UserIF } from '@/types/user';
-import { fetchRestApiQuery } from '@/store/functions';
-import { ResponseIF } from '@/store/types';
+import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
+import { ResponseIF } from '@/types/api';
 
 export const usersApi = createApi({
     reducerPath: 'usersApi',

@@ -1,40 +1,66 @@
+import { ReactElement } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getApi } from '@/store/functions';
+import { ResponseIF } from '@/types/api';
 import { PageProps } from '@/types/common';
-import { SeoData } from '@/types/post';
-import { NewsIF } from '@/api/news/types';
-import { getNewsSingleUrl } from '@/api/news/urls';
-import { setSeo } from '@/helpers/seo';
+import { PostIF, SeoData } from '@/types/post';
+import { fetchApi } from '@/helpers/fetchApi';
+import { setSeo } from '@/helpers/setSeo';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
 
-export const generateMetadata = async ({
+/**
+ * Генерирует список всех слаг-ов для статической генерации.
+ * Если не удалось получить список, возвращается пустой массив — страницы будут создаваться динамически.
+ */
+
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+    try {
+        // Запрашиваем последние 100 новостей (можно увеличить или добавить пагинацию)
+        const data = await fetchApi<ResponseIF<string[]>>(`/news/get-slugs`);
+
+        console.log('data', data);
+
+        if (data?.data?.length) {
+            return data.data.map((slug) => ({
+                slug,
+            }));
+        }
+    } catch (error) {
+        // Логируем ошибку, но не прерываем сборку
+        console.warn(
+            'Не удалось получить список слаг-ов для статической генерации',
+            error,
+        );
+    }
+
+    // Если нет данных, возвращаем пустой массив — всё будет работать динамически
+    return [];
+}
+
+export async function generateMetadata({
     params,
-}: PageProps): Promise<Metadata> => {
+}: PageProps): Promise<Metadata> {
     const { slug } = await params;
 
-    const data = await getApi<SeoData>(`/news/metadata/${slug}`);
+    const data = await fetchApi<SeoData>(`/news/metadata/${slug}`);
 
     return await setSeo(data);
-};
+}
 
-const NewsSingle = async ({ params }: PageProps): any => {
+export default async function Page({
+    params,
+}: PageProps): Promise<ReactElement> {
     const { slug } = await params;
 
     try {
-        const data = await getApi<NewsIF>(`${getNewsSingleUrl}/${slug}`);
+        const data = await fetchApi<PostIF>(`news/${slug}`);
 
         if (!data) {
-            console.log('page404');
-            return slug;
-            // notFound();
+            notFound();
         }
 
         return <PostTPL data={data} />;
     } catch {
-        console.log('page404');
-        // notFound();
+        notFound();
     }
-};
-
-export default NewsSingle;
+}

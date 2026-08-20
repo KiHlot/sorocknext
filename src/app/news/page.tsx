@@ -1,10 +1,10 @@
+import { ReactElement } from 'react';
 import { PostArchiveIF } from '@/types/post';
-import { getNewsArchiveUrl } from '@/api/news/urls';
+import { fetchApi } from '@/helpers/fetchApi';
 import NewsArchiveTPL from '@/templates/NewsArchiveTPL/NewsArchiveTPL.component';
-import { getApi } from '@/store/functions';
 
-const News = async () => {
-    const data = await getApi<PostArchiveIF>(getNewsArchiveUrl);
+const News = async (): Promise<ReactElement> => {
+    const data = await fetchApi<PostArchiveIF>('/news/archive');
 
     return <NewsArchiveTPL data={data} />;
 };

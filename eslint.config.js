@@ -72,13 +72,12 @@ export default [
             'react/require-default-props': 'off',
             'react/jsx-props-no-spreading': 'off',
             'react/no-unused-prop-types': 'off',
-            'react/function-component-definition': [
+            'func-style': [
                 'error',
-                {
-                    namedComponents: 'arrow-function',
-                    unnamedComponents: 'arrow-function',
-                },
+                'declaration',
+                { allowArrowFunctions: true },
             ],
+            'react/function-component-definition': 'off',
             'react/jsx-filename-extension': [
                 'error',
                 { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
@@ -123,17 +122,7 @@ export default [
                     ],
                 },
             ],
-            'unicorn/prevent-abbreviations': [
-                'error',
-                {
-                    allowList: {
-                        Props: true,
-                        props: true,
-                        Ref: true,
-                        utils: true,
-                    },
-                },
-            ],
+            'unicorn/prevent-abbreviations': 'off',
             'unicorn/prefer-global-this': 'off',
             'unicorn/numeric-separators-style': 'off',
             'unicorn/template-indent': 'off',

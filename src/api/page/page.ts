@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { HomePageDataIF } from '@/api/page/types';
-import { fetchRestApiQuery } from '@/store/functions';
+import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
 
 export const pageApi = createApi({
     reducerPath: 'pageApi',

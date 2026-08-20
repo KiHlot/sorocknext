@@ -2,15 +2,18 @@
 
 import { PiUserCheck } from 'react-icons/pi';
 import { CurrentUserIF } from '@/types/user';
-import { getStorageItem } from '@/helpers/utils';
-import styles from '@/templates/ConfirmAccountTPL/ConfirmAccountTPL.module.scss';
-import SendConfirmCodeForm from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.component';
+import { getSessionStorageItem } from '@/helpers/storage/storage';
+import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout.component';
 import Block from '@/components/blocks/Block/Block.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
+import styles from '@/templates/ConfirmAccountTPL/ConfirmAccountTPL.module.scss';
+import SendConfirmCodeForm from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.component';
 
 const ConfirmAccountTPL = () => {
-    const currentUser = getStorageItem<CurrentUserIF>('currentUser');
+    const currentUser = getSessionStorageItem<CurrentUserIF>(
+        STORAGE_KEYS.CurrentUser,
+    );
 
     return (
         <AuthLayout>

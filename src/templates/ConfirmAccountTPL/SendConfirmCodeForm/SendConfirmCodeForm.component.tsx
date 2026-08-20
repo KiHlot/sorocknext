@@ -1,25 +1,29 @@
 'use client';
 
 import { FC } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { redirect } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { IoCheckmark, IoMailOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
-import { redirect } from 'next/navigation';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { CurrentUserIF } from '@/types/user';
 import { authApi } from '@/api/auth/auth';
-import { getStorageItem, setStorageItem } from '@/helpers/utils';
+import { SUCCESS_NOTIFY } from '@/configs/codes';
+import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
+import {
+    getSessionStorageItem,
+    setSessionStorageItem,
+} from '@/helpers/storage/storage';
+import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
+import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
+import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import {
     INPUT_NAMES,
     schema,
 } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.config';
 import styles from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.module.scss';
 import { FieldsNames } from '@/templates/ConfirmAccountTPL/SendConfirmCodeForm/SendConfirmCodeForm.types';
-import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
-import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
-import { SUCCESS_NOTIFY } from '@/configs/codes';
-import { parseResponse } from '@/store/functions';
 
 const SendConfirmCodeForm: FC = () => {
     const [
@@ -61,13 +65,19 @@ const SendConfirmCodeForm: FC = () => {
         parseResponse<FieldsNames>(
             data,
             () => {
-                setStorageItem(
-                    {
-                        ...getStorageItem<CurrentUserIF>('currentUser'),
-                        isActivated: true,
-                    },
-                    'currentUser',
+                const storageData = getSessionStorageItem<CurrentUserIF>(
+                    STORAGE_KEYS.CurrentUser,
                 );
+                if (storageData) {
+                    setSessionStorageItem<CurrentUserIF>(
+                        STORAGE_KEYS.CurrentUser,
+                        {
+                            ...storageData,
+                            isActivated: true,
+                        },
+                    );
+                }
+
                 reset();
                 toast.success(SUCCESS_NOTIFY.s103);
                 redirect('/profile');

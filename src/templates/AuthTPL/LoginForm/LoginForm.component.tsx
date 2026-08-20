@@ -1,18 +1,19 @@
 'use client';
 
 import { FC } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { redirect } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { redirect } from 'next/navigation';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { CurrentUserIF } from '@/types/user';
 import { jwtApi } from '@/api/jwt/jwt';
 import { LoginFieldsReqIF } from '@/api/jwt/types';
-import { setCookie, setStorageItem } from '@/helpers/utils';
-import { schema } from '@/templates/AuthTPL/LoginForm/LoginForm.config';
+import { SUCCESS_NOTIFY } from '@/configs/codes';
+import { setCookie, setSessionStorageItem } from '@/helpers/storage/storage';
+import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import { SUCCESS_NOTIFY } from '@/configs/codes';
+import { schema } from '@/templates/AuthTPL/LoginForm/LoginForm.config';
 
 const LoginForm: FC = () => {
     const [loginUser, { isLoading, data }] = jwtApi.useLoginUserMutation();
@@ -27,12 +28,14 @@ const LoginForm: FC = () => {
             .unwrap()
             .then(({ token, expired, currentUser }) => {
                 if (token && expired && currentUser) {
-                    setCookie('token', token, {
+                    setCookie(STORAGE_KEYS.Token, token, {
                         expires: expired,
                     });
                     reset();
-
-                    setStorageItem<CurrentUserIF>(currentUser, 'currentUser');
+                    setSessionStorageItem<CurrentUserIF>(
+                        STORAGE_KEYS.CurrentUser,
+                        currentUser,
+                    );
                     toast.success(SUCCESS_NOTIFY.s105);
                     setTimeout(() => {
                         redirect('/profile');

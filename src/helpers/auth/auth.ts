@@ -1,23 +1,13 @@
 import { redirect } from 'next/navigation';
-import { toast } from 'react-toastify';
+import { LOGOUT_DELAY } from '@/helpers/auth/auth.config';
 import { deleteCookie, setSessionStorageItem } from '@/helpers/storage/storage';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 
-const DELAY = 2000;
-
-export const useLogout = (isSilent?: boolean): void => {
-    if (typeof window === 'undefined') {
-        return;
-    }
-
+export const logout = async (): Promise<void> => {
     setSessionStorageItem(STORAGE_KEYS.CurrentUser, null);
     deleteCookie(STORAGE_KEYS.Token);
 
-    if (!isSilent) {
-        toast.warning('Вы вышли из аккаунта!');
-    }
-
     setTimeout(() => {
         redirect('/auth');
-    }, DELAY);
+    }, LOGOUT_DELAY);
 };

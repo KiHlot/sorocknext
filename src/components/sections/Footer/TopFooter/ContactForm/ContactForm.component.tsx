@@ -1,17 +1,17 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import { siteApi } from '@/api/site/site';
 import { ContactFormIF } from '@/api/site/types';
+import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import TextArea from '@/components/controls/TextArea/TextArea.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import { schema } from '@/components/sections/Footer/TopFooter/ContactForm/ContactForm.config';
 import { FieldsNames } from '@/components/sections/Footer/TopFooter/ContactForm/ContactForm.types';
-import { parseResponse } from '@/store/functions';
 
 const ContactForm: FC = () => {
     const [sendContactForm, { data: result, isLoading }] =
@@ -27,10 +27,10 @@ const ContactForm: FC = () => {
     const onSubmit = async (values: ContactFormIF): Promise<void> => {
         sendContactForm(values)
             .unwrap()
-            .then(data => {
+            .then((data) => {
                 parseResponse<FieldsNames, { isSent: boolean }>(
                     data,
-                    data => {
+                    (data) => {
                         setIsSent(!!data);
                     },
                     setError,

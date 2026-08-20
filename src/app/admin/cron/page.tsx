@@ -1,10 +1,13 @@
 import { CronInfoIF } from '@/api/admin/types';
-import CronTPL from '@/templates/CronTPL/CronTPL.component';
+import { fetchApi } from '@/helpers/fetchApi';
 import AdminLayout from '@/layouts/AdminLayout/AdminLayout.component';
-import { getApi } from '@/store/functions';
+import CronTPL from '@/templates/CronTPL/CronTPL.component';
 
 const Help = async () => {
-    const cronInfo = await getApi<CronInfoIF>('/admin/get-cron-info', 'reload');
+    const cronInfo = await fetchApi<CronInfoIF>(
+        '/admin/get-cron-info',
+        'reload',
+    );
 
     return (
         <AdminLayout isLoading={!cronInfo}>

@@ -1,16 +1,16 @@
 import { FC } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { redirect } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { redirect } from 'next/navigation';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { authApi } from '@/api/auth/auth';
 import { RegistrationFieldsReqIF } from '@/api/auth/types';
-import { schema } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
-import { FieldsNames } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.types';
+import { SUCCESS_NOTIFY } from '@/configs/codes';
+import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import { SUCCESS_NOTIFY } from '@/configs/codes';
-import { parseResponse } from '@/store/functions';
+import { schema } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
+import { FieldsNames } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.types';
 
 const RegistrationForm: FC = () => {
     const [registerUser, { isLoading, data }] =
@@ -24,7 +24,7 @@ const RegistrationForm: FC = () => {
     const onSubmit = async (values: RegistrationFieldsReqIF): Promise<void> => {
         await registerUser(values)
             .unwrap()
-            .then(data => {
+            .then((data) => {
                 parseResponse<FieldsNames>(
                     data,
                     () => {

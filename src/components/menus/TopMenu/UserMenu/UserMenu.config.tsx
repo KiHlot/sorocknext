@@ -9,7 +9,8 @@ import { RiChatPrivateLine } from 'react-icons/ri';
 import { TbPasswordFingerprint } from 'react-icons/tb';
 import { MenuItemIF } from '@/types/common';
 import { CurrentUserIF } from '@/types/user';
-import { getStorageItem } from '@/helpers/utils';
+import { getSessionStorageItem } from '@/helpers/storage/storage';
+import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 
 export const MENU_USER: MenuItemIF[] = [
     {
@@ -60,7 +61,9 @@ const ACTIVATE_MENU: MenuItemIF[] = [
 ];
 
 export const getUserMenu = (): MenuItemIF[] => {
-    const currentUser = getStorageItem<CurrentUserIF>('currentUser');
+    const currentUser = getSessionStorageItem<CurrentUserIF>(
+        STORAGE_KEYS.CurrentUser,
+    );
 
     const baseMenu = currentUser ? MENU_USER : MENU_GUEST;
 

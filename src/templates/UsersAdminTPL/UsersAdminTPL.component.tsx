@@ -6,7 +6,7 @@ import { ModifyDataIF, UsersAdminJsonDataIF } from '@/api/site/types';
 import { UsersAdminTPLPropsIF } from '@/templates/UsersAdminTPL/UsersAdminTPL.types';
 import UsersList from '@/templates/UsersAdminTPL/UsersList/UsersList.component';
 import AdminPromoBlock from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.component';
-import { ResponseIF } from '@/store/types';
+import { ResponseIF } from '@/types/api';
 
 const UsersAdminTPL: FC<UsersAdminTPLPropsIF> = ({ data }) => {
     const [updateCronTask, { isLoading }] =

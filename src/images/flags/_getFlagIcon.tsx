@@ -452,7 +452,11 @@ export const getFlagIcon = (country: string): ReactElement => {
     }
 };
 
-export function getSelectCountryData(): any[] {
+export function getSelectCountryData(): {
+    key: string;
+    icon: ReactElement;
+    value: string;
+}[] {
     return [
         { key: 'sf', icon: <SfIcon />, value: 'World' },
         { key: 'us', icon: <UsIcon />, value: 'США' },

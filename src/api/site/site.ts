@@ -5,8 +5,8 @@ import {
     SearchIF,
     SearchResultIF,
 } from '@/api/site/types';
-import { fetchRestApiQuery } from '@/store/functions';
-import { ResponseIF } from '@/store/types';
+import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
+import { ResponseIF } from '@/types/api';
 
 export const siteApi = createApi({
     reducerPath: 'siteApi',

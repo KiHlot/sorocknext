@@ -1,6 +1,7 @@
-import { getApi } from '@/store/functions';
+import { ReactElement } from 'react';
 import { PageProps } from '@/types/common';
 import { HomePageDataIF } from '@/api/page/types';
+import { fetchApi } from '@/helpers/fetchApi';
 import HomeTPL from '@/templates/HomeTPL/HomeTPL.component';
 
 export async function generateMetadata({ params }: PageProps): any {
@@ -26,10 +27,10 @@ export async function generateMetadata({ params }: PageProps): any {
     };
 }
 
-const Home = async () => {
-    const homePageInfo = await getApi<HomePageDataIF>('/page/home-page-data');
+export default async function HomePage({
+    params,
+}: PageProps): Promise<ReactElement> {
+    const homePageInfo = await fetchApi<HomePageDataIF>('/page/home-page-data');
 
     return <HomeTPL data={homePageInfo} />;
-};
-
-export default Home;
+}
