@@ -12,11 +12,6 @@
     background-color: var(--bgColorDark);
 }
 
-.thumb {
-    height: auto;
-    min-height: 100vh;
-}
-
 .content {
     padding: var(--gapDesktop);
 }
@@ -27,11 +22,16 @@
     display: flex;
     align-items: center;
     gap: 0 10px;
-
+    
     svg {
         width: 26px;
         height: 26px;
     }
+}
+
+.thumb {
+    height: auto;
+    min-height: 100vh;
 }
 
 .block {

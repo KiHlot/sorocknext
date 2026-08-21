@@ -1,22 +1,10 @@
 import { ReactElement } from 'react';
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import thumbBg from '@/images/img/thumb_bg.jpg';
 import ButtonsGroupAuth from '@/components/blocks/ButtonsGroupAuth/ButtonsGroupAuth.component';
 import authStyles from '@/app/(auth)/auth.module.scss';
 import { LayoutIF } from '@/app/types';
-
-export const metadata: Metadata = {
-    title: 'Auth',
-    description: 'Сделано без любви',
-    icons: {
-        icon: {
-            url: '/favicon.svg',
-            type: 'shortcut icon',
-        },
-    },
-};
 
 export default async function Layout({
     children,
