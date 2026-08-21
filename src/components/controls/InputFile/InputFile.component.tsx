@@ -2,11 +2,11 @@
 
 import { ChangeEvent, ReactElement } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { VALIDATORS } from '@/helpers/validator';
+import { VALIDATOR_FILE } from '@/helpers/validation/validation.config';
 import styles from '@/components/controls/InputFile/InputFile.module.scss';
 import { InputFilePropsIF } from '@/components/controls/InputFile/InputFile.types';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import buttonStyles from '@/components/elems/MainButton/MainButton.module.scss';
+import buttonStyles from '@/components/controls/MainButton/MainButton.module.scss';
 
 export const InputFile = <T extends FieldValues>({
     isDisabled,
@@ -18,7 +18,7 @@ export const InputFile = <T extends FieldValues>({
     register,
     className = '',
 }: InputFilePropsIF<T>): ReactElement => {
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         const file = event.target.files?.[0] ?? null;
 
         if (file) {
@@ -41,9 +41,9 @@ export const InputFile = <T extends FieldValues>({
                 id={name}
                 name={name}
                 type="file"
-                accept={VALIDATORS[acceptType]?.accept?.join(',') ?? ''}
+                accept={VALIDATOR_FILE[acceptType]?.accept?.join(',') ?? ''}
                 className={styles.inputFile}
-                onInput={handleChange}
+                onChange={handleChange}
             />
             {children}
         </MainButton>

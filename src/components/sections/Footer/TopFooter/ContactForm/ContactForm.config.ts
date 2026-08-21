@@ -1,40 +1,40 @@
 import * as yup from 'yup';
-import { VALIDATORS } from '@/helpers/validator';
-import { ERRORS } from '@/configs/codes';
+import { ERRORS_CODES } from '@/helpers/validation/codes/codes.config';
+import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
 
 export const schema = yup.object().shape({
     email: yup
         .string()
-        .required(ERRORS.er200)
-        .email(ERRORS.er203)
+        .required(ERRORS_CODES.er200)
+        .email(ERRORS_CODES.er203)
         .min(
-            VALIDATORS.email.minLength!,
-            `${ERRORS.er201}. Мин: ${VALIDATORS.email.minLength}`,
+            VALIDATOR_FIELD.email.minLength,
+            `${ERRORS_CODES.er201}. Мин: ${VALIDATOR_FIELD.email.minLength}`,
         )
         .max(
-            VALIDATORS.email.maxLength!,
-            `${ERRORS.er202}. Макс: ${VALIDATORS.email.maxLength}`,
+            VALIDATOR_FIELD.email.maxLength,
+            `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.email.maxLength}`,
         ),
     name: yup
         .string()
-        .required(ERRORS.er200)
+        .required(ERRORS_CODES.er200)
         .min(
-            VALIDATORS.name.minLength!,
-            `${ERRORS.er201}. Мин: ${VALIDATORS.name.minLength}`,
+            VALIDATOR_FIELD.name.minLength,
+            `${ERRORS_CODES.er201}. Мин: ${VALIDATOR_FIELD.name.minLength}`,
         )
         .max(
-            VALIDATORS.name.maxLength!,
-            `${ERRORS.er202}. Макс: ${VALIDATORS.name.maxLength}`,
+            VALIDATOR_FIELD.name.maxLength,
+            `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.name.maxLength}`,
         ),
     message: yup
         .string()
-        .required(ERRORS.er200)
+        .required(ERRORS_CODES.er200)
         .min(
-            VALIDATORS.message.minLength!,
-            `${ERRORS.er201}. Мин: ${VALIDATORS.message.minLength}`,
+            VALIDATOR_FIELD.message.minLength,
+            `${ERRORS_CODES.er201}. Мин: ${VALIDATOR_FIELD.message.minLength}`,
         )
         .max(
-            VALIDATORS.message.maxLength!,
-            `${ERRORS.er202}. Макс: ${VALIDATORS.message.maxLength}`,
+            VALIDATOR_FIELD.message.maxLength,
+            `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.message.maxLength}`,
         ),
 });

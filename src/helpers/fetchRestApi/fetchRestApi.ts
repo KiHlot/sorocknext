@@ -1,8 +1,8 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ResponseIF } from '@/types/api';
 import { FetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi.types';
-import { getCookie } from '@/helpers/storage/storage';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
+import { getCookie } from '@/helpers/storage/storage.helpers';
 
 export const fetchRestApiQuery = (baseUrl?: string): FetchRestApiQuery =>
     fetchBaseQuery({

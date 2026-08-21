@@ -1,10 +1,3 @@
-const API_DOMAIN = process.env.NEXT_PUBLIC_DOMEN_URL;
-
-export const ADDRESS = {
-    WP_API_URL: `${API_DOMAIN}${process.env.NEXT_PUBLIC_REST_BASE}`,
-    WP_JWT_API_URL: `${API_DOMAIN}${process.env.NEXT_PUBLIC_JWT_BASE}`,
-};
-
 export const TIME_FORMAT = {
     backDateWithTime: 'YYYY-MM-DD HH:mm:ss',
     dateUi: 'DD.MM.YYYY',

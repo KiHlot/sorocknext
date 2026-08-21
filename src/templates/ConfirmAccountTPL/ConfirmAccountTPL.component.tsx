@@ -2,7 +2,7 @@
 
 import { PiUserCheck } from 'react-icons/pi';
 import { CurrentUserIF } from '@/types/user';
-import { getSessionStorageItem } from '@/helpers/storage/storage';
+import { getSessionStorageItem } from '@/helpers/storage/storage.helpers';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout.component';
 import Block from '@/components/blocks/Block/Block.component';

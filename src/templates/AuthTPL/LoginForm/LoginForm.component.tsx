@@ -7,41 +7,59 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { CurrentUserIF } from '@/types/user';
 import { jwtApi } from '@/api/jwt/jwt';
-import { LoginFieldsReqIF } from '@/api/jwt/types';
-import { SUCCESS_NOTIFY } from '@/configs/codes';
-import { setCookie, setSessionStorageItem } from '@/helpers/storage/storage';
+import { LoginUserIF } from '@/api/jwt/types';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
+import {
+    setCookie,
+    setSessionStorageItem,
+} from '@/helpers/storage/storage.helpers';
+import { SUCCESS_CODES } from '@/helpers/validation/codes/codes.config';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import { schema } from '@/templates/AuthTPL/LoginForm/LoginForm.config';
+import {
+    LOGIN_DELAY,
+    schema,
+} from '@/templates/AuthTPL/LoginForm/LoginForm.config';
 
 const LoginForm: FC = () => {
-    const [loginUser, { isLoading, data }] = jwtApi.useLoginUserMutation();
+    const [loginUser, { isLoading }] = jwtApi.useLoginUserMutation();
 
-    const { handleSubmit, control, reset } = useForm<LoginFieldsReqIF>({
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: { isValid },
+    } = useForm<LoginUserIF>({
         mode: 'onSubmit',
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = async (values: LoginFieldsReqIF): Promise<void> => {
-        await loginUser(values)
-            .unwrap()
-            .then(({ token, expired, currentUser }) => {
-                if (token && expired && currentUser) {
-                    setCookie(STORAGE_KEYS.Token, token, {
-                        expires: expired,
-                    });
-                    reset();
-                    setSessionStorageItem<CurrentUserIF>(
-                        STORAGE_KEYS.CurrentUser,
-                        currentUser,
-                    );
-                    toast.success(SUCCESS_NOTIFY.s105);
-                    setTimeout(() => {
-                        redirect('/profile');
-                    }, 2000);
-                }
-            });
+    const onSubmit = async (values: LoginUserIF): Promise<void> => {
+        try {
+            const result = await loginUser(values).unwrap();
+
+            if (result) {
+                reset();
+
+                const { token, expires, currentUser } = result;
+
+                setCookie(STORAGE_KEYS.Token, token, {
+                    expires: new Date(expires),
+                });
+                setSessionStorageItem<CurrentUserIF>(
+                    STORAGE_KEYS.CurrentUser,
+                    currentUser,
+                );
+
+                toast.success(SUCCESS_CODES.s105);
+
+                setTimeout(() => {
+                    redirect('/profile');
+                }, LOGIN_DELAY);
+            }
+        } catch {
+            console.log('error');
+        }
     };
 
     return (
@@ -61,11 +79,7 @@ const LoginForm: FC = () => {
                 isRequired
                 isPassword
             />
-            <MainButton
-                type="submit"
-                isLoading={isLoading}
-                disabled={!!data?.currentUser}
-            >
+            <MainButton type="submit" isLoading={isLoading} disabled={!isValid}>
                 Вход
             </MainButton>
         </form>

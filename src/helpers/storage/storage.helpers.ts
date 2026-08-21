@@ -27,7 +27,7 @@ export const getCookie = (name: StorageKeyT): string | null => {
             `(?:^|; )${name.replaceAll(/([.$?*|{}()+^])/g, String.raw`\$1`)}=([^;]*)`,
         ),
     );
-    return matches ? decodeURIComponent(matches[1]) : null;
+    return matches?.[1] ? decodeURIComponent(matches[1]) : null;
 };
 
 export const deleteCookie = (name: StorageKeyT): void => {

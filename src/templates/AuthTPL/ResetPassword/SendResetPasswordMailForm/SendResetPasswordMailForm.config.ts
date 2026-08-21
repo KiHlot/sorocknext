@@ -1,18 +1,18 @@
 import * as yup from 'yup';
-import { VALIDATORS } from '@/helpers/validator';
-import { ERRORS } from '@/configs/codes';
+import { VALIDATOR_FIELD } from '@/helpers/validation/validation.helpers';
+import { ERRORS } from '@/helpers/validation/validation.config';
 
 export const schema = yup.object().shape({
     email: yup
         .string()
-        .required(ERRORS.er200)
-        .email(ERRORS.er203)
+        .required(ERRORS_CODES.er200)
+        .email(ERRORS_CODES.er203)
         .min(
-            VALIDATORS.email.minLength!,
-            `${ERRORS.er201}. Мин: ${VALIDATORS.email.minLength}`,
+            VALIDATOR_FIELD.email.minLength,
+            `${ERRORS_CODES.er201}. Мин: ${VALIDATOR_FIELD.email.minLength}`,
         )
         .max(
-            VALIDATORS.email.maxLength!,
-            `${ERRORS.er202}. Макс: ${VALIDATORS.email.maxLength}`,
+            VALIDATOR_FIELD.email.maxLength,
+            `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.email.maxLength}`,
         ),
 });

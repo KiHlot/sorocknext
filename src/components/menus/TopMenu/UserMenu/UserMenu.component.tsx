@@ -2,14 +2,13 @@
 
 import { FC, useRef, useState } from 'react';
 import Link from 'next/link';
-import { CallBackTypeT } from '@/types/common';
 import { CurrentUserIF } from '@/types/user';
-import { useLogout } from '@/hooks/useLogout';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
-import { getSessionStorageItem } from '@/helpers/storage/storage';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
+import { getSessionStorageItem } from '@/helpers/storage/storage.helpers';
 import Img from '@/components/elems/Img/Img.component';
 import { getUserMenu } from '@/components/menus/TopMenu/UserMenu/UserMenu.config';
+import { userMenuClickHandler } from '@/components/menus/TopMenu/UserMenu/UserMenu.helpers';
 import styles from '@/components/menus/TopMenu/UserMenu/UserMenu.module.scss';
 
 const UserMenu: FC = () => {
@@ -22,18 +21,6 @@ const UserMenu: FC = () => {
     const currentUser = getSessionStorageItem<CurrentUserIF>(
         STORAGE_KEYS.CurrentUser,
     );
-
-    const clickHandler = (callBackType: CallBackTypeT) => {
-        switch (callBackType) {
-            case 'logout': {
-                useLogout();
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-    };
 
     return (
         <div className={styles.userMenuWrapper} ref={menuWrapperRef}>
@@ -54,7 +41,9 @@ const UserMenu: FC = () => {
                             >
                                 <button
                                     type="button"
-                                    onClick={() => clickHandler(callBackType)}
+                                    onClick={() =>
+                                        userMenuClickHandler(callBackType)
+                                    }
                                 >
                                     {icon}
                                     <span>{label}</span>

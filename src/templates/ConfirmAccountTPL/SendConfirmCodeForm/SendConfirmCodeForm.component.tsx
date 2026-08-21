@@ -8,12 +8,12 @@ import { IoCheckmark, IoMailOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import { CurrentUserIF } from '@/types/user';
 import { authApi } from '@/api/auth/auth';
-import { SUCCESS_NOTIFY } from '@/configs/codes';
+import { SUCCESS_NOTIFY } from '@/helpers/validation/validation.config';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import {
     getSessionStorageItem,
     setSessionStorageItem,
-} from '@/helpers/storage/storage';
+} from '@/helpers/storage/storage.helpers';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';

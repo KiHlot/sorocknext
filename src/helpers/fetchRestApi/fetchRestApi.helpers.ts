@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { ResponseErrorIF, ResponseIF } from '@/types/api';
-import { ERRORS, SERVER_ERRORS } from '@/configs/codes';
-import { logout } from '@/helpers/auth/auth';
+import { logout } from '@/helpers/logout/logout';
+import { ERRORS_CODES } from '@/helpers/validation/codes/codes.config';
 
 export const parseResponse = <DataT = null>(
     data: ResponseIF<DataT>,
@@ -9,7 +9,7 @@ export const parseResponse = <DataT = null>(
     onError: (errors: ResponseErrorIF[] | null) => void,
 ): void => {
     if (!data || !data.result) {
-        toast.error(SERVER_ERRORS.e900);
+        toast.error(ERRORS_CODES.er900);
         return;
     }
 
@@ -23,7 +23,7 @@ export const parseResponse = <DataT = null>(
             break;
         }
         case 'logout': {
-            toast.error(ERRORS.er222);
+            toast.error(ERRORS_CODES.er222);
             logout();
             break;
         }
@@ -31,16 +31,16 @@ export const parseResponse = <DataT = null>(
             if (data.redirectUrl) {
                 window.location.href = data.redirectUrl;
             } else {
-                toast.error(SERVER_ERRORS.e900);
+                toast.error(ERRORS_CODES.er900);
             }
             break;
         }
         case 'notfound': {
-            toast.error(SERVER_ERRORS.e900);
+            toast.error(ERRORS_CODES.er900);
             break;
         }
         default: {
-            toast.error(SERVER_ERRORS.e900);
+            toast.error(ERRORS_CODES.er900);
             break;
         }
     }

@@ -9,7 +9,7 @@ import { RiChatPrivateLine } from 'react-icons/ri';
 import { TbPasswordFingerprint } from 'react-icons/tb';
 import { MenuItemIF } from '@/types/common';
 import { CurrentUserIF } from '@/types/user';
-import { getSessionStorageItem } from '@/helpers/storage/storage';
+import { getSessionStorageItem } from '@/helpers/storage/storage.helpers';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 
 export const MENU_USER: MenuItemIF[] = [

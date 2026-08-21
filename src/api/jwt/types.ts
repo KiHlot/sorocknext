@@ -1,12 +1,12 @@
 import { CurrentUserIF } from '@/types/user';
 
-export interface UserLoginResponseIF {
+export interface LoginUserResponseIF {
     token: string;
-    expired: string;
+    expires: string;
     currentUser: CurrentUserIF;
 }
 
-export interface LoginFieldsRequestIF {
+export interface LoginUserIF {
     username: string;
     password: string;
 }
