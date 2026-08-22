@@ -1,4 +1,4 @@
-export interface RegistrationFieldsRequestIF {
+export interface RegistrationFieldsIF {
     name: string;
     surname: string;
     loginEmail: string;

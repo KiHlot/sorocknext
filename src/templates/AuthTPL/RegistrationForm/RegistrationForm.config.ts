@@ -1,10 +1,10 @@
-import * as yup from 'yup';
-import { VALIDATOR_FIELD } from '@/helpers/validation/validation.helpers';
-import { ERRORS } from '@/helpers/validation/validation.config';
+import { object, ObjectSchema, ref, string } from 'yup';
+import { RegistrationFieldsIF } from '@/api/auth/types';
+import { ERRORS_CODES } from '@/helpers/validation/codes/codes.config';
+import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
 
-export const schema = yup.object().shape({
-    name: yup
-        .string()
+export const schema: ObjectSchema<RegistrationFieldsIF> = object({
+    name: string()
         .required(ERRORS_CODES.er200)
         .min(
             VALIDATOR_FIELD.name.minLength,
@@ -14,8 +14,7 @@ export const schema = yup.object().shape({
             VALIDATOR_FIELD.name.maxLength,
             `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.name.maxLength}`,
         ),
-    surname: yup
-        .string()
+    surname: string()
         .required(ERRORS_CODES.er200)
         .min(
             VALIDATOR_FIELD.surname.minLength,
@@ -25,8 +24,7 @@ export const schema = yup.object().shape({
             VALIDATOR_FIELD.surname.maxLength,
             `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.name.maxLength}`,
         ),
-    loginEmail: yup
-        .string()
+    loginEmail: string()
         .required(ERRORS_CODES.er200)
         .email(ERRORS_CODES.er203)
         .min(
@@ -37,8 +35,7 @@ export const schema = yup.object().shape({
             VALIDATOR_FIELD.email.maxLength,
             `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.email.maxLength}`,
         ),
-    password: yup
-        .string()
+    password: string()
         .required(ERRORS_CODES.er200)
         .matches(
             /^[a-zA-Z0-9!@#$%^()&*_-]+$/,
@@ -52,8 +49,7 @@ export const schema = yup.object().shape({
             VALIDATOR_FIELD.password.maxLength,
             `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.password.maxLength}`,
         ),
-    passwordConfirm: yup
-        .string()
+    passwordConfirm: string()
         .required(ERRORS_CODES.er200)
         .matches(
             /^[a-zA-Z0-9!@#$%^()&*_-]+$/,
@@ -67,5 +63,5 @@ export const schema = yup.object().shape({
             VALIDATOR_FIELD.password.maxLength,
             `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.password.maxLength}`,
         )
-        .oneOf([yup.ref('password')], ERRORS_CODES.er204),
+        .oneOf([ref('password')], ERRORS_CODES.er204),
 });

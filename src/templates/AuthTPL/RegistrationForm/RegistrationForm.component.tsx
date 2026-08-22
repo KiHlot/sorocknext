@@ -6,39 +6,36 @@ import { redirect } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { authApi } from '@/api/auth/auth';
-import { RegistrationFieldsRequestIF } from '@/api/auth/types';
-import { SUCCESS_NOTIFY } from '@/helpers/validation/validation.config';
+import { RegistrationFieldsIF } from '@/api/auth/types';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
+import { SUCCESS_CODES } from '@/helpers/validation/codes/codes.config';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import { schema } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
 import { FieldsNames } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.types';
 
 const RegistrationForm: FC = () => {
-    const [registerUser, { isLoading, data }] =
-        authApi.useRegisterUserMutation();
+    const [registerUser, { isLoading }] = authApi.useRegisterUserMutation();
 
-    const { handleSubmit, control, setError, reset } = useForm({
+    const {
+        handleSubmit,
+        control,
+        setError,
+        reset,
+        formState: { isValid },
+    } = useForm<RegistrationFieldsIF>({
         mode: 'onSubmit',
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = async (
-        values: RegistrationFieldsRequestIF,
-    ): Promise<void> => {
-        await registerUser(values)
-            .unwrap()
-            .then((data) => {
-                parseResponse<FieldsNames>(
-                    data,
-                    () => {
-                        reset();
-                        toast.success(SUCCESS_NOTIFY.s104);
-                        setTimeout(() => redirect('/auth'), 2000);
-                    },
-                    setError,
-                );
-            });
+    const onSubmit = async (values: RegistrationFieldsIF): Promise<void> => {
+        const result = await registerUser(values).unwrap();
+
+        parseResponse(result, ({ data, errors }) => {
+            reset();
+            toast.success(SUCCESS_CODES.s104);
+            setTimeout(() => redirect('/auth'), 2000);
+        });
     };
 
     return (
@@ -82,11 +79,7 @@ const RegistrationForm: FC = () => {
                 isRequired
                 isPassword
             />
-            <MainButton
-                type="submit"
-                isLoading={isLoading}
-                disabled={!!data?.data}
-            >
+            <MainButton type="submit" isLoading={isLoading} disabled={!isValid}>
                 Регистрация
             </MainButton>
         </form>

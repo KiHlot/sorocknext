@@ -1,21 +1,19 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { ResponseIF } from '@/types/api';
-import { RegistrationFieldsRequestIF, ResetPasswordIF } from '@/api/auth/types';
+import { RegistrationFieldsIF, ResetPasswordIF } from '@/api/auth/types';
 import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchRestApiQuery('/auth'),
     endpoints: (builder) => ({
-        registerUser: builder.mutation<ResponseIF, RegistrationFieldsRequestIF>(
-            {
-                query: (data) => ({
-                    url: `/registration`,
-                    method: 'POST',
-                    body: data,
-                }),
-            },
-        ),
+        registerUser: builder.mutation<ResponseIF, RegistrationFieldsIF>({
+            query: (data) => ({
+                url: `/registration`,
+                method: 'POST',
+                body: data,
+            }),
+        }),
         resetPassword: builder.mutation<ResponseIF, ResetPasswordIF>({
             query: (data) => ({
                 url: `/reset-password`,

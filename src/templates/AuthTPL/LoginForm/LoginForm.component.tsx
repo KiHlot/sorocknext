@@ -56,9 +56,7 @@ const LoginForm: FC = () => {
                     STORAGE_KEYS.CurrentUser,
                     currentUser,
                 );
-
                 toast.success(SUCCESS_CODES.s105);
-
                 setTimeout(() => {
                     redirect('/profile');
                 }, LOGIN_DELAY);
