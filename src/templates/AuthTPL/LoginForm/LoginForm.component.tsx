@@ -13,7 +13,12 @@ import {
     setCookie,
     setSessionStorageItem,
 } from '@/helpers/storage/storage.helpers';
-import { SUCCESS_CODES } from '@/helpers/validation/codes/codes.config';
+import {
+    ERRORS_CODES,
+    SERVER_CODES,
+    SUCCESS_CODES,
+} from '@/helpers/validation/codes/codes.config';
+import { catchError } from '@/helpers/validation/error/error.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import {
@@ -29,6 +34,7 @@ const LoginForm: FC = () => {
         control,
         reset,
         formState: { isValid },
+        setError,
     } = useForm<LoginUserIF>({
         mode: 'onSubmit',
         resolver: yupResolver(schema),
@@ -57,8 +63,19 @@ const LoginForm: FC = () => {
                     redirect('/profile');
                 }, LOGIN_DELAY);
             }
-        } catch {
-            console.log('error');
+        } catch (error) {
+            const { status, message } = catchError(error);
+
+            if (status === SERVER_CODES.C403) {
+                setError('username', {
+                    type: 'manual',
+                    message: ERRORS_CODES.er209,
+                });
+
+                return;
+            }
+
+            toast.error(message || ERRORS_CODES.er900);
         }
     };
 

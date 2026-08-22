@@ -6,7 +6,7 @@ import { getCookie } from '@/helpers/storage/storage.helpers';
 
 export const fetchRestApiQuery = (baseUrl?: string): FetchRestApiQuery =>
     fetchBaseQuery({
-        baseUrl: `${process.env.NEXT_REST_DOMAIN_URL}${process.env.NEXT_REST_BASE}${baseUrl || ''}`,
+        baseUrl: `${process.env.NEXT_PUBLIC_REST_DOMAIN_URL}${process.env.NEXT_PUBLIC_REST_BASE}${baseUrl || ''}`,
         prepareHeaders: (headers) => {
             const token = getCookie(STORAGE_KEYS.Token);
             if (token) {
@@ -20,6 +20,6 @@ export const fetchRestApiQuery = (baseUrl?: string): FetchRestApiQuery =>
 
 export const fetchJWTTokenQuery = (): FetchRestApiQuery =>
     fetchBaseQuery({
-        baseUrl: `${process.env.NEXT_REST_DOMAIN_URL}${process.env.NEXT_JWT_BASE}`,
+        baseUrl: `${process.env.NEXT_PUBLIC_REST_DOMAIN_URL}${process.env.NEXT_PUBLIC_JWT_BASE}`,
         responseHandler: async (response) => response.json(),
     });
