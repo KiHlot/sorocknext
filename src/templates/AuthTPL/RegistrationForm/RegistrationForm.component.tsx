@@ -2,19 +2,27 @@
 
 import { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { authApi } from '@/api/auth/auth';
 import { RegistrationFieldsIF } from '@/api/auth/types';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
-import { SUCCESS_CODES } from '@/helpers/validation/codes/codes.config';
+import {
+    ERRORS_CODES,
+    SUCCESS_CODES,
+} from '@/helpers/validation/codes/codes.config';
+import { catchError } from '@/helpers/validation/error/error.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import { schema } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
-import { FieldsNames } from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.types';
+import {
+    REGISTRATION_DELAY,
+    schema,
+} from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
 
 const RegistrationForm: FC = () => {
+    const router = useRouter();
+
     const [registerUser, { isLoading }] = authApi.useRegisterUserMutation();
 
     const {
@@ -29,13 +37,31 @@ const RegistrationForm: FC = () => {
     });
 
     const onSubmit = async (values: RegistrationFieldsIF): Promise<void> => {
-        const result = await registerUser(values).unwrap();
+        try {
+            const result = await registerUser(values).unwrap();
 
-        parseResponse(result, ({ data, errors }) => {
-            reset();
-            toast.success(SUCCESS_CODES.s104);
-            setTimeout(() => redirect('/auth'), 2000);
-        });
+            parseResponse<null>(result, ({ errors }) => {
+                if (errors?.length) {
+                    for (const { code, fieldName } of errors) {
+                        if (fieldName && code) {
+                            setError(fieldName as keyof RegistrationFieldsIF, {
+                                type: 'manual',
+                                message: ERRORS_CODES[code],
+                            });
+                        }
+                    }
+
+                    return;
+                }
+
+                reset();
+                toast.success(SUCCESS_CODES.s104);
+                setTimeout(() => router.push('/auth'), REGISTRATION_DELAY);
+            });
+        } catch (error) {
+            const { message } = catchError(error);
+            toast.error(message);
+        }
     };
 
     return (

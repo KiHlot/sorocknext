@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { CurrentUserIF } from '@/types/user';
@@ -27,6 +27,8 @@ import {
 } from '@/templates/AuthTPL/LoginForm/LoginForm.config';
 
 const LoginForm: FC = () => {
+    const router = useRouter();
+
     const [loginUser, { isLoading }] = jwtApi.useLoginUserMutation();
 
     const {
@@ -57,9 +59,7 @@ const LoginForm: FC = () => {
                     currentUser,
                 );
                 toast.success(SUCCESS_CODES.s105);
-                setTimeout(() => {
-                    redirect('/profile');
-                }, LOGIN_DELAY);
+                setTimeout(() => router.push('/profile'), LOGIN_DELAY);
             }
         } catch (error) {
             const { status, message } = catchError(error);
