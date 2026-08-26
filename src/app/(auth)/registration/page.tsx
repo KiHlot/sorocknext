@@ -9,7 +9,7 @@ export default function LoginPage(): ReactElement {
         <Block className={`flcol ${authStyles.block}`}>
             <div className={`flc ${authStyles.title}`}>
                 <LuUserRoundPlus />
-                Регистрация
+                <h1>Регистрация</h1>
             </div>
             <RegistrationForm />
         </Block>

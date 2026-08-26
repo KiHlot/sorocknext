@@ -8,22 +8,21 @@ import { toast } from 'react-toastify';
 import { CurrentUserIF } from '@/types/user';
 import { authApi } from '@/api/auth/auth';
 import { ResetPasswordIF } from '@/api/auth/types';
-import { SUCCESS_NOTIFY } from '@/helpers/validation/validation.config';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
+import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import {
     getSessionStorageItem,
     setSessionStorageItem,
 } from '@/helpers/storage/storage.helpers';
-import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import {
     INPUT_NAMES,
     schema,
 } from '@/components/forms/ResetPasswordForm/ResetPasswordForm.config';
 import { FieldsNames } from '@/components/forms/ResetPasswordForm/ResetPasswordForm.types';
+import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 
 const ResetPasswordForm: FC = () => {
     const [resetPassword, { isLoading, data }] =
@@ -96,8 +95,6 @@ const ResetPasswordForm: FC = () => {
                 names={INPUT_NAMES}
                 name="confirmCode"
                 control={control}
-                clearErrors={clearErrors}
-                setValue={(name, code) => setValue(name, code)}
                 isDisabled={isLoading || !!data}
             />
             <Input name="email" label="Email" control={control} isRequired />

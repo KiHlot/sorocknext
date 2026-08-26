@@ -14,6 +14,7 @@ import {
     SUCCESS_CODES,
 } from '@/helpers/validation/codes/codes.config';
 import { catchError } from '@/helpers/validation/error/error.helpers';
+import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import { schema } from '@/components/forms/RegistrationForm/RegistrationForm.config';
@@ -38,7 +39,7 @@ const RegistrationForm: FC = () => {
         try {
             const result = await registerUser(values).unwrap();
 
-            parseResponse<null>(result, ({ errors }) => {
+            parseResponse(result, ({ errors }) => {
                 if (errors?.length) {
                     for (const { code, fieldName } of errors) {
                         if (fieldName && code) {
@@ -72,7 +73,7 @@ const RegistrationForm: FC = () => {
                 label="Имя"
                 control={control}
                 isTextsOnly
-                maxLength={30}
+                maxLength={VALIDATOR_FIELD.name.maxLength}
                 isRemoveSpaces
             />
             <Input
@@ -80,7 +81,7 @@ const RegistrationForm: FC = () => {
                 label="Фамилия"
                 control={control}
                 isTextsOnly
-                maxLength={30}
+                maxLength={VALIDATOR_FIELD.surname.maxLength}
                 isRemoveSpaces
             />
             <Input

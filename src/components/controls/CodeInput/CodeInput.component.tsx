@@ -14,13 +14,11 @@ import { CodeInputPropsIF } from '@/components/controls/CodeInput/CodeInput.type
 import FieldError from '@/components/elems/FieldError/FieldError.component';
 
 const CodeInput = <T extends FieldValues>({
-    setValue,
     names,
     isDisabled,
     className = '',
     name,
     control,
-    clearErrors,
 }: CodeInputPropsIF<T>): ReactElement => {
     const [code, setCode] = useState<string[]>(Array.from(names, () => ''));
     const [inputReferencesArray] = useState<
@@ -43,8 +41,6 @@ const CodeInput = <T extends FieldValues>({
             return;
         }
 
-        clearErrors();
-
         const target = event.target;
 
         target.select();
@@ -56,7 +52,7 @@ const CodeInput = <T extends FieldValues>({
             .replaceAll(/[^0-9]/g, '');
 
         setCode(newCode);
-        setValue(name, newCode.join(''));
+        onChange(newCode.join(''));
 
         for (const [index, element] of newCode.entries()) {
             if (!element) {
@@ -70,7 +66,7 @@ const CodeInput = <T extends FieldValues>({
         }
     };
 
-    const handlePaste = (event: ClipboardEvent<HTMLInputElement>) => {
+    const handlePaste = (event: ClipboardEvent<HTMLInputElement>): void => {
         event.preventDefault();
 
         if (isDisabled) {
@@ -86,10 +82,12 @@ const CodeInput = <T extends FieldValues>({
         if (!/^\d+$/.test(pastedData)) {
             return;
         }
-        clearErrors();
-        setCode(Array.from(pastedData));
+
+        const newCode = Array.from(pastedData);
+
+        setCode(newCode);
+        onChange(newCode.join(''));
         event.currentTarget.blur();
-        setValue(name, pastedData);
     };
 
     return (
@@ -110,7 +108,7 @@ const CodeInput = <T extends FieldValues>({
                         type="text"
                         name={inputName}
                         placeholder="-"
-                        onInput={event => {
+                        onInput={(event) => {
                             inputHandler(event, index);
                         }}
                         value={code[index]}

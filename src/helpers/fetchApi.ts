@@ -11,10 +11,10 @@ export const fetchApi = async <ResultType>(
     try {
         console.log(
             'fetch route:',
-            `${process.env.NEXT_REST_DOMAIN_URL}${process.env.NEXT_REST_BASE}${route}`,
+            `${process.env.NEXT_PUBLIC_REST_DOMAIN_URL}${process.env.NEXT_PUBLIC_REST_BASE}${route}`,
         );
         const response = await fetch(
-            `${process.env.NEXT_REST_DOMAIN_URL}${process.env.NEXT_REST_BASE}${route}`,
+            `${process.env.NEXT_PUBLIC_REST_DOMAIN_URL}${process.env.NEXT_PUBLIC_REST_BASE}${route}`,
             {
                 cache,
                 ...(token
