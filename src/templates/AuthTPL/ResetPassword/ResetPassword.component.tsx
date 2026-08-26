@@ -6,8 +6,8 @@ import {
     ActiveTabT,
     ResetPasswordPropsIF,
 } from '@/templates/AuthTPL/ResetPassword/ResetPassword.types';
-import ResetPasswordForm from '@/templates/AuthTPL/ResetPassword/ResetPasswordForm/ResetPasswordForm.component';
-import SendResetPasswordMailForm from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.component';
+import ResetPasswordForm from '@/components/forms/ResetPasswordForm/ResetPasswordForm.component';
+import SendResetPasswordMailForm from '@/components/forms/SendResetPasswordMailForm/SendResetPasswordMailForm.component';
 import ButtonsGroup from '@/components/interactive/ButtonsGroup/ButtonsGroup.component';
 
 const ResetPassword: FC<ResetPasswordPropsIF> = ({ className = '' }) => {

@@ -7,8 +7,8 @@ import Block from '@/components/blocks/Block/Block.component';
 import ButtonsGroup from '@/components/interactive/ButtonsGroup/ButtonsGroup.component';
 import { AUTH_TPL_CONFIG } from '@/templates/AuthTPL/AuthTPL.config';
 import styles from '@/templates/AuthTPL/AuthTPL.module.scss';
-import LoginForm from '@/templates/AuthTPL/LoginForm/LoginForm.component';
-import RegistrationForm from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.component';
+import LoginForm from '@/components/forms/LoginForm/LoginForm.component';
+import RegistrationForm from '@/components/forms/RegistrationForm/RegistrationForm.component';
 import ResetPassword from '@/templates/AuthTPL/ResetPassword/ResetPassword.component';
 
 const AuthTPL: FC = () => {

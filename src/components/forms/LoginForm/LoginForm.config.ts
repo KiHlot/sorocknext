@@ -3,8 +3,6 @@ import { LoginUserIF } from '@/api/jwt/types';
 import { ERRORS_CODES } from '@/helpers/validation/codes/codes.config';
 import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
 
-export const LOGIN_DELAY = 2000;
-
 export const schema: ObjectSchema<LoginUserIF> = object({
     username: string()
         .required(ERRORS_CODES.er200)

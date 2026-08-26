@@ -3,8 +3,6 @@ import { RegistrationFieldsIF } from '@/api/auth/types';
 import { ERRORS_CODES } from '@/helpers/validation/codes/codes.config';
 import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
 
-export const REGISTRATION_DELAY = 2000;
-
 export const schema: ObjectSchema<RegistrationFieldsIF> = object({
     name: string()
         .required(ERRORS_CODES.er200)

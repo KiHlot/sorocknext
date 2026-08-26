@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { authApi } from '@/api/auth/auth';
 import { RegistrationFieldsIF } from '@/api/auth/types';
+import { MAGIC_NUMBERS } from '@/configs/config';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import {
     ERRORS_CODES,
@@ -15,10 +16,7 @@ import {
 import { catchError } from '@/helpers/validation/error/error.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import {
-    REGISTRATION_DELAY,
-    schema,
-} from '@/templates/AuthTPL/RegistrationForm/RegistrationForm.config';
+import { schema } from '@/components/forms/RegistrationForm/RegistrationForm.config';
 
 const RegistrationForm: FC = () => {
     const router = useRouter();
@@ -56,7 +54,10 @@ const RegistrationForm: FC = () => {
 
                 reset();
                 toast.success(SUCCESS_CODES.s104);
-                setTimeout(() => router.push('/auth'), REGISTRATION_DELAY);
+                setTimeout(
+                    () => router.push('/auth'),
+                    MAGIC_NUMBERS.RedirectDelay,
+                );
             });
         } catch (error) {
             const { message } = catchError(error);

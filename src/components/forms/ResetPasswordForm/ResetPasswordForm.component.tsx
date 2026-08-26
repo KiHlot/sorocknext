@@ -22,8 +22,8 @@ import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import {
     INPUT_NAMES,
     schema,
-} from '@/templates/AuthTPL/ResetPassword/ResetPasswordForm/ResetPasswordForm.config';
-import { FieldsNames } from '@/templates/AuthTPL/ResetPassword/ResetPasswordForm/ResetPasswordForm.types';
+} from '@/components/forms/ResetPasswordForm/ResetPasswordForm.config';
+import { FieldsNames } from '@/components/forms/ResetPasswordForm/ResetPasswordForm.types';
 
 const ResetPasswordForm: FC = () => {
     const [resetPassword, { isLoading, data }] =

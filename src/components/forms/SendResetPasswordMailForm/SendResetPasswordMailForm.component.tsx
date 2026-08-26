@@ -8,11 +8,11 @@ import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
-import { schema } from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.config';
+import { schema } from '@/components/forms/SendResetPasswordMailForm/SendResetPasswordMailForm.config';
 import {
     FieldsNames,
     SendResetPasswordMailFormPropsIF,
-} from '@/templates/AuthTPL/ResetPassword/SendResetPasswordMailForm/SendResetPasswordMailForm.types';
+} from '@/components/forms/SendResetPasswordMailForm/SendResetPasswordMailForm.types';
 
 const SendResetPasswordMailForm: FC<SendResetPasswordMailFormPropsIF> = ({
     callback,

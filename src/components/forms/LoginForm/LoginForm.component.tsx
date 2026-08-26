@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { CurrentUserIF } from '@/types/user';
 import { jwtApi } from '@/api/jwt/jwt';
 import { LoginUserIF } from '@/api/jwt/types';
+import { MAGIC_NUMBERS } from '@/configs/config';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import {
     setCookie,
@@ -21,10 +22,7 @@ import {
 import { catchError } from '@/helpers/validation/error/error.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
-import {
-    LOGIN_DELAY,
-    schema,
-} from '@/templates/AuthTPL/LoginForm/LoginForm.config';
+import { schema } from '@/components/forms/LoginForm/LoginForm.config';
 
 const LoginForm: FC = () => {
     const router = useRouter();
@@ -59,7 +57,10 @@ const LoginForm: FC = () => {
                     currentUser,
                 );
                 toast.success(SUCCESS_CODES.s105);
-                setTimeout(() => router.push('/profile'), LOGIN_DELAY);
+                setTimeout(
+                    () => router.push('/profile'),
+                    MAGIC_NUMBERS.RedirectDelay,
+                );
             }
         } catch (error) {
             const { status, message } = catchError(error);
