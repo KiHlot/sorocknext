@@ -36,18 +36,18 @@ export const authApi = createApi({
                 body,
             }),
         }),
-        resetPassword: builder.mutation<ResponseIF, ResetPasswordIF>({
-            query: (data) => ({
-                url: `/reset-password`,
-                method: 'POST',
-                body: data,
-            }),
-        }),
         sendResetPasswordCodeMail: builder.mutation<ResponseIF, string>({
             query: (email) => ({
                 url: `/send-reset-pass-code-mail`,
                 method: 'POST',
                 body: { email },
+            }),
+        }),
+        resetPassword: builder.mutation<ResponseIF, ResetPasswordIF>({
+            query: (data) => ({
+                url: `/reset-password`,
+                method: 'POST',
+                body: data,
             }),
         }),
     }),
