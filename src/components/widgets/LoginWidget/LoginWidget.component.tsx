@@ -2,10 +2,10 @@ import { FC } from 'react';
 import Block from '@/components/blocks/Block/Block.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
 import MainLogo from '@/components/elems/MainLogo/MainLogo.component';
-import styles from '@/components/sections/HomePagePromoSection/PromoSiteInfo/PromoSiteInfo.module.scss';
+import styles from '@/components/widgets/LoginWidget/LoginWidget.module.scss';
 
-const PromoSiteInfo: FC = () => (
-    <Block className={`${styles.promoSiteInfoWrapper} flcol gapBlock`}>
+const LoginWidget: FC = () => (
+    <Block className={`${styles.loginWidgetWrapper} flcol gapBlock`}>
         <div className={`flc ${styles.logoWrapper}`}>
             <MainLogo className={styles.logo} />
         </div>
@@ -17,10 +17,10 @@ const PromoSiteInfo: FC = () => (
             Добро пожаловать на наш развлекательный портал. Вы можете войти в
             свой аккаунт или создать новый
         </div>
-        <MainButton variant="accent" href="/auth" className={styles.button}>
+        <MainButton variant="accent" href="/login" className={styles.button}>
             Войти
         </MainButton>
     </Block>
 );
 
-export default PromoSiteInfo;
+export default LoginWidget;

@@ -1,13 +1,21 @@
 .commonLayoutWrapper {
-    grid-template-columns: 200px 1fr 360px;
+    grid-template-columns: 200px 1fr 280px;
     gap: var(--gapDesktop);
     padding: 90px 0 var(--gapDesktop);
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    position: relative;
 }
 
 .menu {
     position: sticky;
     top: 90px;
     height: fit-content;
+    max-height: 80vh;
+    overflow: auto;
 }
 
 .content {

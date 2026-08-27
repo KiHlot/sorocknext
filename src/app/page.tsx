@@ -1,30 +1,25 @@
 import { ReactElement } from 'react';
+import type { Metadata } from 'next';
 import { PageProps } from '@/types/common';
+import { SeoData } from '@/types/post';
 import { HomePageDataIF } from '@/api/page/types';
 import { fetchApi } from '@/helpers/fetchApi';
-import HomeTPL from '@/templates/HomeTPL/HomeTPL.component';
+import { setSeo } from '@/helpers/setSeo';
+import CommonLayout, {
+    Content,
+    Sidebar,
+} from '@/layouts/CommonLayout/CommonLayout.component';
+import HomePagePromoSection from '@/components/sections/HomePagePromoSection/HomePagePromoSection.component';
+import LoginWidget from '@/components/widgets/LoginWidget/LoginWidget.component';
 
-export async function generateMetadata({ params }: PageProps): any {
+export async function generateMetadata({
+    params,
+}: PageProps): Promise<Metadata> {
     const { slug } = await params;
 
-    // const product = await fetchProduct(params.id);
+    const data = await fetchApi<SeoData>(`/news/metadata/${slug}`);
 
-    const product = {
-        name: 'name',
-        price: 'price',
-        shortDescription: 'shortDescription',
-    };
-
-    return {
-        title: `${product.name} — купить за ${product.price} руб.`,
-        description: `${product.name}. ${product.shortDescription}. Доставка по России.`,
-        alternates: {
-            canonical: `https://sorock.ru/product/${slug}`,
-        },
-        // openGraph: {
-        //     images: product.images,
-        // }
-    };
+    return await setSeo(data);
 }
 
 export default async function HomePage({
@@ -32,5 +27,14 @@ export default async function HomePage({
 }: PageProps): Promise<ReactElement> {
     const homePageInfo = await fetchApi<HomePageDataIF>('/page/home-page-data');
 
-    return <HomeTPL data={homePageInfo} />;
+    return (
+        <CommonLayout>
+            <Content>
+                {homePageInfo && <HomePagePromoSection data={homePageInfo} />}
+            </Content>
+            <Sidebar>
+                <LoginWidget />
+            </Sidebar>
+        </CommonLayout>
+    );
 }
