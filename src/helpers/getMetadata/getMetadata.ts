@@ -1,16 +1,9 @@
 import { Metadata, SeoData } from '@/types/post';
-import ogimg from '@/images/img/ogimg.jpg';
+import { DEFAULT_METADATA } from '@/helpers/getMetadata/getMetadata.config';
 
-export const setSeo = (seoData?: SeoData | null): Metadata => {
+export const getMetadata = (seoData?: SeoData | null): Metadata => {
     const data = {
-        title: 'Sorock - Музыкальный портал',
-        description: 'Новости, события и музыкальная культура на sorock.ru',
-        canonical: 'https://sorock.ru',
-        dateGmt: '',
-        modifiedGmt: '',
-        tags: ['события', 'музыка', 'новости'],
-        author: 'SoRock Админ',
-        innerImg: ogimg.src,
+        ...DEFAULT_METADATA,
         ...seoData,
     };
 

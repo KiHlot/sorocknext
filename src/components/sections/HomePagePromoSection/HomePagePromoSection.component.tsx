@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Section from '@/components/blocks/Section/Section.component';
 import styles from '@/components/sections/HomePagePromoSection/HomePagePromoSection.module.scss';
 import { HomePagePromoSectionPropsIF } from '@/components/sections/HomePagePromoSection/HomePagePromoSection.types';
-import LastNewsPromoWidget from '@/components/widgets/LastNewsPromoWidget/LastNewsPromoWidget.component';
+import LastNewsPromoWidget from '@/components/sections/LastNewsPromoSection/LastNewsPromoSection.component';
 
 const HomePagePromoSection: FC<HomePagePromoSectionPropsIF> = ({ data }) => (
     <Section className={styles.homePagePromoSectionWrapper}>

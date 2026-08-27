@@ -5,7 +5,7 @@ import { ResponseIF } from '@/types/api';
 import { PageProps } from '@/types/common';
 import { PostIF, SeoData } from '@/types/post';
 import { fetchApi } from '@/helpers/fetchApi';
-import { setSeo } from '@/helpers/setSeo';
+import { getMetadata } from '@/helpers/getMetadata/getMetadata';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
 
 /**
@@ -44,7 +44,7 @@ export async function generateMetadata({
 
     const data = await fetchApi<SeoData>(`/news/metadata/${slug}`);
 
-    return await setSeo(data);
+    return getMetadata(data);
 }
 
 export default async function Page({

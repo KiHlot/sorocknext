@@ -1,10 +1,10 @@
 import { cookies } from 'next/dist/server/request/cookies';
 import { ResponseIF } from '@/types/api';
 
-export const fetchApi = async <ResultType>(
+export const fetchApi = async <DataIF = null>(
     route: string,
     cache: RequestCache = 'force-cache',
-): Promise<ResultType | null | undefined> => {
+): Promise<DataIF | null | undefined> => {
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value || null;
 
@@ -28,7 +28,7 @@ export const fetchApi = async <ResultType>(
             },
         );
 
-        const { result, data }: ResponseIF<ResultType> = await response.json();
+        const { result, data }: ResponseIF<DataIF> = await response.json();
 
         return result === 'ok' ? data : null;
     } catch (error) {
