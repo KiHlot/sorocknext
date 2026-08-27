@@ -10,6 +10,10 @@ export interface ConfirmUserIF {
     confirmCode: string;
 }
 
+export interface SendResetPasswordCodeMailIF {
+    email: string;
+}
+
 export interface ResetPasswordIF {
     confirmCode: string;
     email: string;

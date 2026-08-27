@@ -64,7 +64,7 @@ const SendConfirmCodeForm: FC = () => {
                 control={control}
                 isRemoveSpaces
                 isRequired
-                isDisabled={isSuccess}
+                isDisabled={isLoading || isSuccess}
             />
             <MainButton
                 type="submit"

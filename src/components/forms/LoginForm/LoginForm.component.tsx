@@ -57,10 +57,7 @@ const LoginForm: FC = () => {
                     currentUser,
                 );
                 toast.success(SUCCESS_CODES.s105);
-                setTimeout(
-                    () => router.push('/profile'),
-                    MAGIC_NUMBERS.RedirectDelay,
-                );
+                setTimeout(() => router.push('/'), MAGIC_NUMBERS.RedirectDelay);
             }
         } catch (error) {
             const { status, message } = catchError(error);
@@ -84,6 +81,7 @@ const LoginForm: FC = () => {
                 name="username"
                 label="Email"
                 control={control}
+                isDisabled={isLoading}
                 isRemoveSpaces
                 isRequired
             />
@@ -92,6 +90,7 @@ const LoginForm: FC = () => {
                 label="Пароль"
                 control={control}
                 type="password"
+                isDisabled={isLoading}
                 isRequired
                 isPassword
             />

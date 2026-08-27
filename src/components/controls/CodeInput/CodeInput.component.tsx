@@ -12,6 +12,7 @@ import { FieldValues, useController } from 'react-hook-form';
 import styles from '@/components/controls/CodeInput/CodeInput.module.scss';
 import { CodeInputPropsIF } from '@/components/controls/CodeInput/CodeInput.types';
 import FieldError from '@/components/elems/FieldError/FieldError.component';
+import FieldLabel from '@/components/elems/FieldLabel/FieldLabel.component';
 
 const CodeInput = <T extends FieldValues>({
     names,
@@ -19,6 +20,8 @@ const CodeInput = <T extends FieldValues>({
     className = '',
     name,
     control,
+    label,
+    isRequired,
 }: CodeInputPropsIF<T>): ReactElement => {
     const [code, setCode] = useState<string[]>(Array.from(names, () => ''));
     const [inputReferencesArray] = useState<
@@ -97,6 +100,11 @@ const CodeInput = <T extends FieldValues>({
                 name={name}
                 value={code.join('') || ''}
                 onChange={onChange}
+            />
+            <FieldLabel
+                label={label}
+                isRequired={isRequired}
+                isError={!!error?.message}
             />
             <div
                 className={`flc ${styles.inputsList} ${error?.message ? styles.error : ''}`}

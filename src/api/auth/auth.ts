@@ -5,6 +5,7 @@ import {
     RegistrationFieldsIF,
     ResetPasswordIF,
     SendConfirmCodeMailIF,
+    SendResetPasswordCodeMailIF,
 } from '@/api/auth/types';
 import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
 
@@ -36,11 +37,14 @@ export const authApi = createApi({
                 body,
             }),
         }),
-        sendResetPasswordCodeMail: builder.mutation<ResponseIF, string>({
-            query: (email) => ({
+        sendResetPasswordCodeMail: builder.mutation<
+            ResponseIF,
+            SendResetPasswordCodeMailIF
+        >({
+            query: (body) => ({
                 url: `/send-reset-pass-code-mail`,
                 method: 'POST',
-                body: { email },
+                body,
             }),
         }),
         resetPassword: builder.mutation<ResponseIF, ResetPasswordIF>({

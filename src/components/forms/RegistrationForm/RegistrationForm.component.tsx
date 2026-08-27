@@ -56,7 +56,7 @@ const RegistrationForm: FC = () => {
                 reset();
                 toast.success(SUCCESS_CODES.s104);
                 setTimeout(
-                    () => router.push('/auth'),
+                    () => router.push('/login'),
                     MAGIC_NUMBERS.RedirectDelay,
                 );
             });
@@ -74,6 +74,7 @@ const RegistrationForm: FC = () => {
                 control={control}
                 isTextsOnly
                 maxLength={VALIDATOR_FIELD.name.maxLength}
+                isDisabled={isLoading}
                 isRemoveSpaces
             />
             <Input
@@ -82,12 +83,14 @@ const RegistrationForm: FC = () => {
                 control={control}
                 isTextsOnly
                 maxLength={VALIDATOR_FIELD.surname.maxLength}
+                isDisabled={isLoading}
                 isRemoveSpaces
             />
             <Input
                 name="loginEmail"
                 label="Email"
                 control={control}
+                isDisabled={isLoading}
                 isRemoveSpaces
                 isRequired
             />
@@ -96,6 +99,7 @@ const RegistrationForm: FC = () => {
                 label="Пароль"
                 control={control}
                 type="password"
+                isDisabled={isLoading}
                 isRequired
                 isPassword
             />
@@ -104,6 +108,7 @@ const RegistrationForm: FC = () => {
                 label="Подтверждение пароля"
                 control={control}
                 type="password"
+                isDisabled={isLoading}
                 isRequired
                 isPassword
             />

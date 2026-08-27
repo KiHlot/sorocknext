@@ -1,10 +1,10 @@
-import * as yup from 'yup';
-import { VALIDATOR_FIELD } from '@/helpers/validation/validation.helpers';
-import { ERRORS } from '@/helpers/validation/validation.config';
+import { object, ObjectSchema, string } from 'yup';
+import { SendResetPasswordCodeMailIF } from '@/api/auth/types';
+import { ERRORS_CODES } from '@/helpers/validation/codes/codes.config';
+import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
 
-export const schema = yup.object().shape({
-    email: yup
-        .string()
+export const schema: ObjectSchema<SendResetPasswordCodeMailIF> = object({
+    email: string()
         .required(ERRORS_CODES.er200)
         .email(ERRORS_CODES.er203)
         .min(

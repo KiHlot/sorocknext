@@ -2,76 +2,75 @@
 
 import { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { CurrentUserIF } from '@/types/user';
 import { authApi } from '@/api/auth/auth';
-import { ResetPasswordIF } from '@/api/auth/types';
+import { MAGIC_NUMBERS } from '@/configs/config';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
-import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import {
-    getSessionStorageItem,
-    setSessionStorageItem,
-} from '@/helpers/storage/storage.helpers';
+    ERRORS_CODES,
+    SUCCESS_CODES,
+} from '@/helpers/validation/codes/codes.config';
+import { catchError } from '@/helpers/validation/error/error.helpers';
 import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
+import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import {
     INPUT_NAMES,
     schema,
-} from '@/components/forms/ResetPasswordForm/ResetPasswordForm.config';
-import { FieldsNames } from '@/components/forms/ResetPasswordForm/ResetPasswordForm.types';
-import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
+} from '@/components/widgets/ResetPasswordWidget/ResetPasswordForm/ResetPasswordForm.config';
+import {
+    ResetPasswordFormIF,
+    ResetPasswordFormPropsIF,
+} from '@/components/widgets/ResetPasswordWidget/ResetPasswordForm/ResetPasswordForm.types';
 
-const ResetPasswordForm: FC = () => {
-    const [resetPassword, { isLoading, data }] =
-        authApi.useResetPasswordMutation();
+const ResetPasswordForm: FC<ResetPasswordFormPropsIF> = ({ email }) => {
+    const router = useRouter();
+
+    const [resetPassword, { isLoading }] = authApi.useResetPasswordMutation();
 
     const {
         handleSubmit,
         control,
         reset,
         setError,
-        setValue,
-        clearErrors,
-        watch,
-    } = useForm<ResetPasswordIF>({
+        formState: { isValid },
+    } = useForm<ResetPasswordFormIF>({
         mode: 'onSubmit',
         resolver: yupResolver(schema),
     });
 
-    const confirmCode = watch('confirmCode');
+    const onSubmit = async (values: ResetPasswordFormIF): Promise<void> => {
+        try {
+            const result = await resetPassword({ ...values, email }).unwrap();
 
-    const onSubmit = async (values: ResetPasswordIF): Promise<void> => {
-        await resetPassword(values)
-            .unwrap()
-            .then((result) => {
-                parseResponse<FieldsNames>(
-                    result,
-                    () => {
-                        reset();
-                        const storageData =
-                            getSessionStorageItem<CurrentUserIF>(
-                                STORAGE_KEYS.CurrentUser,
-                            );
-
-                        if (storageData) {
-                            setSessionStorageItem<CurrentUserIF>(
-                                STORAGE_KEYS.CurrentUser,
-                                {
-                                    ...storageData,
-                                    isActivated: true,
-                                },
-                            );
+            parseResponse(result, ({ errors }) => {
+                if (errors?.length) {
+                    for (const { code, fieldName } of errors) {
+                        if (fieldName && code) {
+                            setError(fieldName as keyof ResetPasswordFormIF, {
+                                type: 'manual',
+                                message: ERRORS_CODES[code],
+                            });
                         }
+                    }
 
-                        toast.success(SUCCESS_NOTIFY.s101);
-                        redirect('/auth');
-                    },
-                    setError,
+                    return;
+                }
+
+                reset();
+                toast.success(SUCCESS_CODES.s101);
+                setTimeout(
+                    () => router.push('/login'),
+                    MAGIC_NUMBERS.RedirectDelay,
                 );
             });
+        } catch (error) {
+            const { message } = catchError(error);
+            toast.error(message);
+        }
     };
 
     return (
@@ -92,12 +91,13 @@ const ResetPasswordForm: FC = () => {
                 дважды.
             </InfoBlock>
             <CodeInput
+                label="Введите код полученный по email"
                 names={INPUT_NAMES}
                 name="confirmCode"
                 control={control}
-                isDisabled={isLoading || !!data}
+                isDisabled={isLoading}
+                isRequired
             />
-            <Input name="email" label="Email" control={control} isRequired />
             <Input
                 name="password"
                 label="Новый пароль"
@@ -105,24 +105,18 @@ const ResetPasswordForm: FC = () => {
                 type="password"
                 isRequired
                 isPassword
+                isDisabled={isLoading}
             />
             <Input
                 name="passwordConfirm"
                 label="Подтверждение пароля"
                 control={control}
                 type="password"
+                isDisabled={isLoading}
                 isRequired
                 isPassword
             />
-            <MainButton
-                type="submit"
-                isLoading={isLoading}
-                disabled={
-                    isLoading ||
-                    confirmCode?.length !== INPUT_NAMES.length ||
-                    !!data
-                }
-            >
+            <MainButton type="submit" isLoading={isLoading} disabled={!isValid}>
                 Изменить
             </MainButton>
         </form>
