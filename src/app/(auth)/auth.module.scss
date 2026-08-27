@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as *;
+
 .authLayout {
     width: 100%;
     height: auto;
@@ -6,6 +8,14 @@
     grid-auto-columns: 1fr;
     position: relative;
     grid-template-columns: 10vw 600px 1fr;
+    
+    @include media(xl) {
+        grid-template-columns: 5vw 600px 1fr;
+    }
+    
+    @include media(md) {
+        grid-template-columns: 0 1fr 0;
+    }
 }
 
 .leftSide {
@@ -14,6 +24,10 @@
 
 .content {
     padding: var(--gapDesktop);
+    
+    @include media(xl) {
+        padding: var(--gapBlock);
+    }
 }
 
 .backButton {

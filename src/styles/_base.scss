@@ -282,10 +282,18 @@ header {
 
 .gapLayout {
     gap: 30px 0;
+    
+    @include media(md) {
+        gap: 20px 0;
+    }
 }
 
 .gapBlock {
     gap: 20px 0;
+    
+    @include media(md) {
+        gap: 16px 0;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
