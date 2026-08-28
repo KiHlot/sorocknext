@@ -468,7 +468,7 @@ const RegistrationForm: FC = () => {
 export default RegistrationForm;
 ```
 
-_Пример использования useAppDispatch() и useAppSelector():_
+_Пример использования `useAppDispatch()` и `useAppSelector()`:_
 
 ```tsx
 import { useAppDispatch, useAppSelector } from '@/store/store';
