@@ -468,31 +468,7 @@ const RegistrationForm: FC = () => {
 export default RegistrationForm;
 ```
 
-_Пример использования useAppDispatch():_
-
-```tsx
-'use client';
-
-import { useAppDispatch, useAppSelector } from '@/store/store';
-import { setIsLeftMenuOpened } from '@/store/slices/globalDataSlice';
-
-const MenuButton = () => {
-    const dispatch = useAppDispatch();
-    const isOpen = useAppSelector((state) => state.globalData.isLeftMenuOpened);
-
-    const handleClick = () => {
-        dispatch(setIsLeftMenuOpened(!isOpen));
-    };
-
-    return (
-        <button onClick={handleClick}>
-            {isOpen ? 'Закрыть меню' : 'Открыть меню'}
-        </button>
-    );
-};
-```
-
-_Пример использования useAppDispatch():_
+_Пример использования useAppDispatch() и useAppSelector():_
 
 ```tsx
 import { useAppDispatch, useAppSelector } from '@/store/store';
