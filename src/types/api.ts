@@ -1,4 +1,4 @@
-import { ValueOf } from '@/types/common';
+import { ValueOfT } from '@/types/common';
 
 export const RESPONSE_RESULT = {
     Ok: 'ok',
@@ -15,7 +15,7 @@ export type ResponseErrorIF = {
 };
 
 export interface ResponseIF<DataIF = null> {
-    result: ValueOf<typeof RESPONSE_RESULT>;
+    result: ValueOfT<typeof RESPONSE_RESULT>;
     data: DataIF | null;
     errors?: ResponseErrorIF[];
     redirectUrl?: string;

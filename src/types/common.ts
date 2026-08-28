@@ -4,7 +4,7 @@ export type HTMLString = string;
 export type NormalizeImageTypeT = 'user80' | 'user250' | 'user500';
 export type CallBackTypeT = 'logout';
 
-export type ValueOf<T> = T[keyof T];
+export type ValueOfT<T> = T[keyof T];
 
 export type CookieOptionsT = {
     expires?: Date | string | number;

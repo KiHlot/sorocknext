@@ -5,7 +5,7 @@ export interface PostArchiveIF {
     defaultData: LinkIF[];
 }
 
-export interface SeoData {
+export interface SeoDataIF {
     title: string;
     description: string;
     canonical: string;

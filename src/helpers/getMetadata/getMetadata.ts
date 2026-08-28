@@ -1,7 +1,7 @@
-import { Metadata, SeoData } from '@/types/post';
+import { Metadata, SeoDataIF } from '@/types/post';
 import { DEFAULT_METADATA } from '@/helpers/getMetadata/getMetadata.config';
 
-export const getMetadata = (seoData?: SeoData | null): Metadata => {
+export const getMetadata = (seoData?: SeoDataIF | null): Metadata => {
     const data = {
         ...DEFAULT_METADATA,
         ...seoData,

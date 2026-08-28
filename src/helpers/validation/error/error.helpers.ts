@@ -1,4 +1,4 @@
-import { ValueOf } from '@/types/common';
+import { ValueOfT } from '@/types/common';
 import {
     SERVER_CODES,
     SERVER_ERRORS,
@@ -37,7 +37,7 @@ export const catchError = (error: unknown): CatchErrorIF => {
     }
 
     return {
-        status: String(status || SERVER_CODES.C500) as ValueOf<
+        status: String(status || SERVER_CODES.C500) as ValueOfT<
             typeof SERVER_CODES
         >,
         message: SERVER_ERRORS[status || SERVER_CODES.C500],

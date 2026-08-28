@@ -1,409 +1,395 @@
-Структура папок тома Локальный диск
-Серийный номер тома: 0BE6-1897
-D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 +---api
 |   +---admin
 |   |       admin.ts
 |   |       types.ts
-|   |       
+|   |
 |   +---auth
 |   |       auth.ts
 |   |       types.ts
-|   |       
-|   +---calendar
-|   |       endpoints.ts
-|   |       types.ts
-|   |       urls.ts
-|   |       
+|   |
 |   +---jwt
 |   |       jwt.ts
 |   |       types.ts
-|   |       
-|   +---music
-|   |       endpoints.ts
-|   |       types.ts
-|   |       urls.ts
-|   |       
-|   +---news
-|   |       endpoints.ts
-|   |       types.ts
-|   |       urls.ts
-|   |       
+|   |
 |   +---page
 |   |       page.ts
 |   |       types.ts
-|   |       
-|   +---post
-|   |       endpoints.ts
-|   |       types.ts
-|   |       
-|   +---publications
-|   |       endpoints.ts
-|   |       types.ts
-|   |       urls.ts
-|   |       
-|   +---shorts
-|   |       endpoints.ts
-|   |       types.ts
-|   |       urls.ts
-|   |       
+|   |
 |   +---site
 |   |       site.ts
 |   |       types.ts
-|   |       
-|   +---sport
-|   |       endpoints.ts
-|   |       types.ts
-|   |       urls.ts
-|   |       
+|   |
 |   +---taxonomy
 |   |       taxonomy.ts
 |   |       types.ts
-|   |       
-|   +---users
-|   |       users.ts
-|   |       
-|   \---video
-|           endpoints.ts
-|           types.ts
-|           urls.ts
-|           
+|   |
+|   \---users
+|           users.ts
+|
 +---app
 |   |   layout.tsx
 |   |   not-found.tsx
 |   |   page.tsx
 |   |   StoreProvider.tsx
 |   |   types.ts
-|   |   
-|   +---about
-|   |       page.tsx
-|   |       
-|   +---admin
-|   |   |   page.tsx
-|   |   |   
-|   |   +---cron
-|   |   |       page.tsx
-|   |   |       
-|   |   \---users
-|   |           page.tsx
-|   |           
-|   +---auth
-|   |   |   page.tsx
-|   |   |   
+|   |
+|   +---(auth)
+|   |   |   auth.module.scss
+|   |   |   layout.tsx
+|   |   |
 |   |   +---confirm-account
 |   |   |       page.tsx
-|   |   |       
+|   |   |       page.types.ts
+|   |   |
+|   |   +---login
+|   |   |       page.tsx
+|   |   |
 |   |   +---registration
 |   |   |       page.tsx
-|   |   |       
+|   |   |
 |   |   \---reset-password
 |   |           page.tsx
-|   |           
-|   +---calendar
+|   |
+|   +---admin
 |   |   |   page.tsx
-|   |   |   
-|   |   \---[slug]
+|   |   |
+|   |   +---cron
+|   |   |       page.tsx
+|   |   |
+|   |   \---users
 |   |           page.tsx
-|   |           
-|   +---music
-|   |   |   page.tsx
-|   |   |   
-|   |   \---[slug]
-|   |           page.tsx
-|   |           
-|   +---news
-|   |   |   page.tsx
-|   |   |   
-|   |   \---[slug]
-|   |           page.tsx
-|   |           
-|   +---profile
-|   |       page.tsx
-|   |       
-|   +---publications
-|   |   |   page.tsx
-|   |   |   
-|   |   \---[slug]
-|   |           page.tsx
-|   |           
-|   +---search
-|   |       page.tsx
-|   |       
-|   +---shorts
-|   |   |   page.tsx
-|   |   |   
-|   |   \---[slug]
-|   |           page.tsx
-|   |           
-|   +---sport
-|   |   |   page.tsx
-|   |   |   
-|   |   \---[slug]
-|   |           page.tsx
-|   |           
-|   \---video
+|   |
+|   \---news
 |       |   page.tsx
-|       |   
+|       |
 |       \---[slug]
 |               page.tsx
-|               
+|
 +---components
 |   +---blocks
 |   |   +---AdminPromoBlock
 |   |   |       AdminPromoBlock.component.tsx
 |   |   |       AdminPromoBlock.module.scss
 |   |   |       AdminPromoBlock.types.ts
-|   |   |       
+|   |   |
 |   |   +---Block
 |   |   |       Block.component.tsx
 |   |   |       Block.module.scss
 |   |   |       Block.types.ts
-|   |   |       
+|   |   |
+|   |   +---ButtonsGroupAuth
+|   |   |       ButtonsGroupAuth.component.tsx
+|   |   |       ButtonsGroupAuth.config.tsx
+|   |   |
 |   |   +---Section
 |   |   |       Section.component.tsx
 |   |   |       Section.module.scss
 |   |   |       Section.types.ts
-|   |   |       
+|   |   |
 |   |   +---Table
 |   |   |       Table.component.tsx
 |   |   |       Table.module.scss
 |   |   |       Table.types.ts
-|   |   |       
+|   |   |
 |   |   \---VerticalMenu
 |   |       |   VerticalMenu.component.tsx
 |   |       |   VerticalMenu.module.scss
 |   |       |   VerticalMenu.types.ts
-|   |       |   
+|   |       |
 |   |       \---VerticalMenuItem
 |   |               VerticalMenu.component.tsx
 |   |               VerticalMenu.module.scss
 |   |               VerticalMenu.types.ts
-|   |               
+|   |
 |   +---controls
 |   |   +---CheckBox
 |   |   |   |   CheckBox.component.tsx
 |   |   |   |   CheckBox.types.ts
-|   |   |   |   
+|   |   |   |
 |   |   |   \---CheckBoxBase
 |   |   |           CheckBoxBase.component.tsx
 |   |   |           CheckBoxBase.module.scss
 |   |   |           CheckBoxBase.types.ts
-|   |   |           
+|   |   |
 |   |   +---CodeInput
 |   |   |       CodeInput.component.tsx
 |   |   |       CodeInput.module.scss
 |   |   |       CodeInput.types.ts
-|   |   |       
+|   |   |
 |   |   +---Input
 |   |   |       Input.component.tsx
 |   |   |       Input.module.scss
 |   |   |       Input.types.ts
-|   |   |       
+|   |   |
 |   |   +---InputFile
 |   |   |       InputFile.component.tsx
 |   |   |       InputFile.module.scss
 |   |   |       InputFile.types.ts
-|   |   |       
+|   |   |
 |   |   +---MainButton
 |   |   |       MainButton.component.tsx
 |   |   |       MainButton.module.scss
 |   |   |       MainButton.types.ts
-|   |   |       
+|   |   |
 |   |   \---TextArea
 |   |           TextArea.component.tsx
 |   |           TextArea.module.scss
 |   |           TextArea.types.ts
-|   |           
+|   |
 |   +---elems
 |   |   +---Author
 |   |   |       Author.component.tsx
 |   |   |       Author.module.scss
 |   |   |       Author.types.ts
-|   |   |       
+|   |   |
 |   |   +---Country
 |   |   |       Country.component.tsx
 |   |   |       Country.module.scss
 |   |   |       Country.types.ts
-|   |   |       
+|   |   |
 |   |   +---FieldError
 |   |   |       FieldError.component.tsx
 |   |   |       FieldError.module.scss
 |   |   |       FieldError.types.ts
-|   |   |       
+|   |   |
 |   |   +---FieldLabel
 |   |   |       FieldLabel.component.tsx
 |   |   |       FieldLabel.module.scss
 |   |   |       FieldLabel.types.ts
-|   |   |       
+|   |   |
 |   |   +---Img
 |   |   |       Img.component.tsx
 |   |   |       Img.module.scss
 |   |   |       Img.types.ts
-|   |   |       
+|   |   |
 |   |   +---Loading
 |   |   |       Loading.component.tsx
 |   |   |       Loading.module.scss
 |   |   |       Loading.types.ts
-|   |   |       
+|   |   |
 |   |   +---MainLogo
 |   |   |       MainLogo.component.tsx
 |   |   |       MainLogo.module.scss
 |   |   |       MainLogo.types.ts
-|   |   |       
+|   |   |
 |   |   +---NoData
 |   |   |       NoData.component.tsx
 |   |   |       NoData.module.scss
 |   |   |       NoData.types.ts
-|   |   |       
+|   |   |
 |   |   \---SiteEmail
 |   |           SiteEmail.component.tsx
 |   |           SiteEmail.module.scss
 |   |           SiteEmail.types.ts
-|   |           
+|   |
+|   +---forms
+|   |   +---LoginForm
+|   |   |       LoginForm.component.tsx
+|   |   |       LoginForm.config.ts
+|   |   |
+|   |   \---RegistrationForm
+|   |           RegistrationForm.component.tsx
+|   |           RegistrationForm.config.ts
+|   |
 |   +---interactive
 |   |   +---Breadcrumbs
 |   |   |       Breadcrumbs.component.tsx
 |   |   |       Breadcrumbs.config.ts
 |   |   |       Breadcrumbs.module.scss
 |   |   |       Breadcrumbs.types.ts
-|   |   |       
+|   |   |
 |   |   +---ButtonsGroup
 |   |   |       ButtonsGroup.component.tsx
 |   |   |       ButtonsGroup.module.scss
 |   |   |       ButtonsGroup.types.ts
-|   |   |       
+|   |   |
 |   |   +---DialogModal
 |   |   |       DialogModal.component.tsx
 |   |   |       DialogModal.module.scss
 |   |   |       DialogModal.types.ts
-|   |   |       
+|   |   |
 |   |   +---InfoBlock
 |   |   |       InfoBlock.component.tsx
 |   |   |       InfoBlock.module.scss
 |   |   |       InfoBlock.types.ts
-|   |   |       
+|   |   |
 |   |   +---Modal
 |   |   |       Modal.component.tsx
 |   |   |       Modal.module.scss
 |   |   |       Modal.types.ts
-|   |   |       
+|   |   |
 |   |   +---Pagination
 |   |   |       Pagination.component.tsx
 |   |   |       Pagination.config.ts
 |   |   |       Pagination.module.scss
 |   |   |       Pagination.types.ts
-|   |   |       
+|   |   |
 |   |   \---Tabs
 |   |           Tabs.component.tsx
 |   |           Tabs.module.scss
 |   |           Tabs.types.ts
-|   |           
+|   |
 |   +---menus
 |   |   +---AdminMenu
 |   |   |       AdminMenu.component.tsx
 |   |   |       AdminMenu.config.tsx
-|   |   |       
+|   |   |
 |   |   +---LeftMenu
 |   |   |       LeftMenu.component.tsx
 |   |   |       LeftMenu.config.tsx
-|   |   |       
+|   |   |
 |   |   \---TopMenu
 |   |       |   TopMenu.component.tsx
 |   |       |   TopMenu.module.scss
-|   |       |   
+|   |       |
 |   |       +---SearchForm
 |   |       |       SearchForm.component.tsx
 |   |       |       SearchForm.module.scss
 |   |       |       SearchForm.types.ts
-|   |       |       
+|   |       |
 |   |       +---TrendsSlider
 |   |       |       TrendsSlider.component.tsx
 |   |       |       TrendsSlider.module.scss
 |   |       |       TrendsSlider.types.ts
-|   |       |       
+|   |       |
 |   |       \---UserMenu
 |   |               UserMenu.component.tsx
 |   |               UserMenu.config.tsx
+|   |               UserMenu.helpers.ts
 |   |               UserMenu.module.scss
-|   |               
+|   |
 |   +---sections
 |   |   +---Footer
 |   |   |   |   Footer.component.tsx
 |   |   |   |   Footer.module.scss
 |   |   |   |   Footer.types.ts
-|   |   |   |   
+|   |   |   |
 |   |   |   \---TopFooter
 |   |   |       |   TopFooter.component.tsx
 |   |   |       |   TopFooter.config.ts
 |   |   |       |   TopFooter.module.scss
 |   |   |       |   TopFooter.types.ts
-|   |   |       |   
+|   |   |       |
 |   |   |       +---ContactForm
 |   |   |       |       ContactForm.component.tsx
 |   |   |       |       ContactForm.config.ts
 |   |   |       |       ContactForm.types.ts
-|   |   |       |       
+|   |   |       |
 |   |   |       \---FooterMenuColumn
 |   |   |               FooterMenuColumn.component.tsx
 |   |   |               FooterMenuColumn.module.scss
 |   |   |               FooterMenuColumn.types.ts
-|   |   |               
+|   |   |
 |   |   +---HomePagePromoSection
 |   |   |   |   HomePagePromoSection.component.tsx
 |   |   |   |   HomePagePromoSection.module.scss
 |   |   |   |   HomePagePromoSection.types.ts
-|   |   |   |   
+|   |   |   |
 |   |   |   \---PromoSiteInfo
 |   |   |           PromoSiteInfo.component.tsx
 |   |   |           PromoSiteInfo.module.scss
-|   |   |           PromoSiteInfo.types.ts
-|   |   |           
+|   |   |
+|   |   +---LastNewsPromoSection
+|   |   |       LastNewsPromoSection.component.tsx
+|   |   |       LastNewsPromoSection.module.scss
+|   |   |       LastNewsPromoSection.types.ts
+|   |   |
 |   |   +---PostContentSection
 |   |   |       PostContentSection.component.tsx
 |   |   |       PostContentSection.module.scss
 |   |   |       PostContentSection.types.ts
-|   |   |       
+|   |   |
 |   |   \---SinglePostPromoSection
 |   |           SinglePostPromoSection.component.tsx
 |   |           SinglePostPromoSection.module.scss
 |   |           SinglePostPromoSection.types.ts
-|   |           
+|   |
 |   \---widgets
-|       +---LastNewsPromoWidget
-|       |       LastNewsPromoWidget.component.tsx
-|       |       LastNewsPromoWidget.module.scss
-|       |       LastNewsPromoWidget.types.ts
-|       |       
-|       \---PopularTags
-|           |   PopularTags.component.tsx
-|           |   PopularTags.module.scss
-|           |   
-|           \---PopularTagModal
-|               |   PopularTagModal.component.tsx
-|               |   PopularTagModal.module.scss
-|               |   PopularTagModal.types.ts
-|               |   
-|               \---PopularTagThumb
-|                       PopularTagThumb.component.tsx
-|                       PopularTagThumb.module.scss
-|                       PopularTagThumb.type.ts
-|                       
+|       +---ConfirmAccountWidget
+|       |   |   ConfirmAccountWidget.component.tsx
+|       |   |   ConfirmAccountWidget.config.ts
+|       |   |   ConfirmAccountWidget.types.ts
+|       |   |
+|       |   \---SendConfirmCodeForm
+|       |           SendConfirmCodeForm.component.tsx
+|       |           SendConfirmCodeForm.config.ts
+|       |           SendConfirmCodeForm.module.scss
+|       |
+|       +---LoginWidget
+|       |       LoginWidget.component.tsx
+|       |       LoginWidget.module.scss
+|       |
+|       +---PopularTags
+|       |   |   PopularTags.component.tsx
+|       |   |   PopularTags.module.scss
+|       |   |
+|       |   \---PopularTagModal
+|       |       |   PopularTagModal.component.tsx
+|       |       |   PopularTagModal.module.scss
+|       |       |   PopularTagModal.types.ts
+|       |       |
+|       |       \---PopularTagThumb
+|       |               PopularTagThumb.component.tsx
+|       |               PopularTagThumb.module.scss
+|       |               PopularTagThumb.type.ts
+|       |
+|       \---ResetPasswordWidget
+|           |   ResetPasswordWidget.component.tsx
+|           |   ResetPasswordWidget.config.ts
+|           |   ResetPasswordWidget.types.ts
+|           |
+|           +---ResetPasswordForm
+|           |       ResetPasswordForm.component.tsx
+|           |       ResetPasswordForm.config.ts
+|           |       ResetPasswordForm.types.ts
+|           |
+|           \---SendResetPasswordMailForm
+|                   SendResetPasswordMailForm.component.tsx
+|                   SendResetPasswordMailForm.config.ts
+|                   SendResetPasswordMailForm.types.ts
+|
 +---configs
-|       codes.ts
 |       config.ts
-|       
+|
 +---declarations
-|       svgr.d.ts
-|       
+|       svg.d.ts
+|
 +---helpers
-|       seo.ts
-|       utils.ts
-|       validator.ts
-|       
+|   |   fetchApi.ts
+|   |   utils.ts
+|   |
+|   +---fetchRestApi
+|   |       fetchRestApi.helpers.ts
+|   |       fetchRestApi.ts
+|   |       fetchRestApi.types.ts
+|   |
+|   +---getMetadata
+|   |       getMetadata.config.ts
+|   |       getMetadata.ts
+|   |
+|   +---logout
+|   |       logout.config.ts
+|   |       logout.ts
+|   |
+|   +---storage
+|   |       storage.config.ts
+|   |       storage.helpers.ts
+|   |       storage.types.ts
+|   |
+|   \---validation
+|       |   validation.config.ts
+|       |   validation.types.ts
+|       |
+|       +---codes
+|       |       codes.config.ts
+|       |
+|       \---error
+|               error.helpers.ts
+|               error.types.ts
+|
 +---hooks
-|       useLogout.ts
 |       useOutsideClick.ts
-|       
+|
 +---images
 |   +---flags
 |   |       ae.svg
@@ -518,188 +504,141 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |       vn.svg
 |   |       za.svg
 |   |       _getFlagIcon.tsx
-|   |       
+|   |
 |   +---img
 |   |       empty_user_250_250.png
 |   |       empty_user_500_500.png
 |   |       empty_user_80_80.png
 |   |       ogimg.jpg
 |   |       thumb_bg.jpg
-|   |       
+|   |
 |   \---svg
 |           svg_main_logo.svg
-|           
+|
 +---layouts
 |   +---AdminLayout
 |   |       AdminLayout.component.tsx
 |   |       AdminLayout.module.scss
 |   |       AdminLayout.types.ts
-|   |       
+|   |
 |   +---AuthLayout
 |   |       AuthLayout.component.tsx
 |   |       AuthLayout.module.scss
 |   |       AuthLayout.types.ts
-|   |       
+|   |
 |   +---CommonLayout
 |   |       CommonLayout.component.tsx
 |   |       CommonLayout.module.scss
 |   |       CommonLayout.types.ts
-|   |       
+|   |
 |   +---Layout
 |   |       Layout.component.tsx
-|   |       Layout.module.scss
 |   |       Layout.types.ts
-|   |       
+|   |
 |   \---MainWrapper
 |           MainWrapper.component.tsx
 |           MainWrapper.module.scss
 |           MainWrapper.types.ts
-|           
+|
 +---store
-|   |   functions.ts
-|   |   hooks.ts
 |   |   store.ts
-|   |   types.ts
-|   |   
+|   |
 |   \---slices
 |           globalDataSlice.ts
-|           
+|
 +---styles
 |   |   global.scss
 |   |   _base.scss
 |   |   _mixins.scss
 |   |   _reset.scss
 |   |   _variables.scss
-|   |   
+|   |
 |   \---components
 |           index.scss
 |           _spinner.scss
-|           
+|
 +---templates
-|   +---AuthTPL
-|   |   |   AuthTPL.component.tsx
-|   |   |   AuthTPL.config.tsx
-|   |   |   AuthTPL.module.scss
-|   |   |   
-|   |   +---LoginForm
-|   |   |       LoginForm.component.tsx
-|   |   |       LoginForm.config.ts
-|   |   |       
-|   |   +---RegistrationForm
-|   |   |       RegistrationForm.component.tsx
-|   |   |       RegistrationForm.config.ts
-|   |   |       RegistrationForm.types.ts
-|   |   |       
-|   |   \---ResetPassword
-|   |       |   ResetPassword.component.tsx
-|   |       |   ResetPassword.config.tsx
-|   |       |   ResetPassword.types.ts
-|   |       |   
-|   |       +---ResetPasswordForm
-|   |       |       ResetPasswordForm.component.tsx
-|   |       |       ResetPasswordForm.config.ts
-|   |       |       ResetPasswordForm.types.ts
-|   |       |       
-|   |       \---SendResetPasswordMailForm
-|   |               SendResetPasswordMailForm.component.tsx
-|   |               SendResetPasswordMailForm.config.ts
-|   |               SendResetPasswordMailForm.types.ts
-|   |               
 |   +---CalendarArchiveTPL
 |   |       CalendarArchiveTPL.component.tsx
 |   |       CalendarArchiveTPL.types.ts
-|   |       
-|   +---ConfirmAccountTPL
-|   |   |   ConfirmAccountTPL.component.tsx
-|   |   |   ConfirmAccountTPL.module.scss
-|   |   |   
-|   |   \---SendConfirmCodeForm
-|   |           SendConfirmCodeForm.component.tsx
-|   |           SendConfirmCodeForm.config.ts
-|   |           SendConfirmCodeForm.module.scss
-|   |           SendConfirmCodeForm.types.ts
-|   |           
+|   |
 |   +---CronTPL
 |   |   |   CronTPL.component.tsx
 |   |   |   CronTPL.types.ts
-|   |   |   
+|   |   |
 |   |   \---CronTable
 |   |           CronTable.component.tsx
 |   |           CronTable.config.ts
 |   |           CronTable.module.scss
 |   |           CronTable.types.ts
-|   |           
-|   +---HomeTPL
-|   |       HomeTPL.component.tsx
-|   |       HomeTPL.module.scss
-|   |       HomeTPL.types.ts
-|   |       
+|   |
 |   +---MusicArchiveTPL
 |   |       MusicArchiveTPL.component.tsx
 |   |       MusicArchiveTPL.types.ts
-|   |       
+|   |
 |   +---NewsArchiveTPL
 |   |       NewsArchiveTPL.component.tsx
 |   |       NewsArchiveTPL.types.ts
-|   |       
+|   |
 |   +---PostTPL
 |   |       PostTPL.component.tsx
 |   |       PostTPL.types.ts
-|   |       
+|   |
 |   +---ProfileTPL
 |   |       ProfileTPL.component.tsx
-|   |       
+|   |
 |   +---PublicationsArchiveTPL
 |   |       PublicationsArchiveTPL.component.tsx
 |   |       PublicationsArchiveTPL.types.ts
-|   |       
+|   |
 |   +---SearchTPL
 |   |       SearchTPL.component.tsx
 |   |       SearchTPL.module.scss
-|   |       
+|   |
 |   +---ShortsArchiveTPL
 |   |       ShortsArchiveTPL.component.tsx
 |   |       ShortsArchiveTPL.types.ts
-|   |       
+|   |
 |   +---SportArchiveTPL
 |   |       SportArchiveTPL.component.tsx
 |   |       SportArchiveTPL.types.ts
-|   |       
+|   |
 |   +---UsersAdminTPL
 |   |   |   UsersAdminTPL.component.tsx
 |   |   |   UsersAdminTPL.types.ts
-|   |   |   
+|   |   |
 |   |   \---UsersList
 |   |       |   UsersList.component.tsx
 |   |       |   UsersList.types.ts
-|   |       |   
+|   |       |
 |   |       +---DeleteSuccessModal
 |   |       |       DeleteSuccessModal.component.tsx
 |   |       |       DeleteSuccessModal.config.ts
 |   |       |       DeleteSuccessModal.types.ts
-|   |       |       
+|   |       |
 |   |       \---UsersTable
 |   |           |   UsersTable.component.tsx
 |   |           |   UsersTable.config.ts
 |   |           |   UsersTable.module.scss
 |   |           |   UsersTable.types.ts
-|   |           |   
+|   |           |
 |   |           \---UserDetailModal
 |   |               |   UserDetailModal.component.tsx
 |   |               |   UserDetailModal.module.scss
 |   |               |   UserDetailModal.types.ts
-|   |               |   
+|   |               |
 |   |               \---DetailRow
 |   |                       DetailRow.component.tsx
 |   |                       DetailRow.module.scss
 |   |                       DetailRow.types.ts
-|   |                       
+|   |
 |   \---VideoArchiveTPL
 |           VideoArchiveTPL.component.tsx
 |           VideoArchiveTPL.types.ts
-|           
+|
 \---types
+        api.ts
         common.ts
         post.ts
         user.ts
-        
+

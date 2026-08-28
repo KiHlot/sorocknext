@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ResponseIF } from '@/types/api';
 import { PageProps } from '@/types/common';
-import { PostIF, SeoData } from '@/types/post';
+import { PostIF, SeoDataIF } from '@/types/post';
 import { fetchApi } from '@/helpers/fetchApi';
 import { getMetadata } from '@/helpers/getMetadata/getMetadata';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
@@ -42,7 +42,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
     const { slug } = await params;
 
-    const data = await fetchApi<SeoData>(`/news/metadata/${slug}`);
+    const data = await fetchApi<SeoDataIF>(`/news/metadata/${slug}`);
 
     return getMetadata(data);
 }

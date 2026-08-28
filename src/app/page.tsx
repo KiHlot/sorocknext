@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import type { Metadata } from 'next';
 import { PageProps } from '@/types/common';
-import { SeoData } from '@/types/post';
+import { SeoDataIF } from '@/types/post';
 import { HomePageDataIF } from '@/api/page/types';
 import { fetchApi } from '@/helpers/fetchApi';
 import { getMetadata } from '@/helpers/getMetadata/getMetadata';
@@ -14,7 +14,7 @@ import LastNewsPromoSection from '@/components/sections/LastNewsPromoSection/Las
 import LoginWidget from '@/components/widgets/LoginWidget/LoginWidget.component';
 
 export async function generateMetadata(): Promise<Metadata> {
-    const data = await fetchApi<SeoData>(`/page/metadata/home`);
+    const data = await fetchApi<SeoDataIF>(`/page/metadata/home`);
 
     return getMetadata(data);
 }

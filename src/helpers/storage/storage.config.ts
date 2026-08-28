@@ -1,4 +1,4 @@
-import { ValueOf } from '@/types/common';
+import { ValueOfT } from '@/types/common';
 
 export const SESSION_STORAGE_KEYS = {
     CurrentUser: 'CurrentUser',
@@ -18,4 +18,4 @@ export const STORAGE_KEYS = {
     // ...LOCAL_STORAGE_KEYS,
 } as const;
 
-export type StorageKeyT = ValueOf<typeof STORAGE_KEYS>;
+export type StorageKeyT = ValueOfT<typeof STORAGE_KEYS>;

@@ -1,4 +1,4 @@
-import { ValueOf } from '@/types/common';
+import { ValueOfT } from '@/types/common';
 
 export const SERVER_CODES = {
     C301: '301',
@@ -32,7 +32,7 @@ export const SERVER_CODES = {
     REJECTED: 'REJECTED',
 } as const;
 
-export const SERVER_ERRORS: Record<ValueOf<typeof SERVER_CODES>, string> = {
+export const SERVER_ERRORS: Record<ValueOfT<typeof SERVER_CODES>, string> = {
     '301': 'Страница перемещена на новый адрес',
     '302': 'Временное перенаправление',
     '304': 'Страница не изменилась, используйте кеш',
