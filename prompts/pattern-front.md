@@ -116,6 +116,26 @@ export interface CatchErrorIF {
 
 ---
 
+## Переменные окружения
+
+```
+//.env
+NEXT_PUBLIC_REST_BASE=/wp-json/rest
+NEXT_PUBLIC_JWT_BASE=/wp-json/jwt-auth/v1
+
+//.env.development
+NEXT_PUBLIC_DOMAIN_URL=http://sorockwp.local
+NEXT_PUBLIC_WP_HOST=st.sorockwp.local
+NEXT_PUBLIC_REST_DOMAIN_URL=http://st.sorockwp.local
+
+.env.production
+NEXT_PUBLIC_DOMAIN_URL=https://sorock.ru
+NEXT_PUBLIC_WP_HOST=st.sorock.ru
+NEXT_PUBLIC_REST_DOMAIN_URL=https://st.sorock.ru
+```
+
+---
+
 ## Серверное АПИ (получение и использование)
 
 - Все страницы – серверные компоненты (по умолчанию).
@@ -217,7 +237,7 @@ export const getMetadata = (seoData?: SeoDataIF | null): Metadata => {
 };
 ```
 
-_Пример генерации СЕО и получения данных на странице `app/page.tsx` (здесь и далее не несущественные импорты специально убраны):_
+_Пример генерации СЕО и получения данных на странице `app/page.tsx` (здесь и далее несущественные импорты специально убраны):_
 
 ```tsx
 import type { Metadata } from 'next';
@@ -323,6 +343,8 @@ export default async function Page({
 - Для клиентских запросов (с авторизацией и без) используется **RTK Query**.
 - Клиентское апи (query и mutation) находятся в `src/api`.
 - Все вспомогательные API-слайсы находятся в `src/store/slices`.
+- Для работы со вспомогательными слайсами используй хуки `useAppDispatch()` и `useAppSelector()`
+  - Важно: хуки уже типизированы — не нужно указывать типы вручную.
 - RTK Query автоматически управляет кэшированием, состоянием загрузки и ошибками.
 - Для запросов используется `fetchBaseQuery` с базовым URL из переменных окружения.
 - Каждый API-слайс (query и mutation) из `src/api` состоит из:
@@ -444,6 +466,50 @@ const RegistrationForm: FC = () => {
 };
 
 export default RegistrationForm;
+```
+
+_Пример использования useAppDispatch():_
+
+```tsx
+'use client';
+
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { setIsLeftMenuOpened } from '@/store/slices/globalDataSlice';
+
+const MenuButton = () => {
+    const dispatch = useAppDispatch();
+    const isOpen = useAppSelector((state) => state.globalData.isLeftMenuOpened);
+
+    const handleClick = () => {
+        dispatch(setIsLeftMenuOpened(!isOpen));
+    };
+
+    return (
+        <button onClick={handleClick}>
+            {isOpen ? 'Закрыть меню' : 'Открыть меню'}
+        </button>
+    );
+};
+```
+
+_Пример использования useAppDispatch():_
+
+```tsx
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { setIsLeftMenuOpened } from '@/store/slices/globalDataSlice';
+
+const Component = () => {
+    const dispatch = useAppDispatch();
+    const isMenuOpened = useAppSelector(
+        (state) => state.globalData.isLeftMenuOpened,
+    );
+
+    const toggleMenu = () => {
+        dispatch(setIsLeftMenuOpened(!isMenuOpened));
+    };
+
+    return <button onClick={toggleMenu}>Toggle</button>;
+};
 ```
 
 _Функция `parseResponse`:_
