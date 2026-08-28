@@ -741,18 +741,515 @@ export default async function RootLayout({
 
 ## Формы (если используются)
 
-Для обратной связи и поиска можно использовать react-hook-form + yup (но они пока не обязательны, так как авторизация удалена).
+- Все формы в проекте используют `react-hook-form` + `yup` для валидации.
+- Формы всегда являются клиентскими компонентами (`'use client'`).
+- Тип данных формы берется из интерфейса, который прокидывается в форму через дженерик, и прокидывается в форму через `ObjectSchema<InterfaceIF>`
+- Тип может выводится из схемы Yup через `InferType` если в форме добавлен `context`.
+- Каждая форма должна иметь:
+    - `*.component.tsx` – сам компонент формы.
+    - `*.config.ts` – схема валидации, константы, дефолтные значения.
+    - `*.types.ts` – типы пропсов (если есть).
 
-Если формы есть, они должны быть клиентскими компонентами ('use client').
+_Образец объявления формы без `context`:_
+
+```tsx
+const {
+    handleSubmit,
+    control,
+    formState: { isValid },
+    setError,
+} = useForm<SendConfirmCodeMailIF>({
+    mode: 'onSubmit',
+    resolver: yupResolver(schema),
+});
+```
+
+_Образец schema:_
+
+```tsx
+import { object, ObjectSchema, string } from 'yup';
+import { SendConfirmCodeMailIF } from '@/api/auth/types';
+import { ERRORS_CODES } from '@/helpers/validation/codes/codes.config';
+import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
+
+export const schema: ObjectSchema<SendConfirmCodeMailIF> = object({
+    email: string()
+        .required(ERRORS_CODES.er200)
+        .email(ERRORS_CODES.er203)
+        .min(
+            VALIDATOR_FIELD.email.minLength,
+            `${ERRORS_CODES.er201}. Мин: ${VALIDATOR_FIELD.email.minLength}`,
+        )
+        .max(
+            VALIDATOR_FIELD.email.maxLength,
+            `${ERRORS_CODES.er202}. Макс: ${VALIDATOR_FIELD.email.maxLength}`,
+        ),
+});
+```
+
+_Образец формы с `context`:
+
+```tsx
+'use client';
+
+import { FC, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { authApi } from '@/api/auth/auth';
+import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
+import { catchError } from '@/helpers/validation/error/error.helpers';
+import {
+    ERRORS_CODES,
+    SUCCESS_CODES,
+} from '@/helpers/validation/codes/codes.config';
+import { Input } from '@/components/controls/Input/Input.component';
+import MainButton from '@/components/controls/MainButton/MainButton.component';
+import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
+import {
+    REGISTRATION_FORM_STEP,
+    INPUT_NAMES,
+    schema,
+    RegistrationFormIF,
+} from './RegistrationForm.config';
+
+const RegistrationForm: FC = () => {
+    const router = useRouter();
+    const [step, setStep] = useState<keyof typeof REGISTRATION_FORM_STEP>(
+        REGISTRATION_FORM_STEP.SetMail,
+    );
+
+    const [sendConfirmCode, { isLoading: isSendLoading }] =
+        authApi.useSendConfirmCodeMutation();
+    const [registerUser, { isLoading: isRegisterLoading }] =
+        authApi.useRegisterUserMutation();
+
+    const {
+        handleSubmit,
+        control,
+        setError,
+        clearErrors,
+        reset,
+        formState: { isValid },
+    } = useForm<RegistrationFormIF>({
+        mode: 'onSubmit',
+        resolver: yupResolver(schema),
+        context: { step },
+    });
+
+    const onSubmit = async (values: RegistrationFormIF): Promise<void> => {
+        if (step === REGISTRATION_FORM_STEP.SetMail) {
+            // Первый шаг: отправка кода на email
+            try {
+                const result = await sendConfirmCode({
+                    email: values.loginEmail,
+                }).unwrap();
+
+                parseResponse(result, ({ errors }) => {
+                    if (errors?.length) {
+                        for (const { code, fieldName } of errors) {
+                            if (fieldName) {
+                                setError(
+                                    fieldName as keyof RegistrationFormIF,
+                                    {
+                                        type: 'manual',
+                                        message: ERRORS_CODES[code] || code,
+                                    },
+                                );
+                            }
+                        }
+                        return;
+                    }
+                    setStep(REGISTRATION_FORM_STEP.SetPassword);
+                    toast.success('Код отправлен на ваш email');
+                });
+            } catch (error) {
+                const { message } = catchError(error);
+                toast.error(message);
+            }
+            return;
+        }
+
+        // Второй шаг: регистрация
+        try {
+            const result = await registerUser(values).unwrap();
+
+            parseResponse(result, ({ errors }) => {
+                if (errors?.length) {
+                    for (const { code, fieldName } of errors) {
+                        if (fieldName) {
+                            setError(fieldName as keyof RegistrationFormIF, {
+                                type: 'manual',
+                                message: ERRORS_CODES[code] || code,
+                            });
+                        }
+                    }
+                    return;
+                }
+                reset();
+                toast.success(SUCCESS_CODES.s104);
+                setTimeout(() => router.push('/'), 2000);
+            });
+        } catch (error) {
+            const { message } = catchError(error);
+            toast.error(message);
+        }
+    };
+
+    return (
+        <form className="flcol gapBlock" onSubmit={handleSubmit(onSubmit)}>
+            <Input
+                name="name"
+                label="Имя"
+                control={control}
+                isTextsOnly
+                maxLength={30}
+                isRemoveSpaces
+                isRequired
+            />
+            <Input
+                name="surname"
+                label="Фамилия"
+                control={control}
+                isTextsOnly
+                maxLength={30}
+                isRemoveSpaces
+                isRequired
+            />
+            <Input
+                name="loginEmail"
+                label="Email"
+                control={control}
+                isRemoveSpaces
+                isRequired
+            />
+
+            {step === REGISTRATION_FORM_STEP.SetPassword && (
+                <>
+                    <Input
+                        name="password"
+                        label="Пароль"
+                        control={control}
+                        type="password"
+                        isRequired
+                        isPassword
+                    />
+                    <Input
+                        name="passwordConfirm"
+                        label="Подтверждение пароля"
+                        control={control}
+                        type="password"
+                        isRequired
+                        isPassword
+                    />
+                    <CodeInput
+                        names={INPUT_NAMES}
+                        name="confirmCode"
+                        control={control}
+                        clearErrors={clearErrors}
+                        isDisabled={isSendLoading || isRegisterLoading}
+                    />
+                </>
+            )}
+
+            <MainButton
+                type="submit"
+                isLoading={isSendLoading || isRegisterLoading}
+                disabled={!isValid}
+            >
+                {step === REGISTRATION_FORM_STEP.SetPassword
+                    ? 'Зарегистрироваться'
+                    : 'Получить код'}
+            </MainButton>
+        </form>
+    );
+};
+
+export default RegistrationForm;
+```
+
+_Валидация формы с `context` и использование `InferType`:_
+
+```tsx
+import { object, ref, string, InferType } from 'yup';
+import { ERRORS_CODES } from '@/helpers/validation/codes/codes.config';
+import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
+
+export const REGISTRATION_FORM_STEP = {
+    SetMail: 'setMail',
+    SetPassword: 'setPassword',
+} as const;
+
+export const INPUT_NAMES = ['i0', 'i1', 'i2', 'i3', 'i4', 'i5'];
+
+export const schema = object({
+    name: string()
+        .required(ERRORS_CODES.er200)
+        .min(
+            VALIDATOR_FIELD.name.minLength,
+            `Мин: ${VALIDATOR_FIELD.name.minLength}`,
+        )
+        .max(
+            VALIDATOR_FIELD.name.maxLength,
+            `Макс: ${VALIDATOR_FIELD.name.maxLength}`,
+        ),
+    surname: string()
+        .required(ERRORS_CODES.er200)
+        .min(
+            VALIDATOR_FIELD.surname.minLength,
+            `Мин: ${VALIDATOR_FIELD.surname.minLength}`,
+        )
+        .max(
+            VALIDATOR_FIELD.surname.maxLength,
+            `Макс: ${VALIDATOR_FIELD.surname.maxLength}`,
+        ),
+    loginEmail: string()
+        .required(ERRORS_CODES.er200)
+        .email(ERRORS_CODES.er203)
+        .min(
+            VALIDATOR_FIELD.email.minLength,
+            `Мин: ${VALIDATOR_FIELD.email.minLength}`,
+        )
+        .max(
+            VALIDATOR_FIELD.email.maxLength,
+            `Макс: ${VALIDATOR_FIELD.email.maxLength}`,
+        ),
+    password: string().when(['$step'], ([step], schema) =>
+        step === REGISTRATION_FORM_STEP.SetPassword
+            ? schema
+                  .required(ERRORS_CODES.er200)
+                  .matches(
+                      /^[a-zA-Z0-9!@#$%^()&*_-]+$/,
+                      `${ERRORS_CODES.er206}. Допустимы латинские буквы, цифры и символы !@#$%^()&*_-`,
+                  )
+                  .min(
+                      VALIDATOR_FIELD.password.minLength,
+                      `Мин: ${VALIDATOR_FIELD.password.minLength}`,
+                  )
+                  .max(
+                      VALIDATOR_FIELD.password.maxLength,
+                      `Макс: ${VALIDATOR_FIELD.password.maxLength}`,
+                  )
+            : schema.optional(),
+    ),
+    passwordConfirm: string().when(['$step'], ([step], schema) =>
+        step === REGISTRATION_FORM_STEP.SetPassword
+            ? schema
+                  .required(ERRORS_CODES.er200)
+                  .oneOf([ref('password')], ERRORS_CODES.er204)
+            : schema.optional(),
+    ),
+    confirmCode: string().when(['$step'], ([step], schema) =>
+        step === REGISTRATION_FORM_STEP.SetPassword
+            ? schema
+                  .required(ERRORS_CODES.er200)
+                  .length(
+                      INPUT_NAMES.length,
+                      `Введите ${INPUT_NAMES.length} цифр!`,
+                  )
+            : schema.optional(),
+    ),
+});
+
+export type RegistrationFormIF = InferType<typeof schema>;
+```
+
+#### Ключевые моменты
+
+- yupResolver(schema) — связывает react-hook-form с Yup.
+- mode: 'onSubmit' — валидация только при отправке.
+- context: { step } — передача дополнительных данных в схему.
+- setError — ручная установка ошибок на поля (из ответа API).
+- fieldName as keyof FormFields — приведение типа для TypeScript.
+- parseResponse — стандартизированная обработка ответов.
+- catchError — единообразная обработка ошибок.
+
+#### Рекомендации
+
+- Всегда используй `yupResolver` для валидации.
+- Используй `context` для передачи переменных в схему.
+- Для ошибок API используй `setError` с приведением типа.
+- Формы всегда клиентские (`use client`).
+- Разделяй схему, типы и компонент в разные файлы.
+- Используй `parseResponse` для обработки ответов.
+- Используй `catchError` для обработки ошибок.
+- Состояние загрузки (`isLoading`) передавай в MainButton.
+- Кнопка отправки дизейблится при `!isValid`.
+
 ---
 
 ## Стили
 
-SCSS-модули (.module.scss) — предпочтительный способ.
+- **SCSS-модули** (`.module.scss`) — предпочтительный способ стилизации.
+- Глобальные стили (сброс, переменные, миксины) находятся в `src/styles/`.
+- Именование классов – **camelCase**.
+- Вложенность селекторов — не более 3 уровней.
+- Для медиа-запросов импортируй миксин из `@use '@/styles/mixins' as *;` и используй как `@include media(любой брейкпоинт){//some css}`.
 
-Глобальные стили (сброс, переменные, миксины) – в src/styles/.
+---
 
-Именование классов – camelCase.
+_Пример использования стилей в компоненте `authlayout.module.scss`:_
+
+```scss
+@use '@/styles/mixins' as *;
+
+.authLayout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+
+    .content {
+        flex: 1;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        @include media(md) {
+            padding: 30px;
+        }
+    }
+
+    .backButton {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-secondary);
+        transition: color 0.2s;
+
+        &:hover {
+            color: var(--text-primary);
+        }
+    }
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+
+    h1 {
+        font-size: 24px;
+        font-weight: 600;
+    }
+}
+```
+
+_variables.scss:_
+
+```scss
+@use 'sass:map';
+
+$colors: (
+    white: #ffffff,
+    black: #000000,
+    textColor: #a8b6bb,
+    colorPrimary: #0bb197,
+    colorSecondary: #74788d,
+    accent: #cf304d,
+    bgColor: #303841,
+    bgColorSecondary: #283039,
+    bgColorDark: #21282f,
+    blockQuoteBg: #272a31,
+    grayDark: #1f2426,
+    error: #8a4139,
+    correct: #267873,
+    info: #21495a,
+    active: #1f2329,
+);
+
+$defaultThemeSettings: (
+    boxShadow: 0 5px 12px rgba(map.get($colors, black), 0.1),
+    elemShadow: rgba(map.get($colors, black), 0.24) 0px 3px 8px,
+    textShadow: 1px 1px 2px map.get($colors, black),
+    svgShadow: drop-shadow(1px 1px 0px rgba(map.get($colors, black), 0.5)),
+    loadingGradient: linear-gradient(
+            90deg,
+            map.get($colors, bgColor),
+            map.get($colors, bgColorSecondary),
+            map.get($colors, bgColor)
+        ),
+    borderRadius: 8px,
+    border: 1px solid rgba(map.get($colors, textColor), 0.05),
+    borderError: 1px solid rgba(map.get($colors, error), 0.6),
+    zIndexPopup: 70,
+    zIndexMenu: 50,
+    gapDesktop: 30px,
+    gapBlock: 20px,
+);
+
+$defaultTheme: map.merge($colors, $defaultThemeSettings);
+
+$breakpoints: (
+    xxs: 340px,
+    xs: 420px,
+    sm: 576px,
+    md: 768px,
+    xmd: 890px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1500px,
+    xxxl: 1700px,
+    desktop: 2200px,
+);
+```
+
+_В global.scss существуют утилитарные классы:_
+
+```scss
+// Flex
+.flc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flcol {
+    display: flex;
+    flex-direction: column;
+}
+
+.flrow {
+    display: flex;
+    flex-direction: row;
+}
+
+// Отступы
+.gapBlock {
+    gap: 16px;
+}
+
+.gapLayout {
+    gap: 24px;
+}
+
+// Текст
+.text-center {
+    text-align: center;
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+```
+
+#### Рекомендации
+
+- Предпочитай SCSS-модули глобальным стилям.
+- Именуй классы в camelCase — authLayout, backButton, title.
+- Используй переменные для цветов, размеров, шрифтов.
+- Выноси повторяющиеся стили в миксины.
+- Глобальные стили — только для сброса и базовых элементов (body, h1-h6, a).
+- Вложенность селекторов — не более 3 уровней.
+- Не используй !important без крайней необходимости.
+- Проверяй стили на всех экранах (мобильные, планшеты, десктопы).
+- Используй CSS-переменные для темной/светлой темы.
+- Удаляй неиспользуемый CSS (используй модули, чтобы избежать конфликтов).
+
 ---
 
 ## Изображения
