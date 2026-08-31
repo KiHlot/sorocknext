@@ -521,11 +521,6 @@
 |   |       AdminLayout.module.scss
 |   |       AdminLayout.types.ts
 |   |
-|   +---AuthLayout
-|   |       AuthLayout.component.tsx
-|   |       AuthLayout.module.scss
-|   |       AuthLayout.types.ts
-|   |
 |   +---CommonLayout
 |   |       CommonLayout.component.tsx
 |   |       CommonLayout.module.scss
