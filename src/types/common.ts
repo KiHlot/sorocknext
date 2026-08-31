@@ -6,14 +6,6 @@ export type CallBackTypeT = 'logout';
 
 export type ValueOfT<T> = T[keyof T];
 
-export type CookieOptionsT = {
-    expires?: Date | string | number;
-    path?: string;
-    domain?: string;
-    secure?: boolean;
-    samesite?: 'Strict' | 'Lax' | 'None';
-};
-
 export interface LinkIF {
     label: string;
     url: string;
@@ -74,3 +66,9 @@ export interface FilteredResultIF<DataIF = null> {
     filteredData: DataIF | null;
     isRedirect: boolean;
 }
+
+/** Y-m-d H:i:s*/
+export type DateWithTimeT = string | null;
+
+/** Y-m-d*/
+export type DateT = string | null;

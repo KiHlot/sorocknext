@@ -1,9 +1,5 @@
 export type UserRoleT =
-    | 'lobby'
-    | 'member'
-    | 'editor'
-    | 'admin'
-    | 'administrator';
+    'lobby' | 'member' | 'editor' | 'admin' | 'administrator';
 
 export type SoclinkT = 'vk' | 'in' | 'fb' | 'tt' | 'yt';
 

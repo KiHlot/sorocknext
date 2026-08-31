@@ -4,15 +4,13 @@ import styles from '@/components/sections/LastNewsPromoSection/LastNewsPromoSect
 import { LastNewsPromoSectionPropsIF } from '@/components/sections/LastNewsPromoSection/LastNewsPromoSection.types';
 
 const LastNewsPromoSection: FC<LastNewsPromoSectionPropsIF> = ({
-    className = '',
+    lastNewsPromoData,
 }) => {
     const temporary = 'LastNewsPromoWidget';
 
     return (
-        <Section
-            className={`${styles.lastNewsPromoSectionWrapper} ${className}`}
-        >
-            {temporary}
+        <Section className={styles.lastNewsPromoSectionWrapper}>
+            {lastNewsPromoData[0]?.content}
         </Section>
     );
 };

@@ -8,7 +8,6 @@ import { globalDataSlice } from '@/store/slices/globalDataSlice';
 import { adminApi } from '@/api/admin/admin';
 import { authApi } from '@/api/auth/auth';
 import { jwtApi } from '@/api/jwt/jwt';
-import { pageApi } from '@/api/page/page';
 import { siteApi } from '@/api/site/site';
 import { taxonomyApi } from '@/api/taxonomy/taxonomy';
 import { usersApi } from '@/api/users/users';
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
     [jwtApi.reducerPath]: jwtApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [adminApi.reducerPath]: adminApi.reducer,
-    [pageApi.reducerPath]: pageApi.reducer,
     [globalDataSlice.reducerPath]: globalDataSlice.reducer,
 });
 
@@ -35,7 +33,6 @@ export const makeStore = (): EnhancedStore<RootState> =>
                 authApi.middleware,
                 usersApi.middleware,
                 adminApi.middleware,
-                pageApi.middleware,
             ]),
     });
 

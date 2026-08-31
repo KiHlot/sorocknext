@@ -1,5 +1,6 @@
-import { Metadata, SeoDataIF } from '@/types/post';
+import { SeoDataIF } from '@/api/metadata/types';
 import { DEFAULT_METADATA } from '@/helpers/getMetadata/getMetadata.config';
+import { Metadata } from '@/helpers/getMetadata/getMetadata.types';
 
 export const getMetadata = (seoData?: SeoDataIF | null): Metadata => {
     const data = {

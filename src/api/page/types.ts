@@ -1,5 +1,5 @@
-import { PromoSiteInfoIF } from '@/components/sections/HomePagePromoSection/PromoSiteInfo/PromoSiteInfo.types';
+import { LastNewsPromoDataIF } from '@/components/sections/LastNewsPromoSection/LastNewsPromoSection.types';
 
 export interface HomePageDataIF {
-    promoSiteInfo: PromoSiteInfoIF;
+    lastNewsPromoData?: LastNewsPromoDataIF[] | null;
 }

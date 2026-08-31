@@ -1,37 +1,15 @@
 import { ReactElement } from 'react';
 import type { Metadata } from 'next';
-import { PageProps } from '@/types/common';
-import { SeoDataIF } from '@/types/post';
-import { HomePageDataIF } from '@/api/page/types';
-import { fetchApi } from '@/helpers/fetchApi';
-import { getMetadata } from '@/helpers/getMetadata/getMetadata';
-import CommonLayout, {
-    Content,
-    Sidebar,
-} from '@/layouts/CommonLayout/CommonLayout.component';
-import styles from '@/components/sections/HomePagePromoSection/HomePagePromoSection.module.scss';
-import LastNewsPromoSection from '@/components/sections/LastNewsPromoSection/LastNewsPromoSection.component';
-import LoginWidget from '@/components/widgets/LoginWidget/LoginWidget.component';
+import { fetchMetadata } from '@/api/metadata/endpoints';
+import { fetchHomePageData } from '@/api/page/endpoints';
+import HomePageTPL from '@/templates/HomePageTPL/HomePageTPL.component';
 
 export async function generateMetadata(): Promise<Metadata> {
-    const data = await fetchApi<SeoDataIF>(`/page/metadata/home`);
-
-    return getMetadata(data);
+    return fetchMetadata('page', 'home');
 }
 
-export default async function HomePage({
-    params,
-}: PageProps): Promise<ReactElement> {
-    const homePageInfo = await fetchApi<HomePageDataIF>('/page/home-page-data');
+export default async function HomePage(): Promise<ReactElement> {
+    const data = await fetchHomePageData();
 
-    return (
-        <CommonLayout>
-            <Content>
-                <LastNewsPromoSection className={styles.latestNews} data={{}} />
-            </Content>
-            <Sidebar>
-                <LoginWidget />
-            </Sidebar>
-        </CommonLayout>
-    );
+    return data ? <HomePageTPL data={data} /> : <div />;
 }

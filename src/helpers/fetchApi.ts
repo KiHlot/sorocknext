@@ -3,7 +3,7 @@ import { ResponseIF } from '@/types/api';
 
 export const fetchApi = async <DataIF = null>(
     route: string,
-    cache: RequestCache = 'force-cache',
+    cache: RequestCache = 'no-cache', //'force-cache'
 ): Promise<DataIF | null | undefined> => {
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value || null;

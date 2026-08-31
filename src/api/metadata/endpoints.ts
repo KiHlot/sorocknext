@@ -1,0 +1,13 @@
+import { SeoDataIF } from '@/api/metadata/types';
+import { fetchApi } from '@/helpers/fetchApi';
+import { getMetadata } from '@/helpers/getMetadata/getMetadata';
+import { Metadata } from '@/helpers/getMetadata/getMetadata.types';
+
+export const fetchMetadata = async (
+    type: string,
+    route: string,
+): Promise<Metadata> => {
+    const data = await fetchApi<SeoDataIF>(`/metadata/${type}/${route}`);
+
+    return getMetadata(data);
+};
