@@ -1,10 +1,6 @@
-import { OptionIF } from '@/types/common';
+import { SearchParamsT } from '@/types/common';
 import { AuthorThumbIF } from '@/types/post';
-
-export interface SearchConfigIF {
-    postTypes: OptionIF[];
-    categories: OptionIF[];
-}
+import { SearchConfigIF } from '@/components/widgets/SearchWidget/SearchWidget.types';
 
 export interface SearchedPageIF {
     pageData: {
@@ -26,4 +22,5 @@ export interface SearchResultIF {
 export interface SearchTPLPropsIF {
     searchConfig?: SearchConfigIF | null;
     searchResult?: SearchResultIF;
+    queryParams?: SearchParamsT;
 }

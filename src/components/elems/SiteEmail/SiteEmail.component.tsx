@@ -1,21 +1,24 @@
 import { FC } from 'react';
 import { siteApi } from '@/api/site/site';
 import styles from '@/components/elems/SiteEmail/SiteEmail.module.scss';
-import { SiteEmailPropsIF } from '@/components/elems/SiteEmail/SiteEmail.types';
 
-const SiteEmail: FC<SiteEmailPropsIF> = ({ className = '' }) => {
-    const { data: baseData } = siteApi.useGetCommonDataQuery();
+const SiteEmail: FC = () => {
+    const { data } = siteApi.useGetCommonDataQuery();
 
-    const { supportEmail } = baseData?.base || {};
+    const { supportEmail } = data?.base || {};
 
-    return supportEmail ? (
+    if (!supportEmail) {
+        return null;
+    }
+
+    return (
         <a
             href={`mailto:${supportEmail}`}
-            className={`flc ${styles.siteEmailWrapper} ${className}`}
+            className={`flc ${styles.siteEmailWrapper}`}
         >
             {supportEmail}
         </a>
-    ) : null;
+    );
 };
 
 export default SiteEmail;

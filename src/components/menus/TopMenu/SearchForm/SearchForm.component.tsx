@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useTransition } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -17,6 +17,8 @@ import {
 const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
     const router = useRouter();
 
+    const [isPending, startTransition] = useTransition();
+
     const {
         handleSubmit,
         control,
@@ -28,8 +30,11 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
 
     const onSubmit = async (values: SearchFormIF): Promise<void> => {
         const phrase = values.phrase.trim();
+
         if (phrase) {
-            router.push(`/search?phrase=${encodeURIComponent(phrase)}`);
+            startTransition(() => {
+                router.push(`/search?phrase=${encodeURIComponent(phrase)}`);
+            });
         }
     };
 
@@ -44,11 +49,12 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
                 control={control}
                 className={styles.input}
                 styleType="default"
+                isDisabled={isPending}
             />
             <MainButton
                 className={`flc ${styles.button}`}
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid || isPending}
                 isCustom
             >
                 <IoSearch />

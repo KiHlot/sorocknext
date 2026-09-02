@@ -31,7 +31,7 @@ export interface PageProps {
     params: Promise<{
         slug: string;
     }>;
-    searchParams: Promise<SearchParamsT>;
+    searchParams?: Promise<SearchParamsT>;
 }
 
 export interface MenuItemIF {

@@ -1,6 +1,6 @@
 import { MenuItemIF } from '@/types/common';
 
-export const FOOTER_MENU: { [key: number]: MenuItemIF[] } = {
+export const FOOTER_MENU: Record<number, MenuItemIF[]> = {
     947: [
         {
             url: '/clips',

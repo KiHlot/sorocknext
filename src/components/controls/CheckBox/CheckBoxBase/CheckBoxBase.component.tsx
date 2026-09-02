@@ -1,4 +1,6 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+'use client';
+
+import { ChangeEvent, FC } from 'react';
 import { FaCheck } from 'react-icons/fa6';
 import styles from '@/components/controls/CheckBox/CheckBoxBase/CheckBoxBase.module.scss';
 import { CheckBoxBaseIF } from '@/components/controls/CheckBox/CheckBoxBase/CheckBoxBase.types';
@@ -14,19 +16,13 @@ const CheckBoxBase: FC<CheckBoxBaseIF> = ({
     className = '',
     onChange,
 }) => {
-    const [checked, setChecked] = useState<boolean>(false);
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         if (isDisabled) {
             return;
         }
-        setChecked(e.target.checked);
+
         onChange?.(e);
     };
-
-    useEffect(() => {
-        setChecked(isChecked);
-    }, [isChecked]);
 
     return (
         <div className={`${styles.inputBlock} ${className}`}>
@@ -36,7 +32,7 @@ const CheckBoxBase: FC<CheckBoxBaseIF> = ({
                         type="checkbox"
                         className={styles.checkbox}
                         id={name}
-                        checked={checked}
+                        checked={isChecked}
                         onChange={handleChange}
                         value={value}
                         disabled={isDisabled}

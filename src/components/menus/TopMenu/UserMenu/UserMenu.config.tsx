@@ -9,8 +9,8 @@ import { RiChatPrivateLine } from 'react-icons/ri';
 import { TbPasswordFingerprint } from 'react-icons/tb';
 import { MenuItemIF } from '@/types/common';
 import { CurrentUserIF } from '@/types/user';
-import { getSessionStorageItem } from '@/helpers/storage/storage.helpers';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
+import { getSessionStorageItem } from '@/helpers/storage/storage.helpers';
 
 export const MENU_USER: MenuItemIF[] = [
     {
@@ -28,17 +28,17 @@ export const MENU_USER: MenuItemIF[] = [
 
 export const MENU_GUEST: MenuItemIF[] = [
     {
-        url: '/auth',
+        url: '/login',
         label: 'Вход',
         icon: <IoEnterOutline />,
     },
     {
-        url: '/auth/registration',
+        url: '/registration',
         label: 'Регистрация',
         icon: <IoPersonAddOutline />,
     },
     {
-        url: '/auth/reset-password',
+        url: '/reset-password',
         label: 'Забыли пароль?',
         icon: <TbPasswordFingerprint />,
     },
@@ -54,7 +54,7 @@ const ADMIN_MENU: MenuItemIF[] = [
 
 const ACTIVATE_MENU: MenuItemIF[] = [
     {
-        url: '/auth/confirm-account',
+        url: '/confirm-account',
         label: 'Подтверждение',
         icon: <PiUserCheck />,
     },

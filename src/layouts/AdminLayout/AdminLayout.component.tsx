@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import styles from '@/layouts/AdminLayout/AdminLayout.module.scss';
 import { AdminLayoutPropsIF } from '@/layouts/AdminLayout/AdminLayout.types';
-import layoutStyles from '@/layouts/Layout/Layout.module.scss';
 import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
 import Loading from '@/components/elems/Loading/Loading.component';
 import AdminMenu from '@/components/menus/AdminMenu/AdminMenu.component';
@@ -12,13 +11,11 @@ import Footer from '@/components/sections/Footer/Footer.component';
 const AdminLayout: FC<AdminLayoutPropsIF> = ({ children, isLoading }) => (
     <>
         <TopMenu />
-        <MainWrapper
-            className={`${layoutStyles.layout} ${styles.adminLayoutWrapper}`}
-        >
-            <div className={`cvscroll ${layoutStyles.menu}`}>
+        <MainWrapper className={styles.adminLayoutWrapper}>
+            <div className={`cvscroll ${styles.menu}`}>
                 <LeftMenu />
             </div>
-            <div className={`cvscroll ${layoutStyles.menu}`}>
+            <div className={`cvscroll ${styles.menu}`}>
                 <AdminMenu />
             </div>
             <div>{isLoading ? <Loading height={800} /> : children}</div>

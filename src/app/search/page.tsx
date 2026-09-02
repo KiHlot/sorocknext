@@ -8,23 +8,23 @@ import SearchTPL from '@/templates/SearchTPL/SearchTPL.component';
 export async function generateMetadata({
     searchParams,
 }: PageProps): Promise<Metadata> {
-    const { phrase } = await searchParams;
+    const queryParams = await searchParams;
 
     return fetchMetadata({
         type: 'page',
         route: 'search',
-        param: phrase,
+        param: queryParams?.phrase,
     });
 }
 
 export default async function SearchPage({
     searchParams,
 }: PageProps): Promise<ReactElement> {
-    const params = await searchParams;
+    const queryParams = await searchParams;
 
     const results = await Promise.allSettled([
         fetchSearchConfig(),
-        fetchSearchData(params),
+        fetchSearchData(queryParams),
     ]);
 
     const config = results[0].status === 'fulfilled' ? results[0].value : null;
@@ -34,6 +34,7 @@ export default async function SearchPage({
         <SearchTPL
             searchConfig={config?.searchConfig}
             searchResult={data?.searchResult}
+            queryParams={queryParams}
         />
     );
 }

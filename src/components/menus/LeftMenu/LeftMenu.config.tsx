@@ -7,7 +7,6 @@ import {
     IoHeadsetOutline,
     IoFingerPrintOutline,
 } from 'react-icons/io5';
-import { MdOutlineSportsSoccer } from 'react-icons/md';
 import { MenuItemIF } from '@/types/common';
 
 export const LEFT_MENU: MenuItemIF[] = [
@@ -22,33 +21,28 @@ export const LEFT_MENU: MenuItemIF[] = [
         icon: <IoNewspaperOutline />,
     },
     {
-        url: '/shorts',
-        label: 'Шортс',
-        icon: <GiUnderwearShorts />,
-    },
-    {
-        url: '/sport',
-        label: 'Спорт',
-        icon: <MdOutlineSportsSoccer />,
-    },
-    {
-        url: '/publications',
-        label: 'Публикации',
+        url: '/autors',
+        label: 'Статьи',
         icon: <IoLibraryOutline />,
     },
     {
-        url: '/music',
-        label: 'Музыка',
-        icon: <IoHeadsetOutline />,
-    },
-    {
-        url: '/video',
+        url: '/cool',
         label: 'Видео',
         icon: <IoFilmOutline />,
     },
     {
-        url: '/calendar',
-        label: 'Календарь',
+        url: '/nocommerce',
+        label: 'Новый рок',
+        icon: <GiUnderwearShorts />,
+    },
+    {
+        url: '/reviews',
+        label: 'Рецензии',
+        icon: <IoHeadsetOutline />,
+    },
+    {
+        url: '/rock-data',
+        label: 'Рок дата',
         icon: <IoCalendarOutline />,
         hasBorder: true,
     },

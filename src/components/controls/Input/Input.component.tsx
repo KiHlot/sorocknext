@@ -29,7 +29,7 @@ export const Input = <T extends FieldValues>({
 }: InputProps<T>): ReactElement => {
     const {
         field: { value, onChange },
-        fieldState,
+        fieldState: { error },
     } = useController({ name, control });
 
     const [currentType, setCurrentType] = useState<InputTypeT>(type);
@@ -51,7 +51,7 @@ export const Input = <T extends FieldValues>({
             <FieldLabel
                 label={label}
                 isRequired={isRequired}
-                isError={!!fieldState.error?.message}
+                isError={!!error?.message}
             />
             <div
                 className={`${styles.inputWrapper} ${isPassword ? styles.password : ''}`}
@@ -87,7 +87,7 @@ export const Input = <T extends FieldValues>({
                     </button>
                 )}
             </div>
-            <FieldError message={fieldState.error?.message} />
+            <FieldError message={error?.message} />
         </div>
     );
 };

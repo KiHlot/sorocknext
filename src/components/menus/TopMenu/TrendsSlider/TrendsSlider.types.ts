@@ -1,3 +1,3 @@
 export interface TrendsSliderPropsIF {
-    className: string;
+    className?: string;
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from '@/components/blocks/VerticalMenu/VerticalMenuItem/VerticalMenu.module.scss';
@@ -10,17 +10,7 @@ const VerticalMenuItem: FC<VerticalMenuItemPropsIF> = ({ data }) => {
     const { label, url, icon, hasBorder } = data;
     const pathname = usePathname();
 
-    const isCurrent = useMemo(() => {
-        if (!pathname) {
-            return false;
-        }
-
-        const pathSegments = pathname.split('/').filter(Boolean);
-        const urlSegments = url.split('/').filter(Boolean);
-
-        // Сравниваем последний сегмент пути
-        return pathSegments.at(-1) === urlSegments.at(-1);
-    }, [pathname, url]);
+    const isCurrent = pathname?.split('/').pop() === url.split('/').pop();
 
     return (
         <li

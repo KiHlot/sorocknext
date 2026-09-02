@@ -7,12 +7,9 @@ const VerticalMenu: FC<VerticalMenuPropsIF> = ({
     className = '',
     menuList,
 }) => (
-    <nav
-        role="left menu"
-        className={`${styles.verticalMenuWrapper} ${className}`}
-    >
+    <nav className={`${styles.verticalMenuWrapper} ${className}`}>
         <ul className="flcol">
-            {menuList.map(item => (
+            {menuList.map((item) => (
                 <VerticalMenuItem key={item.url} data={item} />
             ))}
         </ul>

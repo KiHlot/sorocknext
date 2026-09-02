@@ -31,7 +31,7 @@ const TopMenu: FC = () => {
         >
             <MainWrapper className={styles.mainWrapper}>
                 <MainLogo />
-                <TrendsSlider className={`${styles.ml} ${styles.mr}`} />
+                <TrendsSlider className={styles.mr} />
                 <SearchForm />
                 <SiteEmail />
                 <UserMenu />

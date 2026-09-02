@@ -1,17 +1,13 @@
 import { FC } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
 import styles from '@/layouts/CommonLayout/CommonLayout.module.scss';
-import {
-    CommonLayoutContentPropsIF,
-    CommonLayoutPropsIF,
-    CommonLayoutSidebarPropsIF,
-} from '@/layouts/CommonLayout/CommonLayout.types';
+import { CommonPropsIF } from '@/layouts/CommonLayout/CommonLayout.types';
 import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
 import LeftMenu from '@/components/menus/LeftMenu/LeftMenu.component';
 import TopMenu from '@/components/menus/TopMenu/TopMenu.component';
 import Footer from '@/components/sections/Footer/Footer.component';
 
-const CommonLayout: FC<CommonLayoutPropsIF> = ({ children }) => (
+const CommonLayout: FC<CommonPropsIF> = ({ children }) => (
     <>
         <TopMenu />
         <MainWrapper className={styles.commonLayoutWrapper}>
@@ -37,16 +33,13 @@ const CommonLayout: FC<CommonLayoutPropsIF> = ({ children }) => (
     </>
 );
 
-export const Content: FC<CommonLayoutContentPropsIF> = ({
-    children,
-    className = '',
-}) => (
+export const Content: FC<CommonPropsIF> = ({ children, className = '' }) => (
     <main className={`flcol gapLayout ${styles.content} ${className}`}>
         {children}
     </main>
 );
 
-export const Sidebar: FC<CommonLayoutSidebarPropsIF> = ({ children }) => (
+export const Sidebar: FC<CommonPropsIF> = ({ children }) => (
     <aside className="flcol gapLayout">{children}</aside>
 );
 

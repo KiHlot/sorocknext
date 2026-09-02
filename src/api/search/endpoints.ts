@@ -3,15 +3,15 @@ import { FetchSearchConfigIF, FetchSearchDataIF } from '@/api/search/types';
 import { fetchApi } from '@/helpers/fetchApi';
 
 export const fetchSearchData = async (
-    params?: SearchParamsT,
+    queryParams?: SearchParamsT,
 ): Promise<FetchSearchDataIF | null | undefined> => {
-    if (!params) {
+    if (!queryParams) {
         return fetchApi<FetchSearchDataIF>('/search');
     }
 
     const searchParams = new URLSearchParams();
 
-    Object.entries(params).forEach(([key, value]) => {
+    Object.entries(queryParams).forEach(([key, value]) => {
         if (value !== undefined && value !== '') {
             searchParams.append(key, value);
         }
