@@ -29,7 +29,7 @@
 }
 
 .button {
-    border: 1px solid rgba(var(--textColor), 0.5);
+    border: var(--border);
     border-radius: var(--borderRadius);
     width: 40px;
     height: 35px;
@@ -44,12 +44,18 @@
 
     &:disabled {
         cursor: default;
+        opacity: 1;
+
+        svg {
+            opacity: 0.5;
+        }
     }
 
     svg {
         width: 20px;
         height: 20px;
-        fill: rgba(var(--textColor), 0.5);
+        fill: var(--textColor);
         transition: fill 0.3s ease-in-out;
+        opacity: 1;
     }
 }

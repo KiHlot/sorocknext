@@ -1,12 +1,17 @@
 import { HTMLString, LinkIF, OptionIF } from '@/types/common';
-import { AuthorIF } from '@/components/elems/Author/Author.types';
 
 export interface PostArchiveIF {
     defaultData: LinkIF[];
 }
 
+export interface AuthorThumbIF {
+    img80?: string | null;
+    fullName: string;
+    url?: string;
+}
+
 export interface PostBaseIF {
-    author: AuthorIF;
+    author: AuthorThumbIF;
     innerImg: string | null;
     country: string;
     settings: {

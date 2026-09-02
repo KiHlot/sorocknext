@@ -8,3 +8,9 @@ export interface SeoDataIF {
     author: string;
     tags?: string[];
 }
+
+export interface FetchMetadataIF {
+    type: string;
+    route: string;
+    param?: string;
+}

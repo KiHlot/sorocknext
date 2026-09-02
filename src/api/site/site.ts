@@ -1,24 +1,12 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { ResponseIF } from '@/types/api';
-import {
-    BaseData,
-    ContactFormIF,
-    SearchIF,
-    SearchResultIF,
-} from '@/api/site/types';
+import { BaseData, ContactFormIF } from '@/api/site/types';
 import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
 
 export const siteApi = createApi({
     reducerPath: 'siteApi',
     baseQuery: fetchRestApiQuery('/site'),
     endpoints: (builder) => ({
-        search: builder.mutation<ResponseIF<SearchResultIF[]>, SearchIF>({
-            query: (body) => ({
-                url: `/search`,
-                method: 'POST',
-                body,
-            }),
-        }),
         getCommonData: builder.query<BaseData | null, void>({
             query: () => ({
                 url: `/common-data`,

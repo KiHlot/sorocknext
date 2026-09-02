@@ -10,6 +10,7 @@ export const VALIDATOR_FIELDS = {
     Password: 'password',
     Email: 'email',
     Message: 'message',
+    UserId: 'userId',
 } as const;
 
 export const VALIDATOR_FILES = {
@@ -47,5 +48,9 @@ export const VALIDATOR_FIELD: ValidatorFieldT = {
     message: {
         minLength: 10,
         maxLength: 200,
+    },
+    userId: {
+        minLength: 1,
+        maxLength: 6,
     },
 };

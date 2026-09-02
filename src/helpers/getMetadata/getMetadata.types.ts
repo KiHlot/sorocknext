@@ -1,6 +1,3 @@
-import { HTMLString, OptionIF } from '@/types/common';
-import { AuthorIF } from '@/components/elems/Author/Author.types';
-
 export interface Metadata {
     title: string;
     description: string;

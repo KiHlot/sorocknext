@@ -1,29 +1,7 @@
-import { TagIF } from '@/types/common';
-
-export interface SearchIF {
-    phrase: string;
-    postTypes?: string[] | null;
-    categories?: number[] | null;
-}
-
-export interface SearchResultIF {
-    pageData: {
-        pageId: number;
-        thumb: string | null;
-        title: string;
-        country: string;
-        url: string;
-        dateUi: string;
-    };
-    authorData: {
-        fullName: string;
-        url: string;
-        thumb: string | null;
-    };
-}
+import { LinkIF, TagIF } from '@/types/common';
 
 export interface BaseData {
-    trends: { label: string; url: string }[];
+    trends: LinkIF[];
     base: {
         supportEmail: string;
     };

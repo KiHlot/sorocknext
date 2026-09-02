@@ -25,13 +25,13 @@ export interface TagIF {
     postsCount: number;
 }
 
+export type SearchParamsT = Record<string, string | undefined>;
+
 export interface PageProps {
     params: Promise<{
         slug: string;
     }>;
-    searchParams: Promise<{
-        [key: string]: string | undefined;
-    }>;
+    searchParams: Promise<SearchParamsT>;
 }
 
 export interface MenuItemIF {

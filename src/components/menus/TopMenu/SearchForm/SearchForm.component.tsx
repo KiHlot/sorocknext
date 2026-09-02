@@ -1,44 +1,36 @@
 'use client';
 
 import { FC } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
-import { siteApi } from '@/api/site/site';
-import { SearchIF, SearchResultIF } from '@/api/site/types';
-import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
 import MainButton from '@/components/controls/MainButton/MainButton.component';
+import { schema } from '@/components/menus/TopMenu/SearchForm/SearchForm.config';
 import styles from '@/components/menus/TopMenu/SearchForm/SearchForm.module.scss';
 import {
-    FieldsNames,
+    SearchFormIF,
     SearchFormPropsIF,
 } from '@/components/menus/TopMenu/SearchForm/SearchForm.types';
 
 const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
     const router = useRouter();
 
-    const [search, { isLoading }] = siteApi.useSearchMutation();
-
-    const { handleSubmit, control, reset, watch } = useForm<SearchIF>({
+    const {
+        handleSubmit,
+        control,
+        formState: { isValid },
+    } = useForm<SearchFormIF>({
+        resolver: yupResolver(schema),
         mode: 'onSubmit',
-        defaultValues: {
-            phrase: '',
-        },
     });
 
-    const phraseValue = watch('phrase');
-
-    const onSubmit = async (values: SearchIF): Promise<void> => {
-        await search(values)
-            .unwrap()
-            .then((data) => {
-                parseResponse<FieldsNames, SearchResultIF[]>(data, () => {
-                    reset();
-                    router.push('/search');
-                    //TODO error
-                });
-            });
+    const onSubmit = async (values: SearchFormIF): Promise<void> => {
+        const phrase = values.phrase.trim();
+        if (phrase) {
+            router.push(`/search?phrase=${encodeURIComponent(phrase)}`);
+        }
     };
 
     return (
@@ -53,15 +45,10 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
                 className={styles.input}
                 styleType="default"
             />
-
             <MainButton
-                type="submit"
-                disabled={
-                    isLoading ||
-                    phraseValue.length < 5 ||
-                    phraseValue.length > 30
-                }
                 className={`flc ${styles.button}`}
+                type="submit"
+                disabled={!isValid}
                 isCustom
             >
                 <IoSearch />

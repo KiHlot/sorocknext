@@ -1,11 +1,7 @@
-export interface AuthorIF {
-    img80?: string | null;
-    fullName: string;
-    url?: string;
-}
+import { AuthorThumbIF } from '@/types/post';
 
 export interface AuthorPropsIF {
     className?: string;
-    data?: AuthorIF;
+    data?: AuthorThumbIF;
     type?: 'full' | 'name' | 'thumb';
 }
