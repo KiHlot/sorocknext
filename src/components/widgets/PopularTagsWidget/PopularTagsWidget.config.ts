@@ -1,0 +1,1 @@
+export const POPULAR_TAGS_SLICE_COUNT = 15

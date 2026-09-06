@@ -5,9 +5,9 @@ import { IoPricetagOutline, IoCalendarOutline } from 'react-icons/io5';
 import { taxonomyApi } from '@/api/taxonomy/taxonomy';
 import Loading from '@/components/elems/Loading/Loading.component';
 import Modal from '@/components/interactive/Modal/Modal.component';
-import styles from '@/components/widgets/PopularTags/PopularTagModal/PopularTagModal.module.scss';
-import { PopularTagModalPropsIF } from '@/components/widgets/PopularTags/PopularTagModal/PopularTagModal.types';
-import PopularTagThumb from '@/components/widgets/PopularTags/PopularTagModal/PopularTagThumb/PopularTagThumb.component';
+import PopularTagThumb from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagThumb/PopularTagThumb.component';
+import styles from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.module.scss';
+import { PopularTagModalPropsIF } from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.types';
 
 const PopularTagModal: FC<PopularTagModalPropsIF> = ({
     tagData,
@@ -20,7 +20,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    const openHandler = () => {
+    const openHandler = (): void => {
         setIsModalOpen(true);
         searchPostsByTag(tagData.id);
     };
@@ -53,7 +53,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
             >
                 {!isLoading && sortedYears && data ? (
                     <>
-                        {sortedYears.map(year => (
+                        {sortedYears.map((year) => (
                             <div key={year} className={styles.yearWrapper}>
                                 <div className={styles.yearTitle}>
                                     <IoCalendarOutline />
@@ -61,7 +61,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
                                 </div>
 
                                 <div className={styles.yearList}>
-                                    {data[year].map(thumbData => (
+                                    {data[year]?.map((thumbData) => (
                                         <PopularTagThumb
                                             key={thumbData.url}
                                             thumbData={thumbData}

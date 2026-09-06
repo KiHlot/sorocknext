@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import styles from '@/components/widgets/PopularTags/PopularTagModal/PopularTagThumb/PopularTagThumb.module.scss';
-import { PopularTagThumbPropsIF } from '@/components/widgets/PopularTags/PopularTagModal/PopularTagThumb/PopularTagThumb.type';
+import styles from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagThumb/PopularTagThumb.module.scss';
+import { PopularTagThumbPropsIF } from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagThumb/PopularTagThumb.type';
 
 const PopularTagThumb: FC<PopularTagThumbPropsIF> = ({ thumbData }) => (
     <div className={styles.popularTagThumbWrapper}>
