@@ -13,13 +13,12 @@ import { TIME_FORMAT } from '@/configs/config';
 export const shuffle = <T>(array: T[]): T[] => {
     const arrayCopy = [...array];
 
-    for (let index = arrayCopy.length - 1; index > 0; index--) {
-        const randomIndex = Math.floor(Math.random() * (index + 1));
-        [arrayCopy[index], arrayCopy[randomIndex]] = [
-            arrayCopy[randomIndex],
-            arrayCopy[index],
-        ];
+    for (let i = arrayCopy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [arrayCopy[i]!, arrayCopy[j]!] = [arrayCopy[j]!, arrayCopy[i]!];
     }
+
     return arrayCopy;
 };
 

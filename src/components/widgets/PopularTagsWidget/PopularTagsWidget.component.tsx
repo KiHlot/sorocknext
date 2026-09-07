@@ -10,7 +10,11 @@ import styles from '@/components/widgets/PopularTagsWidget/PopularTagsWidget.mod
 const PopularTagsWidget: FC = () => {
     const { data: baseData } = siteApi.useGetCommonDataQuery();
 
-    return baseData?.popularTags?.length ? (
+    if (!baseData?.popularTags?.length) {
+        return null;
+    }
+
+    return (
         <div className={styles.popularTagsWrapper}>
             {shuffle(baseData.popularTags)
                 .slice(0, POPULAR_TAGS_SLICE_COUNT)
@@ -22,7 +26,7 @@ const PopularTagsWidget: FC = () => {
                     />
                 ))}
         </div>
-    ) : null;
+    );
 };
 
 export default PopularTagsWidget;

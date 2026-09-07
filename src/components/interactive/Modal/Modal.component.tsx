@@ -2,6 +2,7 @@ import { FC, useEffect, useRef } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import Loading from '@/components/elems/Loading/Loading.component';
+import { normalizeHtml } from '@/components/interactive/Modal/Modal.helpers';
 import styles from '@/components/interactive/Modal/Modal.module.scss';
 import { ModalPropsIF } from '@/components/interactive/Modal/Modal.types';
 
@@ -16,15 +17,7 @@ const Modal: FC<ModalPropsIF> = ({
 }) => {
     const modalRef = useRef<HTMLDivElement>(null);
 
-    const normalizeHtml = (isOpen: boolean) => {
-        if (isOpen) {
-            document.body.classList.add('ovh', 'hide');
-        } else {
-            document.body.classList.remove('ovh', 'hide');
-        }
-    };
-
-    const onClose = () => {
+    const onClose = (): void => {
         if (blockOutsideClick) {
             return;
         }
@@ -32,14 +25,14 @@ const Modal: FC<ModalPropsIF> = ({
         closeHandler();
     };
 
+    useOutsideClick(modalRef, onClose);
+
     useEffect(() => {
         normalizeHtml(isOpen);
         return () => {
             normalizeHtml(false);
         };
     }, [isOpen]);
-
-    useOutsideClick(modalRef, onClose);
 
     return isOpen ? (
         <div className={styles.overlay}>
