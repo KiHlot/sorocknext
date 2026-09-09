@@ -15,7 +15,7 @@ import {
 import { catchError } from '@/helpers/validation/error/error.helpers';
 import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
 import { Input } from '@/components/controls/Input/Input.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import {
     INPUT_NAMES,
@@ -116,9 +116,9 @@ const ResetPasswordForm: FC<ResetPasswordFormPropsIF> = ({ email }) => {
                 isRequired
                 isPassword
             />
-            <MainButton type="submit" isLoading={isLoading} disabled={!isValid}>
+            <Button type="submit" isLoading={isLoading} disabled={!isValid}>
                 Изменить
-            </MainButton>
+            </Button>
         </form>
     );
 };

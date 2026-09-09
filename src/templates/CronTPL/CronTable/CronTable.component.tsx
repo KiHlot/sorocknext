@@ -12,7 +12,7 @@ import Table, {
     RowItem,
     TableRow,
 } from '@/components/blocks/Table/Table.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import { TIME_FORMAT } from '@/configs/config';
 
 const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
@@ -49,13 +49,13 @@ const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
                     <RowItem>{value?.updatedBy || 'Нет автора'}</RowItem>
                     <RowItem>{value?.itemsCount || '-'}</RowItem>
                     <RowItem>
-                        <MainButton
+                        <Button
                             clickHandler={() => updateTask(taskName)}
                             className={styles.updateButton}
                             disabled={updateCronTaskLoading || cronInfoLoading}
                         >
                             <RxUpdate />
-                        </MainButton>
+                        </Button>
                     </RowItem>
                 </TableRow>
             ))}

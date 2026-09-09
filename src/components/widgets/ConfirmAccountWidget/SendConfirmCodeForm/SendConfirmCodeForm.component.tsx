@@ -14,7 +14,7 @@ import {
 } from '@/helpers/validation/codes/codes.config';
 import { catchError } from '@/helpers/validation/error/error.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import { schema } from '@/components/widgets/ConfirmAccountWidget/SendConfirmCodeForm/SendConfirmCodeForm.config';
 
 const SendConfirmCodeForm: FC = () => {
@@ -66,14 +66,14 @@ const SendConfirmCodeForm: FC = () => {
                 isRequired
                 isDisabled={isLoading || isSuccess}
             />
-            <MainButton
+            <Button
                 type="submit"
                 icon={<IoCheckmark />}
                 isLoading={isLoading}
                 disabled={!isValid || isSuccess}
             >
                 Отправить ссылку
-            </MainButton>
+            </Button>
         </form>
     );
 };

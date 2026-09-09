@@ -1,0 +1,126 @@
+@use '@/styles/mixins' as *;
+
+.modalWrapper {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.95);
+    transition:
+        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.open {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    &.closing {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    &.shake {
+        animation: shake 0.5s ease-in-out;
+    }
+
+    &:not(.custom) {
+        height: auto;
+        border-radius: var(--borderRadius);
+        margin-bottom: 80px;
+        max-width: 94%;
+        background: var(--white);
+
+        @include media(sm) {
+            margin-bottom: 40px;
+        }
+
+        .modalBody {
+            flex: 1 1 auto;
+            padding: 40px;
+        }
+
+        &.small {
+            max-width: 400px;
+            width: calc(100vw - 80px);
+            max-height: calc(80vh - 80px);
+
+            @include media(sm) {
+                max-height: calc(86vh - 40px);
+            }
+        }
+
+        &.medium {
+            width: 500px;
+            max-height: calc(86vh - 80px);
+
+            @include media(sm) {
+                max-height: calc(92vh - 40px);
+            }
+        }
+
+        &.large {
+            width: 900px;
+            max-height: calc(92vh - 80px);
+
+            @include media(sm) {
+                max-height: calc(96vh - 40px);
+            }
+        }
+    }
+}
+
+.closeButton {
+    position: absolute;
+    z-index: 2;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px;
+    
+    @include media(sm) {
+        top: 10px;
+        right: 10px;
+    }
+
+    svg {
+        width: 22px;
+        height: 22px;
+        fill: var(--textColor);
+    }
+
+    &:hover {
+        opacity: var(--hoverOpacity);
+    }
+}
+
+.modalBody {
+    position: relative;
+    overflow: auto;
+}
+
+.loading {
+    z-index: 3;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-10px);
+    }
+    40% {
+        transform: translateX(10px);
+    }
+    60% {
+        transform: translateX(-6px);
+    }
+    80% {
+        transform: translateX(6px);
+    }
+}

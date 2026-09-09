@@ -4,7 +4,7 @@ import { formatDate } from '@/helpers/utils';
 import styles from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.module.scss';
 import { AdminPromoBlockPropsIF } from '@/components/blocks/AdminPromoBlock/AdminPromoBlock.types';
 import Block from '@/components/blocks/Block/Block.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 
 const AdminPromoBlock: FC<AdminPromoBlockPropsIF> = ({
     title,
@@ -30,14 +30,14 @@ const AdminPromoBlock: FC<AdminPromoBlockPropsIF> = ({
                     <div className={styles.value}>
                         {modifyData?.updatedBy || 'error'}
                     </div>
-                    <MainButton
+                    <Button
                         variant="sq"
                         className={styles.updateCronInfoButton}
                         disabled={isLoading}
                         clickHandler={clickHandler}
                     >
                         <RxUpdate />
-                    </MainButton>
+                    </Button>
                 </div>
             </div>
         )}

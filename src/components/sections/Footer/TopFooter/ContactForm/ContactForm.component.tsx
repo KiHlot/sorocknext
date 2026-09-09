@@ -7,7 +7,7 @@ import { siteApi } from '@/api/site/site';
 import { ContactFormIF } from '@/api/site/types';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import TextArea from '@/components/controls/TextArea/TextArea.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import { schema } from '@/components/sections/Footer/TopFooter/ContactForm/ContactForm.config';
@@ -60,14 +60,14 @@ const ContactForm: FC = () => {
                 control={control}
                 isRequired
             />
-            <MainButton
+            <Button
                 type="submit"
                 variant="secondary"
                 isLoading={isLoading}
                 disabled={!!result}
             >
                 Отправить
-            </MainButton>
+            </Button>
         </form>
     );
 };

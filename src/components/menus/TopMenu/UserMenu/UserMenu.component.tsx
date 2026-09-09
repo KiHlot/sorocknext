@@ -3,7 +3,7 @@
 import { FC, useRef, useState } from 'react';
 import Link from 'next/link';
 import { CurrentUserIF } from '@/types/user';
-import { useOutsideClick } from '@/hooks/useOutsideClick';
+import { useOutsideClick } from '@/hooks/outsideClick.hook';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import { getSessionStorageItem } from '@/helpers/storage/storage.helpers';
 import Img from '@/components/elems/Img/Img.component';
@@ -16,7 +16,7 @@ const UserMenu: FC = () => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    useOutsideClick(menuWrapperRef, setIsOpen);
+    useOutsideClick(menuWrapperRef, () => setIsOpen(false));
 
     const currentUser = getSessionStorageItem<CurrentUserIF>(
         STORAGE_KEYS.CurrentUser,

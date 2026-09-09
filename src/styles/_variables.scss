@@ -34,8 +34,11 @@ $defaultThemeSettings: (
     borderError: 1px solid rgba(map.get($colors, error), 0.6),
     zIndexPopup: 70,
     zIndexMenu: 50,
+    zIndexOverlay: 50,
     gapDesktop: 30px,
     gapBlock: 20px,
+    hoverOpacity: 0.8,
+    disabledOpacity: 0.3,
 );
 
 $defaultTheme: map.merge($colors, $defaultThemeSettings);

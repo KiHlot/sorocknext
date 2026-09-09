@@ -5,8 +5,8 @@ import { FieldValues } from 'react-hook-form';
 import { VALIDATOR_FILE } from '@/helpers/validation/validation.config';
 import styles from '@/components/controls/InputFile/InputFile.module.scss';
 import { InputFilePropsIF } from '@/components/controls/InputFile/InputFile.types';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
-import buttonStyles from '@/components/controls/MainButton/MainButton.module.scss';
+import Button from '@/components/controls/Button/Button.component';
+import buttonStyles from '@/components/controls/Button/Button.module.scss';
 
 export const InputFile = <T extends FieldValues>({
     isDisabled,
@@ -30,7 +30,7 @@ export const InputFile = <T extends FieldValues>({
     };
 
     return (
-        <MainButton
+        <Button
             htmlFor={name}
             className={`flc ${styles.label} ${buttonStyles.button} ${className}`}
             icon={icon}
@@ -46,6 +46,6 @@ export const InputFile = <T extends FieldValues>({
                 onChange={handleChange}
             />
             {children}
-        </MainButton>
+        </Button>
     );
 };

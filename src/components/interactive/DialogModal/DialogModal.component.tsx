@@ -4,10 +4,10 @@ import {
     IoAlertCircleOutline,
     IoShieldCheckmarkOutline,
 } from 'react-icons/io5';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import styles from '@/components/interactive/DialogModal/DialogModal.module.scss';
 import { DialogModalPropsIF } from '@/components/interactive/DialogModal/DialogModal.types';
-import Modal from '@/components/interactive/Modal/Modal.component';
+import ModalSheet from '@/components/interactive/ModalSheet/ModalSheet.component';
 
 const DialogModal: FC<DialogModalPropsIF> = ({
     dialogText,
@@ -15,13 +15,13 @@ const DialogModal: FC<DialogModalPropsIF> = ({
     isOpen,
     setIsOpen,
 }) => {
-    const accept = () => {
+    const accept = (): void => {
         clickHandler();
         setIsOpen(false);
     };
 
     return (
-        <Modal
+        <ModalSheet
             title={{
                 label: 'Вы уверены?',
                 icon: <IoAlertCircleOutline />,
@@ -32,19 +32,24 @@ const DialogModal: FC<DialogModalPropsIF> = ({
         >
             <div className={styles.content}>{dialogText}</div>
             <div className={styles.buttonsList}>
-                <MainButton
+                <Button
                     clickHandler={() => setIsOpen(false)}
                     className={styles.decline}
+                    dataTest="dialog_modal_decline_button"
                 >
                     <CgClose />
                     Нет
-                </MainButton>
-                <MainButton clickHandler={accept} className={styles.accept}>
+                </Button>
+                <Button
+                    clickHandler={accept}
+                    className={styles.accept}
+                    dataTest="dialog_modal_accept_button"
+                >
                     <IoShieldCheckmarkOutline />
                     Да
-                </MainButton>
+                </Button>
             </div>
-        </Modal>
+        </ModalSheet>
     );
 };
 

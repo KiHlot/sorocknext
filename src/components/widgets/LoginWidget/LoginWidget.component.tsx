@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Block from '@/components/blocks/Block/Block.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import MainLogo from '@/components/elems/MainLogo/MainLogo.component';
 import styles from '@/components/widgets/LoginWidget/LoginWidget.module.scss';
 
@@ -17,9 +17,9 @@ const LoginWidget: FC = () => (
             Добро пожаловать на наш развлекательный портал. Вы можете войти в
             свой аккаунт или создать новый
         </div>
-        <MainButton variant="accent" href="/login" className={styles.button}>
+        <Button variant="accent" href="/login" className={styles.button}>
             Войти
-        </MainButton>
+        </Button>
     </Block>
 );
 

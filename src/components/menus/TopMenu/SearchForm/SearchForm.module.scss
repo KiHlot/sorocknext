@@ -47,7 +47,7 @@
         opacity: 1;
 
         svg {
-            opacity: 0.5;
+            opacity: var(--disabledOpacity);
         }
     }
 

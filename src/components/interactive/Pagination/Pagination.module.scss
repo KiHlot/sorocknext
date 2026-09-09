@@ -19,7 +19,7 @@
 }
 
 .current {
-    opacity: 0.6;
+    opacity: var(--hoverOpacity);
     cursor: default;
     background-color: var(--bgColor);
 }

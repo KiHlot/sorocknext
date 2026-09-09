@@ -4,7 +4,7 @@ import {
     EnhancedStore,
 } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { globalDataSlice } from '@/store/slices/globalDataSlice';
+import { siteConfig } from '@/store/slices/siteConfig/siteConfig.slice';
 import { adminApi } from '@/api/admin/admin';
 import { authApi } from '@/api/auth/auth';
 import { jwtApi } from '@/api/jwt/jwt';
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
     [jwtApi.reducerPath]: jwtApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [adminApi.reducerPath]: adminApi.reducer,
-    [globalDataSlice.reducerPath]: globalDataSlice.reducer,
+    [siteConfig.reducerPath]: siteConfig.reducer,
 });
 
 export const makeStore = (): EnhancedStore<RootState> =>

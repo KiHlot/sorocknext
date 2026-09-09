@@ -8,7 +8,7 @@ import { IoSearch } from 'react-icons/io5';
 import Block from '@/components/blocks/Block/Block.component';
 import CheckBoxGroup from '@/components/controls/CheckBoxGroup/CheckBoxGroup.component';
 import { Input } from '@/components/controls/Input/Input.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import { schema } from '@/components/widgets/SearchWidget/SearchWidget.config';
 import styles from '@/components/widgets/SearchWidget/SearchWidget.module.scss';
 import {
@@ -96,13 +96,13 @@ const SearchWidget: FC<SearchWidgetPropsIF> = ({
                         />
                     </div>
                 )}
-                <MainButton
+                <Button
                     type="submit"
                     disabled={!isValid || isPending}
                     icon={<IoSearch />}
                 >
                     Искать
-                </MainButton>
+                </Button>
             </form>
         </Block>
     );

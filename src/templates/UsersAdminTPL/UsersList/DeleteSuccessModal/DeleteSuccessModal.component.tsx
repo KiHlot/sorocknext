@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { TiUserDeleteOutline } from 'react-icons/ti';
-import { DELETE_SUCCESS_MODAL_TITLES } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.config';
-import { DeleteSuccessModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.types';
 import Table, {
     RowItem,
     TableRow,
 } from '@/components/blocks/Table/Table.component';
-import Modal from '@/components/interactive/Modal/Modal.component';
+import ModalSheet from '@/components/interactive/ModalSheet/ModalSheet.component';
+import { DELETE_SUCCESS_MODAL_TITLES } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.config';
+import { DeleteSuccessModalPropsIF } from '@/templates/UsersAdminTPL/UsersList/DeleteSuccessModal/DeleteSuccessModal.types';
 
 const DeleteSuccessModal: FC<DeleteSuccessModalPropsIF> = ({
     data,
@@ -16,7 +16,7 @@ const DeleteSuccessModal: FC<DeleteSuccessModalPropsIF> = ({
     const { result, reAssignedUser } = data || {};
 
     return (
-        <Modal
+        <ModalSheet
             isOpen={isOpen}
             closeHandler={onClose}
             title={{
@@ -41,7 +41,7 @@ const DeleteSuccessModal: FC<DeleteSuccessModalPropsIF> = ({
                 )}
                 <span>Посты переасайнены на юзера {reAssignedUser}</span>
             </div>
-        </Modal>
+        </ModalSheet>
     );
 };
 

@@ -13,7 +13,7 @@ import {
 } from '@/helpers/validation/codes/codes.config';
 import { catchError } from '@/helpers/validation/error/error.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import { schema } from '@/components/widgets/ResetPasswordWidget/SendResetPasswordMailForm/SendResetPasswordMailForm.config';
 import { SendResetPasswordMailFormPropsIF } from '@/components/widgets/ResetPasswordWidget/SendResetPasswordMailForm/SendResetPasswordMailForm.types';
@@ -81,9 +81,9 @@ const SendResetPasswordMailForm: FC<SendResetPasswordMailFormPropsIF> = ({
                 isRequired
                 isDisabled={isLoading}
             />
-            <MainButton type="submit" disabled={!isValid} isLoading={isLoading}>
+            <Button type="submit" disabled={!isValid} isLoading={isLoading}>
                 Отправить
-            </MainButton>
+            </Button>
         </form>
     );
 };

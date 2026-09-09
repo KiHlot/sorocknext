@@ -12,7 +12,7 @@ import Table, {
     TableRow,
 } from '@/components/blocks/Table/Table.component';
 import CheckBoxBase from '@/components/controls/CheckBox/CheckBoxBase/CheckBoxBase.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import Img from '@/components/elems/Img/Img.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import Pagination from '@/components/interactive/Pagination/Pagination.component';
@@ -60,23 +60,23 @@ const UsersTable: FC<UsersTablePropsIF> = ({
     return (
         <div className="flcol gapLayout">
             <div className={styles.buttonsLine}>
-                <MainButton
+                <Button
                     className={styles.delete}
                     icon={<AiOutlineDelete />}
                     disabled={selectedUsers.length === 0 || isDataLoading}
                     clickHandler={() => deleteUsers(selectedUsers)}
                 >
                     Удалить
-                </MainButton>
-                <MainButton
+                </Button>
+                <Button
                     className={styles.update}
                     icon={<RxUpdate />}
                     disabled={selectedUsers.length === 0 || isDataLoading}
                     clickHandler={() => updateUsers(selectedUsers)}
                 >
                     Обновить юзеров
-                </MainButton>
-                <MainButton
+                </Button>
+                <Button
                     className={styles.update}
                     icon={<RxUpdate />}
                     disabled={isDataLoading}
@@ -84,7 +84,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                     dialogText={<>Обновить роли всех юзеров?</>}
                 >
                     Обновить роли
-                </MainButton>
+                </Button>
             </div>
 
             {usersList?.length ? (
@@ -148,7 +148,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                 />
                             </RowItem>
                             <RowItem>
-                                <MainButton
+                                <Button
                                     clickHandler={() =>
                                         updateUsers([item.userId])
                                     }
@@ -156,10 +156,10 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                     disabled={isDataLoading}
                                 >
                                     <RxUpdate />
-                                </MainButton>
+                                </Button>
                             </RowItem>
                             <RowItem>
-                                <MainButton
+                                <Button
                                     clickHandler={() =>
                                         deleteUsers([item.userId])
                                     }
@@ -168,7 +168,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                     disabled={isDataLoading}
                                 >
                                     <AiOutlineDelete />
-                                </MainButton>
+                                </Button>
                             </RowItem>
                         </TableRow>
                     ))}

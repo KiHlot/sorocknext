@@ -16,7 +16,7 @@ import {
 import { catchError } from '@/helpers/validation/error/error.helpers';
 import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
 import { Input } from '@/components/controls/Input/Input.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import { schema } from '@/components/forms/RegistrationForm/RegistrationForm.config';
 
 const RegistrationForm: FC = () => {
@@ -112,9 +112,9 @@ const RegistrationForm: FC = () => {
                 isRequired
                 isPassword
             />
-            <MainButton type="submit" isLoading={isLoading} disabled={!isValid}>
+            <Button type="submit" isLoading={isLoading} disabled={!isValid}>
                 Регистрация
-            </MainButton>
+            </Button>
         </form>
     );
 };

@@ -8,7 +8,7 @@
     background-color: rgba(var(--accent), 0.3);
 
     &:hover {
-        opacity: 0.8;
+        opacity: var(--hoverOpacity);
     }
 }
 

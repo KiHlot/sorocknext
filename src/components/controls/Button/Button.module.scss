@@ -11,16 +11,16 @@
 
     &:hover {
         &:not(:disabled):not(.loading) {
-            opacity: 0.8;
+            opacity: var(--hoverOpacity);
         }
     }
 
     &:disabled {
-        opacity: 0.45;
+        opacity: var(--disabledOpacity);
     }
 
     &.loading {
-        opacity: 0.45;
+        opacity: var(--disabledOpacity);
     }
 
     &.hasIcon {

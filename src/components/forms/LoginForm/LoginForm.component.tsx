@@ -21,7 +21,7 @@ import {
 } from '@/helpers/validation/codes/codes.config';
 import { catchError } from '@/helpers/validation/error/error.helpers';
 import { Input } from '@/components/controls/Input/Input.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import { schema } from '@/components/forms/LoginForm/LoginForm.config';
 
 const LoginForm: FC = () => {
@@ -94,9 +94,9 @@ const LoginForm: FC = () => {
                 isRequired
                 isPassword
             />
-            <MainButton type="submit" isLoading={isLoading} disabled={!isValid}>
+            <Button type="submit" isLoading={isLoading} disabled={!isValid}>
                 Вход
-            </MainButton>
+            </Button>
         </form>
     );
 };

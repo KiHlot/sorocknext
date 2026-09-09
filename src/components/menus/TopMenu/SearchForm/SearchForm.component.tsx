@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
 import { Input } from '@/components/controls/Input/Input.component';
-import MainButton from '@/components/controls/MainButton/MainButton.component';
+import Button from '@/components/controls/Button/Button.component';
 import { schema } from '@/components/menus/TopMenu/SearchForm/SearchForm.config';
 import styles from '@/components/menus/TopMenu/SearchForm/SearchForm.module.scss';
 import {
@@ -51,14 +51,14 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
                 styleType="default"
                 isDisabled={isPending}
             />
-            <MainButton
+            <Button
                 className={`flc ${styles.button}`}
                 type="submit"
                 disabled={!isValid || isPending}
                 isCustom
             >
                 <IoSearch />
-            </MainButton>
+            </Button>
         </form>
     );
 };
