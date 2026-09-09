@@ -1,6 +1,7 @@
-import { TagIF } from '@/types/common';
+import { TagSearchIF } from '@/api/taxonomy/types';
 
 export interface PopularTagModalPropsIF {
-    tagData: TagIF;
-    className?: string;
+    modalLabel: string;
+    data: Record<string, TagSearchIF[]>;
+    onClose: () => void;
 }

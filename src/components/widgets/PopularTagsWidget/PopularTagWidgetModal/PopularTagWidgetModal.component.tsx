@@ -8,38 +8,49 @@ import PopularTagThumb from '@/components/widgets/PopularTagsWidget/PopularTagWi
 import styles from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.module.scss';
 import { PopularTagModalPropsIF } from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.types';
 
-const PopularTagModal: FC<PopularTagModalPropsIF> = ({ tagData }) => (
-    <ModalSheet
-        size="large"
-        title={{
-            label: `Поиск по тегу: ${tagData.name}`,
-            icon: <IoPricetagOutline />,
-        }}
-    >
-        {!isLoading && sortedYears && data ? (
-            <>
-                {sortedYears.map((year) => (
-                    <div key={year} className={styles.yearWrapper}>
-                        <div className={styles.yearTitle}>
-                            <IoCalendarOutline />
-                            <span className={styles.label}>{year}</span>
-                        </div>
+const PopularTagModal: FC<PopularTagModalPropsIF> = ({
+    modalLabel,
+    data,
+    onClose,
+}) => {
+    const sortedYears = data
+        ? Object.keys(data).sort(
+              (a, b) => Number.parseInt(b) - Number.parseInt(a),
+          )
+        : [];
 
-                        <div className={styles.yearList}>
-                            {data[year]?.map((thumbData) => (
-                                <PopularTagThumb
-                                    key={thumbData.url}
-                                    thumbData={thumbData}
-                                />
-                            ))}
+    return (
+        <ModalSheet onClose={onClose} size="large" dataTest="popular_tag_modal">
+            <div className={styles.labelWrapper}>
+                <IoPricetagOutline />
+                <h3>{modalLabel}</h3>
+            </div>
+
+            {sortedYears && data ? (
+                <div className={styles.dataList}>
+                    {sortedYears.map((year) => (
+                        <div key={year} className={styles.yearWrapper}>
+                            <div className={styles.yearTitle}>
+                                <IoCalendarOutline />
+                                <span className={styles.label}>{year}</span>
+                            </div>
+
+                            <div className={styles.yearList}>
+                                {data[year]?.map((thumbData) => (
+                                    <PopularTagThumb
+                                        key={thumbData.url}
+                                        thumbData={thumbData}
+                                    />
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </>
-        ) : (
-            <Loading />
-        )}
-    </ModalSheet>
-);
+                    ))}
+                </div>
+            ) : (
+                <Loading />
+            )}
+        </ModalSheet>
+    );
+};
 
 export default PopularTagModal;
