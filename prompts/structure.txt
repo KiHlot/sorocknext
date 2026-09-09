@@ -11,8 +11,16 @@
 |   |       jwt.ts
 |   |       types.ts
 |   |
+|   +---metadata
+|   |       endpoints.ts
+|   |       types.ts
+|   |
 |   +---page
-|   |       page.ts
+|   |       endpoints.ts
+|   |       types.ts
+|   |
+|   +---search
+|   |       endpoints.ts
 |   |       types.ts
 |   |
 |   +---site
@@ -59,11 +67,14 @@
 |   |   \---users
 |   |           page.tsx
 |   |
-|   \---news
-|       |   page.tsx
-|       |
-|       \---[slug]
-|               page.tsx
+|   +---news
+|   |   |   page.tsx
+|   |   |
+|   |   \---[slug]
+|   |           page.tsx
+|   |
+|   \---search
+|           page.tsx
 |
 +---components
 |   +---blocks
@@ -102,6 +113,11 @@
 |   |               VerticalMenu.types.ts
 |   |
 |   +---controls
+|   |   +---Button
+|   |   |       Button.component.tsx
+|   |   |       Button.module.scss
+|   |   |       Button.types.ts
+|   |   |
 |   |   +---CheckBox
 |   |   |   |   CheckBox.component.tsx
 |   |   |   |   CheckBox.types.ts
@@ -110,6 +126,11 @@
 |   |   |           CheckBoxBase.component.tsx
 |   |   |           CheckBoxBase.module.scss
 |   |   |           CheckBoxBase.types.ts
+|   |   |
+|   |   +---CheckBoxGroup
+|   |   |       CheckBoxGroup.component.tsx
+|   |   |       CheckBoxGroup.module.scss
+|   |   |       CheckBoxGroup.types.ts
 |   |   |
 |   |   +---CodeInput
 |   |   |       CodeInput.component.tsx
@@ -125,11 +146,6 @@
 |   |   |       InputFile.component.tsx
 |   |   |       InputFile.module.scss
 |   |   |       InputFile.types.ts
-|   |   |
-|   |   +---MainButton
-|   |   |       MainButton.component.tsx
-|   |   |       MainButton.module.scss
-|   |   |       MainButton.types.ts
 |   |   |
 |   |   \---TextArea
 |   |           TextArea.component.tsx
@@ -177,10 +193,14 @@
 |   |   |       NoData.module.scss
 |   |   |       NoData.types.ts
 |   |   |
+|   |   +---Overlay
+|   |   |       Overlay.component.tsx
+|   |   |       Overlay.module.scss
+|   |   |       Overlay.types.ts
+|   |   |
 |   |   \---SiteEmail
 |   |           SiteEmail.component.tsx
 |   |           SiteEmail.module.scss
-|   |           SiteEmail.types.ts
 |   |
 |   +---forms
 |   |   +---LoginForm
@@ -213,10 +233,27 @@
 |   |   |       InfoBlock.module.scss
 |   |   |       InfoBlock.types.ts
 |   |   |
-|   |   +---Modal
-|   |   |       Modal.component.tsx
-|   |   |       Modal.module.scss
-|   |   |       Modal.types.ts
+|   |   +---ModalSheet
+|   |   |   |   ModalSheet.component.tsx
+|   |   |   |   ModalSheet.config.ts
+|   |   |   |   ModalSheet.helpers.ts
+|   |   |   |   ModalSheet.types.ts
+|   |   |   |
+|   |   |   +---BottomSheet
+|   |   |   |   |   BottomSheet.component.tsx
+|   |   |   |   |   BottomSheet.config.ts
+|   |   |   |   |   BottomSheet.module.scss
+|   |   |   |   |   BottomSheet.types.ts
+|   |   |   |   |
+|   |   |   |   \---Indicator
+|   |   |   |           Indicator.component.tsx
+|   |   |   |           Indicator.module.scss
+|   |   |   |           Indicator.types.ts
+|   |   |   |
+|   |   |   \---Modal
+|   |   |           Modal.component.tsx
+|   |   |           Modal.module.scss
+|   |   |           Modal.types.ts
 |   |   |
 |   |   +---Pagination
 |   |   |       Pagination.component.tsx
@@ -240,10 +277,12 @@
 |   |   |
 |   |   \---TopMenu
 |   |       |   TopMenu.component.tsx
+|   |       |   TopMenu.config.ts
 |   |       |   TopMenu.module.scss
 |   |       |
 |   |       +---SearchForm
 |   |       |       SearchForm.component.tsx
+|   |       |       SearchForm.config.ts
 |   |       |       SearchForm.module.scss
 |   |       |       SearchForm.types.ts
 |   |       |
@@ -268,7 +307,6 @@
 |   |   |       |   TopFooter.component.tsx
 |   |   |       |   TopFooter.config.ts
 |   |   |       |   TopFooter.module.scss
-|   |   |       |   TopFooter.types.ts
 |   |   |       |
 |   |   |       +---ContactForm
 |   |   |       |       ContactForm.component.tsx
@@ -279,15 +317,6 @@
 |   |   |               FooterMenuColumn.component.tsx
 |   |   |               FooterMenuColumn.module.scss
 |   |   |               FooterMenuColumn.types.ts
-|   |   |
-|   |   +---HomePagePromoSection
-|   |   |   |   HomePagePromoSection.component.tsx
-|   |   |   |   HomePagePromoSection.module.scss
-|   |   |   |   HomePagePromoSection.types.ts
-|   |   |   |
-|   |   |   \---PromoSiteInfo
-|   |   |           PromoSiteInfo.component.tsx
-|   |   |           PromoSiteInfo.module.scss
 |   |   |
 |   |   +---LastNewsPromoSection
 |   |   |       LastNewsPromoSection.component.tsx
@@ -319,34 +348,41 @@
 |       |       LoginWidget.component.tsx
 |       |       LoginWidget.module.scss
 |       |
-|       +---PopularTags
-|       |   |   PopularTags.component.tsx
-|       |   |   PopularTags.module.scss
+|       +---PopularTagsWidget
+|       |   |   PopularTagsWidget.component.tsx
+|       |   |   PopularTagsWidget.config.ts
+|       |   |   PopularTagsWidget.module.scss
 |       |   |
-|       |   \---PopularTagModal
-|       |       |   PopularTagModal.component.tsx
-|       |       |   PopularTagModal.module.scss
-|       |       |   PopularTagModal.types.ts
+|       |   \---PopularTagWidgetModal
+|       |       |   PopularTagWidgetModal.component.tsx
+|       |       |   PopularTagWidgetModal.module.scss
+|       |       |   PopularTagWidgetModal.types.ts
 |       |       |
 |       |       \---PopularTagThumb
 |       |               PopularTagThumb.component.tsx
 |       |               PopularTagThumb.module.scss
 |       |               PopularTagThumb.type.ts
 |       |
-|       \---ResetPasswordWidget
-|           |   ResetPasswordWidget.component.tsx
-|           |   ResetPasswordWidget.config.ts
-|           |   ResetPasswordWidget.types.ts
-|           |
-|           +---ResetPasswordForm
-|           |       ResetPasswordForm.component.tsx
-|           |       ResetPasswordForm.config.ts
-|           |       ResetPasswordForm.types.ts
-|           |
-|           \---SendResetPasswordMailForm
-|                   SendResetPasswordMailForm.component.tsx
-|                   SendResetPasswordMailForm.config.ts
-|                   SendResetPasswordMailForm.types.ts
+|       +---ResetPasswordWidget
+|       |   |   ResetPasswordWidget.component.tsx
+|       |   |   ResetPasswordWidget.config.ts
+|       |   |   ResetPasswordWidget.types.ts
+|       |   |
+|       |   +---ResetPasswordForm
+|       |   |       ResetPasswordForm.component.tsx
+|       |   |       ResetPasswordForm.config.ts
+|       |   |       ResetPasswordForm.types.ts
+|       |   |
+|       |   \---SendResetPasswordMailForm
+|       |           SendResetPasswordMailForm.component.tsx
+|       |           SendResetPasswordMailForm.config.ts
+|       |           SendResetPasswordMailForm.types.ts
+|       |
+|       \---SearchWidget
+|               SearchWidget.component.tsx
+|               SearchWidget.config.ts
+|               SearchWidget.module.scss
+|               SearchWidget.types.ts
 |
 +---configs
 |       config.ts
@@ -366,6 +402,7 @@
 |   +---getMetadata
 |   |       getMetadata.config.ts
 |   |       getMetadata.ts
+|   |       getMetadata.types.ts
 |   |
 |   +---logout
 |   |       logout.config.ts
@@ -388,7 +425,11 @@
 |               error.types.ts
 |
 +---hooks
-|       useOutsideClick.ts
+|   |   outsideClick.hook.ts
+|   |
+|   \---breakpoint
+|           breakpoint.config.ts
+|           breakpoint.hook.ts
 |
 +---images
 |   +---flags
@@ -539,7 +580,10 @@
 |   |   store.ts
 |   |
 |   \---slices
-|           globalDataSlice.ts
+|       \---siteConfig
+|               siteConfig.config.ts
+|               siteConfig.slice.ts
+|               siteConfig.types.ts
 |
 +---styles
 |   |   global.scss
@@ -567,6 +611,11 @@
 |   |           CronTable.module.scss
 |   |           CronTable.types.ts
 |   |
+|   +---HomePageTPL
+|   |       HomePageTPL.component.tsx
+|   |       HomePageTPL.module.scss
+|   |       HomePageTPL.types.ts
+|   |
 |   +---MusicArchiveTPL
 |   |       MusicArchiveTPL.component.tsx
 |   |       MusicArchiveTPL.types.ts
@@ -589,6 +638,7 @@
 |   +---SearchTPL
 |   |       SearchTPL.component.tsx
 |   |       SearchTPL.module.scss
+|   |       SearchTPL.types.ts
 |   |
 |   +---ShortsArchiveTPL
 |   |       ShortsArchiveTPL.component.tsx
