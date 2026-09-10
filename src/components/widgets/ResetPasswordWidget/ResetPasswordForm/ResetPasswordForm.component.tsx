@@ -6,16 +6,16 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { authApi } from '@/api/auth/auth';
-import { MAGIC_NUMBERS } from '@/configs/config';
+import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import {
     ERRORS_CODES,
     SUCCESS_CODES,
 } from '@/helpers/validation/codes/codes.config';
 import { catchError } from '@/helpers/validation/error/error.helpers';
+import Button from '@/components/controls/Button/Button.component';
 import CodeInput from '@/components/controls/CodeInput/CodeInput.component';
 import { Input } from '@/components/controls/Input/Input.component';
-import Button from '@/components/controls/Button/Button.component';
 import InfoBlock from '@/components/interactive/InfoBlock/InfoBlock.component';
 import {
     INPUT_NAMES,

@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { CurrentUserIF } from '@/types/user';
 import { jwtApi } from '@/api/jwt/jwt';
 import { LoginUserIF } from '@/api/jwt/types';
-import { MAGIC_NUMBERS } from '@/configs/config';
+import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import {
     setCookie,
@@ -20,8 +20,8 @@ import {
     SUCCESS_CODES,
 } from '@/helpers/validation/codes/codes.config';
 import { catchError } from '@/helpers/validation/error/error.helpers';
-import { Input } from '@/components/controls/Input/Input.component';
 import Button from '@/components/controls/Button/Button.component';
+import { Input } from '@/components/controls/Input/Input.component';
 import { schema } from '@/components/forms/LoginForm/LoginForm.config';
 
 const LoginForm: FC = () => {

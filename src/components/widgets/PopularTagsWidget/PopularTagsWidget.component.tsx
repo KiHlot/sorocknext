@@ -12,7 +12,7 @@ import styles from '@/components/widgets/PopularTagsWidget/PopularTagsWidget.mod
 
 const PopularTagsWidget: FC = () => {
     const { data: baseData } = siteApi.useGetCommonDataQuery();
-    const [searchPostsByTag, { data: searchPostsByTagData, isLoading, reset }] =
+    const [searchPostsByTag, { data: searchPostsByTagData, isFetching }] =
         taxonomyApi.useLazySearchPostsByTagQuery();
 
     const [selectedTag, setSelectedTag] = useState<TagIF | null>(null);
@@ -51,7 +51,7 @@ const PopularTagsWidget: FC = () => {
                         key={tagData.slug}
                         clickHandler={() => openHandler(tagData)}
                         className={`flc ${styles.tagButton}`}
-                        disabled={isLoading}
+                        disabled={isFetching || !!selectedTag}
                         isCustom
                         dataTest="open_popular_tag_modal_button"
                     >
@@ -62,6 +62,7 @@ const PopularTagsWidget: FC = () => {
             {selectedTag && (
                 <PopularTagModal
                     data={data}
+                    isLoading={isFetching}
                     modalLabel={`Посты по тегу: ${selectedTag.name}`}
                     onClose={closeHandler}
                 />

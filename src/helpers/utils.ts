@@ -8,7 +8,7 @@ import {
 import empty_user_250_250 from '@/images/img/empty_user_250_250.png';
 import empty_user_500_500 from '@/images/img/empty_user_500_500.png';
 import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
-import { TIME_FORMAT } from '@/configs/config';
+import { TIME_FORMATS } from '@/configs/timeFormats.config';
 
 export const shuffle = <T>(array: T[]): T[] => {
     const arrayCopy = [...array];
@@ -28,9 +28,9 @@ export const formatDate = (backDate?: string, type?: 'withTime'): string => {
     }
 
     const uiFormat =
-        type === 'withTime' ? TIME_FORMAT.dateWithTime : TIME_FORMAT.dateUi;
+        type === 'withTime' ? TIME_FORMATS.DateWithTimeUi : TIME_FORMATS.DateUi;
 
-    return `${dayjs(backDate, TIME_FORMAT.backDateWithTime).format(uiFormat)}${type ? '' : 'г.'}`;
+    return `${dayjs(backDate, TIME_FORMATS.BackDateWithTime).format(uiFormat)}${type ? '' : 'г.'}`;
 };
 
 export const normalizeImage = (

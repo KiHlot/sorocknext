@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { authApi } from '@/api/auth/auth';
 import { RegistrationFieldsIF } from '@/api/auth/types';
-import { MAGIC_NUMBERS } from '@/configs/config';
+import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import {
     ERRORS_CODES,
@@ -15,8 +15,8 @@ import {
 } from '@/helpers/validation/codes/codes.config';
 import { catchError } from '@/helpers/validation/error/error.helpers';
 import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
-import { Input } from '@/components/controls/Input/Input.component';
 import Button from '@/components/controls/Button/Button.component';
+import { Input } from '@/components/controls/Input/Input.component';
 import { schema } from '@/components/forms/RegistrationForm/RegistrationForm.config';
 
 const RegistrationForm: FC = () => {

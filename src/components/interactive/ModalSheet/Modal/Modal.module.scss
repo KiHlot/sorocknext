@@ -30,8 +30,8 @@
         border-radius: var(--borderRadius);
         margin-bottom: 80px;
         max-width: 94%;
-        background: var(--white);
-
+        background: var(--bgColor);
+        
         @include media(sm) {
             margin-bottom: 40px;
         }

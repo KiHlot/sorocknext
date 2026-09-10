@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import Link from 'next/link';
+import CategoryLink from '@/components/elems/CategoryLink/CategoryLink.component';
 import styles from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagThumb/PopularTagThumb.module.scss';
 import { PopularTagThumbPropsIF } from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagThumb/PopularTagThumb.type';
 
@@ -33,14 +34,14 @@ const PopularTagThumb: FC<PopularTagThumbPropsIF> = ({ thumbData }) => (
 
             {thumbData.categories && (
                 <div className={styles.category_list}>
-                    {/*{thumbData.categories.map((slug) => (*/}
-                    {/*    <CategoryLink*/}
-                    {/*        key={slug}*/}
-                    {/*        category={slug}*/}
-                    {/*        linkType="small"*/}
-                    {/*        className={styles.cat_link}*/}
-                    {/*    />*/}
-                    {/*))}*/}
+                    {thumbData.categories.map((slug) => (
+                        <CategoryLink
+                            key={slug}
+                            categorySLug={slug}
+                            linkType="small"
+                            className={styles.catLink}
+                        />
+                    ))}
                 </div>
             )}
         </div>

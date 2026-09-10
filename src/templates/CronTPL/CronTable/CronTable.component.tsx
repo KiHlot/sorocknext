@@ -2,18 +2,16 @@
 
 import { FC } from 'react';
 import { RxUpdate } from 'react-icons/rx';
-import dayjs from 'dayjs';
 import { adminApi } from '@/api/admin/admin';
 import { formatDate } from '@/helpers/utils';
-import { TABLE_TITLES } from '@/templates/CronTPL/CronTable/CronTable.config';
-import styles from '@/templates/CronTPL/CronTable/CronTable.module.scss';
-import { CronTablePropsIF } from '@/templates/CronTPL/CronTable/CronTable.types';
 import Table, {
     RowItem,
     TableRow,
 } from '@/components/blocks/Table/Table.component';
 import Button from '@/components/controls/Button/Button.component';
-import { TIME_FORMAT } from '@/configs/config';
+import { TABLE_TITLES } from '@/templates/CronTPL/CronTable/CronTable.config';
+import styles from '@/templates/CronTPL/CronTable/CronTable.module.scss';
+import { CronTablePropsIF } from '@/templates/CronTPL/CronTable/CronTable.types';
 
 const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
     const [updateCronTask, { isLoading: updateCronTaskLoading }] =
@@ -21,13 +19,13 @@ const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
     const [getCronInfo, { isLoading: cronInfoLoading }] =
         adminApi.useLazyGetCronInfoQuery();
 
-    const updateTask = (taskName: string) => {
+    const updateTask = async (taskName: string): Promise<void> => {
         updateCronTask(taskName)
             .unwrap()
             .finally(() => {
                 getCronInfo()
                     .unwrap()
-                    .then(data => {
+                    .then((data) => {
                         setCronInfoData(data?.data || null);
                     });
             });
@@ -53,6 +51,7 @@ const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
                             clickHandler={() => updateTask(taskName)}
                             className={styles.updateButton}
                             disabled={updateCronTaskLoading || cronInfoLoading}
+                            dataTest="asd"
                         >
                             <RxUpdate />
                         </Button>

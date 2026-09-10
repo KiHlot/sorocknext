@@ -1,15 +1,25 @@
 @use '@/styles/mixins' as *;
 
-.tagButtonWrapper {
-    height: 40px;
-    border-radius: var(--borderRadius);
-    word-break: break-word;
-    padding: 10px;
-    background-color: rgba(var(--accent), 0.3);
+.bodyWrapper {
+    width: 100%;
+}
 
-    &:hover {
-        opacity: var(--hoverOpacity);
+.labelWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0 10px;
+    font-size: 18px;
+
+    svg {
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
     }
+}
+
+.noData {
+    height: 100%;
 }
 
 .yearWrapper {

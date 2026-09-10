@@ -3,6 +3,7 @@
 import { FC } from 'react';
 import { IoPricetagOutline, IoCalendarOutline } from 'react-icons/io5';
 import Loading from '@/components/elems/Loading/Loading.component';
+import NoData from '@/components/elems/NoData/NoData.component';
 import ModalSheet from '@/components/interactive/ModalSheet/ModalSheet.component';
 import PopularTagThumb from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagThumb/PopularTagThumb.component';
 import styles from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.module.scss';
@@ -12,6 +13,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
     modalLabel,
     data,
     onClose,
+    isLoading,
 }) => {
     const sortedYears = data
         ? Object.keys(data).sort(
@@ -20,12 +22,17 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
         : [];
 
     return (
-        <ModalSheet onClose={onClose} size="large" dataTest="popular_tag_modal">
+        <ModalSheet
+            onClose={onClose}
+            size="large"
+            dataTest="popular_tag_modal"
+            isLoading={isLoading}
+            classNameBody={`flcol gapLayout ${styles.bodyWrapper}`}
+        >
             <div className={styles.labelWrapper}>
                 <IoPricetagOutline />
                 <h3>{modalLabel}</h3>
             </div>
-
             {sortedYears && data ? (
                 <div className={styles.dataList}>
                     {sortedYears.map((year) => (
@@ -47,7 +54,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
                     ))}
                 </div>
             ) : (
-                <Loading />
+                <NoData className={styles.noData} />
             )}
         </ModalSheet>
     );
