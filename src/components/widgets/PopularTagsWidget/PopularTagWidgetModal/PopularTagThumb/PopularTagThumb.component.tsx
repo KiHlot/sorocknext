@@ -14,12 +14,10 @@ const PopularTagThumb: FC<PopularTagThumbPropsIF> = ({ thumbData }) => (
                 backgroundImage: `url(${thumbData.thumbnail})`,
             }}
         />
-
         <div className={styles.content}>
             <Link href={thumbData.url} className={styles.title}>
                 {thumbData.title}
             </Link>
-
             {thumbData.authorUrl && (
                 <Link
                     title="Страница автора статьи"
@@ -29,9 +27,7 @@ const PopularTagThumb: FC<PopularTagThumbPropsIF> = ({ thumbData }) => (
                     {thumbData.authorName}
                 </Link>
             )}
-
             <div className={styles.date}>{thumbData.publishDate}</div>
-
             {thumbData.categories && (
                 <div className={styles.category_list}>
                     {thumbData.categories.map((slug) => (

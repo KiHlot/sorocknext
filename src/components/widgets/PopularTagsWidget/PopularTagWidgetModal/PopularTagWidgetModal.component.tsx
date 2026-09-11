@@ -2,7 +2,6 @@
 
 import { FC } from 'react';
 import { IoPricetagOutline, IoCalendarOutline } from 'react-icons/io5';
-import Loading from '@/components/elems/Loading/Loading.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import ModalSheet from '@/components/interactive/ModalSheet/ModalSheet.component';
 import PopularTagThumb from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagThumb/PopularTagThumb.component';
@@ -41,7 +40,6 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
                                 <IoCalendarOutline />
                                 <span className={styles.label}>{year}</span>
                             </div>
-
                             <div className={styles.yearList}>
                                 {data[year]?.map((thumbData) => (
                                     <PopularTagThumb
