@@ -68,3 +68,37 @@
         display: block;
     }
 }
+
+.thumb {
+    width: 32%;
+    margin-right: 2%;
+    margin-bottom: 16px;
+
+    &:nth-child(3n) {
+        margin-right: 0;
+
+        @include media(xl) {
+            margin-right: 2%;
+        }
+
+        @include media(md) {
+            margin-right: 0;
+        }
+    }
+
+    &:nth-child(2n) {
+        @include media(xl) {
+            margin-right: 0;
+        }
+    }
+
+    @include media(xl) {
+        width: 49%;
+        margin-right: 2%;
+    }
+
+    @include media(md) {
+        width: 100%;
+        margin-right: 0;
+    }
+}

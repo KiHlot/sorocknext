@@ -1,0 +1,78 @@
+@use '@/styles/mixins' as *;
+
+.popularTagThumbWrapper {
+    width: 100%;
+    height: auto;
+    max-height: 140px;
+    background-color: var(--bgColorSecondary);
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    border-radius: var(--borderRadius);
+    overflow: hidden;
+    box-shadow: var(--boxShadow);
+
+    &:hover {
+        box-shadow: none;
+    }
+
+    @include media(xxl) {
+        max-height: 170px;
+    }
+}
+
+.thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 33%;
+    height: 100%;
+    overflow: hidden;
+    text-decoration: unset;
+}
+
+.content {
+    width: 67%;
+    margin-left: auto;
+    padding: 10px;
+    position: relative;
+    gap: 8px 0;
+
+    &.pb {
+        padding-bottom: 30px;
+    }
+}
+
+.thumbHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date {
+    font-size: 13px;
+    opacity: 0.6;
+}
+
+.categories {
+    display: flex;
+    align-items: center;
+    gap: 0 6px;
+}
+
+.title {
+    font-size: 13px;
+    line-height: 16px;
+    display: block;
+}
+
+.postAuthor {
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    width: 100%;
+    text-align: right;
+    padding: 0 10px;
+    opacity: 0.4;
+}

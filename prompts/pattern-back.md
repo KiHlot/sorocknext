@@ -1,346 +1,709 @@
-# Паттерны разработки бэкенда (WordPress) PHP 8.4
+# Паттерны разработки бэкенда (WordPress) — PHP 8.4
 
-## Общая архитектура
+## 0. Общие правила кодирования
 
-_Структура папок:_
+### Версия PHP
 
-```
-theme/
-├── functions.php # Точка входа — подключение всех основных папок
-├── helpers/
-│ ├── index.php # Автозагрузка всех _*.php и **/index.php
-│ ├── _class-api-helper.php # Регистрация роутов, формирование ответов, JWT
-│ ├── _class-site-config.php # Конфигурация сайта (роли, пост-типы, валидаторы)
-│ ├── _class-site-constants.php # Статические данные (страны, месяцы, дни недели)
-│ ├── _class-validate.php # Валидация полей
-│ ├── _mail_html.php # HTML-шаблон для писем
-│ ├── _upload_image_file.php # Загрузка и масштабирование изображений
-│ └── _utils.php # Утилиты: gf(), uf(), gf_img(), sanitize_string() и др.
-├── configs/
-│ └── index.php # Автозагрузка конфигураций
-├── site-setup/
-│ ├── index.php # Автозагрузка site-setup
-│ └── jsons/ # JSON-файлы для кэширования (cron_info_JSON и др.)
-├── controllers/
-│ ├── index.php # Автозагрузка всех контроллеров
-│ ├── _admin-controller.php
-│ ├── _auth-controller.php
-│ ├── _calendar-controller.php
-│ ├── _music-controller.php
-│ ├── _news-controller.php
-│ ├── _page-controller.php
-│ ├── _post-controller.php
-│ ├── _publications-controller.php
-│ ├── _shorts-controller.php
-│ ├── _site-controller.php
-│ ├── _sport-controller.php
-│ ├── _taxonomy-controller.php
-│ ├── _users-controller.php
-│ └── _video-controller.php
-├── models/
-│ ├── index.php # Автозагрузка всех моделей
-│ ├── _auth-model.php
-│ ├── _feed-model.php
-│ ├── _page-model.php
-│ ├── _post-model.php
-│ ├── _site-model.php
-│ ├── _taxonomy-model.php
-│ └── _user-model.php
-└── api/
-└── routes.php # Регистрация всех REST-роутов
+Проект работает на **PHP 8.4+**. Используются:
 
-```
+- **Типизированные константы класса:** `private const string X = '...'`
+- **`readonly`-свойства:** `private readonly int $id`
+- **`readonly class`:** для неизменяемых моделей (`Post_Model`, `Page_Model`)
+- **Конструктор property promotion** — не используется
+- **`match` вместо `switch`** — везде, где возможно
+- **`??=`** для ленивой инициализации
+- **`?->`** для null-safe вызовов
+- **First-class callable:** `self::method(...)`
+- **`catch (Exception)` без переменной** — когда `$e` не нужна
 
-_Загрузка файлов: `functions.php` (точка входа):_
+### Namespace
+
+Проект **без namespace'ов**. Все классы и функции в **глобальном пространстве**.
+
+**Следствие:** перед глобальными классами (`DateTime`, `Exception`, `WP_Error`, `WP_Query`, `WP_Post`, `WP_Term`, `WP_User`, `RuntimeException`, `InvalidArgumentException`) **не ставим `\`**.
 
 ```php
-include_once('helpers/index.php');
-include_once('configs/index.php');
-include_once('site-setup/index.php');
-include_once('controllers/index.php');
-include_once('models/index.php');
-include_once('api/routes.php');
-```
-
-#### Автозагрузка через `index.php`
-
-_Каждая папка содержит `index.php`, который подключает все файлы с префиксом _ и все вложенные `index.php`:_
-
-```php
-foreach (glob((dirname(__FILE__) . '/_*.php')) as $file) {
-    include_once $file;
+// ✅ Правильно
+throw new RuntimeException('...');
+$date = DateTime::createFromFormat('Y-m-d', $value);
+} catch (Exception) {
+    return null;
 }
 
-foreach (glob((dirname(__FILE__) . '/**/index.php')) as $file) {
-    include_once $file;
+// ❌ Неправильно
+throw new \RuntimeException('...');
+$date = \DateTime::createFromFormat('Y-m-d', $value);
+} catch (\Exception $e) {
+    return null;
 }
 ```
 
-#### Принцип:
+### Именование
 
-- Все файлы с префиксом _ загружаются автоматически.
-- Все вложенные папки, содержащие index.php, также подключаются.
+- **Методы** — `snake_case`: `get_post_author()`, `update_email()`
+- **Параметры** — `snake_case`: `$user_id`, `$post__not_in`, `$is_redirect`
+- **Переменные** — `snake_case`: `$post_types`, `$is_valid`
+- **Ключи JSON** — `camelCase`: `userId`, `avatarUrl`, `fullName`
+- **Классы** — `PascalCase` с префиксами категорий:
+    - `Site_Config`, `Site_Model`, `User_Model` — модели/конфиги
+    - `Admin_Controller`, `Auth_Controller` — контроллеры
+    - `Api_Helper`, `Validate` — хелперы
+- **Файлы** — с префиксом `_` для автозагрузки: `_class-api-helper.php`, `_post-model.php`
 
-#### Принципы организации
+### Форматирование
 
-- Контроллеры — обрабатывают HTTP-запросы, валидируют данные, вызывают модели, формируют ответ через Api_Helper::response().
-- Модели — содержат бизнес-логику, работают с БД, ACF, WordPress API.
-- Хелперы — вспомогательные классы и утилиты.
-- Конфигурация — хранится в Site_Config и Site_Constants.
-- Роуты — регистрируются в api/routes.php.
+- **4 пробела** для отступов (не табы)
+- **Открывающая `{` метода** — на следующей строке
+- **PHPDoc** — на **всех** публичных методах и функциях
+- **Секции** — в больших классах через `// =========`
+- **Одинарные кавычки** для строк без интерполяции
+- **Интерполяция** — без `{}` для простых переменных: `"Привет, $name"`
+
+### Секции в классах
+
+Большие классы (> 100 строк) разбиваются на **логические секции** с заголовками:
+
+```php
+// =====================================================================
+// Название секции
+// =====================================================================
+```
+
+Типичные секции:
+
+- `Singleton` (для `Site_Config`)
+- `Константы`
+- `Состояние`
+- `Публичные настройки` (для `Site_Config`)
+- `Регистрация роутов`
+- `Публичные эндпоинты`
+- `Внутренние хелперы`
+- `Модели ответа`
 
 ---
 
-## Классы и их ответственность
+## 1. Архитектура
 
-### Хелперы (`helpers/`)
+### Структура папок
 
-#### `Api_Helper`
+```
+theme/
+├── functions.php              # Точка входа — подключение всех папок
+├── index.php                  # Обязательный файл темы (заглушка)
+├── style.css                  # Заголовок темы + CSS
+├── readme.txt                 # Описание темы
+├── helpers/
+│   ├── index.php              # Автозагрузка helpers
+│   ├── _class-api-helper.php  # Регистрация роутов, ответы, JWT
+│   ├── _class-site-config.php # Singleton-конфиг
+│   ├── _class-validate.php    # Валидация полей
+│   ├── _mail_html.php         # HTML-шаблон писем
+│   ├── _upload_image_file.php # Загрузка и масштабирование
+│   └── _utils.php             # Утилиты
+├── configs/
+│   └── index.php              # Автозагрузка конфигов
+├── site-setup/
+│   ├── index.php              # Автозагрузка site-setup
+│   ├── _debug.php             # Debug для локального окружения
+│   ├── _jwt.php               # Настройка JWT
+│   ├── _media.php             # Размеры изображений
+│   ├── _options_page.php      # ACF-страницы настроек
+│   ├── _reset_functions.php   # Отключение лишнего из WP
+│   ├── _pt_autors.php         # Post type: autors
+│   ├── _pt_cool.php           # Post type: cool
+│   ├── _pt_news.php           # Post type: news
+│   ├── _pt_nocommerce.php     # Post type: nocommerce
+│   ├── _pt_reviews.php        # Post type: reviews
+│   ├── _pt_rock_data.php      # Post type: rock-data
+│   ├── _pt_stars.php          # Post type: stars (экспериментальный)
+│   └── jsons/                 # JSON-кэш (cron_info_JSON и др.)
+├── controllers/
+│   ├── index.php              # Автозагрузка контроллеров
+│   ├── _admin-controller.php
+│   ├── _auth-controller.php
+│   ├── _metadata_controller.php
+│   ├── _news-controller.php
+│   ├── _page-controller.php
+│   ├── _search-controller.php
+│   ├── _site-controller.php
+│   ├── _taxonomy-controller.php
+│   └── _users-controller.php
+├── models/
+│   ├── index.php              # Автозагрузка моделей
+│   ├── _auth-model.php
+│   ├── _page-model.php
+│   ├── _post-model.php
+│   ├── _search-model.php
+│   ├── _site-model.php
+│   ├── _taxonomy-model.php
+│   └── _user-model.php
+└── api/
+    └── routes.php             # Регистрация всех роутов
+```
+
+### Точка входа — `functions.php`
+
+```php
+<?php
+
+if (!defined('_S_VERSION')) {
+    define('_S_VERSION', '1.0.0');
+}
+
+function add_admin_scripts(): void
+{
+    wp_enqueue_script('custom_js', get_template_directory_uri() . '/scripts.js', [], _S_VERSION, true);
+    wp_enqueue_style('custom_css', get_template_directory_uri() . '/style.css', [], _S_VERSION);
+}
+
+add_action('admin_enqueue_scripts', 'add_admin_scripts', 25);
+
+include_once 'helpers/index.php';
+include_once 'configs/index.php';
+include_once 'site-setup/index.php';
+include_once 'controllers/index.php';
+include_once 'models/index.php';
+include_once 'api/routes.php';
+```
+
+### Автозагрузка через `index.php`
+
+Каждая папка содержит `index.php`, который подключает все файлы с префиксом `_` и все вложенные `index.php`:
+
+```php
+<?php
+foreach (glob(dirname(__FILE__) . '/_*.php') as $file) {
+    include_once $file;
+}
+
+foreach (glob(dirname(__FILE__) . '/**/index.php') as $file) {
+    include_once $file;
+}
+```
+
+**Правило:** все PHP-классы и функции в папках — с префиксом `_` в имени файла.
+
+### Принципы
+
+- **Контроллеры** (`controllers/`) — обрабатывают HTTP-запросы, валидируют, вызывают модели, формируют ответ через `Api_Helper::response()`.
+- **Модели** (`models/`) — бизнес-логика, работа с БД, ACF, WordPress API.
+- **Хелперы** (`helpers/`) — вспомогательные классы и утилиты.
+- **Конфигурация** — централизована в `Site_Config` (singleton).
+- **Роуты** — регистрируются в `api/routes.php`.
+
+### Поток данных
+
+```
+HTTP-запрос
+  ↓
+WP REST API (register_rest_route)
+  ↓
+Controller::method()
+  ↓
+Validate::check_request()  ← валидация
+  ↓
+Model::method()             ← бизнес-логика
+  ↓
+Api_Helper::response()      ← стандартизированный ответ
+  ↓
+JSON
+```
+
+---
+
+## 2. Ядро (helpers/)
+
+### 2.1. `Api_Helper`
+
+**Файл:** `helpers/_class-api-helper.php`
 
 Основной класс для работы с REST API.
 
+**Константы:**
+
+- `private const string API_ENDPOINT = '/rest'` — базовый префикс всех роутов
+
 **Методы:**
 
-- `public_route(string $route, array $callback)` — регистрация публичного эндпоинта (без JWT).
-- `private_route(string $route, array $callback)` — регистрация приватного эндпоинта (с JWT-проверкой).
-- `response(?array $data = null, ?array $settings = null): array` — формирование стандартизированного ответа.
-- `set_error(string $code, ?string $field_name = null, ?string $add_info = null): array` — создание структурированной ошибки.
-- `get_user_id_from_headers(?WP_REST_Request $request): ?int` — извлечение ID пользователя из JWT-токена.
-- `get_post_type_args(array $props): array` — генерация аргументов для регистрации CPT.
+- `public function public_route(string $route, array $callback): void` — регистрация публичного эндпоинта (без JWT).
+- `public function private_route(string $route, array $callback): void` — регистрация приватного эндпоинта (с JWT-проверкой).
+- `public static function check_permissions(WP_REST_Request $request): bool|WP_Error` — callback для `permission_callback` приватных роутов.
+- `public function get_user_id_from_headers(?WP_REST_Request $request): ?int` — извлечение ID пользователя из JWT в `Authorization: Bearer <token>`.
+- `public function response(?array $data = null, ?array $settings = null): array` — формирование стандартизированного ответа.
+- `public function set_error(string $code, ?string $field_name = null, ?string $add_info = null): array` — создание структурированной ошибки.
 
-_Пример регистрации роута:_
+**Пример регистрации роутов:**
 
 ```php
-// Публичный
 $this->api->public_route('/page/home-page-data', [$this, 'get_home_page_data']);
-
-// Приватный (с JWT)
-$this->api->private_route('/jwt/login', [$this, 'login']);
+$this->api->private_route('/admin/get-cron-info', [$this, 'get_cron_info']);
 ```
 
-#### Site_Config
+### 2.2. `Site_Config` (Singleton)
 
-- Хранит конфигурацию сайта: роли, пост-типы, валидаторы, email-адреса, настройки.
-- Основные свойства:
-- $site_url — URL сайта (full, short, decorated, api_endpoint).
-- $time_format — форматы дат.
-- $emails — email-адреса (support).
-- $roles — роли пользователей.
-- $post_types — список пользовательских типов записей.
-- $VALIDATORS — правила валидации для полей.
-- $FIELDS — поля для каждого маршрута.
-- $permitted_pages_types — разрешённые типы страниц.
-- $permitted_pages_categories — разрешённые категории страниц.
-- $permitted_settings — настройки сайта.
+**Файл:** `helpers/_class-site-config.php`
 
-_Пример использования:_
+Класс-конфигурация сайта. Хранит **все** настройки, справочники, пост-типы, правила валидации, роли.
+
+**Singleton:**
 
 ```php
-$site_config = new Site_Config();
-$support_email = $site_config->emails['support'];
+private static ?self $instance = null;
+
+private function __construct() {}
+private function __clone() {}
+
+public function __wakeup(): void
+{
+    throw new RuntimeException('Cannot unserialize singleton');
+}
+
+public static function get_instance(): self
+{
+    return self::$instance ??= new self();
+}
 ```
 
-_Основные статические свойства:_
-
-- $countries_arr — список стран (код → название).
-- $month_ui — названия месяцев.
-- $week_titles_full — названия дней недели.
-- $user_menu — пункты меню пользователя.
-- $query_post_types — типы записей для поиска/выборки.
-- $global_post_types_ui — отображение пост-типов в интерфейсе.
-
-#### Validate - Класс для валидации данных.
-
-_Методы:_
-
-- check_request(string $route, ?int $user_id = null): bool|array — проверка запроса по маршруту.
-- Правила валидации (из Site_Config::$VALIDATORS):
-- required — поле обязательно.
-- min_length — минимальная длина.
-- max_length — максимальная длина.
-- email — проверка на email.
-- is_uniq_email — проверка на уникальность email.
-- is_user_exist — проверка существования пользователя.
-- is_page_exist — проверка существования страницы.
-- no_spaces — запрет пробелов.
-- en_numbers_spec_symbols_only — только латиница, цифры и спецсимволы.
-- text_only — только буквы.
-- number — только цифры.
-- length — точная длина.
-- some — совпадение с другим полем (для пароля).
-- max_size — максимальный размер файла.
-- accept — допустимые MIME-типы файлов.
-
-_Пример использования:_
+**Использование:**
 
 ```php
-if ($errors = (new Validate($request))->check_request('registration')) {
+$config = Site_Config::get_instance();
+$support_email = $config->emails['support'];
+```
+
+**Секции:**
+
+- **Публичные настройки** — `$query_latest_posts_types`, `$time_format`, `$emails`, `$permitted_config`, `$cron_config`, `$admin_id`.
+- **Пост-типы и категории** — `$post_types_config`, `$categories_config`.
+- **Валидация** — `$VALIDATORS`, `$FIELDS`, `$VALIDATE_SORT`.
+- **Роли и capabilities** — `$base_cap`, метод `get_roles()`.
+- **Справочники** — `$countries_arr`, `$week_days_short_translate`, `$month_days_short_translate`.
+- **Утилиты** — методы `get_site_url()`, `get_post_type_args()`, `generate_post_type_labels()`.
+
+**Методы:**
+
+- `public static function get_instance(): self` — получение singleton.
+- `public function get_roles(): array` — список ролей с capabilities.
+- `public function get_site_url(?string $type = null): ?string` — URL сайта (`full`, `decorated`, `server_name`, `back_local_domain`).
+- `public function get_post_type_args(array $props): array` — генерация аргументов для `register_post_type()`.
+- `private function generate_post_type_labels(array $props): array` — генерация labels для CPT.
+
+### 2.3. `Validate`
+
+**Файл:** `helpers/_class-validate.php`
+
+Валидация входящих запросов по правилам из `Site_Config::$FIELDS` и `$VALIDATORS`.
+
+**Конструктор:**
+
+```php
+public function __construct(?WP_REST_Request $credentials)
+```
+
+**Методы:**
+
+- `public function check_request(string $route, ?int $user_id = null): array|false` — основная проверка. Возвращает **массив ошибок** или **`false`**, если ошибок нет.
+
+**Принцип работы:**
+
+1. Если маршрут **не описан** в `FIELDS` — возвращает `false` (валидация не требуется).
+2. Если `$user_id` передан и в маршруте есть `capability` — проверяет права.
+3. Для каждого поля:
+    - Проверяет наличие (`isset`).
+    - Если поле обязательно и отсутствует — ошибка `er200`.
+    - Нормализует значение (`null`, `'null'`, `'undefined'` → `null`; строка → `sanitize_string`).
+    - Прогоняет через валидаторы в порядке `VALIDATE_SORT`.
+
+**Внутренние хелперы:**
+
+- `private function normalize_value(mixed $value): mixed` — нормализация.
+- `private function validate(string $field_name, mixed $value): ?array` — прогон через валидаторы.
+- `private function run_validator(string $type, mixed $value, string $field_name, array $validator, bool $is_required): ?array` — запуск конкретного валидатора с тип-чекингом.
+
+**Валидаторы:**
+
+- `check_required`, `check_min_length`, `check_max_length`, `check_length`
+- `check_email`, `check_email_uniq`, `check_text_only`, `check_space`
+- `check_en_numbers_only`, `check_some`
+- `check_is_number`, `check_phone`, `check_telegram`
+- `check_less_then_now`
+- `check_is_user_exist`, `check_is_page_exist`
+- `check_file_size`, `check_file_type`
+
+**Пример использования:**
+
+```php
+$errors = (new Validate($request))->check_request('registration');
+
+if ($errors) {
     return $this->api->response(null, ['errors' => $errors]);
 }
 ```
 
-#### `utils.php` (глобальные функции):
+### 2.4. Утилиты (`_utils.php`)
 
-_Функция и Описание:_
+**Файл:** `helpers/_utils.php`
 
-- gf(string $name, int $id): mixed - Получение ACF-поля.
-- uf(string $name, int $id, mixed $value): bool - Обновление ACF-поля.
-- gf_img(string $name, int $id, string $type): ?string - Получение изображения с указанным размером.
-- get_entity_id(string $slug, ?string $post_type): ?int - Получение ID поста по слагу.
-- sanitize_string(?string $text): string - Санитизация строки.
-- hf_get_first_sentence(string $text, int $max_length): string - Извлечение первого предложения из текста.
-- array_or_null(array $array): ?array - Возвращает null, если массив пуст.
-- get_time(?string $type): string|int - Получение текущего времени.
-- save_json_file(mixed $data, string $title): bool - Сохранение данных в JSON-файл.
-- get_json_file(string $filename): ?array - Получение данных из JSON-файла.
-- upload_image_file(array $file, int $max_width, ?int $max_height): ?array - Загрузка и масштабирование изображения.
+Глобальные функции:
+
+- `get_entity_id(string $slug, ?string $post_type = null): ?int` — ID поста по слагу или числовому ID.
+- `sanitize_string(?string $text = null): string` — базовая санитизация (`trim` + `sanitize_text_field` + `strip_tags`).
+- `hf_get_first_sentence(string $text, int $max_length = 0): string` — первое предложение.
+- `hf_explode(?string $str, ?string $type = null): ?array` — разбиение строки по запятой.
+- `array_or_null(array $array): ?array` — `null`, если массив пуст.
+- `gf(string $name, int|string $id): string|array|bool|WP_Post|null` — получение ACF-поля.
+- `uf(string $name, int|string $id, mixed $value): bool` — обновление ACF-поля.
+- `gf_img(string $name, int|string $id, string $type = 'img900'): string|int|null` — изображение ACF.
+- `save_json_file(mixed $data, string $title): bool` — сохранение в `site-setup/jsons/`.
+- `get_json_file(string $filename): ?array` — чтение из `site-setup/jsons/`.
+- `get_time(?string $type = null, ?int $gmt = null): string|int` — текущее время.
+
+### 2.5. Почта (`_mail_html.php`)
+
+**Файл:** `helpers/_mail_html.php`
+
+```php
+function _mail_html(string $title, string $body): string
+```
+
+Оборачивает контент письма в HTML-шаблон через **heredoc**. Использует `Site_Config::get_instance()->get_site_url('decorated')` для `<title>`.
+
+**Правило:** интерполяция простых переменных без `{}`.
+
+### 2.6. Загрузка изображений (`_upload_image_file.php`)
+
+**Файл:** `helpers/_upload_image_file.php`
+
+Глобальные константы:
+
+- `UPLOAD_IMAGE_DEFAULT_QUALITY = 75`
+- `UPLOAD_IMAGE_DEFAULT_RATIO = 0.6`
+
+Функции:
+
+- `upload_image_file(array $file, int $max_width = 1100, ?int $max_height = null): ?array` — загрузка + масштабирование + вставка в медиатеку. Возвращает `['attach_id' => int, 'url' => string]` или `null`.
+- `_scale_image_file_to_blob(string $file, int $max_width, int $max_height): ?string` — масштабирование в бинарную строку.
+
+Поддерживаемые типы: **GIF, JPEG, PNG, WebP**.
 
 ---
 
-## Контроллеры (controllers/)
+## 3. Модели (models/)
 
-Базовый принцип - Все контроллеры наследуют `WP_REST_Controller` и используют `Api_Helper` для регистрации роутов и формирования ответов.
+### 3.1. `Post_Model` (readonly class)
 
-#### Структура контроллера:
+**Файл:** `models/_post-model.php`
+
+Модель для работы с постами **всех** типов. **`readonly class`** — все свойства неизменяемы.
+
+**Конструктор:**
 
 ```php
+public function __construct(int|string|null $page_id = null)
+```
+
+**Публичные методы:**
+
+- `get_seo_title(): string` — SEO-заголовок из Yoast (или fallback на `get_title()`).
+- `get_title(?int $page_id = null): string` — заголовок поста (fallback на первое предложение).
+- `get_h1(): string` — H1 из ACF или заголовок.
+- `get_description(): string` — SEO-описание из Yoast.
+- `get_post_metadata(): array` — SEO-данные для `generateMetadata`.
+- `get_cover_image(string $type = 'img900'): ?string` — обложка.
+- `get_inner_image(string $type = 'img900'): ?string` — внутреннее изображение.
+- `get_categories(string $type = 'slug'): ?array` — категории поста (исключая `main_rub`).
+- `get_tags(?string $format = null): ?array` — теги поста.
+- `get_post_author(string $format = 'fullname', int $post_count = 5): string|array|null` — данные автора.
+- `get_post_date(?string $type = null): string|int|null` — дата поста.
+- `get_content(?string $format = null, int $cut_count = 0): string` — контент с очисткой.
+- `get_country(string $type = 'value'): string` — страна события.
+- `get_permalink(?int $page_id = null): string` — относительный URL.
+- `get_post_base(): array` — полные данные поста для фронта.
+- `get_latest_news_promo_model(): array` — данные поста для промо-блока.
+- `public static function get_last_posts_by_type(array $post_type, ?int $posts_per_page = 3): ?array` — последние посты по типам.
+
+**Приватные методы:**
+
+- `get_yafeed_time(): string` — время в формате Yandex Feed.
+- `get_clean_content()`, `get_autop_content()`, `get_default_content()` — варианты очистки контента.
+- `get_reading_time(): int` — время чтения в минутах.
+
+### 3.2. `User_Model`
+
+**Файл:** `models/_user-model.php`
+
+Модель пользователя. Работает с ACF (`user_{id}`).
+
+**Конструктор:**
+
+```php
+public function __construct(int $user_id)
+```
+
+Если пользователь **не найден** — модель переходит в **«пустое» состояние** (`$user_data = null`, `$user_id = 0`). **Не бросает исключений.**
+
+**Метод проверки:**
+
+- `public function is_valid(): bool` — `true`, если модель связана с существующим пользователем.
+
+**Принцип guard'ов:**
+
+- **Единая точка проверки** — `get_acf()` / `set_acf()`. Все геттеры и сеттеры через ACF **не имеют** собственных guard'ов.
+- **Методы с `wp_update_user` / `wp_set_password`** — guard **есть**.
+- **Методы с `WP_Query`** — guard **есть**.
+- **Чтение `$this->user_data->...` напрямую** — guard **есть** или null-safe `?->`.
+
+**Публичные геттеры:**
+
+- `get_id(): int`, `get_page_url(): string`
+- `get_avatar(string $type = 'img500'): string|int|null`
+- `get_uname(string $type = 'full'): ?string` — `full | name | last_name | as_is_name`
+- `get_about(string $type = 'replace'): ?string`
+- `get_birthdate(): ?string`, `get_country(): ?string`, `get_city(): ?string`
+- `get_email(string $type = 'public'): ?string`
+- `get_messenger(string $type): ?string` — `tg | wa`
+- `get_phone(): ?string`
+- `get_soclink(string $type): ?string` — `vk | in | fb | tt | yt`
+- `get_soclist(): ?array`
+- `get_author_posts_id(array $post__not_in = [-1], int $posts_per_page = 5): ?array`
+- `get_role(): ?string`
+
+**Публичные сеттеры:**
+
+- `update_uname(?string $new_name, string $type): bool` — `first_name | last_name`
+- `update_birthdate()`, `update_country()`, `update_city()`
+- `update_email(?string $new_email, string $type = 'public'): bool`
+- `update_messenger(?string $new_contact, string $type): bool`
+- `update_phone()`, `update_signature()`, `update_soclink()`
+
+**Подтверждение аккаунта:**
+
+- `is_confirmed(): bool`
+- `confirm_user(?string $confirm_code): bool`
+- `set_new_password(string $new_password, string $confirm_code): bool`
+
+**Миграция:**
+
+- `migrate_user(): void`
+
+**Модели ответа:**
+
+- `get_user_model(): array` — полный публичный профиль.
+- `get_current_user_model(): array` — сокращённый профиль текущего пользователя.
+
+### 3.3. `Page_Model` (readonly class)
+
+**Файл:** `models/_page-model.php`
+
+Модель для страниц (не постов).
+
+**Конструктор:**
+
+```php
+public function __construct(int|string|null $page_id = null)
+```
+
+**Методы:**
+
+- `get_page_metadata(): array` — SEO-данные страницы.
+- `get_latest_news_promo_data(array $post_type, ?int $posts_per_page = 3): ?array` — промо-данные последних постов.
+
+### 3.4. `Taxonomy_Model`
+
+**Файл:** `models/_taxonomy-model.php`
+
+Модель для работы с таксономиями.
+
+**Методы:**
+
+- `get_posts_by_tag(int $tag_id): ?array` — посты по тегу, сгруппированные по годам.
+- `get_published_posts_by_tag(int $tag_id): ?array` — ID опубликованных постов по тегу.
+- `get_popular_tags(?string $type = null): ?array` — популярные теги. `json` — из кэша, иначе — из БД.
+
+**Приватные методы:**
+
+- `group_by_year(array $items): array`
+- `sort_by_date_asc(array $a, array $b): int` (static)
+- `get_popular_tags_from_json(): ?array`
+- `get_popular_tags_from_db(): ?array`
+- `get_tag_data(WP_Term|WP_Error|int|null $tag): ?array`
+
+### 3.5. `Search_Model`
+
+**Файл:** `models/_search-model.php`
+
+Модель глобального поиска.
+
+**Методы:**
+
+- `get_search_data(WP_REST_Request $request): ?array` — данные поиска (посты + метаинформация).
+
+**Приватные методы:**
+
+- `get_searched_post_types(?string $requested_types): array`
+- `get_searched_categories(?string $requested_categories): array`
+- `get_allowed_post_types(): array`
+- `get_allowed_category_ids(): array`
+- `parse_requested_list(string $value): array`
+- `format_post_data(WP_Post $post): array`
+
+### 3.6. `Auth_Model`
+
+**Файл:** `models/_auth-model.php`
+
+Модель авторизации и писем.
+
+**Методы:**
+
+- `send_confirm_account_mail(string $email, int $user_id): bool` — письмо для подтверждения аккаунта.
+- `send_reset_password_code_mail(string $email, int $user_id): bool` — письмо для сброса пароля.
+- `send_changed_password_info_mail(string $email): bool` — уведомление о смене пароля.
+- `get_default_user_data(array $credentials): array` — данные для регистрации.
+
+**Приватные методы:**
+
+- `generate_code(): int` — 6-значный код.
+- `save_confirm_code(int $user_id, int $code): void`
+
+### 3.7. `Site_Model`
+
+**Файл:** `models/_site-model.php`
+
+Модель общих данных сайта.
+
+**Методы:**
+
+- `send_contact_form_mail(array $params): bool` — отправка контактной формы.
+- `get_trends_data(): ?array` — тренды (последние 10 постов).
+- `set_cron_info(): ?array` — обновление cron-сводки.
+- `set_popular_tags(): array` — обновление JSON популярных тегов.
+- `set_users_info(): array` — обновление JSON пользователей.
+- `pagination_model(?array $filtered_data, ?array $pagination, bool $is_redirect = false): array` — модель пагинации.
+
+**Приватные методы:**
+
+- `build_json_data_model(?array $data, string $label): array`
+
+---
+
+## 4. Контроллеры (controllers/)
+
+### 4.1. Общая структура
+
+Все контроллеры:
+
+- Наследуют **`WP_REST_Controller`**.
+- Имеют **`private readonly`** свойства: `$base_route`, `$api`, модели, `$site_config`.
+- Регистрируют роуты в **`register_routes(): void`**.
+- Публичные методы — **эндпоинты**.
+- Приватные методы — **хелперы**.
+- `Site_Config::get_instance()` — в конструкторе.
+- Магические значения — в **константах класса**.
+
+### 4.2. Шаблон контроллера
+
+```php
+<?php
 
 class Some_Controller extends WP_REST_Controller
 {
+    // =====================================================================
+    // Константы
+    // =====================================================================
+
+    private const string SOME_CONST = '...';
+    private const int    SOME_LIMIT = 10;
+
+    // =====================================================================
+    // Состояние
+    // =====================================================================
+
     private readonly string $base_route;
     private readonly Api_Helper $api;
+    private readonly Site_Config $site_config;
 
     public function __construct()
     {
-        $this->base_route = '/some';
-        $this->api = new Api_Helper();
+        $this->base_route  = '/some';
+        $this->api         = new Api_Helper();
+        $this->site_config = Site_Config::get_instance();
     }
+
+    // =====================================================================
+    // Регистрация роутов
+    // =====================================================================
 
     public function register_routes(): void
     {
-        $this->api->public_route($this->base_route . '/endpoint', [$this, 'method']);
+        $this->api->public_route($this->base_route . '/endpoint', [$this, 'some_method']);
+    }
+
+    // =====================================================================
+    // Публичные эндпоинты
+    // =====================================================================
+
+    public function some_method(WP_REST_Request $request): array
+    {
+        $errors = (new Validate($request))->check_request('some-route');
+
+        if ($errors) {
+            return $this->api->response(null, ['errors' => $errors]);
+        }
+
+        return $this->api->response([
+            'result' => 'data',
+        ]);
     }
 }
 ```
 
-#### Admin_Controller - Администрирование сайта.
+### 4.3. Список контроллеров
 
-_Приватные эндпоинты:_
+**`Admin_Controller`** — `/admin/*` (приватные):
 
-- /admin/get-cron-info — получение информации о cron-задачах.
-- /admin/update-cron-info — обновление информации о cron.
-- /admin/update-cron-task — выполнение cron-задачи.
-- /admin/get-users-info — получение информации о пользователях.
-- /admin/update-roles — обновление ролей.
-- /admin/update-users — миграция пользователей.
-- /admin/delete-users — удаление пользователей.
+- `/get-cron-info`, `/update-cron-info`, `/update-cron-task`
+- `/get-users-info`, `/update-users`, `/delete-users`
+- `/update-roles`
 
-#### Auth_Controller - Регистрация, подтверждение email, сброс пароля.
+**`Auth_Controller`** — `/auth/*` (публичные):
 
-_Публичные эндпоинты:_
+- `/registration`, `/send-confirm-code-mail`, `/confirm-email`
+- `/send-reset-pass-code-mail`, `/reset-password`
 
-- /auth/registration — регистрация пользователя.
-- /auth/send-confirm-code-mail — отправка кода подтверждения.
-- /auth/confirm-email — подтверждение email (GET с email и confirmCode).
-- /auth/send-reset-pass-code-mail — отправка кода для сброса пароля.
-- /auth/reset-password — сброс пароля.
+**`Metadata_Controller`** — `/metadata/*` (публичные):
 
-#### Site_Controller - Общие данные сайта.
+- `/metadata/{type}/{slug}` — SEO-метаданные (`page` / `post`).
 
-Публичные эндпоинты:
+**`News_Controller`** — `/news/*` (публичные):
 
-- /site/common-data — тренды, популярные теги, supportEmail.
-- /site/search — глобальный поиск.
-- /site/send-contact-form — отправка контактной формы.
+- `/archive`, `/get-slugs`, `/metadata/{slug}`, `/{slug}` (single).
 
----
+**`Page_Controller`** — `/page/*` (публичные):
 
-## Модели (models/)
+- `/home-page-data`.
 
-#### Post_Model
+**`Search_Controller`** — `/search/*` (публичные):
 
-Модель для работы с постами всех типов.
+- `/` (поиск), `/get-search-config`.
 
-```php
-- get_seo_title(): string	SEO-заголовок из Yoast (или fallback на get_title()).
-- get_title(?int $page_id): string	Заголовок поста (с fallback на первое предложение).
-- get_h1(): string	H1 из ACF или заголовок.
-- get_description(): string	SEO-описание из Yoast.
-- get_permalink(?int $page_id): string	Относительный URL поста.
-- get_post_date(?string $type): string|int|null	Дата поста (для SEO — c, для фидов — yafeed).
-- get_cover_image(string $type): ?string	Обложка поста.
-- get_inner_image(string $type): ?string	Внутреннее изображение поста.
-- get_post_author(string $format, int $post_count): string|array|null	Данные автора (fullname, avatar, ссылка).
-- get_categories(string $type): ?array	Категории поста (исключая main_rub).
-- get_tags(?string $format): ?array	Теги поста (name_arr, id_arr, thumb_type).
-- get_content(?string $format, int $cut_count): string	Контент с очисткой (clean, autop).
-- get_post_metadata(): array	SEO-данные для generateMetadata.
-- get_post_base(): array	Полные данные поста для фронта.
-```
+**`Site_Controller`** — `/site/*` (публичные):
 
-#### User_Model
+- `/common-data`, `/filter-params`, `/send-contact-form`.
 
-Модель для работы с пользователями.
+**`Taxonomy_Controller`** — `/taxonomy/*` (публичные):
 
-```php
-- get_user_model(): array Полный публичный профиль.
-- get_current_user_model(): array Сокращённый профиль для текущего пользователя.
-- get_avatar(string $type): string|int|null	Аватар пользователя.
-- get_uname(string $type): ?string Имя пользователя (full, name, last_name).
-- get_about(string $type): ?string	Описание пользователя.
-- get_soclist(): ?array	Список соцсетей.
-- get_author_posts_id(array, int): ?array	ID постов автора.
-- is_confirmed(): bool	Проверка активации аккаунта.
-- confirm_user(?string $confirm_code): bool Подтверждение аккаунта по коду.
-- set_new_password(string, string): bool Установка нового пароля.
-- migrate_user(): array Миграция данных пользователя из старых ACF-полей.
-```
+- `/search-posts-by-tag`.
 
-#### Page_Model
+**`User_Controller`** — `/users/*`:
 
-Модель для страниц (не постов).
-
-```php
-get_page_metadata(): array — SEO-данные для страницы.
-```
-
-Auth_Model
-Модель для авторизации и отправки писем.
-
-```php
-- send_confirm_account_mail(string $email, int $user_id): bool — отправка письма для подтверждения аккаунта.
-- send_reset_password_code_mail(string $email, int $user_id): bool — отправка кода для сброса пароля.
-- send_changed_password_info_mail(string $email): bool — уведомление о смене пароля.
-- get_default_user_data(array $credentials): array — подготовка данных для регистрации.
-```
-
-Site_Model
-Модель для общих данных сайта.
-
-```php
-- get_trends_data(): ?array — последние 10 постов для трендов.
-- get_search_data(WP_REST_Request $request): ?array — глобальный поиск.
-- send_contact_form_mail(array $params): bool — отправка контактной формы.
-- set_cron_info(): ?array — сохранение информации о cron-задачах.
-- set_popular_tags(): array — сохранение популярных тегов.
-- set_users_info(): array — сохранение информации о пользователях.
-- pagination_model(?array, ?array, bool): array — модель пагинации.
-```
-
-Taxonomy_Model
-Модель для работы с таксономиями.
-
-```php
-- get_posts_by_tag(int $tag_id): ?array — посты по тегу.
-- get_popular_tags(?string $type): ?array — популярные теги (из JSON или из БД).
-- get_published_posts_by_tag(int $tag_id): ?array — ID опубликованных постов по тегу.
-```
+- `/filter` (public), `/get-user-data` (public)
+- `/get-current-user` (private)
 
 ---
 
-## Формат ответа API
+## 5. Формат ответа API
 
-Все ответы API проходят через `Api_Helper::response()`. Это гарантирует единообразную структуру для всех эндпоинтов.
+Все ответы проходят через **`Api_Helper::response()`**.
 
 ### Структура ответа
 
@@ -353,62 +716,59 @@ Taxonomy_Model
 }
 ```
 
-Поля:
+**Поля:**
 
-| Поле |Тип | Описание|
-| result | string |Статус ответа (ok, errors, redirect, logout, notfound)|
-| data | object/null |Основные данные (при result === 'ok')|
-| errors | array/null |Массив ошибок (при result === 'errors')|
-| redirectUrl |string/null| URL для редиректа (при result === 'redirect')|
+| Поле | Тип | Описание |
+|------|-----|----------|
+| `result` | string | Статус ответа |
+| `data` | object/null | Данные (при `result === 'ok'`) |
+| `errors` | array/null | Массив ошибок (при `result === 'errors'`) |
+| `redirectUrl` | string/null | URL для редиректа (при `result === 'redirect'`) |
 
-#### Структура ошибки
-
-- Каждая ошибка в массиве errors имеет следующую структуру:
+### Структура ошибки
 
 ```json
 {
     "code": "er200",
     "fieldName": "email",
-    "addInfo": "Дополнительная информация"
+    "addInfo": "Мин: 8"
 }
 ```
 
-_Примеры ответов_
+| Поле | Тип | Описание |
+|------|-----|----------|
+| `code` | string | Код ошибки (`er200`, `er201`, ...) |
+| `fieldName` | string/null | Имя поля (опционально) |
+| `addInfo` | string/null | Доп. информация (опционально) |
 
-- Успешный ответ (result: "ok")
+### Примеры ответов
+
+**Успех:**
 
 ```json
 {
     "result": "ok",
     "data": {
         "userId": 23,
-        "fullName": "Автор Контента",
-        "email": "user@email.com"
+        "fullName": "Автор Контента"
     }
 }
 ```
 
-- Ответ с ошибками валидации (result: "errors")
+**Ошибки:**
 
 ```json
 {
     "result": "errors",
     "data": null,
     "errors": [
-        {
-            "code": "er200",
-            "fieldName": "email"
-        },
-        {
-            "code": "er201",
-            "fieldName": "password",
-            "addInfo": "Мин: 8"
-        }
+        { "code": "er200", "fieldName": "email" },
+        { "code": "er201", "fieldName": "password", "addInfo": "Мин: 8" }
     ]
 }
 ```
 
-- Ответ с редиректом (result: "redirect")
+**Редирект:**
 
 ```json
 {
@@ -418,7 +778,7 @@ _Примеры ответов_
 }
 ```
 
-- Ответ с логаутом (result: "logout")
+**Логаут:**
 
 ```json
 {
@@ -427,7 +787,7 @@ _Примеры ответов_
 }
 ```
 
-- Ответ с 404 (result: "notfound")
+**404:**
 
 ```json
 {
@@ -436,764 +796,486 @@ _Примеры ответов_
 }
 ```
 
-### Метод response()
-
-Сигнатура:
+### Метод `response()`
 
 ```php
 public function response(?array $data = null, ?array $settings = null): array
 ```
 
-#### Параметры:
+**Параметры:**
 
-- $data — основные данные ответа (для result: "ok").
-- $settings — настройки ответа:
-- errors — массив ошибок (или одна ошибка).
-- redirect — URL для редиректа.
-- logout — флаг для принудительного выхода.
-- notfound — флаг для 404.
+- `$data` — данные ответа (для `result: 'ok'`).
+- `$settings` — настройки:
+    - `errors` — массив ошибок (или одна ошибка).
+    - `redirect` — URL для редиректа.
+    - `logout` — флаг принудительного выхода.
+    - `notfound` — флаг 404.
 
-#### Логика:
+**Логика:**
 
-- Определяется result на основе переданных настроек.
-- Формируется стандартизированный ответ.
-- При result === 'errors' — массив errors нормализуется.
-- При result === 'redirect' — добавляется redirectUrl.
+- `result` определяется по наличию `errors`, `redirect`, `logout`, `notfound`.
+- При `result === 'errors'` — массив нормализуется (одна ошибка → `[ошибка]`).
+- При `result === 'redirect'` — добавляется `redirectUrl`.
 
-#### Метод set_error()
-
-Сигнатура:
+### Метод `set_error()`
 
 ```php
-public function set_error(string $code, ?string $field_name = null, ?string $add_info = null): array
+public function set_error(
+    string $code,
+    ?string $field_name = null,
+    ?string $add_info = null
+): array
 ```
 
-Примеры использования:
+**Примеры:**
 
 ```php
-// Ошибка без поля
 $this->api->set_error('er900');
-```
-
-```php
-// Ошибка с полем
 $this->api->set_error('er200', 'email');
+$this->api->set_error('er201', 'password', 'Мин: 8');
 ```
 
+### Правило вызова
+
+**Всегда** передавайте ошибки массивом:
+
 ```php
-// Ошибка с полем и доп. информацией
-$this->api->set_error('er201', 'password', 'Мин: 8');
+// ✅ Правильно
+return $this->api->response(null, [
+    'errors' => [$this->api->set_error('er404')],
+]);
+
+// ✅ Тоже правильно (для одиночной ошибки)
+return $this->api->response(null, [
+    'errors' => $this->api->set_error('er200', 'email'),
+]);
+
+// ❌ Неправильно — ошибка потеряется
+return $this->api->response(null, $this->api->set_error('er200'));
 ```
 
 ---
 
-## Валидация
+## 6. Валидация
 
-Валидация данных выполняется через класс `Validate`. Он проверяет входящие запросы по заранее описанным правилам.
+Валидация — через класс **`Validate`**, правила — в **`Site_Config`**.
 
-### Класс Validate
+### Правила (`Site_Config::$VALIDATORS`)
 
-**Сигнатура:**
-
-```php
-new Validate(WP_REST_Request $request)
-```
-
-#### Основной метод:
+Для каждого поля:
 
 ```php
-public function check_request(string $route, ?int $user_id = null): bool|array
+'name' => [
+    'min_length' => 2,
+    'max_length' => 30,
+    'text_only'  => true,
+    'required'   => true,
+],
 ```
 
-Параметры:
+### Маршруты (`Site_Config::$FIELDS`)
 
-- $route — имя маршрута (ключ в Site_Config::$FIELDS).
-- $user_id — ID пользователя для проверки прав (опционально).
+Для каждого маршрута:
 
-Возвращает:
+```php
+'registration' => [
+    'fields' => ['name', 'surname', 'password', 'loginEmail', 'passwordConfirm'],
+],
+```
 
-- true — если валидация прошла успешно.
-- array — массив ошибок, если валидация не прошла.
+Если `capability` указан — проверяются права пользователя.
 
-#### Типы валидации
+### Порядок валидации (`Site_Config::$VALIDATE_SORT`)
 
-- required — поле обязательно для заполнения, код ошибки er200.
-- min_length — минимальная длина строки, код ошибки er201.
-- max_length — максимальная длина строки, код ошибки er202.
-- email — проверка формата email, код ошибки er203.
-- is_uniq_email — проверка уникальности email в БД, код ошибки er208.
-- is_user_exist — проверка существования пользователя, код ошибки er209.
-- is_page_exist — проверка существования страницы, код ошибки er214.
-- text_only — только буквы (без цифр), код ошибки er206.
-- number — только цифры, код ошибки er219.
-- no_spaces — без пробелов, код ошибки er206.
-- en_numbers_spec_symbols_only — только латиница, цифры и спецсимволы, код ошибки er206.
-- some — совпадение с другим полем (для пароля), код ошибки er204.
-- length — точная длина строки, код ошибки er221.
-- max_size — максимальный размер файла (в МБ), код ошибки er215.
-- accept — допустимые MIME-типы файлов, код ошибки er216.
-- phone — проверка формата телефона, код ошибки er224.
-- telegram — проверка Telegram-логина, код ошибки er225.
-- less_then_now — дата меньше текущей, код ошибки er226.
+```php
+['required', 'min_length', 'max_length', 'email', 'text_only', ...]
+```
 
-### Ошибки валидации
+Валидаторы применяются **в этом порядке** — первый упавший возвращает ошибку.
 
-Все ошибки валидации возвращаются в формате:
+### Типы валидации
 
-```json
-{
-    "result": "errors",
-    "data": null,
-    "errors": [
-        {
-            "code": "er200",
-            "fieldName": "email"
-        },
-        {
-            "code": "er201",
-            "fieldName": "password",
-            "addInfo": "Мин: 8"
-        }
-    ]
+- `required` — обязательное поле
+- `min_length` / `max_length` / `length` — длина строки
+- `email` / `is_uniq_email` — email
+- `text_only` / `no_spaces` / `en_numbers_spec_symbols_only`
+- `number` / `phone` / `telegram`
+- `is_user_exist` / `is_page_exist`
+- `some` — совпадение с другим полем
+- `max_size` / `accept` — файлы
+- `less_then_now` — дата меньше текущей
+
+### Пример использования
+
+```php
+$errors = (new Validate($request))->check_request('registration');
+
+if ($errors) {
+    return $this->api->response(null, ['errors' => $errors]);
 }
 ```
 
 ---
 
-## Работа с ACF
+## 7. Работа с ACF
 
-В проекте используется Advanced Custom Fields (ACF) для хранения дополнительных данных.
-Для работы с ACF созданы обёртки: `gf()`, `uf()` и `gf_img()`.
+Используются обёртки: **`gf()`**, **`uf()`**, **`gf_img()`**.
 
-### Основные функции
-
-#### `gf()` — получение ACF-поля:
+### `gf()` — получение поля
 
 ```php
 function gf(string $name, int|string $id): string|array|bool|WP_Post|null
 ```
 
-_Параметры:_
-
-- $name — название ACF-поля.
-- $id — ID поста, пользователя (user_{id}) или таксономии (post_tag_{id}).
-- Возвращает: значение ACF-поля или null, если поля нет.
-
-_Примеры:_
+**Примеры:**
 
 ```php
-// Получение поля у поста
 $h1 = gf('main_h1', $post_id);
-
-// Получение поля у пользователя
 $about = gf('prf_about', 'user_' . $user_id);
-
-// Получение поля у тега
 $cover = gf('tgg_cover_img', 'post_tag_' . $tag_id);
 ```
 
-#### `uf()` — обновление ACF-поля
+### `uf()` — обновление поля
 
 ```php
 function uf(string $name, int|string $id, mixed $value): bool
 ```
 
-_Параметры:_
+Если `$value` — массив, используется `add_row()` (добавление строки в repeater).
 
-- $name — название ACF-поля.
-- $id — ID поста, пользователя или таксономии.
-- $value — новое значение.
-- Возвращает: true при успехе, false при ошибке.
-
-_Примеры:_
+**Примеры:**
 
 ```php
-// Обновление поля у поста
 uf('main_h1', $post_id, 'Новый заголовок');
-
-// Обновление поля у пользователя
 uf('is_activated', 'user_' . $user_id, true);
-
-// Удаление поля
-uf('usrmain_confirm_code', 'user_' . $user_id, null);
+uf('usrmain_confirm_code', 'user_' . $user_id, null); // удаление
 ```
 
-#### `gf_img()` — получение изображения с размерами
+### `gf_img()` — изображение
 
 ```php
 function gf_img(string $name, int|string $id, string $type = 'img900'): string|int|null
 ```
 
-_Параметры:_
+**Размеры:** `img80`, `img500`, `img900`, `origin`, `id`.
 
-- $name — название ACF-поля (тип "Изображение").
-- $id — ID поста, пользователя или таксономии.
-- $type — размер изображения (img80, img500, img900, origin, id).
-- Возвращает: URL изображения, ID или null.
-
-_Примеры:_
+**Примеры:**
 
 ```php
-// Получение изображения в размере img900
 $cover = gf_img('cover_img', $post_id);
-
-// Получение изображения в размере img80
 $avatar = gf_img('avatar', 'user_' . $user_id, 'img80');
-
-// Получение ID изображения
 $image_id = gf_img('cover_img', $post_id, 'id');
-
-// Получение оригинального URL
-$original = gf_img('cover_img', $post_id, 'origin');
 ```
 
-### Префиксы для ID
+### Префиксы ID
 
-_В ACF ID может быть разным в зависимости от типа объекта:_
-
-| Тип объекта  | Формат ID              | Пример         |
-| ------------ | ---------------------- | -------------- |
-| Пост         | `{post_id}`            | `123`          |
-| Пользователь | `user_{user_id}`       | `user_23`      |
-| Таксономия   | `{taxonomy}_{term_id}` | `post_tag_456` |
-| Опции        | `options`              | `options`      |
+| Тип объекта | Формат ID | Пример |
+|---|---|---|
+| Пост | `{post_id}` | `123` |
+| Пользователь | `user_{user_id}` | `user_23` |
+| Таксономия | `{taxonomy}_{term_id}` | `post_tag_456` |
+| Опции | `options` | `options` |
 
 ---
 
-## Миграция ACF-полей
+## 8. Пост-типы и таксономии
 
-В User_Model есть метод migrate_user(), который переносит данные из старых ACF-полей в новые:
+### Список CPT
+
+- `news` — Новости
+- `reviews` — Рецензии
+- `cool` — Видео
+- `autors` — Статьи
+- `nocommerce` — Новый рок
+- `rock-data` — Рок-дата
+
+### Правило `singular` / `plural`
+
+- `singular` — **единственное** число (`'Статья'`, `'Новость'`, `'Рецензия'`)
+- `plural` — **множественное** число (`'Статьи'`, `'Новости'`, `'Рецензии'`)
+
+**Пример:**
 
 ```php
-public function migrate_user(): array
-{
-// Перенос основных полей
-$this->update_uname(gf('prf_public_name', $this->user_ACF), 'first_name');
-$this->update_uname(gf('prf_public_last_name', $this->user_ACF), 'last_name');
-$this->update_birthdate(gf('prf_birthdate', $this->user_ACF));
-$this->update_country(gf('prf_profile_bcountry', $this->user_ACF));
-$this->update_city(gf('prf_profile_bcity', $this->user_ACF));
-$this->update_email(gf('prf_public_mail', $this->user_ACF));
-$this->update_phone(gf('prf_public_phone', $this->user_ACF));
-
-    // Активация пользователя
-    uf('is_activated', $this->user_ACF, true);
-
-    // Перенос соцсетей
-    foreach (['vk', 'in', 'fb', 'tt', 'yt'] as $type) {
-        $this->update_soclink(gf('prf_profile_' . $type, $this->user_ACF), $type);
-    }
-
-    // Перенос аватара
-    if ($image = get_field('prf_profile_img', $this->user_ACF)) {
-        update_field('avatar', $image['id'], $this->user_ACF);
-    }
-
-    return [];
-}
+register_post_type(
+    $post_type,
+    Site_Config::get_instance()->get_post_type_args([
+        'singular'  => 'Статья',
+        'plural'    => 'Статьи',
+        'icon'      => 'dashicons-businessman',
+        'post_type' => 'autors',
+    ])
+);
 ```
 
-## Пост-типы и таксономии
+### Регистрация CPT
 
-В проекте используются стандартные и пользовательские типы записей (CPT) для организации контента. Управление пост-типами и таксономиями централизовано в `Site_Config` и `Site_Constants`.
+Файлы `_pt_{slug}.php` в `site-setup/`:
+
+```php
+<?php
+
+function add_{slug}_post_type(): void
+{
+    $post_type = '{slug}';
+
+    register_post_type(
+        $post_type,
+        Site_Config::get_instance()->get_post_type_args([
+            'singular'  => '...',
+            'plural'    => '...',
+            'icon'      => 'dashicons-...',
+            'post_type' => $post_type,
+        ])
+    );
+}
+
+add_action('init', 'add_{slug}_post_type');
+```
+
+### Добавление нового CPT (пошагово)
+
+1. Создать `site-setup/_pt_new_type.php` (см. шаблон выше).
+2. Добавить в `Site_Config::$post_types_config`:
+
+   ```php
+   'new_type' => [
+       'label'           => 'Новые типы',
+       'in_latest_posts' => true,
+       'is_searched'     => true,
+       'page_id'         => ...,
+   ],
+   ```
+
+3. Создать контроллер `controllers/_new-type-controller.php` (если нужны свои эндпоинты).
+4. Зарегистрировать роуты в `api/routes.php`.
+
+### Таксономии
+
+Проект использует **стандартные** таксономии:
+
+- `category` — рубрики
+- `post_tag` — теги
+
+Дополнительные категории описаны в `Site_Config::$categories_config`.
 
 ---
 
-### Список пост-типов
+## 9. Конфигурация
 
-В `Site_Config::$post_types` перечислены все пользовательские типы записей:
+Все настройки — в **`Site_Config`** (singleton).
 
-```php
-public array $post_types = [
-    'archive' => [],
-    'calendar' => [],
-    'music' => [],
-    'news' => [],
-    'publications' => [],
-    'shorts' => [],
-    'sport' => [],
-    'video' => [],
-];
-```
+### Публичные настройки
 
-Каждый пост-тип имеет свой контроллер и модель, а также эндпоинты для получения данных.
+| Свойство | Тип | Описание |
+|---|---|---|
+| `$query_latest_posts_types` | array | Типы для ленты последних постов |
+| `$time_format` | array | Форматы дат (`date_with_time`, `date`) |
+| `$emails` | array | Email-адреса (`support`) |
+| `$permitted_config` | array | Настройки сайта |
+| `$cron_config` | array | Конфигурация cron |
+| `$admin_id` | int | ID администратора |
+| `$post_types_config` | array | Конфиг пост-типов |
+| `$categories_config` | array | Конфиг категорий |
+| `$VALIDATORS` | array | Правила валидации |
+| `$FIELDS` | array | Поля для маршрутов |
+| `$VALIDATE_SORT` | array | Порядок валидации |
+| `$countries_arr` | array | Список стран |
+| `$week_days_short_translate` | array | Дни недели (перевод) |
+| `$month_days_short_translate` | array | Месяцы (перевод) |
 
-Пост-типы для поиска и выборки
+### Справочники
 
-В Site_Constants::$query_post_types задаются типы записей, которые участвуют в поиске и выборках:
+Статические данные (страны, дни недели, месяцы) хранятся **внутри `Site_Config`** (раньше были в `Site_Constants`).
 
-```php
-static array $query_post_types = [
-    "news",
-    "reviews",
-    "cool",
-    "autors",
-    "nocommerce",
-    "rock-data",
-];
-```
-
-Разрешенные типы страниц
-В Site_Config::$permitted_pages_types и Site_Constants::$permitted_pages_types описаны типы страниц, доступные на сайте:
+### Использование
 
 ```php
-static array $permitted_pages_types = [
-    [
-        "slug" => "news",
-        "title" => "Новости",
-        "accessLevel" => 1,
-        "isSearched" => 1,
-        "showForAddPost" => true,
-        "hasArchive" => true,
-        "id" => 209
-    ],
-    [
-        "slug" => "reviews",
-        "title" => "Рецензии",
-        "accessLevel" => 3,
-        "isSearched" => 1,
-        "showForAddPost" => true,
-        "hasArchive" => true,
-        "id" => 211
-    ],
-];
+$config = Site_Config::get_instance();
+
+$support_email = $config->emails['support'];
+$post_types = array_keys($config->post_types_config);
+$validator = $config->VALIDATORS['email'] ?? null;
 ```
-
-Поля:
-
-- slug — уникальный идентификатор.
-- title — название для интерфейса.
-- accessLevel — минимальный уровень доступа.
-- isSearched — участвует в поиске.
-- showForAddPost — показывать при добавлении поста.
-- hasArchive — есть архивная страница.
-- id — ID страницы в WordPress.
-
-Разрешенные категории
-В Site_Config::$permitted_pages_categories и Site_Constants::$permitted_pages_categories описаны категории для страниц:
-
-```php
-static array $permitted_pages_categories = [
-    [
-        "slug" => "alboms_rub",
-        "uri" => "alboms",
-        "title" => "Альбомы",
-        "accessLevel" => 1,
-        "isSearched" => 1,
-        "showForAddPost" => true,
-        "hasArchive" => true,
-        "id" => 18,
-        "pageId" => 15465
-    ],
-];
-```
-
-Поля:
-
-- slug — слаг категории в админке.
-- uri — слаг категории на фронте (для архивов).
-- title — название категории.
-- accessLevel — минимальный уровень доступа.
-- isSearched — участвует в поиске.
-- showForAddPost — показывать при добавлении поста.
-- hasArchive — есть архивная страница.
-- id — ID рубрики в WordPress.
-- pageId — ID страницы архива.
-
-Отображение в интерфейсе
-В Site_Constants::$global_post_types_ui задаются названия пост-типов для интерфейса:
-
-```php
-static array $global_post_types_ui = [
-    "news" => 'Новости',
-    "reviews" => 'Рецензии',
-    "cool" => 'Видео',
-    "autors" => 'Посты',
-    "nocommerce" => 'Новый рок',
-    "rock-data" => 'Рок дата',
-    "users" => 'Пользователи',
-    "alboms" => 'Альбомы',
-    "clips" => 'Клипы',
-    "concerts" => 'Концерты',
-    "rock-films" => 'Кино',
-    "intervju" => 'Интервью',
-    "okolorock" => 'Вокруг рока',
-    "page" => 'Страница',
-    "post" => 'Пост'
-];
-```
-
-Регистрация пост-типов
-Для регистрации пользовательских типов записей используется метод Api_Helper::get_post_type_args():
-
-```php
-public function get_post_type_args(array $props): array
-{
-    $defaults = [
-        'labels' => $this->generate_post_type_labels($props),
-        'public' => true,
-        'publicly_queryable' => true,
-        'show_ui' => true,
-        'show_in_menu' => true,
-        'query_var' => true,
-        'capability_type' => 'post',
-        'map_meta_cap' => true,
-        'has_archive' => true,
-        'hierarchical' => false,
-        'menu_position' => null,
-        'menu_icon' => $props['icon'] ?? 'dashicons-admin-post',
-        'supports' => ['title', 'editor', 'thumbnail', 'comments', 'author'],
-        'taxonomies' => array_merge(
-            ['category', 'post_tag'],
-            $props['additional_taxonomies'] ?? []
-        ),
-        'show_in_rest' => true,
-        'show_in_nav_menus' => true,
-        'rewrite' => [
-            'slug' => sanitize_title($props['rewrite']['slug'] ?? $props['post_type']),
-            'with_front' => $props['rewrite']['with_front'] ?? false
-        ],
-    ];
-
-    return wp_parse_args($props['args'] ?? [], $defaults);
-}
-```
-
-Пример регистрации:
-
-```php
-register_post_type('music', (new Api_Helper())->get_post_type_args([
-    'post_type' => 'music',
-    'singular' => 'Музыка',
-    'plural' => 'Музыка',
-    'icon' => 'dashicons-format-audio',
-    'args' => [
-        'menu_position' => 5,
-        'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
-    ],
-]));
-```
-
-Таксономии
-Проект использует стандартные таксономии WordPress:
-
-- Категории (category) — для группировки постов.
-- Теги (post_tag) — для ключевых слов и поиска.
-- Категории дополнительно настраиваются через permitted_pages_categories, где задаются:
-- Слаг для фронта (uri).
-- Уровень доступа (accessLevel).
-- Участие в поиске (isSearched).
-- Использование в контроллерах
-
-Получение категорий поста:
-
-```php
-public function get_categories(string $type = 'slug'): ?array
-{
-    $categories = get_the_category($this->page_id);
-
-    if (empty($categories)) {
-        return null;
-    }
-
-    $filtered = array_filter($categories, fn($cat) => $cat->slug !== 'main_rub');
-
-    if (empty($filtered)) {
-        return null;
-    }
-
-    return array_map(fn($cat) => $cat->$type, $filtered);
-}
-```
-
-Получение тегов поста:
-
-```php
-public function get_tags(?string $format = null): ?array
-{
-    $tag_list = get_the_tags($this->page_id);
-
-    if (!$tag_list) {
-        return null;
-    }
-
-    return match ($format) {
-        'name_arr' => array_map(fn($tag) => $tag->name, $tag_list),
-        'id_arr' => array_map(fn($tag) => $tag->term_id, $tag_list),
-        default => array_map(
-            fn($tag) => [
-                'value' => $tag->slug,
-                'label' => $tag->name,
-            ],
-            $tag_list
-        ),
-    };
-}
-```
-
-Добавление нового пост-типа
-
-1. Добавить в Site_Config::$post_types:
-
-```php
-public array $post_types = [
-    // ...
-    'new_type' => [],
-];
-```
-
-2. Добавить в Site_Constants::$query_post_types (если нужно):
-
-```php
-static array $query_post_types = [
-    // ...
-    "new_type",
-];
-```
-
-3. Создать контроллер:
-
-```php
-// controllers/_new-type-controller.php
-class New_Type_Controller extends WP_REST_Controller
-{
-    private readonly string $base_post_type;
-    private readonly string $base_route;
-    private readonly Api_Helper $api;
-
-    function __construct()
-    {
-        $this->base_post_type = 'new_type';
-        $this->base_route = '/new-type';
-        $this->api = new Api_Helper();
-    }
-
-    public function register_routes()
-    {
-        $this->api->public_route($this->base_route.'/archive', [$this, 'get_archive']);
-        $this->api->public_route($this->base_route.'/(?P<slug>.+)', [$this, 'get_single']);
-    }
-
-    public function get_single(WP_REST_Request $request): array
-    {
-        // ...
-    }
-
-    public function get_archive(): array
-    {
-        // ...
-    }
-}
-```
-
-4. Добавить в routes.php:
-
-```php
-(new New_Type_Controller())->register_routes();
-```
-
-5. Зарегистрировать пост-тип в WordPress (в functions.php или отдельном файле):
-
-```php
-register_post_type('new_type', (new Api_Helper())->get_post_type_args([
-    'post_type' => 'new_type',
-    'singular' => 'Новый тип',
-    'plural' => 'Новые типы',
-    'icon' => 'dashicons-admin-post',
-]));
-```
-
-## Конфигурация
-
-Вся конфигурация сайта централизована в двух классах: `Site_Config` и `Site_Constants`. Это позволяет легко управлять настройками, не разбрасывая их по всему коду.
 
 ---
 
-### Site_Config
+## 10. Правила и соглашения
 
-Класс для хранения изменяемой конфигурации сайта.
+### Код-стайл
 
-**Основные свойства:**
+- **PSR-12** + правила проекта.
+- **4 пробела** — отступы.
+- **Открывающая `{` метода** — на новой строке.
+- **`(int)$x` без пробела** — правило проекта (принято в код-стайле).
+- **Одинарные кавычки** для строк.
+- **PHPDoc** — на всех публичных методах.
+- **Секции** — в классах > 100 строк.
 
-| Свойство                      | Тип   | Описание                                         |
-| ----------------------------- | ----- | ------------------------------------------------ |
-| `$site_url`                   | array | URL сайта (full, short, decorated, api_endpoint) |
-| `$time_format`                | array | Форматы дат (date_with_time, date)               |
-| `$emails`                     | array | Email-адреса (support)                           |
-| `$roles`                      | array | Роли пользователей                               |
-| `$post_types`                 | array | Список пользовательских типов записей            |
-| `$VALIDATORS`                 | array | Правила валидации для полей                      |
-| `$FIELDS`                     | array | Поля для каждого маршрута                        |
-| `$permitted_pages_types`      | array | Разрешённые типы страниц                         |
-| `$permitted_pages_categories` | array | Разрешённые категории страниц                    |
-| `$permitted_settings`         | array | Настройки сайта                                  |
-| `$cron_config`                | array | Конфигурация cron-задач                          |
-| `$admin_id`                   | int   | ID администратора                                |
+### Логика
+
+- **`wp_reset_postdata()` — после чтения постов** (не до).
+- **`array_map` вместо `foreach + array_push`** — где возможно.
+- **Guard'ы на `null`** — где нужно.
+- **`is_valid()`** — для моделей, которые могут быть «пустыми» (User_Model).
+
+### Ошибки
+
+- **Всегда `['errors' => [...]]`** — ошибки передаются массивом.
+- **Коды ошибок `erXXX`** — единый префикс.
+- **`er404`** — для not found (не `e404`).
+
+### Singleton
+
+- **`Site_Config::get_instance()`** — единственный доступ к конфигу.
+- **`new Site_Config()`** — запрещено (конструктор приватный).
+
+### Модели
+
+- **`readonly class`** — для неизменяемых (`Post_Model`, `Page_Model`).
+- **Nullable user_data** — в `User_Model` (без throw).
+- **Единая точка guard** — в `get_acf()` / `set_acf()` для `User_Model`.
+
+### Контроллеры
+
+- **`extends WP_REST_Controller`** — все.
+- **`register_routes(): void`** — единый формат.
+- **`Site_Config::get_instance()`** — в конструкторе.
+- **Приватные методы** — после публичных.
+
+### Константы
+
+- **Все константы класса** — с типом: `private const string X = '...'`.
+- **Глобальные `const`** — без типа (или с типом, если PHP 8.3+).
 
 ---
 
-#### Настройки сайта
+## 11. Примеры типичных задач
 
-В `Site_Config::$permitted_settings` хранятся основные настройки:
+### Регистрация нового публичного эндпоинта
 
-```php
-public array $permitted_settings = [
-    'pageCategoryMode' => 6,        // режим выбора категорий
-    'postTagsCount' => 10,          // количество тегов у поста
-    'mediaAuthorsCount' => 3,       // количество авторов в медиа
-    'addPostMinLevel' => 1,         // минимальный уровень для добавления поста
-    'searchResultMaxCount' => 21,   // количество результатов поиска
-    'bookmarkFeedCount' => 6,       // количество закладок в ленте
-];
-```
+1. В контроллере — метод:
 
-#### Cron-конфигурация
+   ```php
+   public function my_method(WP_REST_Request $request): array
+   {
+       $errors = (new Validate($request))->check_request('my-route');
 
-```php
-public array $cron_config = [
-'popular_tags' => [
-'action' => 'popular_tags',
-'jsonName' => 'popular_tags_JSON',
-],
-'users_info' => [
-'action' => 'users_info',
-'jsonName' => 'users_info_JSON',
-]
-];
-Email-адреса
-php
-public array $emails = [
-'support' => 'spirit.ofrock@bk.ru',
-];
-```
+       if ($errors) {
+           return $this->api->response(null, ['errors' => $errors]);
+       }
 
-####Site_Constants
-Класс для хранения статической конфигурации (данные, которые редко меняются).
+       return $this->api->response([
+           'result' => $this->my_model->do_something($request->get_params()),
+       ]);
+   }
+   ```
 
-Основные статические свойства:
+2. В `register_routes()`:
 
-Свойство Описание
+   ```php
+   $this->api->public_route($this->base_route . '/my-endpoint', [$this, 'my_method']);
+   ```
 
-- $countries_arr Список стран (код → название)
-- $month_ui Названия месяцев
-- $month_noun Названия месяцев в родительном падеже
-- $month_ui_short Короткие названия месяцев
-- $week_titles_full Названия дней недели
-- $week_days_short_translate Перевод дней недели на английский
-- $month_days_short_translate Перевод месяцев на английский
-- $user_menu Пункты меню пользователя
-- $query_post_types Типы записей для поиска/выборки
-- $global_post_types_ui Отображение пост-типов в интерфейсе
-- $archive_slugs Слаги архивных страниц
+3. В `Site_Config::$FIELDS`:
 
-#### Страны
+   ```php
+   'my-route' => [
+       'fields' => ['field1', 'field2'],
+   ],
+   ```
+
+4. В `Site_Config::$VALIDATORS` — правила для полей.
+
+### Добавление нового метода в модель
 
 ```php
-static array $countries_arr = [
-'sf' => 'World',
-'us' => 'США',
-'gb' => 'Великобритания',
-'ua' => 'Украина',
-'ru' => 'Россия',
-// ...
-];
+public function my_method(int $param): ?array
+{
+    $result = ...;
+
+    return array_or_null($result);
+}
 ```
 
-#### Месяцы и дни недели
+### Добавление нового поля ACF
+
+1. В админке ACF — создать группу полей.
+2. В коде — использовать через `gf()` / `uf()` / `gf_img()`.
+
+---
+
+## 12. Внешние зависимости
+
+- **PHP** — 8.4+
+- **WordPress** — 6.0+
+- **Advanced Custom Fields (ACF)** — для кастомных полей
+- **Yoast SEO** — для SEO-метаданных
+- **JWT Authentication for WP-API** — для JWT
+- **Firebase PHP-JWT** — библиотека для работы с JWT
+
+---
+
+## 13. Cron и JSON-кэш
+
+В проекте есть **cron-задачи** для обновления JSON-файлов:
+
+- `popular_tags_JSON` — популярные теги
+- `users_info_JSON` — информация о пользователях
+- `cron_info_JSON` — сводка по cron
+
+**Расположение:** `site-setup/jsons/`.
+
+**Обновление:**
+
+- Через `/wp-json/rest/admin/update-cron-task` (taskName: `popular_tags` или `users_info`).
+- После обновления — `/wp-json/rest/admin/update-cron-info` (сводка).
+
+**Чтение:**
+
+- `get_json_file('popular_tags_JSON')` — утилита из `_utils.php`.
+
+---
+
+## 14. JWT и авторизация
+
+- **Плагин:** JWT Authentication for WP-API.
+- **Секретный ключ:** `JWT_AUTH_SECRET_KEY` (в `wp-config.php`).
+- **Алгоритм:** HS256 (по умолчанию), через фильтр `jwt_auth_algorithm`.
+- **Время жизни:** 1 час (`JWT_TOKEN_LIFETIME = 3600`).
+
+**Получение токена:**
+
+```
+POST /wp-json/jwt-auth/v1/token
+{ "username": "...", "password": "..." }
+```
+
+**Использование:**
+
+```
+Authorization: Bearer <token>
+```
+
+**Извлечение ID:**
 
 ```php
-static array $month_ui = [
-"Январь",
-"Февраль",
-"Март",
-"Апрель",
-"Май",
-"Июнь",
-"Июль",
-"Август",
-"Сентябрь",
-"Октябрь",
-"Ноябрь",
-"Декабрь",
-];
-
-static array $week_titles_full = [
-"воскресенье",
-"понедельник",
-"вторник",
-"среда",
-"четверг",
-"пятница",
-"суббота"
-];
+$user_id = (new Api_Helper())->get_user_id_from_headers($request);
 ```
 
-#### Меню пользователя
+**TODO:** в будущем авторизация **будет удалена** (портал публичный).
 
-```php
-static array $user_menu = [
-[
-'slug' => 'overview',
-'isPrivate' => false,
-'label' => 'Обзор',
-],
-[
-'slug' => 'commonFeed',
-'isPrivate' => true,
-'label' => 'Все новости',
-],
-// ...
-];
-```
+---
 
-### Использование конфигурации
+## 15. Changelog паттернов
 
-В контроллерах:
-
-```php
-$site_config = new Site_Config();
-$support_email = $site_config->emails['support'];
-```
-
-В моделях:
-
-```php
-$date = current_time($this->site_config->time_format['date_with_time']);
-```
-
-В хелперах:
-
-```php
-$country_label = Site_Constants::$countries_arr[$country_code] ?? 'World';
-```
-
-В валидации:
-
-```php
-$rules = $this->site_config->VALIDATORS[$field_name] ?? null;
-```
-
-Добавление новой настройки
-
-1. Добавить в Site_Config:
-
-```php
-public array $permitted_settings = [
-// ...
-'new_setting' => 'default_value',
-];
-```
-
-2. Использовать в коде:
-
-```php
-$value = $this->site_config->permitted_settings['new_setting'];
-```
-
-3. Если настройка статическая — добавить в Site_Constants:
-
-```php
-static array $new_data = [
-'key' => 'value',
-];
-```
+- **1.0.0** — первая версия паттернов после рефакторинга:
+    - `Site_Config` — singleton.
+    - Типизированные константы.
+    - `readonly class` для `Post_Model` / `Page_Model`.
+    - `User_Model::is_valid()` + nullable `user_data`.
+    - Единая точка guard в `get_acf()` / `set_acf()`.
+    - `Api_Helper` — убран `__construct`, `const string API_ENDPOINT`.
+    - `Validate` — `array|false`, `run_validator()`.
+    - Все контроллеры — секции, константы, `register_routes(): void`.
+    - Post-types — правильные `singular` / `plural`.

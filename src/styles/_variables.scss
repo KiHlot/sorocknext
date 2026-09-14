@@ -23,6 +23,7 @@ $defaultThemeSettings: (
     elemShadow: rgba(map.get($colors, black), 0.24) 0px 3px 8px,
     textShadow: 1px 1px 2px map.get($colors, black),
     svgShadow: drop-shadow(1px 1px 0px rgba(map.get($colors, black), 0.5)),
+    overlayBg: rgba(map.get($colors, black), 0.7),
     loadingGradient: linear-gradient(
             90deg,
             map.get($colors, bgColor),

@@ -24,7 +24,7 @@ export const shuffle = <T>(array: T[]): T[] => {
 
 export const formatDate = (backDate?: string, type?: 'withTime'): string => {
     if (!backDate) {
-        return 'Нет даты';
+        return '';
     }
 
     const uiFormat =

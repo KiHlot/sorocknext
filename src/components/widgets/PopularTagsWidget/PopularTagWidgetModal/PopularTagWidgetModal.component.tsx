@@ -3,8 +3,8 @@
 import { FC } from 'react';
 import { IoPricetagOutline, IoCalendarOutline } from 'react-icons/io5';
 import NoData from '@/components/elems/NoData/NoData.component';
+import PopularTagThumb from '@/components/elems/PopularTagThumb/PopularTagThumb.component';
 import ModalSheet from '@/components/interactive/ModalSheet/ModalSheet.component';
-import PopularTagThumb from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagThumb/PopularTagThumb.component';
 import styles from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.module.scss';
 import { PopularTagModalPropsIF } from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.types';
 
@@ -19,6 +19,8 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
               (a, b) => Number.parseInt(b) - Number.parseInt(a),
           )
         : [];
+
+    console.log('data', data);
 
     return (
         <ModalSheet
@@ -45,6 +47,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
                                     <PopularTagThumb
                                         key={thumbData.url}
                                         thumbData={thumbData}
+                                        className={styles.thumb}
                                     />
                                 ))}
                             </div>
