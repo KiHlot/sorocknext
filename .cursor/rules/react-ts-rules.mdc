@@ -1,0 +1,162 @@
+---
+description: React + TypeScript rules for sorock.ru (Next.js App Router, RTK Query, RHF, SCSS modules)
+globs:
+  - "src/**"
+alwaysApply: false
+---
+
+## React + TypeScript Rules (sorock.ru)
+
+> **Note**: For project structure and layers, see `pattern-front.md` and `structure.txt`. For REST contract and endpoints, see `pattern-back.md` and `.cursor/rules/api-*.mdc`. For component structure, see `react-components-creation.mdc`. For SCSS, see `scss-modules-styling.mdc`. For a11y, see `html-accessibility.mdc`. For linting, see `linting-formatting.mdc`.
+
+### Стек
+
+- **Next.js App Router** (React 19, TypeScript).
+- **Redux Toolkit + RTK Query** для клиентских запросов.
+- **`fetch`** через `fetchApi` для серверных запросов (Server Components).
+- **react-hook-form + yup** для форм.
+- **SCSS-модули** для стилей.
+- **dayjs**, **react-toastify**, **react-icons**, **swiper**.
+- Никаких React Router, Vite, Axios, Radix — их в проекте нет.
+
+### Архитектурные правила
+
+- **Серверные компоненты по умолчанию.** `'use client'` — только там, где нужны хуки, формы, слайдеры, модалки, обработчики событий.
+- **Два слоя запросов:**
+    - На сервере (страницы, `layout.tsx`, серверные обёртки) — **`fetchApi`** из `@/helpers/fetchApi` или готовые обёртки `@/api/<domain>/endpoints.ts`. **Не использовать RTK на сервере.**
+    - На клиенте (в `'use client'`-компонентах) — **RTK Query** из `@/api/<domain>/*.ts`. Каждый слайс регистрируется в `@/store/store.ts` (reducer + middleware).
+- **Не смешивать слои.** Если данные нужны странице — грузим на сервере и пробрасываем пропсами. Если данные нужны по действию пользователя — RTK-мутация.
+- **Не использовать `fetch` напрямую.** Только `fetchApi` (сервер) или `fetchRestApiQuery`/`fetchJWTTokenQuery` (клиент).
+- **Разворачивание конверта.** `fetchApi` уже возвращает `data` (не `ResponseIF`). Дженерик — тип внутренних данных: `fetchApi<SeoDataIF>(...)`, а не `fetchApi<ResponseIF<SeoDataIF>>(...)`.
+- **Статус — в `result`, не в HTTP-коде.** Бэк почти всегда отдаёт 200. Успех смотреть по `result === 'ok'`, ошибки — по `result === 'errors'`.
+- **Обязательная обвязка для клиентских запросов:** мутации REST — `await xxx().unwrap()` → `parseResponse(result, ...)` → `catch(catchError)`. Подробности — в `pattern-front.md` §5.3 и §9.
+- **JWT `/token` — другая форма ответа** (`token`, `expires`, `currentUser`), не `ResponseIF`. Для логина `parseResponse` не используется. См. `pattern-front.md` §5.2 и §9.
+
+### Слой страниц (App Router)
+
+- Страницы — серверные компоненты. Тип: `Promise<ReactElement>`.
+- `params` и `searchParams` в Next 15+ — **`Promise`**. Всегда `await params` / `await searchParams`.
+- SEO — `generateMetadata` (или статический `export const metadata`) + хелпер `getMetadata` / `fetchMetadata`. Подробности — `pattern-front.md` §6.
+- Одиночные записи (5000+ статей) — **`generateStaticParams` + ISR** (`revalidate`).
+- Если данных нет и это допустимо — пустой fallback. Если страница должна существовать — `notFound()`.
+- Разметку в `page.tsx` не писать. Рендерить **шаблон** (`templates/*TPL`).
+
+### TypeScript
+
+- **Все интерфейсы — постфикс `IF`** (`UserIF`, `PageProps`, `ResponseIF`).
+- **Все типы — постфикс `T`** (`ValueOfT`, `UserRoleT`, `SearchParamsT`).
+- **Ключи JSON с бэка — camelCase.** В фронтовых типах `snake_case` не появляется.
+- **Не использовать `any`.** Generics — где обосновано, `unknown` — редко.
+- **Enum не использовать.** Только `const Name = { ... } as const` + `export type NameT = ValueOfT<typeof Name>`. Пример: `RESPONSE_RESULT` в `@/types/api.ts`.
+- **Поля форм совпадают с `Site_Config::$FIELDS`** на бэке (`loginEmail`, `passwordConfirm`, `confirmCode`).
+- **Явные типы аргументов и возврата** у всех функций и компонентов.
+- **Props и объекты — явно типизировать.** Большие интерфейсы дробить и композировать через вложенные `interface`/`type`.
+- **Не дублировать типы.** Если сигнатура уже есть — использовать indexed access (`Type['field']`).
+- **Предпочитать literal unions / mapped types** вместо сырых `string`-контрактов.
+
+### Экспорты
+
+- **`export default`** — для компонентов (`*.component.tsx`), страниц (`page.tsx`, `layout.tsx`, `not-found.tsx`), шаблонов (`*TPL`), layout-обёрток, хуков (один хук — один файл).
+- **Named exports** — для типов (`*.types.ts`), конфигов (`*.config.ts`/`*.config.tsx`), API-слайсов RTK, серверных обёрток (`endpoints.ts`), файлов с несколькими экспортами (`utils.ts`, `storage.helpers.ts`, `codes.config.ts`).
+- **Правило:** один публичный экспорт в файле → `default`. Несколько публичных экспортов → все named.
+
+### Компоненты
+
+- Стрелочные функции, тип `FC<PropsIF>` (или `Promise<ReactElement>` для страниц).
+- Пропсы — в `*.types.ts`, дефолты у опциональных (`className = ''`).
+- Один компонент — одна задача. >250 строк — разбить.
+- Не создавать анонимные функции в JSX — обработчики выносить в именованные `handle*`.
+- Не мутировать state. Обновления — иммутабельные.
+- Хранить state локально, если он не нужен другим.
+- **Один источник истины:** не дублировать данные родителя/ребёнка, не дублировать кэш RTK Query, не заводить лишний `useState`.
+- Для значений, не влияющих на рендер, — `useRef`.
+- В `map` — стабильные уникальные ключи. Индекс допустим только при неизменном порядке.
+- Повторяющийся код выносить в `helpers` / `hooks` / общие компоненты.
+- **Использовать общие UI-примитивы** (`Button`, `Input`, `CheckBox`, `TextArea`, `CodeInput`, `Modal`, `DialogModal`) вместо собственных дублей. Компоненты — в `@/components/<category>/`.
+
+### useEffect
+
+- Только для side effects.
+- Зависимости — корректные и полные.
+- Не использовать `JSON.stringify(...)` в зависимостях.
+- Если функция в зависимостях — оборачивать в `useCallback`, когда уместно.
+
+### react-hook-form
+
+- Всегда указывать `defaultValues`.
+- Не использовать `values` вместо defaults и не смешивать `defaultValue` с `values`.
+- Инициализировать все поля формы.
+- Не передавать `watch` через пропсы — использовать `useWatch` у потребителя.
+- Не вызывать `watch`/`useWatch` на всю форму — подписка на конкретные поля.
+- Не хранить несериализуемые значения (`Map`, `Set`, `BigInt`, `FileList`, `File`, `Buffer`).
+- Не использовать `FieldValues` — строго типизированные схемы.
+- `mode: 'onSubmit'`, `resolver: yupResolver(schema)`, схема — `ObjectSchema<InterfaceIF>` в `*.config.ts`.
+- Обработка ответа — через `parseResponse` + `catchError`, тексты — `ERRORS_CODES` / `SUCCESS_CODES`. Подробности — `pattern-front.md` §9.
+
+### yup
+
+- Callback в `yup.test` — стрелка: `(value, context) => ...`.
+- Не полагаться на `this` внутри `test` (стрелка не биндит `this`).
+- Соседние/родительские поля — через `context.parent`, не `this.parent`.
+- ✅ `.test('name', 'msg', (value, context) => Boolean(context.parent?.status?.value))`
+- ❌ `.test('name', 'msg', function (value) { return Boolean(this.parent?.status?.value); })`
+
+### Data fetching (RTK Query)
+
+- **Query** — для загрузки данных при рендере/инициализации страницы или компонента.
+- **Mutation** — только для действий пользователя.
+- Каждый слайс — одна папка на контроллер бэка (`@/api/<domain>/<domain>.ts` + `types.ts`).
+- Имена эндпоинтов RTK совпадают с роутами бэка (`confirmEmail` → `/confirm-email`, `getCurrentUser` → `/users/get-current-user`).
+- **Не выдумывать URL.** Каталог роутов — `.cursor/rules/api-endpoints.mdc`.
+- Слайс обязательно регистрируется в `@/store/store.ts`.
+
+### Импорты
+
+- **Только абсолютные** (`@/...`). Относительные (`./`, `../`) запрещены ESLint.
+- Порядок — из `eslint.config.js` (`import/order` с pathGroups):
+    1. `builtin`
+    2. `react`
+    3. `external` (`next`, библиотеки)
+    4. `internal`: `@/store` → `@/styles` → `@/types` → `@/images` → `@/api` → `@/configs` → `@/hooks` → `@/helpers` → `@/layouts` → `@/components`
+- Без пустых строк между группами.
+- Внутри группы — алфавит (`caseInsensitive: false`).
+- `import/extensions` — без расширений для `.ts`/`.tsx`/`.js`/`.jsx`.
+
+### Стили
+
+- SCSS-модули, классы `camelCase`. Подробности — `scss-modules-styling.mdc`.
+- Динамические классы — через шаблонную строку: `` className={`${styles.button} ${styles.primary} ${className}`} ``. Не использовать `classnames` (его в проекте нет).
+
+### Magic numbers
+
+- Магические числа выносить в `@/configs/magicNumbers.config` → `MAGIC_NUMBERS`.
+- ESLint игнорирует `0`, `1`, `-1`, индексы массивов и default-значения.
+
+### Прочее
+
+- `'use client'` — первая строка файла, если компонент клиентский.
+- `console.log` в прод-код не оставлять (`no-console: warn`).
+- Даты — только `dayjs`. Форматы — `@/configs/timeFormats.config`.
+- Изображения — `next/image` (при необходимости оптимизатора) или `Img` (фон + `.bgc` + `normalizeImage`). Не ресайзить на фронте: бэк отдаёт готовые URL (`img80`/`img500`/`img900`/`origin`).
+- Иконки — `react-icons`. Кастомные SVG — из `@/images/svg/*.svg` через `@svgr/webpack`.
+
+### Code generation checklist
+
+1. ✅ Импорты только с `@/`, порядок — из `eslint.config.js`.
+2. ✅ У всех функций и компонентов явные типы аргументов и возврата.
+3. ✅ Интерфейсы — `IF`, типы — `T`.
+4. ✅ Нет `any`, нет `enum`.
+5. ✅ Нет относительных импортов.
+6. ✅ Нет magic numbers (кроме `0`, `1`, `-1`).
+7. ✅ Одинарные кавычки, 4 пробела, `printWidth: 80`.
+8. ✅ Шаблонные строки вместо конкатенации.
+9. ✅ Фигурные скобки во всех `if`.
+10. ✅ JSX boolean props без `={true}`.
+11. ✅ Компоненты — `export default`.
+12. ✅ Серверные страницы — `Promise<ReactElement>`, `await params`.
+13. ✅ Клиентские запросы — RTK + `parseResponse` + `catchError`.
+14. ✅ Серверные запросы — `fetchApi` / `endpoints.ts`, не `fetch` напрямую.
+15. ✅ `result` вместо HTTP-статуса.
+16. ✅ Поля формы — как на бэке (camelCase из `Site_Config::$FIELDS`).
+17. ✅ Стили — SCSS-модуль, классы `camelCase`.
+18. ✅ Нет `console.log`.

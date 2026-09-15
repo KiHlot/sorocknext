@@ -1,0 +1,77 @@
+---
+description: React component creation rules for sorock.ru (Next.js App Router, FC, SCSS modules)
+globs:
+  - "src/components/**"
+  - "src/templates/**"
+  - "src/layouts/**"
+alwaysApply: false
+---
+
+## React Component Structure and Naming Conventions (sorock.ru)
+
+> **Note**: For general React/TypeScript rules, see `react-ts-rules.mdc`. For SCSS styling, see `scss-modules-styling.mdc`. For project structure and layers, see `structure.txt` and `pattern-front.md`.
+
+### Расположение компонентов
+
+Новый компонент кладём **в правильную категорию** `src/components/`, а не в корень:
+
+| Папка | Назначение |
+| --- | --- |
+| `blocks/` | Составные блоки (Block, Table, Section) |
+| `controls/` | Поля форм (Input, Button, CheckBox, CodeInput, TextArea, InputFile) |
+| `elems/` | Мелкие элементы (Img, Author, MainLogo, Country, Overlay) |
+| `interactive/` | Модалки, пагинация, табы, breadcrumbs (Modal, DialogModal, ModalSheet, Pagination, Tabs) |
+| `menus/` | TopMenu, LeftMenu, AdminMenu |
+| `sections/` | Секции страниц (Footer, промо, контент поста) |
+| `widgets/` | Виджеты (логин, теги, сброс пароля, поиск) |
+| `forms/` | Самостоятельные формы (LoginForm, RegistrationForm) |
+
+Шаблоны страниц — `src/templates/<Name>TPL/`. Layout-обёртки — `src/layouts/<Name>Layout/`. Страницы — `src/app/**`.
+
+### File Naming
+
+- **Components** — PascalCase + `.component.tsx`: `Button.component.tsx`, `TopMenu.component.tsx`.
+- **Helpers** — PascalCase + `.helpers.ts` (только функции/логика): `ModalSheet.helpers.ts`.
+- **Config/Constants** — PascalCase + `.config.ts` или `.config.tsx` (если содержит JSX): `ButtonsGroupAuth.config.tsx`, `AdminMenu.config.tsx`.
+    - Имена констант внутри — `UPPER_SNAKE_CASE`: `DEFAULT_VALUES`, `MENU_ITEMS`.
+- **Hooks** — `use<Name>.hook.ts`: `outsideClick.hook.ts`, `breakpoint.hook.ts`.
+    - Внутри папки с хуком — `*.config.ts` / `*.types.ts`: `breakpoint.config.ts`.
+- **Types** — PascalCase + `.types.ts`: `Button.types.ts`, `ModalSheet.types.ts`.
+- **Styles** — PascalCase + `.module.scss`: `Button.module.scss`.
+- **`.service.ts` — не используется в проекте.** Не создавать без явного согласования.
+
+### Component Structure
+
+#### Component Declaration
+
+- Использовать `FC<PropsIF>` из `react`.
+- Стрелочные функции с `const`, не `function`.
+- Паттерн: `const ComponentName: FC<ComponentNamePropsIF> = () => { ... }`
+- Без пропсов: `const ComponentName: FC = () => { ... }`
+- **Экспорт — всегда `export default`.** Никаких named-export для компонентов.
+- Для страниц (`app/**/page.tsx`) — тип `Promise<ReactElement>`, `export default XxxPage` (см. `react-ts-rules.mdc`).
+
+#### Пример структуры
+
+```tsx
+import { FC } from 'react';
+import styles from '@/components/controls/Button/Button.module.scss';
+import { ButtonPropsIF } from '@/components/controls/Button/Button.types';
+
+const Button: FC<ButtonPropsIF> = ({ label, variant = 'primary', onClick }) => {
+    const handleClick = (): void => {
+        onClick?.();
+    };
+
+    return (
+        <button
+            type="button"
+            className={`${styles.button} ${styles[variant]}`}
+            onClick={handleClick}
+        >
+            {label}
+        </button>
+    );
+};
+
+export default Button;

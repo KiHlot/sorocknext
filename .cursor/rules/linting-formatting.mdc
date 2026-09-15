@@ -1,0 +1,160 @@
+---
+description: ESLint, Prettier, and TypeScript linting rules for sorock.ru (Next.js App Router)
+globs:
+  - "src/**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+## Linting and Formatting Rules (sorock.ru)
+
+> **Note**: For general React/TypeScript rules, see `react-ts-rules.mdc`. For component structure, see `react-components-creation.mdc`. For SCSS, see `scss-modules-styling.mdc`.
+
+**CRITICAL: весь сгенерированный код должен проходить `npm run lint`, Prettier и `tsc` без ошибок.**
+
+### Prettier
+
+- **Indentation:** 4 spaces (`tabWidth: 4`).
+- **Quotes:** single (`'`).
+- **Trailing commas:** `all`.
+- **Line width:** **80** (`printWidth: 80`).
+- **Semicolons:** `true`.
+- **Line endings:** `auto`.
+
+Примеры (соблюдать переносы под 80 символов):
+
+```ts
+// ✅ Correct
+const name = 'John';
+const items = ['one', 'two', 'three'];
+const obj = { a: 1, b: 2, c: 3 };
+
+// ❌ Incorrect
+const name = "John";
+const items = ["one", "two", "three"];
+```
+
+### ESLint
+
+#### Стрелки и функции
+
+- Для компонентов и хуков — стрелочные функции: `const Component: FC<PropsIF> = () => {}`.
+- Для обычных функций разрешены и `function`, и стрелка (`func-style: ['error', 'declaration', { allowArrowFunctions: true }]`).
+- Body style — `as-needed`: без фигурных скобок, если можно вернуть выражение.
+    - ✅ `const fn = () => value;`
+    - ❌ `const fn = () => { return value; };`
+- Не использовать `function (...)` в `map` / `filter` / обработчиках.
+    - ✅ `items.map((item) => item.id)`
+    - ❌ `items.map(function (item) { return item.id; })`
+
+#### Условия
+
+- Фигурные скобки во всех `if` (`curly: 'error'`).
+    - ✅ `if (condition) { doSomething(); }`
+    - ❌ `if (condition) doSomething();`
+
+#### Строки
+
+- Шаблонные строки вместо конкатенации (`prefer-template: 'error'`).
+    - ✅ ``const msg = `Hello ${name}`;``
+    - ❌ `const msg = 'Hello ' + name;`
+
+#### Импорты
+
+- **Только абсолютные** (`@/...`). Относительные (`./`, `../`) запрещены (`no-relative-import-paths`, `no-restricted-imports`).
+- Расширения в импортах **не писать** (`import/extensions: never` для `.ts`/`.tsx`/`.js`/`.jsx`).
+- Порядок — из `eslint.config.js` (`import/order` с pathGroups):
+    1. `builtin`
+    2. `react`
+    3. `external` (`next`, библиотеки)
+    4. `internal`: `@/store` → `@/styles` → `@/types` → `@/images` → `@/api` → `@/configs` → `@/hooks` → `@/helpers` → `@/layouts` → `@/components`
+- Без пустых строк между группами.
+- Внутри группы — алфавит (`caseInsensitive: false`).
+
+Пример:
+
+```ts
+// builtin
+import path from 'node:path';
+
+// react
+import { FC, useState } from 'react';
+
+// external
+import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
+
+// internal (@/store → ... → @/components)
+import { useAppSelector } from '@/store/store';
+import { ResponseIF } from '@/types/api';
+import { authApi } from '@/api/auth/auth';
+import { MAGIC_NUMBERS } from '@/configs/config';
+import { useOutsideClick } from '@/hooks/outsideClick.hook';
+import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
+import CommonLayout from '@/layouts/CommonLayout/CommonLayout.component';
+import Button from '@/components/controls/Button/Button.component';
+```
+
+#### React
+
+- Компоненты — стрелки с явным `FC<PropsIF>`.
+- JSX boolean props — без `={true}`: `isActive`, не `isActive={true}` (`react/jsx-boolean-value`).
+- JSX curly braces — без лишних фигурных скобок вокруг строк (`react/jsx-curly-brace-presence`): `prop="value"`, не `prop={'value'}`.
+- Ключ в `map` — стабильный, не индекс (`react/no-array-index-key: 'warn'`).
+- Стиль компонентов не фиксирован правилом `react/function-component-definition` (off) — но конвенция проекта: стрелки.
+
+#### TypeScript
+
+- **Явные типы аргументов и возврата** у всех функций и методов (`@typescript-eslint/explicit-module-boundary-types`, `explicit-function-return-type` — error).
+    - ✅ `const handleClick = (): void => { ... }`
+    - ✅ `const getValue = (): string => { ... }`
+    - ✅ `const Component: FC<PropsIF> = () => { ... }`
+    - ✅ `export default async function Page(): Promise<ReactElement> { ... }`
+    - ❌ `const handleClick = () => { ... }`
+- **Не использовать `any`.** Generics — где обосновано, `unknown` — редко.
+- Явно типизировать props и формы объектов.
+- `interface` — постфикс `IF`; `type` — постфикс `T`.
+- Предпочитать literal unions / mapped types вместо сырых `string`-контрактов.
+- Не использовать `enum`. Только `const X = { ... } as const` + `ValueOfT<typeof X>`.
+- Не использовать `Array<T>` — писать `T[]`.
+- `consistent-return: off` — не требовать единый return из функции, если так удобнее. Но не смешивать `return;` и `return value;` в одном месте без причины.
+
+#### Magic numbers
+
+- Не использовать магические числа (`no-magic-numbers`).
+- Игнор: `0`, `1`, `-1`; индексы массивов (`ignoreArrayIndexes`); значения по умолчанию (`ignoreDefaultValues`); `enforceConst`.
+- Именовать через `@/configs/config` → `MAGIC_NUMBERS`.
+    - ✅ `MAGIC_NUMBERS.RedirectDelay`
+    - ❌ `setTimeout(fn, 3000);`
+
+#### Console
+
+- `console.log` в прод-коде не оставлять (`no-console: 'warn'`). Для отладки — временно, потом удалять.
+
+#### Прочие активные правила
+
+- `arrow-body-style: ['error', 'as-needed']`.
+- `no-param-reassign: 'warn'` — не мутировать аргументы функций.
+- `no-use-before-define: 'warn'` — не использовать переменные до объявления.
+- `import/no-unresolved`, `import/named` — резолвер `eslint-import-resolver-typescript`.
+- `prettier/prettier: ['error', { endOfLine: 'auto' }]` — конфликты Prettier/ESLint падают как ошибка.
+- `unicorn/filename-case`: `pascalCase` или `camelCase`. Исключения — `utils.ts`, `.d.ts`, файлы с UPPER-prefix (`_getFlagIcon.tsx`).
+- `unicorn/no-null: off`, `unicorn/prefer-spread: off`, `unicorn/no-array-for-each: off` — эти правила у нас отключены, не «оптимизировать» без запроса.
+
+### Code generation checklist
+
+1. ✅ Импорты только `@/`, порядок — из `eslint.config.js`.
+2. ✅ Без расширений в импортах.
+3. ✅ Явные типы аргументов и возврата.
+4. ✅ `interface` — `IF`, `type` — `T`.
+5. ✅ Нет `any`, нет `enum`.
+6. ✅ Строки — одинарные кавычки.
+7. ✅ 4 пробела.
+8. ✅ Точки с запятой.
+9. ✅ `printWidth: 80`, `trailingComma: all`.
+10. ✅ Шаблонные строки вместо конкатенации.
+11. ✅ Фигурные скобки во всех `if`.
+12. ✅ Стрелки с `as-needed` телом.
+13. ✅ JSX boolean props без `={true}`.
+14. ✅ Magic numbers — в `MAGIC_NUMBERS`.
+15. ✅ `console.log` отсутствует.
+16. ✅ Имена файлов — `PascalCase` или `camelCase` (по `unicorn/filename-case`).
