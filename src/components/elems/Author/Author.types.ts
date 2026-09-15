@@ -1,7 +1,7 @@
-import { AuthorThumbIF } from '@/types/post';
+import { AuthorIF } from '@/types/post';
 
 export interface AuthorPropsIF {
     className?: string;
-    data?: AuthorThumbIF;
+    data?: AuthorIF;
     type?: 'full' | 'name' | 'thumb';
 }

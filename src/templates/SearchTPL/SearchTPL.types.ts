@@ -1,5 +1,5 @@
 import { SearchParamsT } from '@/types/common';
-import { AuthorThumbIF } from '@/types/post';
+import { AuthorIF } from '@/types/post';
 import { SearchConfigIF } from '@/components/widgets/SearchWidget/SearchWidget.types';
 
 export interface SearchedPageIF {
@@ -11,7 +11,7 @@ export interface SearchedPageIF {
         url: string;
         dateUi: string;
     };
-    authorData: AuthorThumbIF;
+    authorData: AuthorIF;
 }
 
 export interface SearchResultIF {

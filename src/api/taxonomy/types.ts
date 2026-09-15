@@ -1,10 +1,10 @@
-import { AuthorThumbIF } from '@/types/post';
+import { AuthorIF } from '@/types/post';
 
 export interface TagSearchIF {
     thumbnail: string;
     title: string;
     url: string;
-    author: AuthorThumbIF;
+    author: AuthorIF;
     publishDate: string;
     categories: string[] | null;
     postDateNumber: number;

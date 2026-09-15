@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { formatDate } from '@/helpers/utils';
+import Author from '@/components/elems/Author/Author.component';
 import CategoryLink from '@/components/elems/CategoryLink/CategoryLink.component';
 import styles from '@/components/elems/PopularTagThumb/PopularTagThumb.module.scss';
 import { PopularTagThumbPropsIF } from '@/components/elems/PopularTagThumb/PopularTagThumb.type';
@@ -19,7 +20,7 @@ const PopularTagThumb: FC<PopularTagThumbPropsIF> = ({
             }}
         />
         <div
-            className={`flcol ${styles.content}  ${thumbData.authorUrl ? styles.pb : ''}`}
+            className={`flcol ${styles.content}  ${thumbData.author ? styles.pb : ''}`}
         >
             <div className={styles.thumbHeader}>
                 <span className={styles.date}>
@@ -40,14 +41,12 @@ const PopularTagThumb: FC<PopularTagThumbPropsIF> = ({
             <Link href={thumbData.url} className={styles.title}>
                 {thumbData.title}
             </Link>
-            {thumbData.authorUrl && (
-                <Link
-                    title="Страница автора статьи"
-                    href={thumbData.authorUrl}
-                    className={styles.postAuthor}
-                >
-                    {thumbData.authorName}
-                </Link>
+            {thumbData.author && (
+                <Author
+                    data={thumbData.author}
+                    className={styles.author}
+                    type="name"
+                />
             )}
         </div>
     </div>

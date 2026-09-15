@@ -20,8 +20,6 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
           )
         : [];
 
-    console.log('data', data);
-
     return (
         <ModalSheet
             onClose={onClose}
