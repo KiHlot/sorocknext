@@ -1,0 +1,59 @@
+---
+description: Полный каталог эндпоинтов REST API бэкенда
+globs:
+  - src/api/**
+  - src/app/**
+  - src/store/**
+alwaysApply: false
+---
+
+# Эндпоинты REST API
+
+Базовый префикс — `/wp-json/rest`. Ниже указаны роуты без него.
+Эндпоинта нет в списке — значит его нет на бэке. Не выдумывать, а спросить.
+
+## Публичные
+
+| Роут | Назначение |
+| --- | --- |
+| `/auth/registration` | Регистрация |
+| `/auth/send-confirm-code-mail` | Письмо с кодом подтверждения |
+| `/auth/confirm-email` | Подтверждение аккаунта |
+| `/auth/send-reset-pass-code-mail` | Письмо для сброса пароля |
+| `/auth/reset-password` | Сброс пароля |
+| `/news/archive` | Архив новостей |
+| `/news/get-slugs` | Слаги для `generateStaticParams` |
+| `/news/metadata/{slug}` | SEO новости |
+| `/news/{slug}` | Одна новость |
+| `/page/home-page-data` | Данные главной |
+| `/search` | Поиск |
+| `/search/get-search-config` | Конфиг поиска |
+| `/site/common-data` | Общие данные сайта |
+| `/site/filter-params` | Параметры фильтров |
+| `/site/send-contact-form` | Контактная форма |
+| `/taxonomy/search-posts-by-tag` | Посты по тегу |
+| `/metadata/{type}/{slug}` | SEO, `type` = `page` \| `post` |
+| `/users/filter` | Список пользователей |
+| `/users/get-user-data` | Публичный профиль |
+
+## Приватные (Authorization: Bearer)
+
+| Роут | Назначение |
+| --- | --- |
+| `/users/get-current-user` | Профиль текущего пользователя |
+| `/admin/get-cron-info` | Сводка по cron |
+| `/admin/update-cron-info` | Обновить сводку |
+| `/admin/update-cron-task` | Запустить задачу (`popular_tags` \| `users_info`) |
+| `/admin/get-users-info` | Список пользователей для админки |
+| `/admin/update-users` | Обновить пользователей |
+| `/admin/delete-users` | Удалить пользователей |
+| `/admin/update-roles` | Обновить роли |
+
+## JWT
+
+`POST /wp-json/jwt-auth/v1/token` с телом `{ username, password }`.
+
+## Раскладка в `src/api/`
+
+Одна папка на контроллер бэкенда. Внутри — файл со слайсом (RTK Query) или функциями
+серверных запросов плюс `types.ts` с интерфейсами ответов.

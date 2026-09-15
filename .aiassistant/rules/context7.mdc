@@ -1,0 +1,6 @@
+---
+description: Context7 MCP — актуальная документация библиотеки, когда неясен API, новая версия или setup/конфиг. Не вызывать для правок по паттернам проекта (футер, секции, формы).
+alwaysApply: false
+---
+
+Use Context7 MCP for library/API documentation, code generation against a third-party API, and setup or configuration steps — without the user having to ask. Skip it when the project rules already define the pattern.

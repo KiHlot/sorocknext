@@ -5,6 +5,10 @@ import { IoPricetagOutline, IoCalendarOutline } from 'react-icons/io5';
 import NoData from '@/components/elems/NoData/NoData.component';
 import PopularTagThumb from '@/components/elems/PopularTagThumb/PopularTagThumb.component';
 import ModalSheet from '@/components/interactive/ModalSheet/ModalSheet.component';
+import {
+    MODAL_ID,
+    MODAL_TITLE_ID,
+} from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.config';
 import styles from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.module.scss';
 import { PopularTagModalPropsIF } from '@/components/widgets/PopularTagsWidget/PopularTagWidgetModal/PopularTagWidgetModal.types';
 
@@ -13,6 +17,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
     data,
     onClose,
     isLoading,
+    isError,
 }) => {
     const sortedYears = data
         ? Object.keys(data).sort(
@@ -26,35 +31,41 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
             size="large"
             dataTest="popular_tag_modal"
             isLoading={isLoading}
-            classNameBody={`flcol gapLayout ${styles.bodyWrapper}`}
+            classNameBody={styles.bodyWrapper}
         >
-            <div className={styles.labelWrapper}>
-                <IoPricetagOutline />
-                <h3>{modalLabel}</h3>
-            </div>
-            {sortedYears && data ? (
-                <div className={styles.dataList}>
-                    {sortedYears.map((year) => (
-                        <div key={year} className={styles.yearWrapper}>
-                            <div className={styles.yearTitle}>
-                                <IoCalendarOutline />
-                                <span className={styles.label}>{year}</span>
-                            </div>
-                            <div className={styles.yearList}>
-                                {data[year]?.map((thumbData) => (
-                                    <PopularTagThumb
-                                        key={thumbData.url}
-                                        thumbData={thumbData}
-                                        className={styles.thumb}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    ))}
+            <div
+                id={MODAL_ID}
+                className={`flcol gapLayout ${styles.modalContent}`}
+                aria-labelledby={MODAL_TITLE_ID}
+            >
+                <div className={styles.labelWrapper}>
+                    <IoPricetagOutline aria-hidden />
+                    <h3 id={MODAL_TITLE_ID}>{modalLabel}</h3>
                 </div>
-            ) : (
-                <NoData className={styles.noData} />
-            )}
+                {!isError && sortedYears.length > 0 && data ? (
+                    <div className={styles.dataList}>
+                        {sortedYears.map((year) => (
+                            <div key={year} className={styles.yearWrapper}>
+                                <div className={styles.yearTitle}>
+                                    <IoCalendarOutline aria-hidden />
+                                    <span className={styles.label}>{year}</span>
+                                </div>
+                                <div className={styles.yearList}>
+                                    {data[year]?.map((thumbData) => (
+                                        <PopularTagThumb
+                                            key={thumbData.url}
+                                            thumbData={thumbData}
+                                            className={styles.thumb}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <NoData className={styles.noData} />
+                )}
+            </div>
         </ModalSheet>
     );
 };

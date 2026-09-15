@@ -1,0 +1,15 @@
+---
+description: Контекст проекта sorock.ru — стек, слои, где искать остальные правила
+alwaysApply: true
+---
+
+# sorocknext
+
+Новостной портал. Фронт — Next.js App Router. Бэкенд — WordPress REST. **Контракт бэка — источник истины** для URL, JSON-ключей и имён полей.
+
+- Не выдумывать эндпоинты. Каталог: `api-endpoints.mdc`.
+- Не ставить axios, react-router, `classnames`/`clsx`, Radix, Vite.
+- Сервер: `fetchApi` / `@/api/<domain>/endpoints.ts`. Клиент: RTK Query + регистрация в `@/store/store.ts`.
+- Импорты только `@/...`. Стили — SCSS-модули. Формы — RHF + yup.
+- Детали для агента в этом репозитории: `.cursor/rules/*.mdc`.
+- `prompts/pattern-front.md`, `prompts/pattern-back.md`, `prompts/rooles.md` — **документация для сторонних клиентов**, не источник истины для кода. Обновлять по мере изменения контракта и паттернов (скилл `.cursor/skills/update-client-patterns`).

@@ -4,6 +4,10 @@
     width: 100%;
 }
 
+.modalContent {
+    width: 100%;
+}
+
 .labelWrapper {
     width: 100%;
     display: flex;
@@ -20,6 +24,10 @@
 
 .noData {
     height: 100%;
+}
+
+.dataList {
+    width: 100%;
 }
 
 .yearWrapper {
@@ -46,6 +54,10 @@
         stroke: var(--accent);
         fill: var(--accent);
         margin-right: 8px;
+    }
+
+    .label {
+        line-height: 1;
     }
 }
 

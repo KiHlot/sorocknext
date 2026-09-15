@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+bower_components
+
+# Production
+/build
+/dist
+
+# IDE
+.idea/
+*.iml
+
+# Misc
+.DS_Store
+.DS_Store?
+
+# Debug
+npm-debug.log*
+
+# Project specific
+.qodo/
+/svg/readme.md
