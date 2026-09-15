@@ -1,12 +1,13 @@
 import { cookies } from 'next/dist/server/request/cookies';
 import { ResponseIF } from '@/types/api';
+import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 
 export const fetchApi = async <DataIF = null>(
     route: string,
     cache: RequestCache = 'no-cache', //'force-cache'
 ): Promise<DataIF | null | undefined> => {
     const cookieStore = await cookies();
-    const token = cookieStore.get('token')?.value || null;
+    const token = cookieStore.get(STORAGE_KEYS.Token)?.value || null;
 
     try {
         console.log(

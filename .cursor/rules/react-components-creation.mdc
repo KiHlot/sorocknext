@@ -28,50 +28,83 @@ alwaysApply: false
 
 Шаблоны страниц — `src/templates/<Name>TPL/`. Layout-обёртки — `src/layouts/<Name>Layout/`. Страницы — `src/app/**`.
 
+Перед новым UI-примитивом проверить, нет ли уже `Button`, `Input`, `CheckBox`, `TextArea`, `CodeInput`, `Modal`, `DialogModal`. Не дублировать.
+
 ### File Naming
 
-- **Components** — PascalCase + `.component.tsx`: `Button.component.tsx`, `TopMenu.component.tsx`.
-- **Helpers** — PascalCase + `.helpers.ts` (только функции/логика): `ModalSheet.helpers.ts`.
-- **Config/Constants** — PascalCase + `.config.ts` или `.config.tsx` (если содержит JSX): `ButtonsGroupAuth.config.tsx`, `AdminMenu.config.tsx`.
-    - Имена констант внутри — `UPPER_SNAKE_CASE`: `DEFAULT_VALUES`, `MENU_ITEMS`.
-- **Hooks** — `use<Name>.hook.ts`: `outsideClick.hook.ts`, `breakpoint.hook.ts`.
-    - Внутри папки с хуком — `*.config.ts` / `*.types.ts`: `breakpoint.config.ts`.
-- **Types** — PascalCase + `.types.ts`: `Button.types.ts`, `ModalSheet.types.ts`.
-- **Styles** — PascalCase + `.module.scss`: `Button.module.scss`.
-- **`.service.ts` — не используется в проекте.** Не создавать без явного согласования.
+- **Components** — PascalCase + `.component.tsx`: `Button.component.tsx`.
+- **Helpers** рядом с компонентом — PascalCase + `.helpers.ts`: `ModalSheet.helpers.ts`.
+- **Config** — PascalCase + `.config.ts` / `.config.tsx` (JSX в конфиге): `AdminMenu.config.tsx`.
+    - Константы внутри — `UPPER_SNAKE_CASE`: `MENU_ITEMS`.
+- **Hooks** (в `src/hooks/`) — camelCase **без** префикса `use` в имени файла: `outsideClick.hook.ts`, `breakpoint/breakpoint.hook.ts`.
+    - Экспорт: `export const useOutsideClick` / `export const useBreakpoint` (named, не default).
+    - Рядом: `breakpoint.config.ts`, при необходимости `*.types.ts`.
+- **Types** — PascalCase + `.types.ts`.
+- **Styles** — PascalCase + `.module.scss`.
+- **`.service.ts` не создавать.**
+
+Вложенные куски — подпапка с тем же паттерном: `UsersTable/UserDetailModal/DetailRow/`.
 
 ### Component Structure
 
-#### Component Declaration
+- `FC<PropsIF>` из `react`, стрелка `const`, не `function`.
+- С пропсами: `const Name: FC<NamePropsIF> = ({ ... }) => { ... }`
+- Без пропсов: `const Name: FC = () => { ... }`
+- Компонент — всегда `export default`. Named export — только типы, конфиги, хелперы, хуки.
+- Пропсы — в `*.types.ts`, имя `NamePropsIF`. Опциональные с дефолтом в деструктуризации (`className = ''`).
+- Обработчики — именованные `handle*`, не анонимные в JSX.
+- `'use client'` — первая строка, только если нужны хуки, события, формы, браузерные API.
+- Кнопка проекта: `children`, `clickHandler`, `variant`, `isLoading`, `href` (тогда `next/link`). Не вводить `label` / `onClick` как новый контракт — расширять существующий `ButtonPropsIF`.
 
-- Использовать `FC<PropsIF>` из `react`.
-- Стрелочные функции с `const`, не `function`.
-- Паттерн: `const ComponentName: FC<ComponentNamePropsIF> = () => { ... }`
-- Без пропсов: `const ComponentName: FC = () => { ... }`
-- **Экспорт — всегда `export default`.** Никаких named-export для компонентов.
-- Для страниц (`app/**/page.tsx`) — тип `Promise<ReactElement>`, `export default XxxPage` (см. `react-ts-rules.mdc`).
-
-#### Пример структуры
+#### Пример
 
 ```tsx
+'use client';
+
 import { FC } from 'react';
 import styles from '@/components/controls/Button/Button.module.scss';
 import { ButtonPropsIF } from '@/components/controls/Button/Button.types';
 
-const Button: FC<ButtonPropsIF> = ({ label, variant = 'primary', onClick }) => {
-    const handleClick = (): void => {
-        onClick?.();
-    };
+const Button: FC<ButtonPropsIF> = ({
+    children,
+    variant = 'primary',
+    type = 'button',
+    className = '',
+    clickHandler,
+    isLoading,
+    disabled,
+}) => {
+    const handleClick = clickHandler;
 
     return (
         <button
-            type="button"
-            className={`${styles.button} ${styles[variant]}`}
+            type={type}
+            className={`flc ${styles.button} ${styles[variant]} ${className}`}
+            disabled={disabled || isLoading}
             onClick={handleClick}
         >
-            {label}
+            {children}
         </button>
     );
 };
 
 export default Button;
+```
+
+Это упрощённый образец структуры файлов, не полная копия `Button.component.tsx`. Для кнопок в UI использовать существующий `Button`.
+
+### Props и типы
+
+- Один файл `Name.types.ts` на папку компонента.
+- Не тащить пропсы инлайном в `.component.tsx`, если их больше одного-двух примитивов.
+- Булевы пропсы — префикс `is*` / `has*` (`isLoading`, `isDisabled`), в JSX без `={true}`.
+
+### Клиент vs сервер
+
+- Серверный компонент не импортирует клиентские хуки и RTK.
+- Клиентский виджет получает данные пропсами со страницы/шаблона либо дергает RTK-мутацию по действию пользователя.
+
+### Шаблоны и layout
+
+- `*TPL` собирает `CommonLayout` / `AdminLayout` + секции. Сами `page.tsx` шаблон только подключают.
+- Не класть секцию страницы в `components/elems/` — только в `sections/` / `widgets/` / `templates/`.

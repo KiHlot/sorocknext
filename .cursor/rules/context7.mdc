@@ -1,4 +1,5 @@
 ---
+description: Всегда тянуть актуальную документацию библиотек через Context7 MCP
 alwaysApply: true
 ---
 

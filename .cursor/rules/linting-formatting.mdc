@@ -87,7 +87,7 @@ import { toast } from 'react-toastify';
 import { useAppSelector } from '@/store/store';
 import { ResponseIF } from '@/types/api';
 import { authApi } from '@/api/auth/auth';
-import { MAGIC_NUMBERS } from '@/configs/config';
+import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import { useOutsideClick } from '@/hooks/outsideClick.hook';
 import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import CommonLayout from '@/layouts/CommonLayout/CommonLayout.component';
@@ -122,7 +122,7 @@ import Button from '@/components/controls/Button/Button.component';
 
 - Не использовать магические числа (`no-magic-numbers`).
 - Игнор: `0`, `1`, `-1`; индексы массивов (`ignoreArrayIndexes`); значения по умолчанию (`ignoreDefaultValues`); `enforceConst`.
-- Именовать через `@/configs/config` → `MAGIC_NUMBERS`.
+- Именовать через `@/configs/magicNumbers.config` → `MAGIC_NUMBERS`.
     - ✅ `MAGIC_NUMBERS.RedirectDelay`
     - ❌ `setTimeout(fn, 3000);`
 

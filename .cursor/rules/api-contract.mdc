@@ -1,6 +1,10 @@
 ---
 description: Контракт REST API бэкенда (WordPress) — конверт ответа, обработка ошибок, авторизация
-globs: src/api/**,src/app/**,src/helpers/**
+globs:
+  - src/api/**
+  - src/app/**
+  - src/helpers/**
+  - src/store/**
 alwaysApply: false
 ---
 
@@ -26,8 +30,9 @@ interface ResponseIF<DataIF = null> {
 
 ## Обработка ответа
 
-- `parseResponse` — бизнес-логика, разбирает все пять веток `result`. **Обязателен в каждой мутации.**
-- `catchError` — только транспорт и JWT (нет сети, 401/403/500). Вызывается в `catch`.
+- `parseResponse` — бизнес-логика, разбирает все пять веток `result`. **Обязателен для мутаций REST** (`ResponseIF`).
+- **Исключение:** JWT `POST /wp-json/jwt-auth/v1/token` возвращает `{ token, expires, currentUser }`, не `ResponseIF`. Для логина `parseResponse` не использовать.
+- `catchError` — только транспорт и JWT-плагин (нет сети, 401/403/500). Вызывается в `catch`.
 
 ```ts
 // ❌ Ошибки валидации потеряются: бэк вернул 200, catch не сработает
@@ -70,6 +75,7 @@ type ResponseErrorIF = { code: string; fieldName?: string; addInfo?: string };
 - Приватные роуты (нужен `Authorization: Bearer <token>`): `/admin/*` и `/users/get-current-user`.
 - Все остальные публичные — токен не требуется.
 - JWT HS256, время жизни **1 час**. При `result: 'logout'` вызывать `logout()`.
+- Имя cookie токена — **`STORAGE_KEYS.Token`** (`Token`), не `'token'`. И клиентский `getCookie`, и серверный `cookies().get(...)` должны использовать этот ключ.
 
 ## Пагинация
 

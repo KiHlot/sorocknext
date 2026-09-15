@@ -1,6 +1,9 @@
 ---
 description: Полный каталог эндпоинтов REST API бэкенда
-globs: src/api/**,src/app/**
+globs:
+  - src/api/**
+  - src/app/**
+  - src/store/**
 alwaysApply: false
 ---
 

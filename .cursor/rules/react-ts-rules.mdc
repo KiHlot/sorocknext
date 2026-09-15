@@ -39,12 +39,13 @@ alwaysApply: false
 - SEO — `generateMetadata` (или статический `export const metadata`) + хелпер `getMetadata` / `fetchMetadata`. Подробности — `pattern-front.md` §6.
 - Одиночные записи (5000+ статей) — **`generateStaticParams` + ISR** (`revalidate`).
 - Если данных нет и это допустимо — пустой fallback. Если страница должна существовать — `notFound()`.
-- Разметку в `page.tsx` не писать. Рендерить **шаблон** (`templates/*TPL`).
+- Разметку в `page.tsx` не писать. Рендерить **шаблон** (`templates/*TPL`). Исключение: тонкие auth-страницы (`src/app/(auth)/**`), где пока собирается `Block` прямо в `page.tsx` — новые публичные и админ-страницы всё равно через TPL.
 
 ### TypeScript
 
-- **Все интерфейсы — постфикс `IF`** (`UserIF`, `PageProps`, `ResponseIF`).
+- **Все интерфейсы — постфикс `IF`** (`UserIF`, `ResponseIF`, `ButtonPropsIF`).
 - **Все типы — постфикс `T`** (`ValueOfT`, `UserRoleT`, `SearchParamsT`).
+- Исключение без постфикса: `PageProps` в `@/types/common.ts` (контракт страниц Next). Новые интерфейсы страниц — с `IF`.
 - **Ключи JSON с бэка — camelCase.** В фронтовых типах `snake_case` не появляется.
 - **Не использовать `any`.** Generics — где обосновано, `unknown` — редко.
 - **Enum не использовать.** Только `const Name = { ... } as const` + `export type NameT = ValueOfT<typeof Name>`. Пример: `RESPONSE_RESULT` в `@/types/api.ts`.
@@ -56,9 +57,9 @@ alwaysApply: false
 
 ### Экспорты
 
-- **`export default`** — для компонентов (`*.component.tsx`), страниц (`page.tsx`, `layout.tsx`, `not-found.tsx`), шаблонов (`*TPL`), layout-обёрток, хуков (один хук — один файл).
-- **Named exports** — для типов (`*.types.ts`), конфигов (`*.config.ts`/`*.config.tsx`), API-слайсов RTK, серверных обёрток (`endpoints.ts`), файлов с несколькими экспортами (`utils.ts`, `storage.helpers.ts`, `codes.config.ts`).
-- **Правило:** один публичный экспорт в файле → `default`. Несколько публичных экспортов → все named.
+- **`export default`** — для компонентов (`*.component.tsx`), страниц (`page.tsx`, `layout.tsx`, `not-found.tsx`), шаблонов (`*TPL`), layout-обёрток.
+- **Named exports** — для хуков (`export const useOutsideClick`), типов (`*.types.ts`), конфигов (`*.config.ts`/`*.config.tsx`), API-слайсов RTK, серверных обёрток (`endpoints.ts`), файлов с несколькими экспортами (`utils.ts`, `storage.helpers.ts`, `codes.config.ts`).
+- **Правило:** один публичный **компонент** в файле → `default`. Хуки — всегда named `use*`. Несколько публичных экспортов → все named.
 
 ### Компоненты
 

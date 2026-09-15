@@ -1,5 +1,5 @@
 ---
-description: Справочники бэкенда — пост-типы, размеры изображений, коды ошибок, JSON-кэш
+description: Справочники бэкенда — пост-типы news/reviews/cool/autors, размеры img80/img500/img900, коды er200/er900, cron JSON-кэш
 alwaysApply: false
 ---
 

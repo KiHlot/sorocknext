@@ -12,8 +12,9 @@ alwaysApply: false
 
 ### Core CSS Rules
 
-- Стилизация — только через **SCSS-модули**. Не заводить обычные `.css` файлы для компонентов.
-- Не стилизовать по HTML-тегам (`div`, `p`, `button` и т.д.) — использовать классы из модуля.
+- Стилизация компонентов — только через **SCSS-модули**. Не заводить обычные `.css` файлы для компонентов.
+- В модулях компонента **не стилизовать по HTML-тегам** (`div`, `p`, `button`) — только классы модуля.
+- Стили по тегам допустимы **только** в `src/styles/` (`_base.scss`, `_reset.scss`, `global.scss`).
 - Повторяющиеся значения и паттерны — выносить в миксины (`@/styles/_mixins.scss`).
 - Не задавать CSS-переменные инлайн через JSX `style`, кроме **динамических** значений (см. ниже).
 
@@ -36,7 +37,8 @@ alwaysApply: false
     - **Абсолютный путь** через `@/styles/mixins`.
     - Импортировать только когда действительно нужны миксины.
 - Глобальные переменные/темы подтягиваются через `global.scss` — отдельно импортировать `_variables.scss` в каждый модуль **не нужно**.
-- CSS-переменные читаются через `var(--...)`; имена — см. `src/styles/_variables.scss` (например, `var(--colorPrimary)`).
+- CSS-переменные читаются через `var(--...)`. Имена совпадают с ключами `$colors` / `$defaultThemeSettings` в `src/styles/_variables.scss` после `spread-map` (например `var(--colorPrimary)`, `var(--white)`, `var(--bgColor)`, `var(--borderRadius)`, `var(--hoverOpacity)`).
+- Не выдумывать токены вроде `--colorWhite`, `--fontPrimary`, `--backgroundHover`, `--greyNeutral` — сначала смотреть `_variables.scss`.
 
 ### CSS Variables Usage
 
@@ -52,15 +54,15 @@ alwaysApply: false
 // ✅ Correct
 .button {
     color: var(--colorPrimary);
-    background-color: var(--colorWhite);
+    background-color: var(--white);
     border-radius: var(--borderRadius);
 }
 
 // ❌ Incorrect
 .button {
-    color: #87c009;
+    color: #0bb197;
     background-color: #fff;
-    border-radius: 12px;
+    border-radius: 8px;
 }
 ```
 
@@ -69,7 +71,7 @@ alwaysApply: false
 - Единственный обязательный миксин — **`media`**.
 - Вызов: `@include media($size)`.
 - Проект — **desktop-first**: стили по умолчанию — десктопные, в `media(...)` описываем, что меняется **на меньших** экранах.
-- Доступные брейкпоинты: `xxs`, `xs`, `sm`, `md`, `lg`, `xl`, `desktop` (точные значения — в `_variables.scss`).
+- Брейкпоинты (как в `_variables.scss`): `xxs`, `xs`, `sm`, `md`, `xmd`, `lg`, `xl`, `xxl`, `xxxl`, `desktop`. Не сокращать список и не писать `@media (max-width: …)` вручную.
 
 Пример:
 
@@ -133,24 +135,23 @@ alwaysApply: false
     cursor: pointer;
 
     &:hover {
-        background: var(--backgroundHover);
+        opacity: var(--hoverOpacity);
     }
 
     &:active,
     &:focus-visible {
         outline: none;
-        background: var(--backgroundActive);
     }
 
     &:disabled {
-        opacity: 0.5;
+        opacity: var(--disabledOpacity);
         cursor: default;
     }
 }
 
 .primary {
     background-color: var(--colorPrimary);
-    color: var(--colorWhite);
+    color: var(--white);
 }
 
 .secondary {
@@ -181,7 +182,7 @@ alwaysApply: false
 ```tsx
 <span
     className={`bgc ${styles.imgWrapper}`}
-    style={{ backgroundImage: `url(${normalizeImage(url, 'img900')})` }}
+    style={{ backgroundImage: `url(${normalizeImage(url, 'user80')})` }}
 />
 ```
 
@@ -237,11 +238,12 @@ alwaysApply: false
 
 ### Inline styles в JSX
 
-- **Запрещено** задавать через `style` цвета, шрифты, радиусы, тени, размеры из токенов — только через CSS-модуль.
-- **Разрешено** использовать `style` для **динамических** значений, которые зависят от данных:
+- **Запрещено** задавать через `style` цвета, шрифты, радиусы, тени — только через CSS-модуль.
+- **Разрешено** использовать `style` для **динамических** значений:
     - `backgroundImage` (URL картинки, например в `Img`);
     - координаты (`top`, `left`, `transform`) при drag/position;
-    - CSS custom properties, вычисляемые во время рендера (например, `--progress: ...`).
+    - CSS custom properties, вычисляемые во время рендера;
+    - проп `style` у примитива, если он уже есть в `*PropsIF` (как у `Button`).
 
 ### Common Patterns
 
@@ -255,13 +257,13 @@ alwaysApply: false
 }
 
 .modal {
-    background-color: var(--colorWhite);
+    background-color: var(--bgColorSecondary);
     border-radius: var(--borderRadius);
 }
 
 .modalHeader {
     padding: 16px;
-    border-bottom: 1px solid var(--greyNeutral);
+    border-bottom: var(--border);
 }
 ```
 
@@ -274,7 +276,7 @@ alwaysApply: false
 
 .primary {
     background-color: var(--colorPrimary);
-    color: var(--colorWhite);
+    color: var(--white);
 }
 
 .secondary {
