@@ -13,7 +13,14 @@ import tsEslint from 'typescript-eslint';
 export default [
     { files: ['**/*.{ts,tsx}'] },
     {
-        ignores: ['public', 'dist', 'build', 'node_modules'],
+        ignores: [
+            'public',
+            'dist',
+            'build',
+            'node_modules',
+            'scripts',
+            '.cursor',
+        ],
     },
     { languageOptions: { globals: globals.browser } },
     pluginJs.configs.recommended,

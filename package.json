@@ -3,7 +3,8 @@
     "version": "0.2.0",
     "private": true,
     "scripts": {
-        "prompt": "tree src /A /F > prompts/structure.txt",
+        "sync:cursor": "node scripts/sync-cursor.mjs",
+        "predev": "npm run sync:cursor && tree src /A /F > prompts/structure.txt",
         "dev": "next dev --turbopack",
         "build": "next build",
         "start": "next start",
