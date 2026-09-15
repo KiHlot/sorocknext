@@ -7,7 +7,7 @@ alwaysApply: false
 
 ## Linting and Formatting Rules (sorock.ru)
 
-> **Note**: For general React/TypeScript rules, see `react-ts-rules.mdc`. For component structure, see `react-components-creation.mdc`. For SCSS, see `scss-modules-styling.mdc`.
+> Поведение React/TS — `react-ts-rules.mdc`. Компоненты — `react-components-creation.mdc`. SCSS — `scss-modules-styling.mdc`.
 
 **CRITICAL: весь сгенерированный код должен проходить `npm run lint`, Prettier и `tsc` без ошибок.**
 
@@ -20,18 +20,7 @@ alwaysApply: false
 - **Semicolons:** `true`.
 - **Line endings:** `auto`.
 
-Примеры (соблюдать переносы под 80 символов):
-
-```ts
-// ✅ Correct
-const name = 'John';
-const items = ['one', 'two', 'three'];
-const obj = { a: 1, b: 2, c: 3 };
-
-// ❌ Incorrect
-const name = "John";
-const items = ["one", "two", "three"];
-```
+Переносы — под 80. Двойные кавычки в JS/TS не использовать.
 
 ### ESLint
 
@@ -70,29 +59,7 @@ const items = ["one", "two", "three"];
 - Без пустых строк между группами.
 - Внутри группы — алфавит (`caseInsensitive: false`).
 
-Пример:
-
-```ts
-// builtin
-import path from 'node:path';
-
-// react
-import { FC, useState } from 'react';
-
-// external
-import dayjs from 'dayjs';
-import { toast } from 'react-toastify';
-
-// internal (@/store → ... → @/components)
-import { useAppSelector } from '@/store/store';
-import { ResponseIF } from '@/types/api';
-import { authApi } from '@/api/auth/auth';
-import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
-import { useOutsideClick } from '@/hooks/outsideClick.hook';
-import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
-import CommonLayout from '@/layouts/CommonLayout/CommonLayout.component';
-import Button from '@/components/controls/Button/Button.component';
-```
+Источник порядка — `eslint.config.js`, не выдумывать группы.
 
 #### React
 

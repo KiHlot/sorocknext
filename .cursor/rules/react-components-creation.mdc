@@ -9,7 +9,7 @@ alwaysApply: false
 
 ## React Component Structure and Naming Conventions (sorock.ru)
 
-> **Note**: For general React/TypeScript rules, see `react-ts-rules.mdc`. For SCSS styling, see `scss-modules-styling.mdc`. For project structure and layers, see `structure.txt` and `pattern-front.md`.
+> React/TS — `react-ts-rules.mdc`. SCSS — `scss-modules-styling.mdc`.
 
 ### Расположение компонентов
 

@@ -6,302 +6,48 @@ globs:
 alwaysApply: false
 ---
 
-## SCSS Modules Styling Guidelines (sorock.ru)
+## SCSS Modules (sorock.ru)
 
-> **Note**: For component structure and file naming, see `react-components-creation.mdc`. For general React/TypeScript rules, see `react-ts-rules.mdc`. For project structure and layers, see `pattern-front.md` and `structure.txt`.
+Структура файлов компонента — `react-components-creation.mdc`. Токены — `src/styles/_variables.scss`, не дублировать список здесь.
 
-### Core CSS Rules
+### Обязательно
 
-- Стилизация компонентов — только через **SCSS-модули**. Не заводить обычные `.css` файлы для компонентов.
-- В модулях компонента **не стилизовать по HTML-тегам** (`div`, `p`, `button`) — только классы модуля.
-- Стили по тегам допустимы **только** в `src/styles/` (`_base.scss`, `_reset.scss`, `global.scss`).
-- Повторяющиеся значения и паттерны — выносить в миксины (`@/styles/_mixins.scss`).
-- Не задавать CSS-переменные инлайн через JSX `style`, кроме **динамических** значений (см. ниже).
+- Стили компонента — только `Name.module.scss` рядом с компонентом. Обычные `.css` для UI не заводить.
+- В модуле не стилизовать HTML-теги (`div`, `p`, `button`) — только классы модуля. Стили по тегам — только `src/styles/` (`_base`, `_reset`, `global`).
+- Повторяющиеся паттерны — миксины `@/styles/_mixins.scss`.
+- Классы — **camelCase** (`.modalHeader`). Модификаторы — отдельные классы (`.primary`), не BEM.
+- `classnames` / `clsx` нет: `` className={`${styles.button} ${styles.primary} ${className}`} ``.
+- Вложенность ≤ 3. `&:hover` / `&.active`. Без `!important` (кроме утилит вроде `.d_none`).
+- Отступы — 4 пробела.
 
-### File Structure and Naming
-
-- **File naming:** PascalCase + `.module.scss`.
-    - Примеры: `Button.module.scss`, `Modal.module.scss`, `TopMenu.module.scss`.
-- **File location:** тот же каталог, что и компонент.
-    - `ComponentName/ComponentName.module.scss`.
-- **Import:** `import styles from '@/components/<Category>/<Name>/<Name>.module.scss';`
-- **Usage:** `className={styles.className}`.
-
-### SCSS Imports Structure
-
-- В начале модуля — импорт миксинов, если они нужны:
-    - `@use '@/styles/mixins' as *;`
-- **Правила:**
-    - Только `@use`, не `@import`.
-    - Обязательно с namespace `as *`.
-    - **Абсолютный путь** через `@/styles/mixins`.
-    - Импортировать только когда действительно нужны миксины.
-- Глобальные переменные/темы подтягиваются через `global.scss` — отдельно импортировать `_variables.scss` в каждый модуль **не нужно**.
-- CSS-переменные читаются через `var(--...)`. Имена совпадают с ключами `$colors` / `$defaultThemeSettings` в `src/styles/_variables.scss` после `spread-map` (например `var(--colorPrimary)`, `var(--white)`, `var(--bgColor)`, `var(--borderRadius)`, `var(--hoverOpacity)`).
-- Не выдумывать токены вроде `--colorWhite`, `--fontPrimary`, `--backgroundHover`, `--greyNeutral` — сначала смотреть `_variables.scss`.
-
-### CSS Variables Usage
-
-- **Всегда** использовать CSS-переменные для цветов, шрифтов, теней, радиусов, отступов.
-- **Никогда** не хардкодить цвета и токены (`#87c009`, `#fff`, `600`, `12px` для токена).
-- Переменные определены в `src/styles/_variables.scss` и в теме.
-- Тема — **`defaultTheme`** (класс на `body`), значения формируются из `$defaultTheme`.
-- Полный список переменных — в `_variables.scss`. Здесь **не дублируем** их, чтобы не расходилось с источником.
-
-Примеры:
+### `@use` и токены
 
 ```scss
-// ✅ Correct
-.button {
-    color: var(--colorPrimary);
-    background-color: var(--white);
-    border-radius: var(--borderRadius);
-}
-
-// ❌ Incorrect
-.button {
-    color: #0bb197;
-    background-color: #fff;
-    border-radius: 8px;
-}
+@use '@/styles/mixins' as *; // только если нужны миксины
 ```
 
-### Mixins Usage
+Только `@use`, namespace `as *`, путь `@/styles/mixins`. `_variables.scss` в каждый модуль не импортировать — тема через `global.scss` / `defaultTheme` на `body`.
 
-- Единственный обязательный миксин — **`media`**.
-- Вызов: `@include media($size)`.
-- Проект — **desktop-first**: стили по умолчанию — десктопные, в `media(...)` описываем, что меняется **на меньших** экранах.
-- Брейкпоинты (как в `_variables.scss`): `xxs`, `xs`, `sm`, `md`, `xmd`, `lg`, `xl`, `xxl`, `xxxl`, `desktop`. Не сокращать список и не писать `@media (max-width: …)` вручную.
+Цвета, шрифты, радиусы, тени, токены отступов — `var(--...)` из ключей `$colors` / `$defaultThemeSettings` после `spread-map` (`--colorPrimary`, `--white`, `--bgColor`, `--borderRadius`, `--hoverOpacity`). Не выдумывать `--colorWhite` / `--fontPrimary`. Не хардкодить `#87c009`, `#fff`, `12px` как токен.
 
-Пример:
+### Адаптив
+
+Единственный обязательный миксин — `media`. Проект **desktop-first**: дефолт — десктоп, в `media(...)` — меньшие экраны. Брейкпоинты как в `_variables.scss`: `xxs`, `xs`, `sm`, `md`, `xmd`, `lg`, `xl`, `xxl`, `xxxl`, `desktop`. Не писать `@media (max-width: …)` вручную.
 
 ```scss
-@use '@/styles/mixins' as *;
-
 .card {
-    display: flex;
     gap: 24px;
-    padding: 32px;
 
     @include media(md) {
         gap: 16px;
-        padding: 24px;
-    }
-
-    @include media(sm) {
-        flex-direction: column;
-        padding: 16px;
     }
 }
 ```
 
-### Class Naming Conventions
+### Утилиты `_base.scss`
 
-- **camelCase** для всех классов.
-    - ✅ `.modalHeader`, `.titleWrap`, `.buttonPrimary`.
-- **Модификаторы — отдельными классами**, не BEM.
-    - ✅ `.primary`, `.secondary`, `.large`, `.small`.
-    - ❌ `.button--primary`, `.button_primary`.
-- Описательные имена, без аббревиатур.
-    - ✅ `.header`, `.container`.
-    - ❌ `.hdr`, `.cnt`.
+Использовать, не копировать: `.flc`, `.flcol`, `.flrow`, `.gapBlock`, `.gapLayout`, `.bgc`, `.d_none`.
 
-### SCSS Structure and Nesting
+### Inline `style` в JSX
 
-Рекомендуемый порядок внутри класса:
-
-1. Базовые стили.
-2. Псевдоклассы и псевдоэлементы.
-3. Вложенные элементы (если нужны).
-
-Правила вложенности:
-
-- `&` — для псевдоклассов: `&:hover`, `&:active`, `&:focus-visible`, `&:disabled`.
-- `&` — для комбинированных модификаторов: `&.active`, `&.disabled`.
-- **Не больше трёх уровней вложенности.**
-- Не использовать `!important` (исключение — существующие утилиты вроде `.d_none`).
-
-Пример:
-
-```scss
-@use '@/styles/mixins' as *;
-
-.button {
-    display: flex;
-    align-items: center;
-    padding: 10px 16px;
-    border-radius: var(--borderRadius);
-    font-family: var(--fontPrimary);
-    cursor: pointer;
-
-    &:hover {
-        opacity: var(--hoverOpacity);
-    }
-
-    &:active,
-    &:focus-visible {
-        outline: none;
-    }
-
-    &:disabled {
-        opacity: var(--disabledOpacity);
-        cursor: default;
-    }
-}
-
-.primary {
-    background-color: var(--colorPrimary);
-    color: var(--white);
-}
-
-.secondary {
-    background-color: transparent;
-    color: var(--colorPrimary);
-}
-
-.large {
-    padding: 20px;
-    font-size: 18px;
-}
-```
-
-### Утилиты из `_base.scss`
-
-В проекте есть готовые утилиты — использовать, а не изобретать заново:
-
-- `.flc` — flex + центрирование.
-- `.flcol` — flex column.
-- `.flrow` — flex row.
-- `.gapBlock` — отступы блока.
-- `.gapLayout` — отступы лейаута.
-- `.bgc` — `background-size: cover; background-position: center`.
-- `.d_none` — display: none (для скрытия в адаптиве).
-
-Пример с `Img`-обёрткой:
-
-```tsx
-<span
-    className={`bgc ${styles.imgWrapper}`}
-    style={{ backgroundImage: `url(${normalizeImage(url, 'user80')})` }}
-/>
-```
-
-### Best Practices
-
-1. **Всегда CSS-переменные** — не хардкодить цвета, шрифты, отступы-токены.
-2. **Классы локальны** — SCSS-модуль сам скоупит, вручную не префиксовать.
-3. **Адаптив — через `@include media(...)`**, не писать `@media` вручную.
-4. **Группировать связанные стили** — читаемость важнее краткости.
-5. **Глобальные стили — в `src/styles/global.scss`**, не в модулях.
-6. **Семантические имена** — по назначению, не по внешнему виду.
-7. **Минимум вложенности** — только когда улучшает читаемость.
-8. **Отступы — пробелы** (4 пробела), не табы.
-9. **Комментарии** — для неочевидных решений.
-10. **Переиспользовать переменные** — проверить `_variables.scss` до создания новой.
-
-### Component Integration
-
-- **Import:**
-    - `import styles from '@/components/<Category>/<Name>/<Name>.module.scss';`
-- **Usage:**
-
-```tsx
-<div className={styles.wrapper}>
-    <h1 className={styles.title}>Title</h1>
-    <button
-        type="button"
-        className={`${styles.button} ${styles.primary}`}
-    >
-        Click me
-    </button>
-</div>
-```
-
-- **Динамические классы:**
-
-```tsx
-// Условные классы
-<div
-    className={`${styles.modal} ${
-        isLarge ? styles.large : styles.medium
-    }`}
->
-
-// Несколько классов + внешний className
-<button
-    type="button"
-    className={`${styles.button} ${styles.primary} ${className}`}
->
-```
-
-- **`classnames` не используем** — только шаблонные строки.
-
-### Inline styles в JSX
-
-- **Запрещено** задавать через `style` цвета, шрифты, радиусы, тени — только через CSS-модуль.
-- **Разрешено** использовать `style` для **динамических** значений:
-    - `backgroundImage` (URL картинки, например в `Img`);
-    - координаты (`top`, `left`, `transform`) при drag/position;
-    - CSS custom properties, вычисляемые во время рендера;
-    - проп `style` у примитива, если он уже есть в `*PropsIF` (как у `Button`).
-
-### Common Patterns
-
-**Modal:**
-
-```scss
-.overlay {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-}
-
-.modal {
-    background-color: var(--bgColorSecondary);
-    border-radius: var(--borderRadius);
-}
-
-.modalHeader {
-    padding: 16px;
-    border-bottom: var(--border);
-}
-```
-
-**Button variants:**
-
-```scss
-.button {
-    // base
-}
-
-.primary {
-    background-color: var(--colorPrimary);
-    color: var(--white);
-}
-
-.secondary {
-    background-color: transparent;
-    color: var(--colorPrimary);
-}
-```
-
-**Responsive (desktop-first):**
-
-```scss
-.container {
-    padding: 20px;
-
-    @include media(sm) {
-        padding: 16px;
-    }
-
-    @include media(xxs) {
-        padding: 12px;
-    }
-}
-```
-
-**Адаптив:**
-
-- Значения брейкпоинтов — в `_variables.scss`.
-- Не писать «магические» `@media (max-width: 1024px)` — использовать `@include media(lg)`.
+Запрещены цвета/шрифты/радиусы/тени. Разрешено: `backgroundImage` (URL), координаты при drag, CSS custom properties с рендера, существующий проп `style` у примитива (`Button`).

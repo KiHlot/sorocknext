@@ -7,7 +7,7 @@ alwaysApply: false
 
 ## HTML and Accessibility Rules (sorock.ru)
 
-> **Note**: For general React/TypeScript rules, see `react-ts-rules.mdc`. For component structure, see `react-components-creation.mdc`. For SCSS, see `scss-modules-styling.mdc`. For project layers, see `pattern-front.md`.
+> React/TS — `react-ts-rules.mdc`. Компоненты — `react-components-creation.mdc`.
 
 ### Semantic HTML
 

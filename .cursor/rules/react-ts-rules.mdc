@@ -7,7 +7,7 @@ alwaysApply: false
 
 ## React + TypeScript Rules (sorock.ru)
 
-> **Note**: For project structure and layers, see `pattern-front.md` and `structure.txt`. For REST contract and endpoints, see `pattern-back.md` and `.cursor/rules/api-*.mdc`. For component structure, see `react-components-creation.mdc`. For SCSS, see `scss-modules-styling.mdc`. For a11y, see `html-accessibility.mdc`. For linting, see `linting-formatting.mdc`.
+> Формат, импорты, Prettier, чеклист lint — `linting-formatting.mdc`. Компоненты — `react-components-creation.mdc`. SCSS — `scss-modules-styling.mdc`. a11y — `html-accessibility.mdc`. REST — `api-*.mdc`.
 
 ### Стек
 
@@ -111,27 +111,9 @@ alwaysApply: false
 - **Не выдумывать URL.** Каталог роутов — `.cursor/rules/api-endpoints.mdc`.
 - Слайс обязательно регистрируется в `@/store/store.ts`.
 
-### Импорты
+### Импорты, формат, magic numbers
 
-- **Только абсолютные** (`@/...`). Относительные (`./`, `../`) запрещены ESLint.
-- Порядок — из `eslint.config.js` (`import/order` с pathGroups):
-    1. `builtin`
-    2. `react`
-    3. `external` (`next`, библиотеки)
-    4. `internal`: `@/store` → `@/styles` → `@/types` → `@/images` → `@/api` → `@/configs` → `@/hooks` → `@/helpers` → `@/layouts` → `@/components`
-- Без пустых строк между группами.
-- Внутри группы — алфавит (`caseInsensitive: false`).
-- `import/extensions` — без расширений для `.ts`/`.tsx`/`.js`/`.jsx`.
-
-### Стили
-
-- SCSS-модули, классы `camelCase`. Подробности — `scss-modules-styling.mdc`.
-- Динамические классы — через шаблонную строку: `` className={`${styles.button} ${styles.primary} ${className}`} ``. Не использовать `classnames` (его в проекте нет).
-
-### Magic numbers
-
-- Магические числа выносить в `@/configs/magicNumbers.config` → `MAGIC_NUMBERS`.
-- ESLint игнорирует `0`, `1`, `-1`, индексы массивов и default-значения.
+Только `@/...`. Порядок групп, Prettier, `MAGIC_NUMBERS`, `no-console` — `linting-formatting.mdc`. Стили — `scss-modules-styling.mdc` (`classnames` нет).
 
 ### Прочее
 
@@ -141,23 +123,9 @@ alwaysApply: false
 - Изображения — `next/image` (при необходимости оптимизатора) или `Img` (фон + `.bgc` + `normalizeImage`). Не ресайзить на фронте: бэк отдаёт готовые URL (`img80`/`img500`/`img900`/`origin`).
 - Иконки — `react-icons`. Кастомные SVG — из `@/images/svg/*.svg` через `@svgr/webpack`.
 
-### Code generation checklist
+### Поведение (формат — в `linting-formatting.mdc`)
 
-1. ✅ Импорты только с `@/`, порядок — из `eslint.config.js`.
-2. ✅ У всех функций и компонентов явные типы аргументов и возврата.
-3. ✅ Интерфейсы — `IF`, типы — `T`.
-4. ✅ Нет `any`, нет `enum`.
-5. ✅ Нет относительных импортов.
-6. ✅ Нет magic numbers (кроме `0`, `1`, `-1`).
-7. ✅ Одинарные кавычки, 4 пробела, `printWidth: 80`.
-8. ✅ Шаблонные строки вместо конкатенации.
-9. ✅ Фигурные скобки во всех `if`.
-10. ✅ JSX boolean props без `={true}`.
-11. ✅ Компоненты — `export default`.
-12. ✅ Серверные страницы — `Promise<ReactElement>`, `await params`.
-13. ✅ Клиентские запросы — RTK + `parseResponse` + `catchError`.
-14. ✅ Серверные запросы — `fetchApi` / `endpoints.ts`, не `fetch` напрямую.
-15. ✅ `result` вместо HTTP-статуса.
-16. ✅ Поля формы — как на бэке (camelCase из `Site_Config::$FIELDS`).
-17. ✅ Стили — SCSS-модуль, классы `camelCase`.
-18. ✅ Нет `console.log`.
+- Компоненты — `export default`.
+- Серверные страницы — `Promise<ReactElement>`, `await params`.
+- Клиент — RTK + `parseResponse` + `catchError`; сервер — `fetchApi` / `endpoints.ts`.
+- Успех — `result`, не HTTP. Поля формы — camelCase из `Site_Config::$FIELDS`.
