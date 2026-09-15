@@ -24,6 +24,10 @@ export interface ContactFormIF {
     message: string;
 }
 
+export interface ContactFormResponseIF {
+    isSent: boolean;
+}
+
 export interface UsersAdminJsonDataIF {
     modifyData: ModifyDataIF;
     data: number[] | null;

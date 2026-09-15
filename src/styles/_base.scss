@@ -11,6 +11,7 @@ body {
     min-height: 100vh;
     position: relative;
     background: var(--bgColor);
+    font-family: var(--defaultFont), sans-serif;
     font-size: 14px;
     color: var(--textColor);
     line-height: normal;

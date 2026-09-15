@@ -1,6 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { ResponseIF } from '@/types/api';
-import { BaseData, ContactFormIF } from '@/api/site/types';
+import {
+    BaseData,
+    ContactFormIF,
+    ContactFormResponseIF,
+} from '@/api/site/types';
 import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
 
 export const siteApi = createApi({
@@ -16,7 +20,7 @@ export const siteApi = createApi({
             },
         }),
         sendContactForm: builder.mutation<
-            ResponseIF<{ isSent: boolean }>,
+            ResponseIF<ContactFormResponseIF>,
             ContactFormIF
         >({
             query: (contactForm) => ({

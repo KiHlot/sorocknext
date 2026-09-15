@@ -1,1 +1,3 @@
-export type FieldsNames = 'email' | 'name' | 'message';
+import { ContactFormIF } from '@/api/site/types';
+
+export type FieldsNames = keyof ContactFormIF;
