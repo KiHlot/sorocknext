@@ -1,0 +1,42 @@
+---
+description: Справочники бэкенда — пост-типы, размеры изображений, коды ошибок, JSON-кэш
+alwaysApply: false
+---
+
+# Справочники бэкенда
+
+## Пост-типы
+
+`news` (Новости), `reviews` (Рецензии), `cool` (Видео), `autors` (Статьи),
+`nocommerce` (Новый рок), `rock-data` (Рок-дата).
+
+Таксономии — стандартные WordPress: `category` и `post_tag`.
+
+## Изображения
+
+Бэкенд отдаёт готовые URL с `/wp-content/uploads/**` (домен уже прописан
+в `remotePatterns` в `next.config.ts`). Размер выбирается на бэке через `gf_img`:
+`img80`, `img500`, `img900`, `origin`, `id`.
+
+Фронт ничего не ресайзит: `next/image` с явными `width` и `height`,
+либо фон инлайном через `style={{ backgroundImage }}` вместе с классом `.bgc`.
+
+## Даты
+
+Бэк отдаёт GMT-строки (`dateGmt`, `modifiedGmt`). Форматирование — только `dayjs`.
+
+## JSON-кэш и cron
+
+Часть данных бэк отдаёт из JSON-файлов, а не из БД, поэтому они могут отставать:
+`popular_tags_JSON` (популярные теги), `users_info_JSON`, `cron_info_JSON`.
+Обновляются через `/admin/update-cron-task`, затем `/admin/update-cron-info`.
+
+## Коды
+
+- `erXXX` — ошибки бэка, словарь в `@/helpers/validation/codes/codes.config`.
+  Часто встречающиеся: `er200` (поле обязательно), `er201`/`er202` (длина),
+  `er203` (некорректное значение), `er204` (пароли не совпадают), `er208` (email занят),
+  `er209` (неверный логин или пароль), `er217` (недостаточно прав), `er222` (нужен вход),
+  `er900` (неизвестная ошибка).
+- `sXXX` — успешные операции, там же в `SUCCESS_CODES`.
+- Сетевые статусы — `SERVER_CODES` / `SERVER_ERRORS`, разбираются внутри `catchError`.

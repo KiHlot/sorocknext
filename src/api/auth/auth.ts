@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { ResponseIF } from '@/types/api';
 import {
-    ConfirmUserIF,
+    ConfirmEmailIF,
     RegistrationFieldsIF,
     ResetPasswordIF,
     SendConfirmCodeMailIF,
@@ -30,9 +30,9 @@ export const authApi = createApi({
                 body,
             }),
         }),
-        confirmUser: builder.mutation<ResponseIF, ConfirmUserIF>({
+        confirmEmail: builder.mutation<ResponseIF, ConfirmEmailIF>({
             query: (body) => ({
-                url: `/confirm-user`,
+                url: `/confirm-email`,
                 method: 'POST',
                 body,
             }),

@@ -1,20 +1,20 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { ResponseIF } from '@/types/api';
 import { FilteredResultIF } from '@/types/common';
 import { CurrentUserIF, UserIF } from '@/types/user';
 import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
-import { ResponseIF } from '@/types/api';
 
 export const usersApi = createApi({
     reducerPath: 'usersApi',
     baseQuery: fetchRestApiQuery('/users'),
-    endpoints: builder => ({
+    endpoints: (builder) => ({
         filter: builder.query<ResponseIF<FilteredResultIF<UserIF[]>>, string>({
-            query: parameters => ({
+            query: (parameters) => ({
                 url: `/filter?${parameters}`,
             }),
         }),
         getUserData: builder.mutation<ResponseIF<UserIF>, number>({
-            query: userId => ({
+            query: (userId) => ({
                 url: `/get-user-data`,
                 method: 'POST',
                 body: {
@@ -22,9 +22,9 @@ export const usersApi = createApi({
                 },
             }),
         }),
-        getProfileData: builder.query<ResponseIF<CurrentUserIF | null>, void>({
+        getCurrentUser: builder.query<ResponseIF<CurrentUserIF | null>, void>({
             query: () => ({
-                url: `/get-profile-data`,
+                url: `/get-current-user`,
             }),
         }),
     }),

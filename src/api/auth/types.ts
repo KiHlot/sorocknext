@@ -6,7 +6,7 @@ export interface RegistrationFieldsIF {
     passwordConfirm: string;
 }
 
-export interface ConfirmUserIF {
+export interface ConfirmEmailIF {
     confirmCode: string;
 }
 
