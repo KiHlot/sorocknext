@@ -3,7 +3,7 @@
 import { FC } from 'react';
 import { IoPricetagOutline, IoCalendarOutline } from 'react-icons/io5';
 import NoData from '@/components/elems/NoData/NoData.component';
-import PopularTagThumb from '@/components/elems/PopularTagThumb/PopularTagThumb.component';
+import PostShortCard from '@/components/cards/PostShortCard/PostShortCard.component';
 import ModalSheet from '@/components/interactive/ModalSheet/ModalSheet.component';
 import {
     MODAL_ID,
@@ -52,7 +52,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
                                 </div>
                                 <div className={styles.yearList}>
                                     {data[year]?.map((thumbData) => (
-                                        <PopularTagThumb
+                                        <PostShortCard
                                             key={thumbData.url}
                                             thumbData={thumbData}
                                             className={styles.thumb}

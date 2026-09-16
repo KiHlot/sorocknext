@@ -1,21 +1,9 @@
 import { SearchParamsT } from '@/types/common';
-import { AuthorIF } from '@/types/post';
+import { PostShortCardModelIF } from '@/components/cards/PostShortCard/PostShortCard.types';
 import { SearchConfigIF } from '@/components/widgets/SearchWidget/SearchWidget.types';
 
-export interface SearchedPageIF {
-    pageData: {
-        pageId: number;
-        thumb: string | null;
-        title: string;
-        country: string;
-        url: string;
-        dateUi: string;
-    };
-    authorData: AuthorIF;
-}
-
 export interface SearchResultIF {
-    searchedPages: SearchedPageIF[] | null;
+    searchedPages: PostShortCardModelIF[] | null;
     searchResultMaxCount: number;
 }
 

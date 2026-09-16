@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { formatDate } from '@/helpers/utils';
+import styles from '@/components/cards/PostShortCard/PostShortCard.module.scss';
+import { PostShortCardPropsIF } from '@/components/cards/PostShortCard/PostShortCard.types';
 import Author from '@/components/elems/Author/Author.component';
 import CategoryLink from '@/components/elems/CategoryLink/CategoryLink.component';
-import styles from '@/components/elems/PopularTagThumb/PopularTagThumb.module.scss';
-import { PopularTagThumbPropsIF } from '@/components/elems/PopularTagThumb/PopularTagThumb.type';
 
-const PopularTagThumb: FC<PopularTagThumbPropsIF> = ({
+const PostShortCard: FC<PostShortCardPropsIF> = ({
     thumbData,
     className = '',
 }) => (
-    <div className={`${styles.popularTagThumbWrapper} ${className}`}>
+    <div className={`${styles.postShortCardWrapper} ${className}`}>
         <Link
             href={thumbData.url}
             aria-label={thumbData.title}
@@ -52,4 +52,4 @@ const PopularTagThumb: FC<PopularTagThumbPropsIF> = ({
     </div>
 );
 
-export default PopularTagThumb;
+export default PostShortCard;

@@ -68,7 +68,7 @@ export interface FilteredResultIF<DataIF = null> {
 }
 
 /** Y-m-d H:i:s*/
-export type DateWithTimeT = string | null;
+export type DateWithTimeT = string;
 
 /** Y-m-d*/
-export type DateT = string | null;
+export type DateT = string;
