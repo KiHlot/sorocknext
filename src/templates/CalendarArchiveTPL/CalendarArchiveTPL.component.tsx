@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { CalendarArchiveTPLPropsIF } from '@/templates/CalendarArchiveTPL/CalendarArchiveTPL.types';
-import CommonLayout, {
+import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
+import { CalendarArchiveTPLPropsIF } from '@/templates/CalendarArchiveTPL/CalendarArchiveTPL.types';
 
 const CalendarArchiveTPL: FC<CalendarArchiveTPLPropsIF> = ({ data }) => (
-    <CommonLayout>
+    <>
         <Content>
             <Breadcrumbs />
             <div className="flcol gapBlock">
@@ -20,7 +20,7 @@ const CalendarArchiveTPL: FC<CalendarArchiveTPLPropsIF> = ({ data }) => (
             </div>
         </Content>
         <Sidebar>sidebar</Sidebar>
-    </CommonLayout>
+    </>
 );
 
 export default CalendarArchiveTPL;

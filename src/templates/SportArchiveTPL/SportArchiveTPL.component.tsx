@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { SportArchiveTPLPropsIF } from '@/templates/SportArchiveTPL/SportArchiveTPL.types';
-import CommonLayout, {
+import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
+import { SportArchiveTPLPropsIF } from '@/templates/SportArchiveTPL/SportArchiveTPL.types';
 
 const SportArchiveTPL: FC<SportArchiveTPLPropsIF> = ({ data }) => (
-    <CommonLayout>
+    <>
         <Content>
             <Breadcrumbs />
             <div className="flcol gapBlock">
@@ -20,7 +20,7 @@ const SportArchiveTPL: FC<SportArchiveTPLPropsIF> = ({ data }) => (
             </div>
         </Content>
         <Sidebar>sidebar</Sidebar>
-    </CommonLayout>
+    </>
 );
 
 export default SportArchiveTPL;

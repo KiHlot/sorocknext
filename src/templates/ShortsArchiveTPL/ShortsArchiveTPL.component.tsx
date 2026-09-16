@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { ShortsArchiveTPLPropsIF } from '@/templates/ShortsArchiveTPL/ShortsArchiveTPL.types';
-import CommonLayout, {
+import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
+import { ShortsArchiveTPLPropsIF } from '@/templates/ShortsArchiveTPL/ShortsArchiveTPL.types';
 
 const ShortsArchiveTPL: FC<ShortsArchiveTPLPropsIF> = ({ data }) => (
-    <CommonLayout>
+    <>
         <Content>
             <Breadcrumbs />
             <div className="flcol gapBlock">
@@ -20,7 +20,7 @@ const ShortsArchiveTPL: FC<ShortsArchiveTPLPropsIF> = ({ data }) => (
             </div>
         </Content>
         <Sidebar>sidebar</Sidebar>
-    </CommonLayout>
+    </>
 );
 
 export default ShortsArchiveTPL;

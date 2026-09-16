@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import CommonLayout, {
+import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
@@ -11,7 +11,7 @@ const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
     const { lastNewsPromoData } = data || {};
 
     return (
-        <CommonLayout>
+        <>
             <Content>
                 {!!lastNewsPromoData?.length && (
                     <LastNewsPromoSection
@@ -22,7 +22,7 @@ const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
             <Sidebar>
                 <LoginWidget />
             </Sidebar>
-        </CommonLayout>
+        </>
     );
 };
 

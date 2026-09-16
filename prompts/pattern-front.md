@@ -13,8 +13,8 @@ src/
 ├── app/              # App Router: страницы, layout, StoreProvider
 ├── api/              # Клиентские RTK-слайсы и серверные fetch-обёртки
 ├── store/            # Redux store и UI-слайсы
-├── templates/        # Шаблоны страниц (собирают layout + секции)
-├── layouts/          # Общие обёртки (Layout, CommonLayout, AdminLayout, MainWrapper)
+├── templates/        # Шаблоны страниц (Content / Sidebar + секции)
+├── layouts/          # Хром сегментов (CommonLayout, AdminLayout, MainWrapper)
 ├── components/       # UI по категориям
 ├── helpers/          # fetchApi, parseResponse, валидация, storage, SEO
 ├── hooks/            # Кастомные хуки
@@ -271,10 +271,10 @@ JWT `/token` — **другая форма ответа** (`token`, `expires`, `
 
 | Путь                                                                 | Назначение   |
 | -------------------------------------------------------------------- | ------------ |
-| `/`                                                                  | Главная      |
-| `/news`, `/news/[slug]`                                              | Архив и пост |
-| `/search`                                                            | Поиск        |
-| `/(auth)/login`, `registration`, `reset-password`, `confirm-account` | Авторизация  |
+| `(site)/`                                                            | Главная      |
+| `(site)/news`, `(site)/news/[slug]`                                  | Архив и пост |
+| `(site)/search`                                                      | Поиск        |
+| `(auth)/login`, `registration`, `reset-password`, `confirm-account`  | Авторизация  |
 | `/admin`, `/admin/cron`, `/admin/users`                              | Админка      |
 
 Паттерн страницы:
@@ -319,7 +319,7 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
 
 `fetchApi` уже вернул `data`. Не типизировать как `ResponseIF<string[]>`.
 
-Корень приложения: `src/app/layout.tsx` — шрифт Inter, `defaultTheme`, `StoreProvider`, `Layout` (тосты). Публичные страницы оборачиваются в `CommonLayout` + `Content` / `Sidebar` внутри шаблона. Админка — `AdminLayout`. Auth-группа — свой `layout.tsx` + `auth.module.scss`.
+Корень: `src/app/layout.tsx` — шрифт Inter, `defaultTheme`, `StoreProvider`, один `ToastContainer`. Хром сегментов — в `layout.tsx`: `(site)` → `CommonLayout`, `admin` → `AdminLayout`, `(auth)` → свой layout + `auth.module.scss`. `*TPL` собирает только `Content` / `Sidebar` и секции, без повторной обёртки в хром.
 
 ---
 
@@ -425,14 +425,14 @@ export default MainWrapper;
 - Кастомные SVG из `@/images/svg/*.svg` как React-компоненты. Иконки — `react-icons`.
 - Даты — `dayjs`.
 
-Шаблон страницы собирает layout:
+Шаблон страницы собирает колонки, не хром:
 
 ```tsx
 const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
     const { lastNewsPromoData } = data || {};
 
     return (
-        <CommonLayout>
+        <>
             <Content>
                 {!!lastNewsPromoData?.length && (
                     <LastNewsPromoSection
@@ -443,7 +443,7 @@ const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
             <Sidebar>
                 <LoginWidget />
             </Sidebar>
-        </CommonLayout>
+        </>
     );
 };
 ```

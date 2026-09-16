@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import CommonLayout, {
+import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
@@ -12,7 +12,7 @@ const SearchTPL: FC<SearchTPLPropsIF> = ({
     searchResult,
     queryParams,
 }) => (
-    <CommonLayout>
+    <>
         <Content className={styles.contentWrapper}>
             {searchResult?.searchedPages?.map((result) => (
                 <div key={result.pageData.pageId}>{result.pageData.title}</div>
@@ -26,7 +26,7 @@ const SearchTPL: FC<SearchTPLPropsIF> = ({
                 />
             )}
         </Sidebar>
-    </CommonLayout>
+    </>
 );
 
 export default SearchTPL;

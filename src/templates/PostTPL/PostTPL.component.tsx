@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import CommonLayout, {
+import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
@@ -11,13 +11,13 @@ const PostTPL: FC<PostTPLPropsIF> = ({ data }) => {
     const { postBase } = data;
 
     return (
-        <CommonLayout>
+        <>
             <Content>
                 <SinglePostPromoSection postBase={postBase} />
                 <PostContentSection content={postBase.main.content} />
             </Content>
             <Sidebar>sidebar</Sidebar>
-        </CommonLayout>
+        </>
     );
 };
 

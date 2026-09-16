@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
 export interface CommonPropsIF {
-    children: ReactNode;
+    children?: ReactNode;
     className?: string;
 }

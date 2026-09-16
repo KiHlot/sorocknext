@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { MusicArchiveTPLPropsIF } from '@/templates/MusicArchiveTPL/MusicArchiveTPL.types';
-import CommonLayout, {
+import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
+import { MusicArchiveTPLPropsIF } from '@/templates/MusicArchiveTPL/MusicArchiveTPL.types';
 
 const MusicArchiveTPL: FC<MusicArchiveTPLPropsIF> = ({ data }) => (
-    <CommonLayout>
+    <>
         <Content>
             <Breadcrumbs />
             <div className="flcol gapBlock">
@@ -20,7 +20,7 @@ const MusicArchiveTPL: FC<MusicArchiveTPLPropsIF> = ({ data }) => (
             </div>
         </Content>
         <Sidebar>sidebar</Sidebar>
-    </CommonLayout>
+    </>
 );
 
 export default MusicArchiveTPL;

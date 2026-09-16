@@ -106,5 +106,5 @@ export default Button;
 
 ### Шаблоны и layout
 
-- `*TPL` собирает `CommonLayout` / `AdminLayout` + секции. Сами `page.tsx` шаблон только подключают.
+- `*TPL` собирает колонки страницы (`Content` / `Sidebar` + секции), не хром сайта. Хром — в `layout.tsx` сегмента (`(site)`, `admin`, `(auth)`). `page.tsx` только подключает шаблон.
 - Не класть секцию страницы в `components/elems/` — только в `sections/` / `widgets/` / `templates/`.

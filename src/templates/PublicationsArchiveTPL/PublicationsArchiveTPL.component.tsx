@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { PublicationsArchiveTPLPropsIF } from '@/templates/PublicationsArchiveTPL/PublicationsArchiveTPL.types';
-import CommonLayout, {
+import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
+import { PublicationsArchiveTPLPropsIF } from '@/templates/PublicationsArchiveTPL/PublicationsArchiveTPL.types';
 
 const PublicationsArchiveTPL: FC<PublicationsArchiveTPLPropsIF> = ({
     data,
 }) => (
-    <CommonLayout>
+    <>
         <Content>
             <Breadcrumbs />
             <div className="flcol gapBlock">
@@ -22,7 +22,7 @@ const PublicationsArchiveTPL: FC<PublicationsArchiveTPLPropsIF> = ({
             </div>
         </Content>
         <Sidebar>sidebar</Sidebar>
-    </CommonLayout>
+    </>
 );
 
 export default PublicationsArchiveTPL;

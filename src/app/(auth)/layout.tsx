@@ -6,9 +6,7 @@ import ButtonsGroupAuth from '@/components/blocks/ButtonsGroupAuth/ButtonsGroupA
 import authStyles from '@/app/(auth)/auth.module.scss';
 import { LayoutIF } from '@/app/types';
 
-export default async function Layout({
-    children,
-}: LayoutIF): Promise<ReactElement> {
+export default function Layout({ children }: LayoutIF): ReactElement {
     return (
         <div className={authStyles.authLayout}>
             <div className={authStyles.leftSide} />

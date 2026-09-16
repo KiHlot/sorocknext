@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import CommonLayout, {
+import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
@@ -8,7 +8,7 @@ import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.compon
 import { NewsArchiveTPLPropsIF } from '@/templates/NewsArchiveTPL/NewsArchiveTPL.types';
 
 const NewsArchiveTPL: FC<NewsArchiveTPLPropsIF> = ({ data }) => (
-    <CommonLayout>
+    <>
         <Content>
             <Breadcrumbs />
             <div className="flcol gapBlock">
@@ -20,7 +20,7 @@ const NewsArchiveTPL: FC<NewsArchiveTPLPropsIF> = ({ data }) => (
             </div>
         </Content>
         <Sidebar>sidebar</Sidebar>
-    </CommonLayout>
+    </>
 );
 
 export default NewsArchiveTPL;

@@ -1,7 +1,5 @@
-import AdminLayout from '@/layouts/AdminLayout/AdminLayout.component';
+import { ReactElement } from 'react';
 
-const UserUpdate = async () => (
-    <AdminLayout isLoading={false}>admin</AdminLayout>
-);
-
-export default UserUpdate;
+export default function AdminPage(): ReactElement {
+    return <>admin</>;
+}

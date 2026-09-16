@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Bounce, ToastContainer } from 'react-toastify';
 import styles from '@/layouts/CommonLayout/CommonLayout.module.scss';
 import { CommonPropsIF } from '@/layouts/CommonLayout/CommonLayout.types';
 import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
@@ -17,19 +16,6 @@ const CommonLayout: FC<CommonPropsIF> = ({ children }) => (
             {children}
         </MainWrapper>
         <Footer />
-        <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-            transition={Bounce}
-        />
     </>
 );
 

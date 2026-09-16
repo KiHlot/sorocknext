@@ -1,13 +1,14 @@
-import { FC } from 'react';
+import { ReactElement } from 'react';
 import { redirect } from 'next/navigation';
 import { PageProps } from '@/types/common';
 import { fetchApi } from '@/helpers/fetchApi';
 import { normalizeFilter } from '@/helpers/utils';
-import AdminLayout from '@/layouts/AdminLayout/AdminLayout.component';
 import UsersAdminTPL from '@/templates/UsersAdminTPL/UsersAdminTPL.component';
 import { UsersAdminTPLDataIF } from '@/templates/UsersAdminTPL/UsersAdminTPL.types';
 
-const UserUpdate: FC<PageProps> = async ({ searchParams }) => {
+export default async function UserUpdate({
+    searchParams,
+}: PageProps): Promise<ReactElement> {
     const { page, column, direction } = await searchParams;
 
     const usersInfo = await fetchApi<UsersAdminTPLDataIF>(
@@ -18,14 +19,7 @@ const UserUpdate: FC<PageProps> = async ({ searchParams }) => {
         redirect(
             `?${normalizeFilter({ page: usersInfo.filterResult.pagination.page })}`,
         );
-        return;
     }
 
-    return (
-        <AdminLayout isLoading={!usersInfo}>
-            <UsersAdminTPL data={usersInfo} />
-        </AdminLayout>
-    );
-};
-
-export default UserUpdate;
+    return <UsersAdminTPL data={usersInfo} />;
+}

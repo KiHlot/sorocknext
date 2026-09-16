@@ -125,6 +125,7 @@ export default [
                     ignore: [
                         /^[A-Z]+[A-Za-z0-9]*\.\w+\.(tsx|ts)$/,
                         'utils.ts',
+                        'not-found.tsx',
                         /\.d\.ts$/, // ← добавляем это
                     ],
                 },

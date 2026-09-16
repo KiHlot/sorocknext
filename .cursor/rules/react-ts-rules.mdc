@@ -40,6 +40,7 @@ alwaysApply: false
 - Одиночные записи (5000+ статей) — **`generateStaticParams` + ISR** (`revalidate`).
 - Если данных нет и это допустимо — пустой fallback. Если страница должна существовать — `notFound()`.
 - Разметку в `page.tsx` не писать. Рендерить **шаблон** (`templates/*TPL`). Исключение: тонкие auth-страницы (`src/app/(auth)/**`), где пока собирается `Block` прямо в `page.tsx` — новые публичные и админ-страницы всё равно через TPL.
+- Хром сегмента (`TopMenu`, боковые меню, `Footer`) — только в `src/app/**/layout.tsx`. `*TPL` не оборачивать в `CommonLayout` / `AdminLayout`.
 
 ### TypeScript
 

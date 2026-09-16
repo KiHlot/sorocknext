@@ -1,5 +1,5 @@
-Структура папок тома Локальный диск
-Серийный номер тома: 0BE6-1897
+п»їв•¤Р„РЃС”СЉР„С”РЃСЂ СЏСЂСЏСЋСЉ Р„СЋСЊСЂ в•¦СЋСЉСЂС‹в„–СЌв€љС‰ С„С€С‘СЉ
+в•¤С…РЃС€С‰СЌв€љС‰ СЌСЋСЊС…РЃ Р„СЋСЊСЂ: 0BE6-1897
 D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 +---api
 |   +---admin
@@ -40,7 +40,6 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 +---app
 |   |   layout.tsx
 |   |   not-found.tsx
-|   |   page.tsx
 |   |   StoreProvider.tsx
 |   |   types.ts
 |   |   
@@ -61,24 +60,30 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   \---reset-password
 |   |           page.tsx
 |   |           
-|   +---admin
+|   +---(site)
+|   |   |   layout.tsx
+|   |   |   not-found.tsx
 |   |   |   page.tsx
 |   |   |   
-|   |   +---cron
-|   |   |       page.tsx
-|   |   |       
-|   |   \---users
+|   |   +---news
+|   |   |   |   page.tsx
+|   |   |   |   
+|   |   |   \---[slug]
+|   |   |           page.tsx
+|   |   |           
+|   |   \---search
 |   |           page.tsx
 |   |           
-|   +---news
-|   |   |   page.tsx
-|   |   |   
-|   |   \---[slug]
-|   |           page.tsx
-|   |           
-|   \---search
-|           page.tsx
-|           
+|   \---admin
+|       |   layout.tsx
+|       |   page.tsx
+|       |   
+|       +---cron
+|       |       page.tsx
+|       |       
+|       \---users
+|               page.tsx
+|               
 +---components
 |   +---blocks
 |   |   +---AdminPromoBlock
@@ -587,10 +592,6 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |       CommonLayout.component.tsx
 |   |       CommonLayout.module.scss
 |   |       CommonLayout.types.ts
-|   |       
-|   +---Layout
-|   |       Layout.component.tsx
-|   |       Layout.types.ts
 |   |       
 |   \---MainWrapper
 |           MainWrapper.component.tsx
