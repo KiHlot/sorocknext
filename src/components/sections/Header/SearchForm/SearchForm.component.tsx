@@ -2,7 +2,7 @@
 
 import { FC, useTransition } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
 import Button from '@/components/controls/Button/Button.component';
@@ -15,6 +15,7 @@ import {
 } from '@/components/sections/Header/SearchForm/SearchForm.types';
 
 const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
+    const pathname = usePathname();
     const router = useRouter();
 
     const [isPending, startTransition] = useTransition();
@@ -37,6 +38,10 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
             });
         }
     };
+
+    if (pathname === '/search') {
+        return null;
+    }
 
     return (
         <form
