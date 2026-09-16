@@ -7,12 +7,12 @@ import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
 import { Input } from '@/components/controls/Input/Input.component';
 import Button from '@/components/controls/Button/Button.component';
-import { schema } from '@/components/menus/TopMenu/SearchForm/SearchForm.config';
-import styles from '@/components/menus/TopMenu/SearchForm/SearchForm.module.scss';
+import { schema } from '@/components/sections/Header/SearchForm/SearchForm.config';
+import styles from '@/components/sections/Header/SearchForm/SearchForm.module.scss';
 import {
     SearchFormIF,
     SearchFormPropsIF,
-} from '@/components/menus/TopMenu/SearchForm/SearchForm.types';
+} from '@/components/sections/Header/SearchForm/SearchForm.types';
 
 const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
     const router = useRouter();

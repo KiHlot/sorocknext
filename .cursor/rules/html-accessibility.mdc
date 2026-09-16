@@ -70,7 +70,7 @@ alwaysApply: false
 
 ### Навигация
 
-- Меню (`TopMenu`, `LeftMenu`, `AdminMenu`) — внутри `<nav>` с `aria-label` (например, `aria-label="Главное меню"`).
+- Меню (`UserMenu`, `LeftMenu`, `AdminMenu`) — внутри `<nav>` с `aria-label` (например, `aria-label="Главное меню"`).
 - `Breadcrumbs` — `<nav aria-label="Хлебные крошки">` + `<ol>` / `<li>`.
 
 ### Прочее

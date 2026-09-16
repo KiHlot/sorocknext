@@ -32,8 +32,8 @@ src/
 | `controls/`    | Поля форм (Input, Button, CheckBox, CodeInput, TextArea) |
 | `elems/`       | Мелкие элементы (Img, Author, MainLogo, Overlay)         |
 | `interactive/` | Модалки, пагинация, табы, breadcrumbs                    |
-| `menus/`       | TopMenu, LeftMenu, AdminMenu                             |
-| `sections/`    | Секции страниц (Footer, промо, контент поста)            |
+| `menus/`       | LeftMenu, AdminMenu                                      |
+| `sections/`    | Секции страниц (Header, Footer, промо, контент поста)    |
 | `widgets/`     | Виджеты (логин, теги, сброс пароля)                      |
 | `forms/`       | Самостоятельные формы (LoginForm, RegistrationForm)      |
 

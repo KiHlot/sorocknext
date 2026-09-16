@@ -1,6 +1,6 @@
 import { object, ObjectSchema, string } from 'yup';
 import { VALIDATOR_FIELD } from '@/helpers/validation/validation.config';
-import { SearchFormIF } from '@/components/menus/TopMenu/SearchForm/SearchForm.types';
+import { SearchFormIF } from '@/components/sections/Header/SearchForm/SearchForm.types';
 
 export const schema: ObjectSchema<SearchFormIF> = object({
     phrase: string()

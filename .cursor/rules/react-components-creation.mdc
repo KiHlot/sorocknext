@@ -21,8 +21,8 @@ alwaysApply: false
 | `controls/` | Поля форм (Input, Button, CheckBox, CodeInput, TextArea, InputFile) |
 | `elems/` | Мелкие элементы (Img, Author, MainLogo, Country, Overlay) |
 | `interactive/` | Модалки, пагинация, табы, breadcrumbs (Modal, DialogModal, ModalSheet, Pagination, Tabs) |
-| `menus/` | TopMenu, LeftMenu, AdminMenu |
-| `sections/` | Секции страниц (Footer, промо, контент поста) |
+| `menus/` | LeftMenu, AdminMenu |
+| `sections/` | Секции страниц (Header, Footer, промо, контент поста) |
 | `widgets/` | Виджеты (логин, теги, сброс пароля, поиск) |
 | `forms/` | Самостоятельные формы (LoginForm, RegistrationForm) |
 

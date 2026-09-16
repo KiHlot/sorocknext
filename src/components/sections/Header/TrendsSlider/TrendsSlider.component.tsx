@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { siteApi } from '@/api/site/site';
-import styles from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.module.scss';
-import { TrendsSliderPropsIF } from '@/components/menus/TopMenu/TrendsSlider/TrendsSlider.types';
+import styles from '@/components/sections/Header/TrendsSlider/TrendsSlider.module.scss';
+import { TrendsSliderPropsIF } from '@/components/sections/Header/TrendsSlider/TrendsSlider.types';
 
 const TrendsSlider: FC<TrendsSliderPropsIF> = ({ className }) => {
     const { data: baseData } = siteApi.useGetCommonDataQuery();

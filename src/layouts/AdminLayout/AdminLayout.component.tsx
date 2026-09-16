@@ -4,12 +4,12 @@ import { AdminLayoutPropsIF } from '@/layouts/AdminLayout/AdminLayout.types';
 import MainWrapper from '@/layouts/MainWrapper/MainWrapper.component';
 import AdminMenu from '@/components/menus/AdminMenu/AdminMenu.component';
 import LeftMenu from '@/components/menus/LeftMenu/LeftMenu.component';
-import TopMenu from '@/components/menus/TopMenu/TopMenu.component';
 import Footer from '@/components/sections/Footer/Footer.component';
+import Header from '@/components/sections/Header/Header.component';
 
 const AdminLayout: FC<AdminLayoutPropsIF> = ({ children }) => (
     <>
-        <TopMenu />
+        <Header />
         <MainWrapper className={styles.adminLayoutWrapper}>
             <div className={`cvscroll ${styles.menu}`}>
                 <LeftMenu />

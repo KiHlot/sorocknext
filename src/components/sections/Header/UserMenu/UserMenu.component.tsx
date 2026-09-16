@@ -7,9 +7,9 @@ import { useOutsideClick } from '@/hooks/outsideClick.hook';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import { getSessionStorageItem } from '@/helpers/storage/storage.helpers';
 import Img from '@/components/elems/Img/Img.component';
-import { getUserMenu } from '@/components/menus/TopMenu/UserMenu/UserMenu.config';
-import { userMenuClickHandler } from '@/components/menus/TopMenu/UserMenu/UserMenu.helpers';
-import styles from '@/components/menus/TopMenu/UserMenu/UserMenu.module.scss';
+import { getUserMenu } from '@/components/sections/Header/UserMenu/UserMenu.config';
+import { userMenuClickHandler } from '@/components/sections/Header/UserMenu/UserMenu.helpers';
+import styles from '@/components/sections/Header/UserMenu/UserMenu.module.scss';
 
 const UserMenu: FC = () => {
     const menuWrapperRef = useRef<HTMLDivElement>(null);
