@@ -28,6 +28,7 @@ const BottomSheet: FC<BottomSheetIF> = ({ props, overlayId }) => {
         classNameWrapper = '',
         classNameBody = '',
         children,
+        dataTest,
     } = props;
 
     const [isOpen, setIsOpen] = useState(false);
@@ -84,8 +85,12 @@ const BottomSheet: FC<BottomSheetIF> = ({ props, overlayId }) => {
                     ${isClosing ? styles.closing : ''}
                     ${isShake ? styles.shake : ''}
                 `}
+                data-test={`${dataTest}_bottom_sheet`}
             >
-                <Indicator onClose={closeHandler} />
+                <Indicator
+                    onClose={closeHandler}
+                    dataTest={`${dataTest}_bottom_sheet_swipe_indicator`}
+                />
                 <div className={styles.bodyOverflow}>
                     <div
                         className={`${styles.bottomSheetBody} ${classNameBody}`}

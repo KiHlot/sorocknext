@@ -12,6 +12,6 @@ export interface PostShortCardModelIF {
 }
 
 export interface PostShortCardPropsIF {
-    thumbData: PostShortCardModelIF;
+    postData: PostShortCardModelIF;
     className?: string;
 }

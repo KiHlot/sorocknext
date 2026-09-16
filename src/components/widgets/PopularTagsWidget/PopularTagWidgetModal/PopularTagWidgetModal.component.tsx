@@ -2,8 +2,8 @@
 
 import { FC } from 'react';
 import { IoPricetagOutline, IoCalendarOutline } from 'react-icons/io5';
-import NoData from '@/components/elems/NoData/NoData.component';
 import PostShortCard from '@/components/cards/PostShortCard/PostShortCard.component';
+import NoData from '@/components/elems/NoData/NoData.component';
 import ModalSheet from '@/components/interactive/ModalSheet/ModalSheet.component';
 import {
     MODAL_ID,
@@ -29,7 +29,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
         <ModalSheet
             onClose={onClose}
             size="large"
-            dataTest="popular_tag_modal"
+            dataTest="popular_tag"
             isLoading={isLoading}
             classNameBody={styles.bodyWrapper}
         >
@@ -51,10 +51,10 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
                                     <span className={styles.label}>{year}</span>
                                 </div>
                                 <div className={styles.yearList}>
-                                    {data[year]?.map((thumbData) => (
+                                    {data[year]?.map((postData) => (
                                         <PostShortCard
-                                            key={thumbData.url}
-                                            thumbData={thumbData}
+                                            key={postData.url}
+                                            postData={postData}
                                             className={styles.thumb}
                                         />
                                     ))}
@@ -63,7 +63,10 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
                         ))}
                     </div>
                 ) : (
-                    <NoData className={styles.noData} />
+                    <NoData
+                        className={styles.noData}
+                        text="Не удалось найти информацию по вашему запросу"
+                    />
                 )}
             </div>
         </ModalSheet>

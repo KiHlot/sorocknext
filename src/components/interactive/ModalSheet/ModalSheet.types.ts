@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { ValueOf } from '@/types/common';
+import { ValueOfT } from '@/types/common';
 import { MODAL_SHEET_SIZES } from '@/components/interactive/ModalSheet/ModalSheet.config';
 
 export interface ModalSheetPropsIF {
@@ -7,7 +7,7 @@ export interface ModalSheetPropsIF {
     dataTest: string;
     onClose?: () => void;
     bodyRef?: (node: HTMLDivElement | null) => void;
-    size?: ValueOf<typeof MODAL_SHEET_SIZES>;
+    size?: ValueOfT<typeof MODAL_SHEET_SIZES>;
     classNameWrapper?: string;
     classNameBody?: string;
     isLoading?: boolean;

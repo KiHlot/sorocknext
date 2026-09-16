@@ -4,7 +4,7 @@ import { SWIPE_THRESHOLD } from '@/components/interactive/ModalSheet/BottomSheet
 import styles from '@/components/interactive/ModalSheet/BottomSheet/Indicator/Indicator.module.scss';
 import { IndicatorPropsIF } from '@/components/interactive/ModalSheet/BottomSheet/Indicator/Indicator.types';
 
-const Indicator: FC<IndicatorPropsIF> = ({ onClose }) => {
+const Indicator: FC<IndicatorPropsIF> = ({ onClose, dataTest }) => {
     const [isSwiping, setIsSwiping] = useState<boolean>(false);
     const [touchStartY, setTouchStartY] = useState<number>(0);
     const [touchCurrentY, setTouchCurrentY] = useState<number>(0);
@@ -61,7 +61,7 @@ const Indicator: FC<IndicatorPropsIF> = ({ onClose }) => {
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
-                dataTest="bottom_sheet_swipe_indicator_button"
+                dataTest={dataTest}
             />
             <span className={styles.swipeIndicator} />
         </div>

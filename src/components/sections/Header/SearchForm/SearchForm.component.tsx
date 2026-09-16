@@ -5,8 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
-import { Input } from '@/components/controls/Input/Input.component';
 import Button from '@/components/controls/Button/Button.component';
+import { Input } from '@/components/controls/Input/Input.component';
 import { schema } from '@/components/sections/Header/SearchForm/SearchForm.config';
 import styles from '@/components/sections/Header/SearchForm/SearchForm.module.scss';
 import {
@@ -56,6 +56,7 @@ const SearchForm: FC<SearchFormPropsIF> = ({ className = '' }) => {
                 type="submit"
                 disabled={!isValid || isPending}
                 isCustom
+                dataTest="search_form_submit"
             >
                 <IoSearch />
             </Button>

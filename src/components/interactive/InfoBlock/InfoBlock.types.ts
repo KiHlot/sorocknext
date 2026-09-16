@@ -5,5 +5,5 @@ export interface InfoBlockPropsIF {
     title?: string;
     onClose?: () => void;
     children: ReactNode;
-    variant?: 'error' | 'success' | 'info';
+    variant?: 'error' | 'success' | 'info' | 'outlined';
 }

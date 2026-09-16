@@ -1,8 +1,8 @@
+import { PostShortCardModelIF } from '@/components/cards/PostShortCard/PostShortCard.types';
 import { SearchConfigIF } from '@/components/widgets/SearchWidget/SearchWidget.types';
-import { SearchResultIF } from '@/templates/SearchTPL/SearchTPL.types';
 
 export interface FetchSearchDataIF {
-    searchResult: SearchResultIF;
+    searchedPages: PostShortCardModelIF[] | null;
 }
 
 export interface FetchSearchConfigIF {

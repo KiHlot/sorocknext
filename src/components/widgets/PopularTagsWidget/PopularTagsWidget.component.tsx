@@ -79,7 +79,7 @@ const PopularTagsWidget: FC = () => {
                             className={`flc ${styles.tagButton}`}
                             disabled={isFetching || !!selectedTag}
                             isCustom
-                            dataTest="open_popular_tag_modal_button"
+                            dataTest="open_popular_tag_modal"
                             aria-haspopup="dialog"
                             aria-expanded={isSelected}
                             aria-controls={isSelected ? MODAL_ID : undefined}

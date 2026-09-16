@@ -7,28 +7,28 @@ import Author from '@/components/elems/Author/Author.component';
 import CategoryLink from '@/components/elems/CategoryLink/CategoryLink.component';
 
 const PostShortCard: FC<PostShortCardPropsIF> = ({
-    thumbData,
+    postData,
     className = '',
 }) => (
     <div className={`${styles.postShortCardWrapper} ${className}`}>
         <Link
-            href={thumbData.url}
-            aria-label={thumbData.title}
+            href={postData.url}
+            aria-label={postData.title}
             className={`bgc ${styles.thumb}`}
             style={{
-                backgroundImage: `url(${thumbData.thumbnail})`,
+                backgroundImage: `url(${postData.thumbnail})`,
             }}
         />
         <div
-            className={`flcol ${styles.content}  ${thumbData.author ? styles.pb : ''}`}
+            className={`flcol ${styles.content}  ${postData.author ? styles.pb : ''}`}
         >
             <div className={styles.thumbHeader}>
                 <span className={styles.date}>
-                    {formatDate(thumbData.publishDate)}
+                    {formatDate(postData.publishDate)}
                 </span>
-                {thumbData.categories && (
+                {postData.categories && (
                     <div className={styles.categories}>
-                        {thumbData.categories.map((slug) => (
+                        {postData.categories.map((slug) => (
                             <CategoryLink
                                 key={slug}
                                 categorySLug={slug}
@@ -38,12 +38,12 @@ const PostShortCard: FC<PostShortCardPropsIF> = ({
                     </div>
                 )}
             </div>
-            <Link href={thumbData.url} className={styles.title}>
-                {thumbData.title}
+            <Link href={postData.url} className={styles.title}>
+                {postData.title}
             </Link>
-            {thumbData.author && (
+            {postData.author && (
                 <Author
-                    data={thumbData.author}
+                    data={postData.author}
                     className={styles.author}
                     type="name"
                 />

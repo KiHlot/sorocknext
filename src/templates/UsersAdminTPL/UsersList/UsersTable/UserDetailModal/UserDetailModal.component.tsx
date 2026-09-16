@@ -44,7 +44,7 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
                 clickHandler={() => setIsOpen(true)}
                 variant="sq"
                 disabled={disabled || isLoading}
-                dataTest="open_user_detail_button"
+                dataTest="open_user_detail"
             >
                 <CgDetailsMore />
             </Button>

@@ -23,7 +23,7 @@ const Button: FC<ButtonPropsIF> = ({
 }) => {
     const commonProps = {
         disabled: disabled || isLoading,
-        'data-test': dataTest,
+        'data-test': `${dataTest}_button`,
         className: isCustom
             ? `${className}`
             : `flc ${styles.button} ${icon ? styles.hasIcon : ''} ${styles[variant]} ${className} ${isLoading ? styles.loading : ''}`,

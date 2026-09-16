@@ -35,7 +35,7 @@ const DialogModal: FC<DialogModalPropsIF> = ({
                 <Button
                     clickHandler={() => setIsOpen(false)}
                     className={styles.decline}
-                    dataTest="dialog_modal_decline_button"
+                    dataTest="dialog_modal_decline"
                 >
                     <CgClose />
                     Нет
@@ -43,7 +43,7 @@ const DialogModal: FC<DialogModalPropsIF> = ({
                 <Button
                     clickHandler={accept}
                     className={styles.accept}
-                    dataTest="dialog_modal_accept_button"
+                    dataTest="dialog_modal_accept"
                 >
                     <IoShieldCheckmarkOutline />
                     Да

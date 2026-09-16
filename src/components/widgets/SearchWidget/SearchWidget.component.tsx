@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { IoSearch } from 'react-icons/io5';
 import Block from '@/components/blocks/Block/Block.component';
+import Button from '@/components/controls/Button/Button.component';
 import CheckBoxGroup from '@/components/controls/CheckBoxGroup/CheckBoxGroup.component';
 import { Input } from '@/components/controls/Input/Input.component';
-import Button from '@/components/controls/Button/Button.component';
 import { schema } from '@/components/widgets/SearchWidget/SearchWidget.config';
 import styles from '@/components/widgets/SearchWidget/SearchWidget.module.scss';
 import {
@@ -100,6 +100,7 @@ const SearchWidget: FC<SearchWidgetPropsIF> = ({
                     type="submit"
                     disabled={!isValid || isPending}
                     icon={<IoSearch />}
+                    dataTest="search_widget_submit"
                 >
                     Искать
                 </Button>

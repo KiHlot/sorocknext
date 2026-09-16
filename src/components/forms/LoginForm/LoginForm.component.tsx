@@ -94,7 +94,12 @@ const LoginForm: FC = () => {
                 isRequired
                 isPassword
             />
-            <Button type="submit" isLoading={isLoading} disabled={!isValid}>
+            <Button
+                type="submit"
+                isLoading={isLoading}
+                disabled={!isValid}
+                dataTest="login_form_submit"
+            >
                 Вход
             </Button>
         </form>

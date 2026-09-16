@@ -33,7 +33,7 @@ export default async function SearchPage({
     return (
         <SearchTPL
             searchConfig={config?.searchConfig}
-            searchResult={data?.searchResult}
+            searchedPages={data?.searchedPages}
             queryParams={queryParams}
         />
     );

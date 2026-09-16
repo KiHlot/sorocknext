@@ -7,6 +7,7 @@ export interface SearchWidgetFormIF {
 }
 
 export interface SearchConfigIF {
+    searchResultMaxCount: number;
     postTypes: OptionIF[];
     categories: OptionIF[];
 }

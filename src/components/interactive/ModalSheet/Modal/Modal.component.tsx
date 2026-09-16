@@ -95,7 +95,7 @@ const Modal: FC<ModalPropsIF> = ({ props, overlayId }) => {
                     ${isShake ? styles.shake : ''}
                 `}
                 ref={wrapperRef}
-                data-test={dataTest}
+                data-test={`${dataTest}_modal`}
             >
                 {!isHideClose && (
                     <Button
@@ -103,7 +103,7 @@ const Modal: FC<ModalPropsIF> = ({ props, overlayId }) => {
                         clickHandler={() => closeHandler()}
                         className={`flc ${styles.closeButton}`}
                         type="button"
-                        dataTest={`${dataTest}_close_button`}
+                        dataTest={`${dataTest}_modal_close`}
                     >
                         <IoClose />
                     </Button>

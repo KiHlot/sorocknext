@@ -103,7 +103,7 @@ const ContactForm: FC = () => {
                 variant="secondary"
                 isLoading={isLoading}
                 disabled={!isValid}
-                dataTest="contact_form_submit_button"
+                dataTest="contact_form_submit"
             >
                 Отправить
             </Button>
