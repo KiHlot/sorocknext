@@ -1,0 +1,23 @@
+---
+description: Не выносить одноразовые выражения в константы
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Локальные константы
+
+Не выносить выражение в константу, если оно используется **в одном месте**. Константа нужна, когда то же значение читается **хотя бы в двух местах**.
+
+```tsx
+// ❌ BAD — одноразовая обёртка
+const hasData = sortedYears.length > 0;
+return !isError && hasData && data ? <List /> : <NoData />;
+
+// ✅ GOOD — условие на месте
+return !isError && sortedYears.length > 0 && data ? <List /> : <NoData />;
+
+// ✅ GOOD — переиспользование
+const hasData = sortedYears.length > 0;
+if (!hasData) return <NoData />;
+return hasData && data ? <List /> : null;
+```

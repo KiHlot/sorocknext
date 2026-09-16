@@ -368,6 +368,7 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |       |   |   
 |       |   \---PopularTagWidgetModal
 |       |           PopularTagWidgetModal.component.tsx
+|       |           PopularTagWidgetModal.config.ts
 |       |           PopularTagWidgetModal.module.scss
 |       |           PopularTagWidgetModal.types.ts
 |       |           
