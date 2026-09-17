@@ -1,5 +1,6 @@
-import { PostIF } from '@/api/post/types';
+import { PostIF } from '@/types/post';
 
 export interface PostTPLPropsIF {
     data: PostIF;
+    pathname: string;
 }

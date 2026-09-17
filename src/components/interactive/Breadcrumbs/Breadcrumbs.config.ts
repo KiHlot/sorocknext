@@ -1,28 +1,9 @@
-export const getArchiveLabel = (slug: string, title?: string) => {
-    switch (slug) {
-        case 'news': {
-            return 'Новости';
-        }
-        case 'video': {
-            return 'Видео';
-        }
-        case 'calendar': {
-            return 'Календарь';
-        }
-        case 'music': {
-            return 'Музыка';
-        }
-        case 'publications': {
-            return 'Публикации';
-        }
-        case 'sport': {
-            return 'Спорт';
-        }
-        case 'shorts': {
-            return 'Шортс';
-        }
-        default: {
-            return title || 'Архив';
-        }
+import { POST_TYPES } from '@/configs/postTypes.config';
+
+export const getArchiveLabel = (slug: string, title?: string): string => {
+    if (slug in POST_TYPES) {
+        return POST_TYPES[slug as keyof typeof POST_TYPES];
     }
+
+    return title || 'Архив';
 };

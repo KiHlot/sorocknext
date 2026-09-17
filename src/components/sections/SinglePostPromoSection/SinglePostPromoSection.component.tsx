@@ -13,6 +13,7 @@ import { SinglePostPromoSectionPropsIF } from '@/components/sections/SinglePostP
 
 const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
     postBase,
+    pathname,
 }) => {
     const { main, country, settings, innerImg, author } = postBase;
 
@@ -27,7 +28,7 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
         		rgba(40, 48, 57, 1)), url(${innerImg}`,
                 }}
             />
-            <Breadcrumbs title={main.titleSeo} />
+            <Breadcrumbs pathname={pathname} title={main.titleSeo} />
             <h1 className={styles.title}>{main.titleH1}</h1>
             <div className={styles.perks}>
                 <ul>

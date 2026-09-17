@@ -21,10 +21,10 @@ alwaysApply: false
 | `/auth/confirm-email` | Подтверждение аккаунта |
 | `/auth/send-reset-pass-code-mail` | Письмо для сброса пароля |
 | `/auth/reset-password` | Сброс пароля |
-| `/news/archive` | Архив новостей |
-| `/news/get-slugs` | Слаги для `generateStaticParams` |
-| `/news/metadata/{slug}` | SEO новости |
-| `/news/{slug}` | Одна новость |
+| `/archive/archive` | Архив постов, query `postType` + `page` |
+| `/archive/get-slugs` | Слаги для `generateStaticParams`, query `postType` |
+| `/archive/metadata/{post_type}` | SEO поста, query `slug` |
+| `/archive/{slug}` | Одна запись, query `postType` (временно в Archive_Controller) |
 | `/page/home-page-data` | Данные главной |
 | `/search` | Поиск |
 | `/search/get-search-config` | Конфиг поиска |

@@ -10,7 +10,7 @@ import { VideoArchiveTPLPropsIF } from '@/templates/VideoArchiveTPL/VideoArchive
 const VideoArchiveTPL: FC<VideoArchiveTPLPropsIF> = ({ data }) => (
     <>
         <Content>
-            <Breadcrumbs />
+            <Breadcrumbs pathname="/video" />
             <div className="flcol gapBlock">
                 {data?.defaultData.map(({ url, label }) => (
                     <Link key={url} href={url}>

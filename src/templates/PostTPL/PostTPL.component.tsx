@@ -7,13 +7,16 @@ import PostContentSection from '@/components/sections/PostContentSection/PostCon
 import SinglePostPromoSection from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.component';
 import { PostTPLPropsIF } from '@/templates/PostTPL/PostTPL.types';
 
-const PostTPL: FC<PostTPLPropsIF> = ({ data }) => {
+const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname }) => {
     const { postBase } = data;
 
     return (
         <>
             <Content>
-                <SinglePostPromoSection postBase={postBase} />
+                <SinglePostPromoSection
+                    postBase={postBase}
+                    pathname={pathname}
+                />
                 <PostContentSection content={postBase.main.content} />
             </Content>
             <Sidebar>sidebar</Sidebar>

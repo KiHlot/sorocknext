@@ -1,13 +1,19 @@
-@use '@/styles/mixins' as *;
+.nav {
+    width: 100%;
+}
 
-.breadcrumbsWrapper {
+.list {
     width: 100%;
     height: auto;
     display: flex;
     flex-wrap: wrap;
+}
 
-    li {
-        width: fit-content;
-        display: flex;
-    }
+.item {
+    width: fit-content;
+    display: flex;
+}
+
+.separator {
+    white-space: pre;
 }

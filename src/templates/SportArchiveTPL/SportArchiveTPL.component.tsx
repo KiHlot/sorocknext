@@ -10,7 +10,7 @@ import { SportArchiveTPLPropsIF } from '@/templates/SportArchiveTPL/SportArchive
 const SportArchiveTPL: FC<SportArchiveTPLPropsIF> = ({ data }) => (
     <>
         <Content>
-            <Breadcrumbs />
+            <Breadcrumbs pathname="/sport" />
             <div className="flcol gapBlock">
                 {data?.defaultData.map(({ url, label }) => (
                     <Link key={url} href={url}>

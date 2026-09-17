@@ -27,10 +27,10 @@ export interface TagIF {
 
 export type SearchParamsT = Record<string, string | undefined>;
 
-export interface PageProps {
-    params: Promise<{
-        slug: string;
-    }>;
+export interface PageProps<
+    ParamsIF extends Record<string, string> = Record<string, string>,
+> {
+    params: Promise<ParamsIF>;
     searchParams?: Promise<SearchParamsT>;
 }
 
@@ -59,6 +59,11 @@ export interface NormalizeFilterIF {
 export interface PaginationIF {
     pagesCount?: number;
     page: number;
+}
+
+export interface PaginationInfoIF {
+    currentPage: number;
+    pagesCount: number;
 }
 
 export interface FilteredResultIF<DataIF = null> {

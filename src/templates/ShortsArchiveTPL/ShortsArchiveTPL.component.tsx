@@ -10,7 +10,7 @@ import { ShortsArchiveTPLPropsIF } from '@/templates/ShortsArchiveTPL/ShortsArch
 const ShortsArchiveTPL: FC<ShortsArchiveTPLPropsIF> = ({ data }) => (
     <>
         <Content>
-            <Breadcrumbs />
+            <Breadcrumbs pathname="/shorts" />
             <div className="flcol gapBlock">
                 {data?.defaultData.map(({ url, label }) => (
                     <Link key={url} href={url}>

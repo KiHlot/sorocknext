@@ -12,7 +12,7 @@ const PublicationsArchiveTPL: FC<PublicationsArchiveTPLPropsIF> = ({
 }) => (
     <>
         <Content>
-            <Breadcrumbs />
+            <Breadcrumbs pathname="/publications" />
             <div className="flcol gapBlock">
                 {data?.defaultData.map(({ url, label }) => (
                     <Link key={url} href={url}>

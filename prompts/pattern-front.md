@@ -214,7 +214,7 @@ const x = 1;
 Файл: `src/helpers/fetchApi.ts`. Только в Server Components / Route Handlers (`cookies()` из Next).
 
 - Собирает URL: `${NEXT_PUBLIC_REST_DOMAIN_URL}${NEXT_PUBLIC_REST_BASE}${route}`.
-- `route` всегда с ведущим слэшем: `/news/archive`.
+- `route` всегда с ведущим слэшем: `/archive/archive`.
 - Берёт cookie `token` и при наличии ставит `Authorization: Bearer`.
 - **Разворачивает конверт**: при `result === 'ok'` возвращает `data`, иначе `null`.
 - Дженерик `fetchApi<T>` — тип **внутренних данных**, не `ResponseIF<T>`.
@@ -232,6 +232,12 @@ export const fetchApi = async <DataIF = null>(
 
 - `fetchMetadata` — `/metadata/{type}/{route}` + `getMetadata`
 - `fetchHomePageData` — `/page/home-page-data`
+- `fetchArchive({ postType, page })` — `/archive/archive?postType=...&page=...`;
+  количество страниц приходит в `paginationInfo: { currentPage, pagesCount }`
+  и в запрос не передаётся
+- `fetchArchiveSlugs(postType)` — `/archive/get-slugs?postType=...`
+- `fetchArchivePostMetadata({ postType, slug })` — `/archive/metadata/{postType}?slug=...`
+- `fetchArchivePost({ postType, slug })` — `/archive/{slug}?postType=...`
 - `fetchSearchData` / `fetchSearchConfig` — `/search`, `/search/get-search-config`
 
 На странице предпочтительно вызывать обёртку, а не сырой `fetchApi`, если обёртка уже есть.
@@ -272,7 +278,7 @@ JWT `/token` — **другая форма ответа** (`token`, `expires`, `
 | Путь                                                                | Назначение   |
 | ------------------------------------------------------------------- | ------------ |
 | `(site)/`                                                           | Главная      |
-| `(site)/news`, `(site)/news/[slug]`                                 | Архив и пост |
+| `(site)/[postType]`, `(site)/[postType]/[slug]`                     | Архив и пост |
 | `(site)/search`                                                     | Поиск        |
 | `(auth)/login`, `registration`, `reset-password`, `confirm-account` | Авторизация  |
 
@@ -302,17 +308,25 @@ export default async function HomePage(): Promise<ReactElement> {
 }
 ```
 
-`getMetadata` (`src/helpers/getMetadata/getMetadata.ts`) мержит ответ бэка с `DEFAULT_METADATA`. Для обычных страниц — `fetchMetadata({ type: 'page', route })`. Для постов бэк отдаёт SEO и через `/metadata/post/{slug}`, и через `/news/metadata/{slug}`. Если обёртки нет — `fetchApi<SeoDataIF>` + `getMetadata`.
+`getMetadata` (`src/helpers/getMetadata/getMetadata.ts`) мержит ответ бэка с `DEFAULT_METADATA`. Для обычных страниц — `fetchMetadata({ type: 'page', route })`. Для постов — `fetchArchivePostMetadata({ postType, slug })` (`/archive/metadata/{postType}?slug=...`). Если обёртки нет — `fetchApi<SeoDataIF>` + `getMetadata`.
 
 `params` и `searchParams` в Next — `Promise`. Всегда `await params` / `await searchParams`.
 
 Статика постов (`generateStaticParams`):
 
 ```ts
-export async function generateStaticParams(): Promise<{ slug: string }[]> {
-    const slugs = await fetchApi<string[]>(`/news/get-slugs`);
+export async function generateStaticParams(): Promise<
+    { postType: string; slug: string }[]
+> {
+    const slugGroups = await Promise.all(
+        POST_TYPE_SLUGS.map(async (postType) => {
+            const slugs = await fetchArchiveSlugs(postType);
 
-    return slugs?.map((slug) => ({ slug })) ?? [];
+            return slugs?.map((slug) => ({ postType, slug })) ?? [];
+        }),
+    );
+
+    return slugGroups.flat();
 }
 ```
 

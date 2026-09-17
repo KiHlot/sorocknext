@@ -89,9 +89,12 @@ alwaysApply: false
 
 - Не использовать магические числа (`no-magic-numbers`).
 - Игнор: `0`, `1`, `-1`; индексы массивов (`ignoreArrayIndexes`); значения по умолчанию (`ignoreDefaultValues`); `enforceConst`.
+- Смещения в выражениях (`index + 2`) — не индекс массива, их тоже именовать.
 - Именовать через `@/configs/magicNumbers.config` → `MAGIC_NUMBERS`.
     - ✅ `MAGIC_NUMBERS.RedirectDelay`
+    - ✅ `index + MAGIC_NUMBERS.BreadcrumbPathPositionOffset`
     - ❌ `setTimeout(fn, 3000);`
+    - ❌ `content={\`${index + 2}\`}`
 
 #### Console
 

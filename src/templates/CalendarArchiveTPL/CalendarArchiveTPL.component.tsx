@@ -10,7 +10,7 @@ import { CalendarArchiveTPLPropsIF } from '@/templates/CalendarArchiveTPL/Calend
 const CalendarArchiveTPL: FC<CalendarArchiveTPLPropsIF> = ({ data }) => (
     <>
         <Content>
-            <Breadcrumbs />
+            <Breadcrumbs pathname="/calendar" />
             <div className="flcol gapBlock">
                 {data?.defaultData.map(({ url, label }) => (
                     <Link key={url} href={url}>

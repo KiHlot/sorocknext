@@ -10,7 +10,7 @@ import { MusicArchiveTPLPropsIF } from '@/templates/MusicArchiveTPL/MusicArchive
 const MusicArchiveTPL: FC<MusicArchiveTPLPropsIF> = ({ data }) => (
     <>
         <Content>
-            <Breadcrumbs />
+            <Breadcrumbs pathname="/music" />
             <div className="flcol gapBlock">
                 {data?.defaultData.map(({ url, label }) => (
                     <Link key={url} href={url}>

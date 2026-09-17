@@ -82,3 +82,8 @@ type ResponseErrorIF = { code: string; fieldName?: string; addInfo?: string };
 
 `result: 'redirect'` + `redirectUrl` — так бэк отвечает на запрос страницы вне диапазона
 (`Site_Model::pagination_model`). Эту ветку нельзя игнорировать.
+
+`/archive/archive` принимает обязательный `postType` и опциональный `page`;
+`pagesCount` в запрос не передаётся. `page` отсутствует или `< 1` → первая страница,
+`page > archive_pages_count` → последняя. В данных ответа:
+`paginationInfo: { currentPage, pagesCount }`.

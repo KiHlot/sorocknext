@@ -1,70 +1,85 @@
-'use client';
-
 import { FC } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import { getArchiveLabel } from '@/components/interactive/Breadcrumbs/Breadcrumbs.config';
 import styles from '@/components/interactive/Breadcrumbs/Breadcrumbs.module.scss';
 import { BreadcrumbsPropsIF } from '@/components/interactive/Breadcrumbs/Breadcrumbs.types';
 
-const Breadcrumbs: FC<BreadcrumbsPropsIF> = ({ className = '', title }) => {
-    const pathname = usePathname();
-    const pathSegments = pathname.split('/').filter(Boolean);
+const Breadcrumbs: FC<BreadcrumbsPropsIF> = ({
+    className = '',
+    pathname,
+    title,
+}) => {
+    const isHome = pathname === '/';
 
     return (
-        <ul
-            className={`${styles.breadcrumbsWrapper} ${className || ''}`}
-            itemType="https://schema.org/BreadcrumbList"
+        <nav
+            aria-label="Хлебные крошки"
+            className={`${styles.nav} ${className}`}
             itemScope
+            itemType="https://schema.org/BreadcrumbList"
         >
-            <li
-                itemProp="itemListElement"
-                itemScope
-                itemType="https://schema.org/ListItem"
-            >
-                <Link href="/" itemProp="item">
-                    <span itemProp="name">Главная</span>
-                    <meta itemProp="position" content="1" />
-                </Link>
-            </li>
+            <ol className={styles.list}>
+                <li
+                    className={styles.item}
+                    itemProp="itemListElement"
+                    itemScope
+                    itemType="https://schema.org/ListItem"
+                    aria-current={isHome ? 'page' : undefined}
+                >
+                    {isHome ? (
+                        <span itemProp="name">Главная</span>
+                    ) : (
+                        <Link href="/" itemProp="item">
+                            <span itemProp="name">Главная</span>
+                        </Link>
+                    )}
+                    <meta
+                        itemProp="position"
+                        content={`${MAGIC_NUMBERS.BreadcrumbHomePosition}`}
+                    />
+                </li>
+                {pathname
+                    .split('/')
+                    .filter(Boolean)
+                    .map((segment, index, pathSegments) => {
+                        const href = `/${pathSegments
+                            .slice(0, index + 1)
+                            .join('/')}`;
+                        const isLast = index === pathSegments.length - 1;
+                        const label = getArchiveLabel(segment, title);
 
-            {pathSegments.map((segment, index) => {
-                const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
-                const isLast = index === pathSegments.length - 1;
-
-                return (
-                    <li
-                        key={segment}
-                        itemProp="itemListElement"
-                        itemScope
-                        itemType="https://schema.org/ListItem"
-                    >
-                        &nbsp;»&nbsp;
-                        {isLast ? (
-                            <span>
-                                <span itemProp="name">
-                                    {getArchiveLabel(segment, title)}
+                        return (
+                            <li
+                                key={href}
+                                className={styles.item}
+                                itemProp="itemListElement"
+                                itemScope
+                                itemType="https://schema.org/ListItem"
+                                aria-current={isLast ? 'page' : undefined}
+                            >
+                                <span className={styles.separator} aria-hidden>
+                                    {' » '}
                                 </span>
+                                {isLast ? (
+                                    <span itemProp="name">{label}</span>
+                                ) : (
+                                    <Link href={href} itemProp="item">
+                                        <span itemProp="name">{label}</span>
+                                    </Link>
+                                )}
                                 <meta
                                     itemProp="position"
-                                    content={(index + 2).toString()}
+                                    content={`${
+                                        index +
+                                        MAGIC_NUMBERS.BreadcrumbPathPositionOffset
+                                    }`}
                                 />
-                            </span>
-                        ) : (
-                            <Link href={href} itemProp="item">
-                                <span itemProp="name">
-                                    {getArchiveLabel(segment, title)}
-                                </span>
-                                <meta
-                                    itemProp="position"
-                                    content={(index + 2).toString()}
-                                />
-                            </Link>
-                        )}
-                    </li>
-                );
-            })}
-        </ul>
+                            </li>
+                        );
+                    })}
+            </ol>
+        </nav>
     );
 };
 

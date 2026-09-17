@@ -674,9 +674,28 @@ class Some_Controller extends WP_REST_Controller
 
 - `/metadata/{type}/{slug}` — SEO-метаданные (`page` / `post`).
 
-**`News_Controller`** — `/news/*` (публичные):
+**`Archive_Controller`** — `/archive/*` (публичные), общий для всех пост-типов:
 
-- `/archive`, `/get-slugs`, `/metadata/{slug}`, `/{slug}` (single).
+- `/archive` — архив. Query: обязательный `postType`, опциональный `page`.
+  `page` отсутствует или `< 1` → первая; `page > archive_pages_count` → последняя.
+- `/get-slugs` — слаги для SSG. Query: обязательный `postType`.
+- `/metadata/{post_type}` — SEO поста. Query: `slug`.
+- `/{slug}` — одна запись. Query: `postType`. Временно здесь, будет перенесено
+  в `Single_Controller`.
+- `/archive` не принимает `pagesCount` от клиента. `data` содержит:
+
+```php
+[
+    'postsData' => $archive_model->get_posts_archive(
+        $post_type,
+        $page_num,
+    ),
+    'paginationInfo' => [
+        'currentPage' => $page_num,
+        'pagesCount'  => $pages_max,
+    ],
+]
+```
 
 **`Page_Controller`** — `/page/*` (публичные):
 
