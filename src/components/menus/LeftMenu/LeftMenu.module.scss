@@ -1,0 +1,122 @@
+@use '@/styles/mixins' as *;
+
+.leftMenuWrapper {
+    width: 100%;
+}
+
+.list {
+    width: 100%;
+    height: fit-content;
+    min-height: fit-content;
+    position: relative;
+    margin-bottom: 0;
+    gap: 6px 0;
+}
+
+.item {
+    width: 100%;
+    height: 43px;
+    position: relative;
+    border-radius: var(--borderRadius);
+
+    &:hover {
+        .link {
+            background-color: var(--accent);
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .icon {
+            animation: jump 0.3s ease-in-out;
+        }
+
+        .icon svg {
+            fill: var(--white);
+        }
+    }
+}
+
+.border {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 80%;
+        height: 1px;
+        left: 0;
+        bottom: -8px;
+        display: block;
+        background-color: rgba(var(--textColor), 0.2);
+    }
+}
+
+.link {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    padding: 0 20px 0 60px;
+    background-color: transparent;
+    text-decoration: unset;
+    border-radius: var(--borderRadius);
+
+    @include media(desktop) {
+        padding: 0 16px 0 40px;
+    }
+}
+
+.current {
+    background-color: var(--accent);
+    color: var(--white);
+
+    &:after {
+        display: none;
+    }
+
+    .icon svg {
+        fill: var(--white);
+    }
+}
+
+.icon {
+    width: 60px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding-right: 4px;
+
+    @include media(desktop) {
+        width: 40px;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+        fill: var(--textColor);
+
+        @include media(desktop) {
+            position: relative;
+            top: -1px;
+        }
+    }
+}
+
+@keyframes jump {
+    0% {
+        top: 0;
+    }
+    50% {
+        top: -10px;
+    }
+    100% {
+        top: 0;
+    }
+}

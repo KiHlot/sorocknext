@@ -84,7 +84,7 @@
 .metaIcon {
     width: 16px;
     height: 16px;
-    color: var(--accent);
+    color: var(--colorPrimary);
 }
 
 .title {
@@ -99,7 +99,7 @@
     text-decoration: none;
 
     &:hover {
-        color: var(--accent);
+        opacity: 0.8;
     }
 }
 
@@ -168,7 +168,7 @@
     height: 34px;
     padding: 0 12px;
     font-size: 13px;
-    color: var(--accent);
+    color: var(--colorPrimary);
     font-weight: 600;
     text-decoration: none;
 }
