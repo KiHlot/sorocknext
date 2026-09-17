@@ -34,7 +34,9 @@ const PopularTagsWidget: FC = () => {
 
     if (!idsKey && tagsCache !== null) {
         setTagsCache(null);
-    } else if (idsKey && popularTags && tagsCache?.idsKey !== idsKey) {
+    } 
+    
+    if (idsKey && popularTags && tagsCache?.idsKey !== idsKey) {
         setTagsCache({
             idsKey,
             value: shuffle(popularTags).slice(0, POPULAR_TAGS_SLICE_COUNT),

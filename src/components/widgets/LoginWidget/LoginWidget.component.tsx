@@ -17,7 +17,12 @@ const LoginWidget: FC = () => (
             Добро пожаловать на наш развлекательный портал. Вы можете войти в
             свой аккаунт или создать новый
         </div>
-        <Button variant="accent" href="/login" className={styles.button}>
+        <Button
+            variant="accent"
+            href="/login"
+            className={styles.button}
+            dataTest="login_widget_enter"
+        >
             Войти
         </Button>
     </Block>

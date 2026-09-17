@@ -25,6 +25,7 @@ const ButtonsGroup: FC<ButtonsGroupPropsIF> = ({
                         key={key}
                         href={href}
                         className={`flc ${styles.tabButton} ${fullWidth ? styles.fullWidth : ''} ${key === activeTab ? styles.active : ''}`}
+                        data-test={`${key}_tab`}
                     >
                         {label}
                     </Link>
@@ -34,6 +35,7 @@ const ButtonsGroup: FC<ButtonsGroupPropsIF> = ({
                         key={key}
                         className={`flc ${styles.tabButton} ${fullWidth ? styles.fullWidth : ''} ${key === activeTab ? styles.active : ''}`}
                         onClick={() => clickHandler(key)}
+                        data-test={`${key}_tab`}
                     >
                         {label}
                     </button>

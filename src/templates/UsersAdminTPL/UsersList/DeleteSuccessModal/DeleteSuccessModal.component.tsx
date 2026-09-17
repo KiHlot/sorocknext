@@ -15,17 +15,22 @@ const DeleteSuccessModal: FC<DeleteSuccessModalPropsIF> = ({
 }) => {
     const { result, reAssignedUser } = data || {};
 
+    if (!isOpen) {
+        return null;
+    }
+
     return (
         <ModalSheet
-            isOpen={isOpen}
             closeHandler={onClose}
-            title={{
-                icon: <TiUserDeleteOutline />,
-                label: 'Пользователи удалены',
-            }}
             isLoading={!data}
+            dataTest="delete_success_modal"
         >
             <div className="flcol gapLayout">
+                {/*//TODO*/}
+                <div className="title">
+                    <TiUserDeleteOutline />
+                    Пользователи удалены
+                </div>
                 {result?.length && (
                     <Table titles={DELETE_SUCCESS_MODAL_TITLES}>
                         {result.map(({ isDeleted, userId, fullName }) => (

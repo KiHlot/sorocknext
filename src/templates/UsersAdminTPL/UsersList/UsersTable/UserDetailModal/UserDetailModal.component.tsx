@@ -48,91 +48,103 @@ const UserDetailModal: FC<UserDetailModalPropsIF> = ({ disabled, useId }) => {
             >
                 <CgDetailsMore />
             </Button>
-            <ModalSheet
-                title={{
-                    label: `${metrics?.firstName} ${metrics?.lastName}`,
-                    icon: <IoAlertCircleOutline />,
-                }}
-                isOpen={isOpen}
-                closeHandler={() => setIsOpen(false)}
-                size="large"
-                isLoading={isLoading || !userData?.data}
-            >
-                <div className={`flcol ${styles.modalLayout}`}>
-                    <div className={styles.row}>
-                        <Block
-                            className={`flcol ${styles.block} ${styles.avatarBlock}`}
-                        >
-                            <Img
-                                className={styles.avatar}
-                                url={avatarUrl}
-                                type="user500"
-                            />
-                            <Author
-                                type="name"
-                                data={{
-                                    url: userUrl,
-                                    fullName: `${metrics?.firstName} ${metrics?.lastName}`,
-                                }}
-                            />
-                            <Country
-                                className={styles.country}
-                                value={metrics?.country}
-                            />
-                        </Block>
-                        <Block className={`flcol ${styles.block}`}>
-                            <DetailRow label="ID">{userId}</DetailRow>
-                            <DetailRow label="Роль">{role}</DetailRow>
-                            <DetailRow label="Логин">{userLogin}</DetailRow>
-                            <DetailRow label="Город">{metrics?.city}</DetailRow>
-                            <DetailRow label="Дата рождения">
-                                {metrics?.birthdate}
-                            </DetailRow>
-                        </Block>
-                        <Block className={`flcol ${styles.block}`}>
-                            <DetailRow label="Публичный email">
-                                {contacts?.emailPublic}
-                            </DetailRow>
-                            <DetailRow label="Телефон">
-                                {contacts?.phone}
-                            </DetailRow>
-                            <DetailRow label="Телеграм">
-                                {contacts?.tgLogin}
-                            </DetailRow>
-                            <DetailRow label="Whatsapp">
-                                {contacts?.waLogin}
-                            </DetailRow>
-                            {socLinks &&
-                                Object.entries(socLinks).map(([key, value]) => (
-                                    <DetailRow
-                                        key={key}
-                                        label={`Соцсеть ${key}`}
-                                    >
-                                        <>{value}</>
-                                    </DetailRow>
-                                ))}
-                        </Block>
+            {isOpen && (
+                <ModalSheet
+                    closeHandler={() => setIsOpen(false)}
+                    size="large"
+                    isLoading={isLoading || !userData?.data}
+                    dataTest="user_detail"
+                >
+                    <div className={`flcol ${styles.modalLayout}`}>
+                        <div className="title">
+                            <IoAlertCircleOutline />
+                            <h1>
+                                {metrics?.firstName} {metrics?.lastName}
+                            </h1>
+                        </div>
+                        <div className={styles.row}>
+                            <Block
+                                className={`flcol ${styles.block} ${styles.avatarBlock}`}
+                            >
+                                <Img
+                                    className={styles.avatar}
+                                    url={avatarUrl}
+                                    type="user500"
+                                />
+                                <Author
+                                    type="name"
+                                    data={{
+                                        url: userUrl,
+                                        fullName: `${metrics?.firstName} ${metrics?.lastName}`,
+                                    }}
+                                />
+                                <Country
+                                    className={styles.country}
+                                    value={metrics?.country}
+                                />
+                            </Block>
+                            <Block className={`flcol ${styles.block}`}>
+                                <DetailRow label="ID">{userId}</DetailRow>
+                                <DetailRow label="Роль">{role}</DetailRow>
+                                <DetailRow label="Логин">{userLogin}</DetailRow>
+                                <DetailRow label="Город">
+                                    {metrics?.city}
+                                </DetailRow>
+                                <DetailRow label="Дата рождения">
+                                    {metrics?.birthdate}
+                                </DetailRow>
+                            </Block>
+                            <Block className={`flcol ${styles.block}`}>
+                                <DetailRow label="Публичный email">
+                                    {contacts?.emailPublic}
+                                </DetailRow>
+                                <DetailRow label="Телефон">
+                                    {contacts?.phone}
+                                </DetailRow>
+                                <DetailRow label="Телеграм">
+                                    {contacts?.tgLogin}
+                                </DetailRow>
+                                <DetailRow label="Whatsapp">
+                                    {contacts?.waLogin}
+                                </DetailRow>
+                                {socLinks &&
+                                    Object.entries(socLinks).map(
+                                        ([key, value]) => (
+                                            <DetailRow
+                                                key={key}
+                                                label={`Соцсеть ${key}`}
+                                            >
+                                                <>{value}</>
+                                            </DetailRow>
+                                        ),
+                                    )}
+                            </Block>
+                        </div>
+                        <div className={styles.row}>
+                            <Block className={`flcol ${styles.block}`}>
+                                <DetailRow label="Зарегистрирован">
+                                    {activity?.registrationDate}
+                                </DetailRow>
+                                <DetailRow label="Активирован">
+                                    {activity?.isActivated ? 'Да' : 'Нет'}
+                                </DetailRow>
+                                <DetailRow label="Активность">
+                                    {activity?.lastActivity}
+                                </DetailRow>
+                                <DetailRow label="Куки">
+                                    {activity?.isCookieAccepted ? 'Да' : 'Нет'}
+                                </DetailRow>
+                            </Block>
+                            <Block className={`flcol ${styles.block}`}>
+                                Инфа2
+                            </Block>
+                            <Block className={`flcol ${styles.block}`}>
+                                Инфа3
+                            </Block>
+                        </div>
                     </div>
-                    <div className={styles.row}>
-                        <Block className={`flcol ${styles.block}`}>
-                            <DetailRow label="Зарегистрирован">
-                                {activity?.registrationDate}
-                            </DetailRow>
-                            <DetailRow label="Активирован">
-                                {activity?.isActivated ? 'Да' : 'Нет'}
-                            </DetailRow>
-                            <DetailRow label="Активность">
-                                {activity?.lastActivity}
-                            </DetailRow>
-                            <DetailRow label="Куки">
-                                {activity?.isCookieAccepted ? 'Да' : 'Нет'}
-                            </DetailRow>
-                        </Block>
-                        <Block className={`flcol ${styles.block}`}>Инфа2</Block>
-                        <Block className={`flcol ${styles.block}`}>Инфа3</Block>
-                    </div>
-                </div>
-            </ModalSheet>
+                </ModalSheet>
+            )}
         </>
     ) : null;
 };

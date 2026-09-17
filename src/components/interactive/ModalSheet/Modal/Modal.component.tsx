@@ -18,7 +18,7 @@ const Modal: FC<ModalPropsIF> = ({ props, overlayId }) => {
 
     const {
         children,
-        onClose,
+        closeHandler,
         dataTest,
         size = MODAL_SHEET_SIZES.Medium,
         isLoading,
@@ -34,7 +34,7 @@ const Modal: FC<ModalPropsIF> = ({ props, overlayId }) => {
     const [isClosing, setIsClosing] = useState(false);
     const [isShake, setIsShake] = useState(false);
 
-    const closeHandler = useCallback(
+    const handleClose = useCallback(
         (isCheckOutsideClick?: boolean): void => {
             if (isCheckOutsideClick && isBlockOutsideClick) {
                 if (!isShake) {
@@ -44,7 +44,7 @@ const Modal: FC<ModalPropsIF> = ({ props, overlayId }) => {
                 return;
             }
 
-            if (!onClose || isClosing) {
+            if (!closeHandler || isClosing) {
                 return;
             }
 
@@ -53,16 +53,16 @@ const Modal: FC<ModalPropsIF> = ({ props, overlayId }) => {
             setTimeout(() => {
                 setIsClosing(false);
                 setIsOpen(false);
-                onClose();
+                closeHandler();
             }, ANIMATION_DELAY);
         },
-        [isBlockOutsideClick, isShake, onClose, isClosing],
+        [isBlockOutsideClick, isShake, closeHandler, isClosing],
     );
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent): void => {
             if (event.key === 'Escape') {
-                closeHandler(true);
+                handleClose(true);
             }
         };
 
@@ -71,9 +71,9 @@ const Modal: FC<ModalPropsIF> = ({ props, overlayId }) => {
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [closeHandler]);
+    }, [handleClose]);
 
-    useOutsideClick(wrapperRef, () => closeHandler(true), overlayId);
+    useOutsideClick(wrapperRef, () => handleClose(true), overlayId);
 
     useEffect(() => {
         requestAnimationFrame(() => {
@@ -100,7 +100,7 @@ const Modal: FC<ModalPropsIF> = ({ props, overlayId }) => {
                 {!isHideClose && (
                     <Button
                         isCustom
-                        clickHandler={() => closeHandler()}
+                        clickHandler={() => handleClose()}
                         className={`flc ${styles.closeButton}`}
                         type="button"
                         dataTest={`${dataTest}_modal_close`}

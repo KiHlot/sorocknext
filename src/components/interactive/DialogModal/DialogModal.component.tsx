@@ -19,17 +19,24 @@ const DialogModal: FC<DialogModalPropsIF> = ({
         clickHandler();
         setIsOpen(false);
     };
+    {
+        /*//TODO*/
+    }
+    if (!isOpen) {
+        return null;
+    }
 
     return (
         <ModalSheet
-            title={{
-                label: 'Вы уверены?',
-                icon: <IoAlertCircleOutline />,
-            }}
-            isOpen={isOpen}
             closeHandler={() => setIsOpen(false)}
             size="small"
+            dataTest="dialog_modal"
         >
+            {/*//TODO*/}
+            <div className="title">
+                <IoAlertCircleOutline />
+                Вы уверены?
+            </div>
             <div className={styles.content}>{dialogText}</div>
             <div className={styles.buttonsList}>
                 <Button

@@ -1,4 +1,4 @@
 export interface IndicatorPropsIF {
-    onClose?: () => void;
+    closeHandler?: () => void;
     dataTest: string;
 }

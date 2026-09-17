@@ -21,6 +21,7 @@ const Tabs: FC<TabsPropsIF> = ({
                         key={key}
                         className={`${styles.tabButton} ${key === activeTab ? styles.active : ''}`}
                         onClick={() => setActiveTab(key)}
+                        data-test={`${key}_tab`}
                     >
                         {label}
                     </button>

@@ -78,6 +78,7 @@ export const Input = <T extends FieldValues>({
                             )
                         }
                         className="flc"
+                        data-test={`${name}_toggle_password`}
                     >
                         {currentType === 'text' ? (
                             <RiLockPasswordFill />

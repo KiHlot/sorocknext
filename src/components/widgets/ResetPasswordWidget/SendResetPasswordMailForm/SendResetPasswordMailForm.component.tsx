@@ -81,7 +81,12 @@ const SendResetPasswordMailForm: FC<SendResetPasswordMailFormPropsIF> = ({
                 isRequired
                 isDisabled={isLoading}
             />
-            <Button type="submit" disabled={!isValid} isLoading={isLoading}>
+            <Button
+                type="submit"
+                disabled={!isValid}
+                isLoading={isLoading}
+                dataTest="send_reset_password_mail_submit"
+            >
                 Отправить
             </Button>
         </form>

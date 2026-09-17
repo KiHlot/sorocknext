@@ -18,6 +18,7 @@ const InfoBlock: FC<InfoBlockPropsIF> = ({
                 type="button"
                 onClick={onClose}
                 className={`flc ${styles.button}`}
+                data-test="info_block_close"
             >
                 <IoClose />
             </button>

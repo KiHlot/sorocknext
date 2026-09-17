@@ -28,6 +28,7 @@ const UserMenu: FC = () => {
                 type="button"
                 className={`flc ${styles.toggleMenu} ${isOpen ? styles.opened : ''}`}
                 onClick={() => setIsOpen(!isOpen)}
+                data-test="user_menu_toggle"
             >
                 <Img url={currentUser?.avatarUrl} />
             </button>
@@ -44,6 +45,7 @@ const UserMenu: FC = () => {
                                     onClick={() =>
                                         userMenuClickHandler(callBackType)
                                     }
+                                    data-test={`user_menu_${callBackType}`}
                                 >
                                     {icon}
                                     <span>{label}</span>

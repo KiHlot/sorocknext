@@ -112,7 +112,12 @@ const RegistrationForm: FC = () => {
                 isRequired
                 isPassword
             />
-            <Button type="submit" isLoading={isLoading} disabled={!isValid}>
+            <Button
+                type="submit"
+                isLoading={isLoading}
+                disabled={!isValid}
+                dataTest="registration_form_submit"
+            >
                 Регистрация
             </Button>
         </form>

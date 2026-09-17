@@ -35,6 +35,7 @@ export const InputFile = <T extends FieldValues>({
             className={`flc ${styles.label} ${buttonStyles.button} ${className}`}
             icon={icon}
             disabled={isDisabled}
+            dataTest={`${name}_file`}
         >
             <input
                 {...register(name)}

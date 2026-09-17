@@ -51,7 +51,7 @@ const CronTable: FC<CronTablePropsIF> = ({ jsonStatuses, setCronInfoData }) => {
                             clickHandler={() => updateTask(taskName)}
                             className={styles.updateButton}
                             disabled={updateCronTaskLoading || cronInfoLoading}
-                            dataTest="asd"
+                            dataTest={`cron_table_update_task_${taskName}`}
                         >
                             <RxUpdate />
                         </Button>

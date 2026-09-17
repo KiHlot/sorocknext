@@ -116,7 +116,12 @@ const ResetPasswordForm: FC<ResetPasswordFormPropsIF> = ({ email }) => {
                 isRequired
                 isPassword
             />
-            <Button type="submit" isLoading={isLoading} disabled={!isValid}>
+            <Button
+                type="submit"
+                isLoading={isLoading}
+                disabled={!isValid}
+                dataTest="reset_password_form_submit"
+            >
                 Изменить
             </Button>
         </form>

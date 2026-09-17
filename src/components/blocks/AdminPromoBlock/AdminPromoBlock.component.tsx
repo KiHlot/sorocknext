@@ -35,6 +35,7 @@ const AdminPromoBlock: FC<AdminPromoBlockPropsIF> = ({
                         className={styles.updateCronInfoButton}
                         disabled={isLoading}
                         clickHandler={clickHandler}
+                        dataTest="admin_promo_update_cron_info"
                     >
                         <RxUpdate />
                     </Button>

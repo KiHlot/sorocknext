@@ -71,6 +71,7 @@ const SendConfirmCodeForm: FC = () => {
                 icon={<IoCheckmark />}
                 isLoading={isLoading}
                 disabled={!isValid || isSuccess}
+                dataTest="confirm_account_send_code_submit"
             >
                 Отправить ссылку
             </Button>

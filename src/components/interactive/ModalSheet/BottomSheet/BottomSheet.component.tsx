@@ -22,7 +22,7 @@ const BottomSheet: FC<BottomSheetIF> = ({ props, overlayId }) => {
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
     const {
-        onClose,
+        closeHandler,
         isBlockOutsideClick,
         bodyRef,
         classNameWrapper = '',
@@ -35,7 +35,7 @@ const BottomSheet: FC<BottomSheetIF> = ({ props, overlayId }) => {
     const [isClosing, setIsClosing] = useState(false);
     const [isShake, setIsShake] = useState(false);
 
-    const closeHandler = useCallback((): void => {
+    const handleClose = useCallback((): void => {
         if (isBlockOutsideClick) {
             if (!isShake) {
                 setIsShake(true);
@@ -44,7 +44,7 @@ const BottomSheet: FC<BottomSheetIF> = ({ props, overlayId }) => {
             return;
         }
 
-        if (!onClose || isClosing) {
+        if (!closeHandler || isClosing) {
             return;
         }
 
@@ -53,11 +53,11 @@ const BottomSheet: FC<BottomSheetIF> = ({ props, overlayId }) => {
         setTimeout(() => {
             setIsClosing(false);
             setIsOpen(false);
-            onClose();
+            closeHandler();
         }, ANIMATION_DELAY);
-    }, [isBlockOutsideClick, isShake, onClose, isClosing]);
+    }, [isBlockOutsideClick, isShake, closeHandler, isClosing]);
 
-    useOutsideClick(wrapperRef, closeHandler, overlayId);
+    useOutsideClick(wrapperRef, handleClose, overlayId);
 
     useEffect(() => {
         requestAnimationFrame(() => {
@@ -88,7 +88,7 @@ const BottomSheet: FC<BottomSheetIF> = ({ props, overlayId }) => {
                 data-test={`${dataTest}_bottom_sheet`}
             >
                 <Indicator
-                    onClose={closeHandler}
+                    closeHandler={handleClose}
                     dataTest={`${dataTest}_bottom_sheet_swipe_indicator`}
                 />
                 <div className={styles.bodyOverflow}>

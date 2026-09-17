@@ -4,7 +4,7 @@ import { SWIPE_THRESHOLD } from '@/components/interactive/ModalSheet/BottomSheet
 import styles from '@/components/interactive/ModalSheet/BottomSheet/Indicator/Indicator.module.scss';
 import { IndicatorPropsIF } from '@/components/interactive/ModalSheet/BottomSheet/Indicator/Indicator.types';
 
-const Indicator: FC<IndicatorPropsIF> = ({ onClose, dataTest }) => {
+const Indicator: FC<IndicatorPropsIF> = ({ closeHandler, dataTest }) => {
     const [isSwiping, setIsSwiping] = useState<boolean>(false);
     const [touchStartY, setTouchStartY] = useState<number>(0);
     const [touchCurrentY, setTouchCurrentY] = useState<number>(0);
@@ -44,13 +44,13 @@ const Indicator: FC<IndicatorPropsIF> = ({ onClose, dataTest }) => {
         }
 
         if (shouldClose) {
-            onClose?.();
+            closeHandler?.();
         }
 
         setIsSwiping(false);
         setTouchStartY(0);
         setTouchCurrentY(0);
-    }, [isSwiping, shouldClose, onClose]);
+    }, [isSwiping, shouldClose, closeHandler]);
 
     return (
         <div className={`flc ${styles.indicatorWrapper}`}>

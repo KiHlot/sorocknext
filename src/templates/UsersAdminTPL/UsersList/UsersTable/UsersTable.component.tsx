@@ -1,21 +1,21 @@
 import { FC, useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import Link from 'next/link';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RxUpdate } from 'react-icons/rx';
-import Link from 'next/link';
-import dayjs from 'dayjs';
-import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.component';
-import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
-import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';
-import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.types';
 import Table, {
     RowItem,
     TableRow,
 } from '@/components/blocks/Table/Table.component';
-import CheckBoxBase from '@/components/controls/CheckBox/CheckBoxBase/CheckBoxBase.component';
 import Button from '@/components/controls/Button/Button.component';
+import CheckBoxBase from '@/components/controls/CheckBox/CheckBoxBase/CheckBoxBase.component';
 import Img from '@/components/elems/Img/Img.component';
 import NoData from '@/components/elems/NoData/NoData.component';
 import Pagination from '@/components/interactive/Pagination/Pagination.component';
+import UserDetailModal from '@/templates/UsersAdminTPL/UsersList/UsersTable/UserDetailModal/UserDetailModal.component';
+import { TABLE_TITLES } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.config';
+import styles from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.module.scss';
+import { UsersTablePropsIF } from '@/templates/UsersAdminTPL/UsersList/UsersTable/UsersTable.types';
 
 const UsersTable: FC<UsersTablePropsIF> = ({
     usersList,
@@ -28,17 +28,17 @@ const UsersTable: FC<UsersTablePropsIF> = ({
     const [isAllSelected, setIsAllSelected] = useState<boolean>(false);
     const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
-    const selectUsers = (userId: number, isAdd: boolean) => {
+    const selectUsers = (userId: number, isAdd: boolean): void => {
         const result = isAdd
             ? [...selectedUsers, userId]
-            : selectedUsers.filter(id => id !== userId);
+            : selectedUsers.filter((id) => id !== userId);
 
         setIsAllSelected(usersList?.length === result.length);
 
         setSelectedUsers(result);
     };
 
-    const selectAll = (isAllSelected: boolean) => {
+    const selectAll = (isAllSelected: boolean): void => {
         if (!usersList) {
             return;
         }
@@ -46,7 +46,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
         setIsAllSelected(isAllSelected);
 
         if (isAllSelected) {
-            setSelectedUsers(usersList.map(user => user.userId));
+            setSelectedUsers(usersList.map((user) => user.userId));
         } else {
             setSelectedUsers([]);
         }
@@ -65,6 +65,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                     icon={<AiOutlineDelete />}
                     disabled={selectedUsers.length === 0 || isDataLoading}
                     clickHandler={() => deleteUsers(selectedUsers)}
+                    dataTest="users_table_delete_selected"
                 >
                     Удалить
                 </Button>
@@ -73,6 +74,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                     icon={<RxUpdate />}
                     disabled={selectedUsers.length === 0 || isDataLoading}
                     clickHandler={() => updateUsers(selectedUsers)}
+                    dataTest="users_table_update_selected"
                 >
                     Обновить юзеров
                 </Button>
@@ -82,6 +84,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                     disabled={isDataLoading}
                     clickHandler={updateRoles}
                     dialogText={<>Обновить роли всех юзеров?</>}
+                    dataTest="users_table_update_roles"
                 >
                     Обновить роли
                 </Button>
@@ -92,7 +95,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                     titles={TABLE_TITLES}
                     selectData={{ selectAll, isAllSelected }}
                 >
-                    {usersList.map(item => (
+                    {usersList.map((item) => (
                         <TableRow
                             key={item.userId}
                             isChecked={selectedUsers.includes(item.userId)}
@@ -103,7 +106,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                     isChecked={selectedUsers.includes(
                                         item.userId,
                                     )}
-                                    onChange={e =>
+                                    onChange={(e) =>
                                         selectUsers(
                                             item.userId,
                                             e.target.checked,
@@ -154,6 +157,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                     }
                                     variant="sq"
                                     disabled={isDataLoading}
+                                    dataTest={`users_table_update_user_${item.userId}`}
                                 >
                                     <RxUpdate />
                                 </Button>
@@ -166,6 +170,7 @@ const UsersTable: FC<UsersTablePropsIF> = ({
                                     variant="sq_error"
                                     dialogText={<>Удалить?</>}
                                     disabled={isDataLoading}
+                                    dataTest={`users_table_delete_user_${item.userId}`}
                                 >
                                     <AiOutlineDelete />
                                 </Button>

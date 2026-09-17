@@ -2,7 +2,8 @@ import { ReactElement } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PageProps } from '@/types/common';
-import { PostIF, SeoDataIF } from '@/types/post';
+import { PostIF } from '@/types/post';
+import { SeoDataIF } from '@/api/metadata/types';
 import { fetchApi } from '@/helpers/fetchApi';
 import { getMetadata } from '@/helpers/getMetadata/getMetadata';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
@@ -32,7 +33,7 @@ export default async function Page({
 }: PageProps): Promise<ReactElement> {
     const { slug } = await params;
 
-    let data: PostIF | null = null;
+    let data: PostIF | null | undefined = null;
 
     try {
         data = await fetchApi<PostIF>(`/news/${slug}`);

@@ -27,7 +27,7 @@ const PopularTagModal: FC<PopularTagModalPropsIF> = ({
 
     return (
         <ModalSheet
-            onClose={onClose}
+            closeHandler={onClose}
             size="large"
             dataTest="popular_tag"
             isLoading={isLoading}

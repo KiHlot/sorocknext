@@ -5,7 +5,7 @@ import { MODAL_SHEET_SIZES } from '@/components/interactive/ModalSheet/ModalShee
 export interface ModalSheetPropsIF {
     children: ReactNode;
     dataTest: string;
-    onClose?: () => void;
+    closeHandler?: () => void;
     bodyRef?: (node: HTMLDivElement | null) => void;
     size?: ValueOfT<typeof MODAL_SHEET_SIZES>;
     classNameWrapper?: string;
