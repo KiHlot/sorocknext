@@ -72,7 +72,8 @@ type ResponseErrorIF = { code: string; fieldName?: string; addInfo?: string };
 
 ## Авторизация
 
-- Приватные роуты (нужен `Authorization: Bearer <token>`): `/admin/*` и `/users/get-current-user`.
+- Приватные роуты (нужен `Authorization: Bearer <token>`): сейчас только `/users/get-current-user`.
+- `/admin/*` на бэке **закомментированы** (возможно вернутся). Не считать активным контрактом, не дергать с фронта.
 - Все остальные публичные — токен не требуется.
 - JWT HS256, время жизни **1 час**. При `result: 'logout'` вызывать `logout()`.
 - Имя cookie токена — **`STORAGE_KEYS.Token`** (`Token`), не `'token'`. И клиентский `getCookie`, и серверный `cookies().get(...)` должны использовать этот ключ.

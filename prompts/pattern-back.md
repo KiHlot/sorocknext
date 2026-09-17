@@ -236,7 +236,7 @@ JSON
 
 ```php
 $this->api->public_route('/page/home-page-data', [$this, 'get_home_page_data']);
-$this->api->private_route('/admin/get-cron-info', [$this, 'get_cron_info']);
+$this->api->private_route('/users/get-current-user', [$this, 'get_current_user']);
 ```
 
 ### 2.2. `Site_Config` (Singleton)
@@ -659,7 +659,7 @@ class Some_Controller extends WP_REST_Controller
 
 ### 4.3. Список контроллеров
 
-**`Admin_Controller`** — `/admin/*` (приватные):
+**`Admin_Controller`** — `/admin/*` (приватные), **пауза:** регистрация роутов на бэке закомментирована, фронт админки снят. Возможно вернутся. Не вызывать, пока снова не включат:
 
 - `/get-cron-info`, `/update-cron-info`, `/update-cron-task`
 - `/get-users-info`, `/update-users`, `/delete-users`
@@ -1226,10 +1226,7 @@ public function my_method(int $param): ?array
 
 **Расположение:** `site-setup/jsons/`.
 
-**Обновление:**
-
-- Через `/wp-json/rest/admin/update-cron-task` (taskName: `popular_tags` или `users_info`).
-- После обновления — `/wp-json/rest/admin/update-cron-info` (сводка).
+**Обновление (пауза):** роуты `/admin/update-cron-task` и `/admin/update-cron-info` на бэке закомментированы, возможно вернутся. Пока JSON обновляется только cron-задачами на сервере, не через REST.
 
 **Чтение:**
 

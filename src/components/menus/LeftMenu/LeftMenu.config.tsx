@@ -11,11 +11,6 @@ import { MenuItemIF } from '@/types/common';
 
 export const LEFT_MENU: MenuItemIF[] = [
     {
-        url: '/admin',
-        label: 'Админка',
-        icon: <IoNewspaperOutline />,
-    },
-    {
         url: '/news',
         label: 'Новости',
         icon: <IoNewspaperOutline />,

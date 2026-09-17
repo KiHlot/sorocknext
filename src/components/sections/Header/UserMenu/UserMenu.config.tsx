@@ -5,7 +5,6 @@ import {
     IoPersonAddOutline,
 } from 'react-icons/io5';
 import { PiUserCheck } from 'react-icons/pi';
-import { RiChatPrivateLine } from 'react-icons/ri';
 import { TbPasswordFingerprint } from 'react-icons/tb';
 import { MenuItemIF } from '@/types/common';
 import { CurrentUserIF } from '@/types/user';
@@ -44,14 +43,6 @@ export const MENU_GUEST: MenuItemIF[] = [
     },
 ];
 
-const ADMIN_MENU: MenuItemIF[] = [
-    {
-        url: '/admin',
-        label: 'Админка',
-        icon: <RiChatPrivateLine />,
-    },
-];
-
 const ACTIVATE_MENU: MenuItemIF[] = [
     {
         url: '/confirm-account',
@@ -67,10 +58,8 @@ export const getUserMenu = (): MenuItemIF[] => {
 
     const baseMenu = currentUser ? MENU_USER : MENU_GUEST;
 
-    const adminMenu = currentUser?.role === 'administrator' ? ADMIN_MENU : [];
-
     const activateMenu =
         currentUser && !currentUser.isActivated ? ACTIVATE_MENU : [];
 
-    return [...adminMenu, ...activateMenu, ...baseMenu];
+    return [...activateMenu, ...baseMenu];
 };

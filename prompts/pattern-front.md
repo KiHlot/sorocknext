@@ -275,7 +275,6 @@ JWT `/token` — **другая форма ответа** (`token`, `expires`, `
 | `(site)/news`, `(site)/news/[slug]`                                  | Архив и пост |
 | `(site)/search`                                                      | Поиск        |
 | `(auth)/login`, `registration`, `reset-password`, `confirm-account`  | Авторизация  |
-| `/admin`, `/admin/cron`, `/admin/users`                              | Админка      |
 
 Паттерн страницы:
 
@@ -319,7 +318,7 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
 
 `fetchApi` уже вернул `data`. Не типизировать как `ResponseIF<string[]>`.
 
-Корень: `src/app/layout.tsx` — шрифт Inter, `defaultTheme`, `StoreProvider`, один `ToastContainer`. Хром сегментов — в `layout.tsx`: `(site)` → `CommonLayout`, `admin` → `AdminLayout`, `(auth)` → свой layout + `auth.module.scss`. `*TPL` собирает только `Content` / `Sidebar` и секции, без повторной обёртки в хром.
+Корень: `src/app/layout.tsx` — шрифт Inter, `defaultTheme`, `StoreProvider`, один `ToastContainer`. Хром сегментов — в `layout.tsx`: `(site)` → `CommonLayout`, `(auth)` → свой layout + `auth.module.scss`. `*TPL` собирает только `Content` / `Sidebar` и секции, без повторной обёртки в хром.
 
 ---
 
@@ -334,7 +333,6 @@ const rootReducer = combineReducers({
     [taxonomyApi.reducerPath]: taxonomyApi.reducer,
     [jwtApi.reducerPath]: jwtApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
-    [adminApi.reducerPath]: adminApi.reducer,
     [siteConfig.reducerPath]: siteConfig.reducer,
 });
 ```
@@ -582,7 +580,7 @@ const formatted = dayjs(dateString).format('DD MMM YYYY');
 ## 14. Чеклист новой фичи
 
 1. Роут есть в каталоге бэка? Если нет — не придумывать.
-2. Публичный vs приватный (`/admin/*`, `/users/get-current-user`).
+2. Публичный vs приватный. Сейчас приватный только `/users/get-current-user`. `/admin/*` на бэке закомментированы (возможно вернутся) — не вызывать.
 3. Серверная страница → `endpoints.ts` / `fetchApi`. Клиентская мутация → RTK + регистрация в store.
 4. Компонент в правильной категории, абсолютные импорты, `*.types.ts`.
 5. Форма: схема в config, `parseResponse` + `catchError`, имена полей как на бэке.

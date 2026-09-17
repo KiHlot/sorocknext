@@ -8,16 +8,6 @@ export interface BaseData {
     popularTags: TagIF[];
 }
 
-export interface ModifyDataIF {
-    lastUpdate: string;
-    lastUpdateStatus: 'success' | 'error';
-    updatedBy: string | 'cron';
-    itemsCount?: number;
-    label: string;
-}
-
-export type JsonStatusesT = Record<string, ModifyDataIF | null>;
-
 export interface ContactFormIF {
     email: string;
     name: string;
@@ -26,9 +16,4 @@ export interface ContactFormIF {
 
 export interface ContactFormResponseIF {
     isSent: boolean;
-}
-
-export interface UsersAdminJsonDataIF {
-    modifyData: ModifyDataIF;
-    data: number[] | null;
 }

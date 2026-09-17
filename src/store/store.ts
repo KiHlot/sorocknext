@@ -5,7 +5,6 @@ import {
 } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { siteConfig } from '@/store/slices/siteConfig/siteConfig.slice';
-import { adminApi } from '@/api/admin/admin';
 import { authApi } from '@/api/auth/auth';
 import { jwtApi } from '@/api/jwt/jwt';
 import { siteApi } from '@/api/site/site';
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
     [taxonomyApi.reducerPath]: taxonomyApi.reducer,
     [jwtApi.reducerPath]: jwtApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
-    [adminApi.reducerPath]: adminApi.reducer,
     [siteConfig.reducerPath]: siteConfig.reducer,
 });
 
@@ -32,7 +30,6 @@ export const makeStore = (): EnhancedStore<RootState> =>
                 jwtApi.middleware,
                 authApi.middleware,
                 usersApi.middleware,
-                adminApi.middleware,
             ]),
     });
 

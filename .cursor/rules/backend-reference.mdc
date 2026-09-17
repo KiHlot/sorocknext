@@ -29,7 +29,7 @@ alwaysApply: false
 
 Часть данных бэк отдаёт из JSON-файлов, а не из БД, поэтому они могут отставать:
 `popular_tags_JSON` (популярные теги), `users_info_JSON`, `cron_info_JSON`.
-Обновляются через `/admin/update-cron-task`, затем `/admin/update-cron-info`.
+Ручное обновление через `/admin/update-cron-task` и `/admin/update-cron-info` **на паузе** (роуты закомментированы, возможно вернутся).
 
 ## Коды
 
