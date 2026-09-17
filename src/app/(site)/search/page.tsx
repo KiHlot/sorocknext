@@ -11,8 +11,7 @@ export async function generateMetadata({
     const queryParams = await searchParams;
 
     return fetchMetadata({
-        type: 'page',
-        route: 'search',
+        type: 'search',
         param: queryParams?.phrase,
     });
 }

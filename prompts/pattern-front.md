@@ -110,6 +110,21 @@ export interface ResponseIF<DataIF = null> {
 SEO с бэка (`src/api/metadata/types.ts`):
 
 ```ts
+export const METADATA_TYPE = {
+    Page: 'page',
+    Archive: 'archive',
+    Post: 'post',
+    Search: 'search',
+} as const;
+
+export type MetadataTypeT = ValueOfT<typeof METADATA_TYPE>;
+
+export interface MetadataParamsIF {
+    type: MetadataTypeT;
+    slug?: string;
+    param?: string;
+}
+
 export interface SeoDataIF {
     title: string;
     description: string;
@@ -230,13 +245,12 @@ export const fetchApi = async <DataIF = null>(
 
 Обёртки серверных эндпоинтов лежат в `src/api/<domain>/endpoints.ts` (не регистрируются в Redux):
 
-- `fetchMetadata` — `/metadata/{type}/{route}` + `getMetadata`
+- `fetchMetadata({ type, slug?, param? })` — `/metadata?type=...&slug=...&param=...` + `getMetadata`
 - `fetchHomePageData` — `/page/home-page-data`
 - `fetchArchive({ postType, page })` — `/archive/archive?postType=...&page=...`;
   количество страниц приходит в `paginationInfo: { currentPage, pagesCount }`
   и в запрос не передаётся
 - `fetchArchiveSlugs(postType)` — `/archive/get-slugs?postType=...`
-- `fetchArchivePostMetadata({ postType, slug })` — `/archive/metadata/{postType}?slug=...`
 - `fetchArchivePost({ postType, slug })` — `/archive/{slug}?postType=...`
 - `fetchSearchData` / `fetchSearchConfig` — `/search`, `/search/get-search-config`
 
@@ -298,7 +312,7 @@ import { fetchHomePageData } from '@/api/page/endpoints';
 import HomePageTPL from '@/templates/HomePageTPL/HomePageTPL.component';
 
 export async function generateMetadata(): Promise<Metadata> {
-    return fetchMetadata({ type: 'page', route: 'home' });
+    return fetchMetadata({ type: 'page' });
 }
 
 export default async function HomePage(): Promise<ReactElement> {
@@ -308,7 +322,7 @@ export default async function HomePage(): Promise<ReactElement> {
 }
 ```
 
-`getMetadata` (`src/helpers/getMetadata/getMetadata.ts`) мержит ответ бэка с `DEFAULT_METADATA`. Для обычных страниц — `fetchMetadata({ type: 'page', route })`. Для постов — `fetchArchivePostMetadata({ postType, slug })` (`/archive/metadata/{postType}?slug=...`). Если обёртки нет — `fetchApi<SeoDataIF>` + `getMetadata`.
+`getMetadata` (`src/helpers/getMetadata/getMetadata.ts`) мержит ответ бэка с `DEFAULT_METADATA`. Единая обёртка `fetchMetadata` принимает: `{ type: 'page' }` для главной, `{ type: 'archive', slug: postType }` для архива, `{ type: 'post', slug }` для записи, `{ type: 'search', param: phrase }` для поиска. `URLSearchParams` формирует query-string. Если обёртки нет — `fetchApi<SeoDataIF>` + `getMetadata`.
 
 `params` и `searchParams` в Next — `Promise`. Всегда `await params` / `await searchParams`.
 

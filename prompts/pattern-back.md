@@ -670,16 +670,21 @@ class Some_Controller extends WP_REST_Controller
 - `/registration`, `/send-confirm-code-mail`, `/confirm-email`
 - `/send-reset-pass-code-mail`, `/reset-password`
 
-**`Metadata_Controller`** — `/metadata/*` (публичные):
+**`Metadata_Controller`** — `/metadata` (публичный):
 
-- `/metadata/{type}/{slug}` — SEO-метаданные (`page` / `post`).
+- `/metadata` — единая точка SEO-метаданных. Query: обязательный `type`
+  (`page` / `archive` / `post` / `search`), опциональные `slug` и `param`.
+  Для `page` пустой `slug` означает главную; для `archive` в `slug`
+  передаётся post type; для `post` — слаг записи; для `search` поисковая
+  фраза передаётся в `param`.
 
 **`Archive_Controller`** — `/archive/*` (публичные), общий для всех пост-типов:
 
 - `/archive` — архив. Query: обязательный `postType`, опциональный `page`.
   `page` отсутствует или `< 1` → первая; `page > archive_pages_count` → последняя.
 - `/get-slugs` — слаги для SSG. Query: обязательный `postType`.
-- `/metadata/{post_type}` — SEO поста. Query: `slug`.
+- `/metadata/{post_type}` — legacy SEO поста. Query: `slug`; новый фронт
+  использует единый `/metadata`.
 - `/{slug}` — одна запись. Query: `postType`. Временно здесь, будет перенесено
   в `Single_Controller`.
 - `/archive` не принимает `pagesCount` от клиента. `data` содержит:

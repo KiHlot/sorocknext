@@ -6,8 +6,14 @@ export const fetchApi = async <DataIF = null>(
     route: string,
     cache: RequestCache = 'no-cache', //'force-cache'
 ): Promise<DataIF | null | undefined> => {
-    const cookieStore = await cookies();
-    const token = cookieStore.get(STORAGE_KEYS.Token)?.value || null;
+    let token: string | null = null;
+
+    try {
+        const cookieStore = await cookies();
+        token = cookieStore.get(STORAGE_KEYS.Token)?.value || null;
+    } catch {
+        token = null;
+    }
 
     try {
         console.log(

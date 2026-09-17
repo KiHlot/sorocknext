@@ -23,7 +23,7 @@ alwaysApply: false
 | `/auth/reset-password` | Сброс пароля |
 | `/archive/archive` | Архив постов, query `postType` + `page` |
 | `/archive/get-slugs` | Слаги для `generateStaticParams`, query `postType` |
-| `/archive/metadata/{post_type}` | SEO поста, query `slug` |
+| `/archive/metadata/{post_type}` | Legacy SEO поста, query `slug`; фронт использует `/metadata` |
 | `/archive/{slug}` | Одна запись, query `postType` (временно в Archive_Controller) |
 | `/page/home-page-data` | Данные главной |
 | `/search` | Поиск |
@@ -32,7 +32,7 @@ alwaysApply: false
 | `/site/filter-params` | Параметры фильтров |
 | `/site/send-contact-form` | Контактная форма |
 | `/taxonomy/search-posts-by-tag` | Посты по тегу |
-| `/metadata/{type}/{slug}` | SEO, `type` = `page` \| `post` |
+| `/metadata` | SEO, query: обязательный `type` (`page` \| `archive` \| `post` \| `search`), опциональные `slug` и `param` |
 | `/users/filter` | Список пользователей |
 | `/users/get-user-data` | Публичный профиль |
 

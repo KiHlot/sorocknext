@@ -25,7 +25,7 @@ export async function generateMetadata({
         notFound();
     }
 
-    return fetchMetadata({ type: 'page', route: postType });
+    return fetchMetadata({ type: 'archive', slug: postType });
 }
 
 const ArchivePage = async ({

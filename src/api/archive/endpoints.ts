@@ -4,10 +4,7 @@ import {
     FetchArchiveParamsIF,
     FetchArchivePostParamsIF,
 } from '@/api/archive/types';
-import { SeoDataIF } from '@/api/metadata/types';
 import { fetchApi } from '@/helpers/fetchApi';
-import { getMetadata } from '@/helpers/getMetadata/getMetadata';
-import { Metadata } from '@/helpers/getMetadata/getMetadata.types';
 
 export const fetchArchive = async ({
     postType,
@@ -31,21 +28,6 @@ export const fetchArchiveSlugs = async (
     searchParams.append('postType', postType);
 
     return fetchApi<string[]>(`/archive/get-slugs?${searchParams.toString()}`);
-};
-
-export const fetchArchivePostMetadata = async ({
-    postType,
-    slug,
-}: FetchArchivePostParamsIF): Promise<Metadata> => {
-    const searchParams = new URLSearchParams();
-
-    searchParams.append('slug', slug);
-
-    const data = await fetchApi<SeoDataIF>(
-        `/archive/metadata/${postType}?${searchParams.toString()}`,
-    );
-
-    return getMetadata(data);
 };
 
 export const fetchArchivePost = async ({

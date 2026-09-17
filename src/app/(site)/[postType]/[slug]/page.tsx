@@ -3,11 +3,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PageProps } from '@/types/common';
 import { PostIF } from '@/types/post';
-import {
-    fetchArchivePost,
-    fetchArchivePostMetadata,
-    fetchArchiveSlugs,
-} from '@/api/archive/endpoints';
+import { fetchArchivePost, fetchArchiveSlugs } from '@/api/archive/endpoints';
+import { fetchMetadata } from '@/api/metadata/endpoints';
 import { POST_TYPE_SLUGS, isPostType } from '@/configs/postTypes.config';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
 
@@ -36,7 +33,7 @@ export async function generateMetadata({
         notFound();
     }
 
-    return fetchArchivePostMetadata({ postType, slug });
+    return fetchMetadata({ type: 'post', slug });
 }
 
 export default async function PostPage({

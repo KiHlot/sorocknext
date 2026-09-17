@@ -5,7 +5,7 @@ import { fetchHomePageData } from '@/api/page/endpoints';
 import HomePageTPL from '@/templates/HomePageTPL/HomePageTPL.component';
 
 export async function generateMetadata(): Promise<Metadata> {
-    return fetchMetadata({ type: 'page', route: 'home' });
+    return fetchMetadata({ type: 'page' });
 }
 
 export default async function HomePage(): Promise<ReactElement> {
