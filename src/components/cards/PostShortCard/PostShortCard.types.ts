@@ -7,7 +7,7 @@ export interface PostShortCardModelIF {
     url: string;
     author: AuthorIF;
     categories: string[] | null;
-    publishDate: DateWithTimeT;
+    postDate: DateWithTimeT;
     year: string;
 }
 

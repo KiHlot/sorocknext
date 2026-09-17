@@ -1,5 +1,5 @@
-import { PostArchiveIF } from '@/types/post';
+import { FetchNewsArchiveIF } from '@/api/news/types';
 
 export interface NewsArchiveTPLPropsIF {
-    data?: PostArchiveIF | null;
+    data?: FetchNewsArchiveIF | null;
 }

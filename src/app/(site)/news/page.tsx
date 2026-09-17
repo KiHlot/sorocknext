@@ -1,12 +1,22 @@
 import { ReactElement } from 'react';
-import { PostArchiveIF } from '@/types/post';
-import { fetchApi } from '@/helpers/fetchApi';
+import type { Metadata } from 'next';
+import { PageProps } from '@/types/common';
+import { fetchMetadata } from '@/api/metadata/endpoints';
+import { fetchNewsArchive } from '@/api/news/endpoints';
 import NewsArchiveTPL from '@/templates/NewsArchiveTPL/NewsArchiveTPL.component';
 
-const News = async (): Promise<ReactElement> => {
-    const data = await fetchApi<PostArchiveIF>('/news/archive');
+export async function generateMetadata(): Promise<Metadata> {
+    return fetchMetadata({ type: 'page', route: 'news' });
+}
 
-    return <NewsArchiveTPL data={data} />;
+const News = async ({ searchParams }: PageProps): Promise<ReactElement> => {
+    const queryParams = await searchParams;
+    const parsedPage = Number(queryParams?.page);
+    const page = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+
+    const data = await fetchNewsArchive({ page });
+
+    return data ? <NewsArchiveTPL data={data} /> : <div />;
 };
 
 export default News;

@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import Link from 'next/link';
 import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
+import PostArchiveCard from '@/components/cards/PostArchiveCard/PostArchiveCard.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 import { NewsArchiveTPLPropsIF } from '@/templates/NewsArchiveTPL/NewsArchiveTPL.types';
 
@@ -12,10 +12,8 @@ const NewsArchiveTPL: FC<NewsArchiveTPLPropsIF> = ({ data }) => (
         <Content>
             <Breadcrumbs />
             <div className="flcol gapBlock">
-                {data?.defaultData.map(({ url, label }) => (
-                    <Link key={url} href={url}>
-                        {label}
-                    </Link>
+                {data?.postsData?.map((postData, index) => (
+                    <PostArchiveCard key={index} postData={postData} />
                 ))}
             </div>
         </Content>
