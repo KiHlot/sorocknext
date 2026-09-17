@@ -17,6 +17,7 @@ alwaysApply: false
 - Повторяющиеся паттерны — миксины `@/styles/_mixins.scss`.
 - Классы — **camelCase** (`.modalHeader`). Модификаторы — отдельные классы (`.primary`), не BEM.
 - `classnames` / `clsx` нет: `` className={`${styles.button} ${styles.primary} ${className}`} ``.
+- Для раскладки использовать Flexbox. CSS Grid (`display: grid`) не использовать.
 - Вложенность ≤ 3. `&:hover` / `&.active`. Без `!important` (кроме утилит вроде `.d_none`).
 - Отступы — 4 пробела.
 
@@ -33,6 +34,7 @@ alwaysApply: false
 ### Адаптив
 
 Единственный обязательный миксин — `media`. Проект **desktop-first**: дефолт — десктоп, в `media(...)` — меньшие экраны. Брейкпоинты как в `_variables.scss`: `xxs`, `xs`, `sm`, `md`, `xmd`, `lg`, `xl`, `xxl`, `xxxl`, `desktop`. Не писать `@media (max-width: …)` вручную.
+`@include media(...)` размещать внутри класса, к которому относится адаптивное правило; не создавать медиамиксины на верхнем уровне SCSS-модуля.
 
 ```scss
 .card {

@@ -149,14 +149,14 @@ Prettier: `printWidth: 80`, `tabWidth: 4`, `singleQuote`, `semi`, `trailingComma
 
 Когда генерируется `.md` или `.mdc`-файл, внутри которого есть **примеры кода** (`.ts` / `.tsx` / `.scss` / `.php` и т.д.):
 
-- **Внешний блок** оборачивается **четырьмя бэктиками** (```` ```` ````).
+- **Внешний блок** оборачивается **четырьмя бэктиками** (` ` ````).
 - **Внутренние примеры** — **тремя** (` ``` `).
 
 Иначе внешний markdown-блок «съедается» первым вложенным, и весь файл ломается.
 
 **Пример правильной структуры:**
 
-`````markdown
+````markdown
 ## Раздел
 
 Пример кода:
@@ -164,7 +164,7 @@ Prettier: `printWidth: 80`, `tabWidth: 4`, `singleQuote`, `semi`, `trailingComma
 ```ts
 const x = 1;
 ```
-`````
+````
 
 ---
 
@@ -269,12 +269,12 @@ JWT `/token` — **другая форма ответа** (`token`, `expires`, `
 
 Роуты сейчас:
 
-| Путь                                                                 | Назначение   |
-| -------------------------------------------------------------------- | ------------ |
-| `(site)/`                                                            | Главная      |
-| `(site)/news`, `(site)/news/[slug]`                                  | Архив и пост |
-| `(site)/search`                                                      | Поиск        |
-| `(auth)/login`, `registration`, `reset-password`, `confirm-account`  | Авторизация  |
+| Путь                                                                | Назначение   |
+| ------------------------------------------------------------------- | ------------ |
+| `(site)/`                                                           | Главная      |
+| `(site)/news`, `(site)/news/[slug]`                                 | Архив и пост |
+| `(site)/search`                                                     | Поиск        |
+| `(auth)/login`, `registration`, `reset-password`, `confirm-account` | Авторизация  |
 
 Паттерн страницы:
 
@@ -509,7 +509,8 @@ const onSubmit = async (values: RegistrationFieldsIF): Promise<void> => {
 - Предпочтительно `*.module.scss`, классы **camelCase**.
 - Глобальное — `src/styles/` (`global.scss`, `_variables.scss`, `_mixins.scss`, `_base.scss`, `_reset.scss`).
 - Тема: класс `defaultTheme` на `body`, CSS-переменные из `$defaultTheme`.
-- Медиа: `@use '@/styles/mixins' as *;` и `@include media(md) { ... }`. Брейкпоинты в `_variables.scss` (`xxs` … `desktop`).
+- Раскладка строится на Flexbox; CSS Grid (`display: grid`) не используется.
+- Медиа: `@use '@/styles/mixins' as *;` и `@include media(md) { ... }`. Медиамиксин вкладывается внутрь изменяемого класса, а не размещается на верхнем уровне. Брейкпоинты в `_variables.scss` (`xxs` … `desktop`).
 - Вложенность селекторов — не больше трёх уровней. Без `!important`, кроме существующих утилит вроде `.d_none`.
 
 Утилиты из `_base.scss` (можно вешать рядом с модулем):
