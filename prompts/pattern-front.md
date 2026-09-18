@@ -250,6 +250,10 @@ export const fetchApi = async <DataIF = null>(
 - `fetchArchive({ postType, page })` — `/archive/archive?postType=...&page=...`;
   количество страниц приходит в `paginationInfo: { currentPage, pagesCount }`
   и в запрос не передаётся
+- `fetchArchivePromo({ postType })` — `/archive/promo-data?postType=...`;
+  `seoData` (HTML `titleH1` / `description`, `reviewUrl`) и
+  `archivePromoData` (посты галереи, активен первый). Без `page`.
+  На архивной странице лента и промо грузятся через `Promise.allSettled`
 - `fetchArchiveSlugs(postType)` — `/archive/get-slugs?postType=...`
 - `fetchArchivePost({ postType, slug })` — `/archive/{slug}?postType=...`
 - `fetchSearchData` / `fetchSearchConfig` — `/search`, `/search/get-search-config`

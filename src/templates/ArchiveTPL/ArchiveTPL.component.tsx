@@ -6,6 +6,7 @@ import {
 import PostArchiveCard from '@/components/cards/PostArchiveCard/PostArchiveCard.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 import Pagination from '@/components/interactive/Pagination/Pagination.component';
+import ArchivePromoSection from '@/components/sections/ArchivePromoSection/ArchivePromoSection.component';
 import styles from '@/templates/ArchiveTPL/ArchiveTPL.module.scss';
 import { ArchiveTPLPropsIF } from '@/templates/ArchiveTPL/ArchiveTPL.types';
 
@@ -14,17 +15,36 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
     title,
     postsData,
     paginationInfo,
+    seoData = null,
+    archivePromoData = null,
 }) => {
     const titleId = `${pathname.replaceAll('/', '') || 'archive'}-title`;
+    const hasPromo = !!seoData || !!archivePromoData?.length;
 
     return (
         <>
             <Content>
-                <Breadcrumbs pathname={pathname} />
-                <section className={styles.archive} aria-labelledby={titleId}>
-                    <h1 id={titleId} className={styles.title}>
-                        {title}
-                    </h1>
+                {hasPromo ? (
+                    <ArchivePromoSection
+                        pathname={pathname}
+                        title={title}
+                        titleId={titleId}
+                        seoData={seoData}
+                        archivePromoData={archivePromoData}
+                    />
+                ) : (
+                    <Breadcrumbs pathname={pathname} />
+                )}
+                <section
+                    className={styles.archive}
+                    aria-labelledby={hasPromo ? undefined : titleId}
+                    aria-label={hasPromo ? 'Материалы раздела' : undefined}
+                >
+                    {!hasPromo && (
+                        <h1 id={titleId} className={styles.title}>
+                            {title}
+                        </h1>
+                    )}
                     {!!postsData?.length && (
                         <div className={styles.list}>
                             {postsData.map((postData) => (

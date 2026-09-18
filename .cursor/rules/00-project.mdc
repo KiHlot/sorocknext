@@ -12,4 +12,5 @@ alwaysApply: true
 - Сервер: `fetchApi` / `@/api/<domain>/endpoints.ts`. Клиент: RTK Query + регистрация в `@/store/store.ts`.
 - Импорты только `@/...`. Стили — SCSS-модули. Формы — RHF + yup.
 - Детали для агента в этом репозитории: `.cursor/rules/*.mdc`.
+- Верстка по фигме/скрину и крупные задачи: сначала план в `prompts/plans`, потом подтверждение (правило `plan-before-layout.mdc`, скилл `.cursor/skills/plan-before-layout`).
 - `prompts/pattern-front.md`, `prompts/pattern-back.md`, `prompts/rooles.md` — **документация для сторонних клиентов**, не источник истины для кода. Обновлять по мере изменения контракта и паттернов (скилл `.cursor/skills/update-client-patterns`).

@@ -3,6 +3,7 @@
 D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 +---api
 |   +---archive
+|   |       archivePromo.config.ts
 |   |       endpoints.ts
 |   |       types.ts
 |   |       
@@ -266,6 +267,11 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |           LeftMenu.module.scss
 |   |           
 |   +---sections
+|   |   +---ArchivePromoSection
+|   |   |       ArchivePromoSection.component.tsx
+|   |   |       ArchivePromoSection.module.scss
+|   |   |       ArchivePromoSection.types.ts
+|   |   |       
 |   |   +---Footer
 |   |   |   |   Footer.component.tsx
 |   |   |   |   Footer.module.scss

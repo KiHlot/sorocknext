@@ -3,6 +3,8 @@ import {
     FetchArchiveIF,
     FetchArchiveParamsIF,
     FetchArchivePostParamsIF,
+    FetchArchivePromoIF,
+    FetchArchivePromoParamsIF,
 } from '@/api/archive/types';
 import { fetchApi } from '@/helpers/fetchApi';
 
@@ -17,6 +19,20 @@ export const fetchArchive = async ({
 
     return fetchApi<FetchArchiveIF>(
         `/archive/archive?${searchParams.toString()}`,
+    );
+};
+
+export const fetchArchivePromo = async ({
+    postType,
+}: FetchArchivePromoParamsIF): Promise<
+    FetchArchivePromoIF | null | undefined
+> => {
+    const searchParams = new URLSearchParams();
+
+    searchParams.append('postType', postType);
+
+    return fetchApi<FetchArchivePromoIF>(
+        `/archive/promo-data?${searchParams.toString()}`,
     );
 };
 

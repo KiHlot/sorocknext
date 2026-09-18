@@ -297,6 +297,27 @@ header {
     }
 }
 
+.archivePromoTitle {
+    em,
+    strong,
+    span {
+        display: block;
+        color: var(--accent);
+        font-style: normal;
+        font-weight: 700;
+    }
+}
+
+.archivePromoLead {
+    strong,
+    b,
+    em {
+        color: var(--white);
+        font-style: normal;
+        font-weight: 600;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     html {
         color-scheme: dark;

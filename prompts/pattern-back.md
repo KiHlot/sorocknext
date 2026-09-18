@@ -682,6 +682,8 @@ class Some_Controller extends WP_REST_Controller
 
 - `/archive` — архив. Query: обязательный `postType`, опциональный `page`.
   `page` отсутствует или `< 1` → первая; `page > archive_pages_count` → последняя.
+- `/promo-data` — промо раздела. Query: обязательный `postType`, без `page`.
+  `data`: `seoData` (`titleH1`, `description`, `reviewUrl`) и `archivePromoData`.
 - `/get-slugs` — слаги для SSG. Query: обязательный `postType`.
 - `/metadata/{post_type}` — legacy SEO поста. Query: `slug`; новый фронт
   использует единый `/metadata`.

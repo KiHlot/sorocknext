@@ -22,6 +22,7 @@ alwaysApply: false
 | `/auth/send-reset-pass-code-mail` | Письмо для сброса пароля |
 | `/auth/reset-password` | Сброс пароля |
 | `/archive/archive` | Архив постов, query `postType` + `page` |
+| `/archive/promo-data` | Промо архива, query `postType`: `seoData` + `archivePromoData` |
 | `/archive/get-slugs` | Слаги для `generateStaticParams`, query `postType` |
 | `/archive/metadata/{post_type}` | Legacy SEO поста, query `slug`; фронт использует `/metadata` |
 | `/archive/{slug}` | Одна запись, query `postType` (временно в Archive_Controller) |

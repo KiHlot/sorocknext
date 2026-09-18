@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import { PageProps } from '@/types/common';
-import { fetchArchive } from '@/api/archive/endpoints';
+import { fetchArchive, fetchArchivePromo } from '@/api/archive/endpoints';
 import { fetchMetadata } from '@/api/metadata/endpoints';
 import {
     POST_TYPES,
@@ -42,7 +42,13 @@ const ArchivePage = async ({
     const parsedPage = Number(queryParams?.page);
     const page = Number.isInteger(parsedPage) ? Math.max(1, parsedPage) : 1;
 
-    const data = await fetchArchive({ postType, page });
+    const results = await Promise.allSettled([
+        fetchArchive({ postType, page }),
+        fetchArchivePromo({ postType }),
+    ]);
+
+    const data = results[0].status === 'fulfilled' ? results[0].value : null;
+    const promo = results[1].status === 'fulfilled' ? results[1].value : null;
 
     if (data && queryParams?.page !== undefined) {
         const pagesCount = Math.max(1, data.paginationInfo.pagesCount);
@@ -68,6 +74,8 @@ const ArchivePage = async ({
             title={POST_TYPES[postType]}
             postsData={data.postsData}
             paginationInfo={data.paginationInfo}
+            seoData={promo?.seoData}
+            archivePromoData={promo?.archivePromoData}
         />
     ) : (
         <div />

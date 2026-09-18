@@ -21,17 +21,18 @@ const Button: FC<ButtonPropsIF> = ({
     style,
     ...restProps
 }) => {
-    const commonProps = {
-        disabled: disabled || isLoading,
-        'data-test': `${dataTest}_button`,
-        className: isCustom
-            ? `${className}`
-            : `flc ${styles.button} ${icon ? styles.hasIcon : ''} ${styles[variant]} ${className} ${isLoading ? styles.loading : ''}`,
-    };
+    const classNameValue = isCustom
+        ? `${className}`
+        : `flc ${styles.button} ${icon ? styles.hasIcon : ''} ${styles[variant]} ${className} ${isLoading ? styles.loading : ''}`;
+    const dataTestValue = `${dataTest}_button`;
 
     if (href) {
         return (
-            <Link {...commonProps} href={href}>
+            <Link
+                data-test={dataTestValue}
+                className={classNameValue}
+                href={href}
+            >
                 {icon && <span className={`flc ${styles.icon}`}>{icon}</span>}
                 {children}
             </Link>
@@ -40,7 +41,11 @@ const Button: FC<ButtonPropsIF> = ({
 
     if (htmlFor) {
         return (
-            <label {...commonProps} htmlFor={htmlFor}>
+            <label
+                data-test={dataTestValue}
+                className={classNameValue}
+                htmlFor={htmlFor}
+            >
                 {icon && <span className={`flc ${styles.icon}`}>{icon}</span>}
                 {children}
             </label>
@@ -50,7 +55,9 @@ const Button: FC<ButtonPropsIF> = ({
     return (
         <button
             {...restProps}
-            {...commonProps}
+            disabled={disabled || isLoading}
+            data-test={dataTestValue}
+            className={classNameValue}
             type={type}
             style={style}
             onClick={(event) => {

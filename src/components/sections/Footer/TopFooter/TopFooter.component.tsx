@@ -19,7 +19,7 @@ const TopFooter: FC = () => (
                     <FooterMenuColumn menuItems={menu.menuList} />
                 </div>
             ))}
-            <div className={styles.footerCol}>
+            <div id="contact" className={styles.footerCol}>
                 <div className={styles.title}>Обратная связь</div>
                 <ContactForm />
             </div>
