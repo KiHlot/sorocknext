@@ -49,6 +49,8 @@ const ArchivePromoIntro: FC<ArchivePromoIntroPropsIF> = ({
                 <Button
                     isCustom
                     href={seoData.reviewUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`flc ${styles.iconButton} ${styles.reviewButton}`}
                     aria-label="Оставить отзыв"
                     dataTest="archive_promo_review"

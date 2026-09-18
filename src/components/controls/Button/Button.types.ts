@@ -11,6 +11,8 @@ type ButtonVariantT =
 export interface ButtonPropsIF extends ButtonHTMLAttributes<HTMLButtonElement> {
     children?: ReactNode;
     href?: string;
+    target?: string;
+    rel?: string;
     htmlFor?: string;
     disabled?: boolean;
     isLoading?: boolean;

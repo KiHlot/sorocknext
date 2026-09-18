@@ -8,6 +8,8 @@ import { ButtonPropsIF } from '@/components/controls/Button/Button.types';
 const Button: FC<ButtonPropsIF> = ({
     children,
     href,
+    target,
+    rel,
     disabled,
     clickHandler,
     className = '',
@@ -32,6 +34,8 @@ const Button: FC<ButtonPropsIF> = ({
                 data-test={dataTestValue}
                 className={classNameValue}
                 href={href}
+                target={target}
+                rel={rel}
                 aria-label={restProps['aria-label']}
             >
                 {icon && <span className={`flc ${styles.icon}`}>{icon}</span>}
