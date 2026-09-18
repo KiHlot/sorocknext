@@ -1,16 +1,17 @@
 .commonLayoutWrapper {
-    grid-template-columns: 200px 1fr 280px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     gap: var(--gapDesktop);
     padding: 90px 0 var(--gapDesktop);
     width: 100%;
     height: auto;
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
     position: relative;
 }
 
 .menu {
+    flex: 0 0 200px;
+    width: 200px;
     position: sticky;
     top: 90px;
     height: fit-content;
@@ -19,5 +20,12 @@
 }
 
 .content {
+    flex: 1 1 auto;
+    min-width: 0;
     height: auto;
+}
+
+.sidebar {
+    flex: 0 0 280px;
+    width: 280px;
 }

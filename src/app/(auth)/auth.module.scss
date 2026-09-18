@@ -3,30 +3,39 @@
 .authLayout {
     width: 100%;
     height: auto;
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
     position: relative;
-    grid-template-columns: 10vw 600px 1fr;
-    
-    @include media(xl) {
-        grid-template-columns: 5vw 600px 1fr;
-    }
-    
-    @include media(md) {
-        grid-template-columns: 0 1fr 0;
-    }
 }
 
 .leftSide {
+    flex: 0 0 10vw;
     background-color: var(--bgColorDark);
+
+    @include media(xl) {
+        flex-basis: 5vw;
+    }
+
+    @include media(md) {
+        flex: 0 0 0;
+        width: 0;
+        overflow: hidden;
+    }
 }
 
 .content {
+    flex: 0 0 600px;
+    width: 600px;
     padding: var(--gapDesktop);
-    
+
     @include media(xl) {
         padding: var(--gapBlock);
+    }
+
+    @include media(md) {
+        flex: 1 1 auto;
+        width: 100%;
     }
 }
 
@@ -44,8 +53,16 @@
 }
 
 .thumb {
+    flex: 1 1 auto;
+    min-width: 0;
     height: auto;
     min-height: 100vh;
+
+    @include media(md) {
+        flex: 0 0 0;
+        width: 0;
+        overflow: hidden;
+    }
 }
 
 .block {

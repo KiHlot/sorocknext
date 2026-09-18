@@ -26,7 +26,7 @@ export const Content: FC<CommonPropsIF> = ({ children, className = '' }) => (
 );
 
 export const Sidebar: FC<CommonPropsIF> = ({ children }) => (
-    <aside className="flcol gapLayout">{children}</aside>
+    <aside className={`flcol gapLayout ${styles.sidebar}`}>{children}</aside>
 );
 
 export default CommonLayout;

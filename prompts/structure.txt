@@ -3,7 +3,6 @@
 D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 +---api
 |   +---archive
-|   |       archivePromo.config.ts
 |   |       endpoints.ts
 |   |       types.ts
 |   |       
@@ -268,10 +267,20 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |           
 |   +---sections
 |   |   +---ArchivePromoSection
-|   |   |       ArchivePromoSection.component.tsx
-|   |   |       ArchivePromoSection.module.scss
-|   |   |       ArchivePromoSection.types.ts
-|   |   |       
+|   |   |   |   ArchivePromoSection.component.tsx
+|   |   |   |   ArchivePromoSection.module.scss
+|   |   |   |   ArchivePromoSection.types.ts
+|   |   |   |   
+|   |   |   +---ArchivePromoGallery
+|   |   |   |       ArchivePromoGallery.component.tsx
+|   |   |   |       ArchivePromoGallery.module.scss
+|   |   |   |       ArchivePromoGallery.types.ts
+|   |   |   |       
+|   |   |   \---ArchivePromoIntro
+|   |   |           ArchivePromoIntro.component.tsx
+|   |   |           ArchivePromoIntro.module.scss
+|   |   |           ArchivePromoIntro.types.ts
+|   |   |           
 |   |   +---Footer
 |   |   |   |   Footer.component.tsx
 |   |   |   |   Footer.module.scss
