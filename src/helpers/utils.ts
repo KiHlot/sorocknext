@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 import {
     DirectionT,
     FilterIF,
@@ -9,6 +10,19 @@ import empty_user_250_250 from '@/images/img/empty_user_250_250.png';
 import empty_user_500_500 from '@/images/img/empty_user_500_500.png';
 import empty_user_80_80 from '@/images/img/empty_user_80_80.png';
 import { TIME_FORMATS } from '@/configs/timeFormats.config';
+import {
+    ERRORS_CODES,
+    SUCCESS_CODES,
+} from '@/helpers/validation/codes/codes.config';
+
+export const handleCopyLink = async (): Promise<void> => {
+    try {
+        await navigator.clipboard.writeText(window.location.href);
+        toast.success(SUCCESS_CODES.s107);
+    } catch {
+        toast.error(ERRORS_CODES.er900);
+    }
+};
 
 export const shuffle = <T>(array: T[]): T[] => {
     const arrayCopy = [...array];

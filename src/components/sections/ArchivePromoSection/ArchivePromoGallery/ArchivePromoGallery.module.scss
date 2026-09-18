@@ -1,0 +1,150 @@
+@use '@/styles/mixins' as *;
+
+.gallery {
+    display: flex;
+    flex: 1 1 560px;
+    min-width: 0;
+    min-height: 360px;
+    position: relative;
+    z-index: 1;
+
+    @include media(lg) {
+        flex-wrap: wrap;
+        min-height: 0;
+    }
+}
+
+.thumbs {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 64px;
+    gap: 8px;
+    margin-right: 12px;
+    z-index: 1;
+
+    @include media(lg) {
+        flex-direction: row;
+        flex: 1 1 100%;
+        margin-right: 0;
+        margin-bottom: 12px;
+        overflow-x: auto;
+    }
+}
+
+.thumb {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: var(--borderRadius);
+    box-shadow: var(--elemShadow);
+    cursor: pointer;
+
+    @include media(lg) {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+    }
+}
+
+.thumbSelected {
+    border-color: var(--accent);
+}
+
+.cover {
+    flex: 1 1 240px;
+    min-height: 280px;
+    border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+    z-index: 1;
+
+    @include media(lg) {
+        flex: 1 1 100%;
+        min-height: 220px;
+        border-radius: var(--borderRadius);
+    }
+}
+
+.featured {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 280px;
+    min-width: 0;
+    padding: 20px;
+    background-color: var(--bgColorDark);
+    border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+    z-index: 1;
+
+    @include media(lg) {
+        flex: 1 1 100%;
+        border-radius: var(--borderRadius);
+    }
+}
+
+.featuredTitle {
+    margin-bottom: 16px;
+    color: var(--white);
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+}
+
+.metaRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.metaLabel {
+    color: var(--colorSecondary);
+}
+
+.metaLabel::after {
+    content: ':';
+}
+
+.metaValue {
+    margin: 0;
+    color: var(--white);
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.author {
+    color: var(--white);
+    text-decoration: none;
+}
+
+.excerpt {
+    display: -webkit-box;
+    margin-top: 16px;
+    color: var(--textColor);
+    font-size: 13px;
+    line-height: 19px;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+}
+
+.readWrap {
+    margin-top: auto;
+    padding-top: 16px;
+}
+
+.readButton {
+    width: auto;
+}

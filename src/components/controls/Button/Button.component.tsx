@@ -32,6 +32,7 @@ const Button: FC<ButtonPropsIF> = ({
                 data-test={dataTestValue}
                 className={classNameValue}
                 href={href}
+                aria-label={restProps['aria-label']}
             >
                 {icon && <span className={`flc ${styles.icon}`}>{icon}</span>}
                 {children}
