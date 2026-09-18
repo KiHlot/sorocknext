@@ -13,6 +13,8 @@ const RULES_DIR = 'rules';
 const SKILLS_DIR = 'skills';
 const SKILL_FILE = 'SKILL.md';
 
+const isDotName = (name) => name.startsWith('.');
+
 const copyFileAs = async (src_path, dest_path) => {
     await mkdir(dirname(dest_path), { recursive: true });
     const content = await readFile(src_path);
@@ -29,6 +31,10 @@ const processRules = async (rules_source, rules_target) => {
     const entries = await readdir(rules_source, { withFileTypes: true });
 
     for (const entry of entries) {
+        if (isDotName(entry.name)) {
+            continue;
+        }
+
         const src_path = join(rules_source, entry.name);
         const dest_path = join(rules_target, renameMdc(entry.name));
 
@@ -51,6 +57,10 @@ const processSkills = async (skills_source, skills_target) => {
     const entries = await readdir(skills_source, { withFileTypes: true });
 
     for (const entry of entries) {
+        if (isDotName(entry.name)) {
+            continue;
+        }
+
         if (!entry.isDirectory()) {
             console.warn(
                 `[sync-cursor] Пропущен файл верхнего уровня в skills/: ${entry.name}`,
@@ -75,6 +85,10 @@ const copyDir = async (src_path, dest_path) => {
     const entries = await readdir(src_path, { withFileTypes: true });
 
     for (const entry of entries) {
+        if (isDotName(entry.name)) {
+            continue;
+        }
+
         const next_source = join(src_path, entry.name);
         const next_target = join(dest_path, renameMdc(entry.name));
 
@@ -99,6 +113,10 @@ const sync = async () => {
     const entries = await readdir(SOURCE_DIR, { withFileTypes: true });
 
     for (const entry of entries) {
+        if (isDotName(entry.name)) {
+            continue;
+        }
+
         const src_path = join(SOURCE_DIR, entry.name);
 
         if (entry.name === RULES_DIR && entry.isDirectory()) {

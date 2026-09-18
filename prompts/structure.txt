@@ -84,21 +84,11 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       ButtonsGroupAuth.component.tsx
 |   |   |       ButtonsGroupAuth.config.tsx
 |   |   |       
-|   |   +---Section
-|   |   |       Section.component.tsx
-|   |   |       Section.module.scss
-|   |   |       Section.types.ts
-|   |   |       
-|   |   \---VerticalMenu
-|   |       |   VerticalMenu.component.tsx
-|   |       |   VerticalMenu.module.scss
-|   |       |   VerticalMenu.types.ts
-|   |       |   
-|   |       \---VerticalMenuItem
-|   |               VerticalMenu.component.tsx
-|   |               VerticalMenu.module.scss
-|   |               VerticalMenu.types.ts
-|   |               
+|   |   \---Section
+|   |           Section.component.tsx
+|   |           Section.module.scss
+|   |           Section.types.ts
+|   |           
 |   +---cards
 |   |   +---PostArchiveCard
 |   |   |       PostArchiveCard.component.tsx
@@ -273,6 +263,7 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   \---LeftMenu
 |   |           LeftMenu.component.tsx
 |   |           LeftMenu.config.tsx
+|   |           LeftMenu.module.scss
 |   |           
 |   +---sections
 |   |   +---Footer
