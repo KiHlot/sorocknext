@@ -22,10 +22,42 @@
     > * {
         height: 100%;
     }
+
+    @include media(lg) {
+        gap: 0 12px;
+    }
+}
+
+.headerSearch {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+
+    @include media(md) {
+        display: none;
+    }
+}
+
+.headerEmail {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+
+    @include media(lg) {
+        margin-left: auto;
+    }
+
+    @include media(md) {
+        display: none;
+    }
 }
 
 .mr {
     margin-right: auto;
+
+    @include media(xl) {
+        margin-right: 0;
+    }
 }
 
 .ml {

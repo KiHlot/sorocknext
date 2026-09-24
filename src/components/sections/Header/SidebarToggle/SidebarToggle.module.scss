@@ -1,0 +1,35 @@
+@use '@/styles/mixins' as *;
+
+.toggle {
+    display: none;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 100%;
+    color: var(--textColor);
+
+    @include media(xl) {
+        display: flex;
+    }
+
+    @include media(md) {
+        margin-left: auto;
+    }
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    &.opened {
+        background-color: var(--bgColorDark);
+        color: var(--white);
+    }
+
+    &:hover {
+        &:not(.opened) {
+            background-color: rgba(var(--bgColorDark), 0.6);
+        }
+    }
+}

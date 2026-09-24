@@ -22,6 +22,10 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |       endpoints.ts
 |   |       types.ts
 |   |       
+|   +---post
+|   |       endpoints.ts
+|   |       types.ts
+|   |       
 |   +---search
 |   |       endpoints.ts
 |   |       types.ts
@@ -306,11 +310,19 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |   |   Header.config.ts
 |   |   |   |   Header.module.scss
 |   |   |   |   
+|   |   |   +---BurgerMenu
+|   |   |   |       BurgerMenu.component.tsx
+|   |   |   |       BurgerMenu.module.scss
+|   |   |   |       
 |   |   |   +---SearchForm
 |   |   |   |       SearchForm.component.tsx
 |   |   |   |       SearchForm.config.ts
 |   |   |   |       SearchForm.module.scss
 |   |   |   |       SearchForm.types.ts
+|   |   |   |       
+|   |   |   +---SidebarToggle
+|   |   |   |       SidebarToggle.component.tsx
+|   |   |   |       SidebarToggle.module.scss
 |   |   |   |       
 |   |   |   +---TrendsSlider
 |   |   |   |       TrendsSlider.component.tsx
@@ -572,10 +584,18 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |           
 +---layouts
 |   +---CommonLayout
-|   |       CommonLayout.component.tsx
-|   |       CommonLayout.module.scss
-|   |       CommonLayout.types.ts
-|   |       
+|   |   |   CommonLayout.component.tsx
+|   |   |   CommonLayout.module.scss
+|   |   |   CommonLayout.types.ts
+|   |   |   
+|   |   +---LayoutShell
+|   |   |       LayoutShell.config.ts
+|   |   |       LayoutShell.context.tsx
+|   |   |       LayoutShell.types.ts
+|   |   |       
+|   |   \---Sidebar
+|   |           Sidebar.component.tsx
+|   |           
 |   \---MainWrapper
 |           MainWrapper.component.tsx
 |           MainWrapper.module.scss

@@ -1,8 +1,6 @@
-import { PostIF } from '@/types/post';
 import {
     FetchArchiveIF,
     FetchArchiveParamsIF,
-    FetchArchivePostParamsIF,
     FetchArchivePromoIF,
     FetchArchivePromoParamsIF,
 } from '@/api/archive/types';
@@ -44,15 +42,4 @@ export const fetchArchiveSlugs = async (
     searchParams.append('postType', postType);
 
     return fetchApi<string[]>(`/archive/get-slugs?${searchParams.toString()}`);
-};
-
-export const fetchArchivePost = async ({
-    postType,
-    slug,
-}: FetchArchivePostParamsIF): Promise<PostIF | null | undefined> => {
-    const searchParams = new URLSearchParams();
-
-    searchParams.append('postType', postType);
-
-    return fetchApi<PostIF>(`/archive/${slug}?${searchParams.toString()}`);
 };

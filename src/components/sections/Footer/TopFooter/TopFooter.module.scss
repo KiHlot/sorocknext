@@ -13,6 +13,11 @@
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
+    row-gap: var(--gapBlock);
+
+    @include media(sm) {
+        column-gap: var(--gapBlock);
+    }
 }
 
 .footerCol {
@@ -28,12 +33,10 @@
         @include media(sm) {
             order: 1;
             width: 100%;
-            margin-bottom: 20px;
         }
 
         @include media(xs) {
             order: 0;
-            margin-bottom: 30px;
         }
     }
 
@@ -47,21 +50,18 @@
         @include media(xl) {
             order: 1;
             width: 32%;
-            margin-top: 20px;
         }
 
         @include media(sm) {
             order: 0;
-            margin-bottom: 20px;
-            margin-top: 0;
             font-size: 15px;
             line-height: 20px;
-            width: 33%;
+            width: calc((100% - (var(--gapBlock) * 2)) / 3);
         }
 
         @include media(xs) {
             order: 1;
-            width: 49%;
+            width: calc((100% - var(--gapBlock)) / 2);
         }
     }
 }

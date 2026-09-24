@@ -255,7 +255,8 @@ export const fetchApi = async <DataIF = null>(
   `archivePromoData` (посты галереи, активен первый). Без `page`.
   На архивной странице лента и промо грузятся через `Promise.allSettled`
 - `fetchArchiveSlugs(postType)` — `/archive/get-slugs?postType=...`
-- `fetchArchivePost({ postType, slug })` — `/archive/{slug}?postType=...`
+- `fetchPost({ postType, slug })` (`@/api/post/endpoints`) — `/post/{slug}?postType=...`;
+  нет записи — `null` (`notfound`), страница вызывает `notFound()`
 - `fetchSearchData` / `fetchSearchConfig` — `/search`, `/search/get-search-config`
 
 На странице предпочтительно вызывать обёртку, а не сырой `fetchApi`, если обёртка уже есть.

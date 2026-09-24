@@ -96,33 +96,18 @@ const PostArchiveCard: FC<PostArchiveCardPropsIF> = ({
                 )}
 
                 <footer className={styles.footer}>
-                    {author.url ? (
-                        <Link href={author.url} className={styles.author}>
-                            <span
-                                className={`bgc ${styles.authorAvatar}`}
-                                style={{
-                                    backgroundImage: `url(${normalizeImage(author.img80, 'user80')})`,
-                                }}
-                                aria-hidden="true"
-                            />
-                            <span className={styles.authorName}>
-                                {author.fullName}
-                            </span>
-                        </Link>
-                    ) : (
-                        <span className={styles.author}>
-                            <span
-                                className={`bgc ${styles.authorAvatar}`}
-                                style={{
-                                    backgroundImage: `url(${normalizeImage(author.img80, 'user80')})`,
-                                }}
-                                aria-hidden="true"
-                            />
-                            <span className={styles.authorName}>
-                                {author.fullName}
-                            </span>
+                    <span className={styles.author}>
+                        <span
+                            className={`bgc ${styles.authorAvatar}`}
+                            style={{
+                                backgroundImage: `url(${normalizeImage(author.img80, 'user80')})`,
+                            }}
+                            aria-hidden="true"
+                        />
+                        <span className={styles.authorName}>
+                            {author.fullName}
                         </span>
-                    )}
+                    </span>
                     <Button
                         href={url}
                         variant="link"

@@ -11,6 +11,10 @@
     background-color: var(--bgColorSecondary);
     overflow: hidden;
 
+    @include media(xxl) {
+        flex-direction: column;
+    }
+
     @include media(xl) {
         flex-wrap: wrap;
         padding: 24px;

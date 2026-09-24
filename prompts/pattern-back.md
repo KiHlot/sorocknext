@@ -678,6 +678,12 @@ class Some_Controller extends WP_REST_Controller
   передаётся post type; для `post` — слаг записи; для `search` поисковая
   фраза передаётся в `param`.
 
+**`Post_Controller`** — `/post/*` (публичный):
+
+- `/post/{slug}` — базовые данные одной записи (`Post_Model::get_post_base()`).
+  Query: обязательный `postType`. Запись не найдена → `data: null`,
+  `['notfound' => true]`.
+
 **`Archive_Controller`** — `/archive/*` (публичные), общий для всех пост-типов:
 
 - `/archive` — архив. Query: обязательный `postType`, опциональный `page`.
@@ -687,8 +693,6 @@ class Some_Controller extends WP_REST_Controller
 - `/get-slugs` — слаги для SSG. Query: обязательный `postType`.
 - `/metadata/{post_type}` — legacy SEO поста. Query: `slug`; новый фронт
   использует единый `/metadata`.
-- `/{slug}` — одна запись. Query: `postType`. Временно здесь, будет перенесено
-  в `Single_Controller`.
 - `/archive` не принимает `pagesCount` от клиента. `data` содержит:
 
 ```php

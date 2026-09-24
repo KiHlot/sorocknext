@@ -2,11 +2,18 @@
 
 .trendsSliderWrapper {
     width: 40%;
+    min-width: 0;
     height: auto;
     position: relative;
     display: flex;
 
-    @media (max-width: 1360px) {
+    @include media(xl) {
+        width: auto;
+        flex: 1 1 0;
+        max-width: 40%;
+    }
+
+    @include media(lg) {
         display: none;
     }
 }

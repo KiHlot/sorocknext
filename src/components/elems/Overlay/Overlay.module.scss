@@ -9,4 +9,10 @@
     background-color: var(--overlayBg);
     transition: opacity 0.3s ease-in-out;
     pointer-events: auto;
+
+    &.belowHeader {
+        top: 60px;
+        height: calc(100dvh - 60px);
+        z-index: calc(var(--zIndexMenu) - 2);
+    }
 }

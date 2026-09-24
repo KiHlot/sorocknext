@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as *;
+
 .commonLayoutWrapper {
     display: flex;
     flex-direction: row;
@@ -17,6 +19,10 @@
     height: fit-content;
     max-height: 80vh;
     overflow: auto;
+
+    @include media(lg) {
+        display: none;
+    }
 }
 
 .content {
@@ -28,4 +34,32 @@
 .sidebar {
     flex: 0 0 280px;
     width: 280px;
+
+    @include media(xl) {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        z-index: calc(var(--zIndexMenu) - 1);
+        flex: none;
+        width: 300px;
+        height: calc(100dvh - 60px);
+        padding: var(--gapBlock);
+        background-color: var(--bgColor);
+        box-shadow: var(--boxShadow);
+        overflow: auto;
+        transform: translateX(100%);
+        visibility: hidden;
+        pointer-events: none;
+        transition: transform 0.3s ease;
+
+        &.open {
+            transform: translateX(0);
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
 }

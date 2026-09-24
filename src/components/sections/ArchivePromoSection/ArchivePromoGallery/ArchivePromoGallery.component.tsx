@@ -1,7 +1,6 @@
 'use client';
 
 import { FC, MouseEvent, useState } from 'react';
-import Link from 'next/link';
 import { formatDate } from '@/helpers/utils';
 import Button from '@/components/controls/Button/Button.component';
 import CategoryLink from '@/components/elems/CategoryLink/CategoryLink.component';
@@ -114,16 +113,7 @@ const ArchivePromoGallery: FC<ArchivePromoGalleryPropsIF> = ({
                     <div className={styles.metaRow}>
                         <dt className={styles.metaLabel}>Автор</dt>
                         <dd className={styles.metaValue}>
-                            {selectedPost.author.url ? (
-                                <Link
-                                    href={selectedPost.author.url}
-                                    className={styles.author}
-                                >
-                                    {selectedPost.author.fullName}
-                                </Link>
-                            ) : (
-                                selectedPost.author.fullName
-                            )}
+                            {selectedPost.author.fullName}
                         </dd>
                     </div>
                 </dl>

@@ -20,8 +20,3 @@ export interface FetchArchivePromoIF {
     seoData: ArchiveSeoDataIF | null;
     archivePromoData: PostArchiveCardModelIF[] | null;
 }
-
-export interface FetchArchivePostParamsIF {
-    postType: string;
-    slug: string;
-}

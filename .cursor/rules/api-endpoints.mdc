@@ -25,7 +25,7 @@ alwaysApply: false
 | `/archive/promo-data` | Промо архива, query `postType`: `seoData` + `archivePromoData` |
 | `/archive/get-slugs` | Слаги для `generateStaticParams`, query `postType` |
 | `/archive/metadata/{post_type}` | Legacy SEO поста, query `slug`; фронт использует `/metadata` |
-| `/archive/{slug}` | Одна запись, query `postType` (временно в Archive_Controller) |
+| `/post/{slug}` | Одна запись, query обязательный `postType`; нет записи — `notfound` |
 | `/page/home-page-data` | Данные главной |
 | `/search` | Поиск |
 | `/search/get-search-config` | Конфиг поиска |

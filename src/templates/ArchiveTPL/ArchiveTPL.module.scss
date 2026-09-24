@@ -26,11 +26,19 @@
 .card {
     flex: 0 0 calc((100% - (var(--gapBlock) * 2)) / 3);
 
-    @include media(xl) {
+    @include media(xxl) {
         flex-basis: calc((100% - var(--gapBlock)) / 2);
     }
 
     @include media(lg) {
+        flex-basis: calc((100% - (var(--gapBlock) * 2)) / 3);
+    }
+
+    @include media(md) {
+        flex-basis: calc((100% - var(--gapBlock)) / 2);
+    }
+
+    @include media(sm) {
         flex-basis: 100%;
     }
 }

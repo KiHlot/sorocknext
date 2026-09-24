@@ -3,7 +3,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PageProps } from '@/types/common';
 import { PostIF } from '@/types/post';
-import { fetchArchivePost, fetchArchiveSlugs } from '@/api/archive/endpoints';
+import { fetchArchiveSlugs } from '@/api/archive/endpoints';
+import { fetchPost } from '@/api/post/endpoints';
 import { fetchMetadata } from '@/api/metadata/endpoints';
 import { POST_TYPE_SLUGS, isPostType } from '@/configs/postTypes.config';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
@@ -48,7 +49,7 @@ export default async function PostPage({
     let data: PostIF | null | undefined = null;
 
     try {
-        data = await fetchArchivePost({ postType, slug });
+        data = await fetchPost({ postType, slug });
     } catch {
         notFound();
     }
