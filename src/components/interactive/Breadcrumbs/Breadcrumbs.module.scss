@@ -1,17 +1,19 @@
+@use '@/styles/mixins' as *;
+
 .nav {
     width: 100%;
+    
+    @include media(sm) {
+        line-height: 22px;
+    }
 }
 
 .list {
     width: 100%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .item {
-    width: fit-content;
-    display: flex;
+    display: inline;
 }
 
 .separator {

@@ -104,7 +104,7 @@ header {
     word-break: keep-all;
     overflow-wrap: break-word;
 
-    @include media(md) {
+    @include media(xxl) {
         font-size: 18px;
         line-height: 26px;
     }

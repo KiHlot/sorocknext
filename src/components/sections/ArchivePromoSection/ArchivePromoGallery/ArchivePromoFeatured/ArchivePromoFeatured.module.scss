@@ -1,5 +1,3 @@
-@use '@/styles/mixins' as *;
-
 .featuredWrap {
     display: flex;
     height: auto;
@@ -66,10 +64,6 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
-}
-
-.readWrap {
-
 }
 
 .readButton {

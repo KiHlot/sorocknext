@@ -1,5 +1,7 @@
-const MEDIA_TAG = /<(img|iframe|video|audio|embed|object)\b/i;
-const TOP_HEADING = /<(\/?)h1\b/gi;
+import {
+    MEDIA_TAG,
+    TOP_HEADING,
+} from '@/components/sections/PostContentSection/PostContentSection.config';
 
 export const hasPostContent = (content?: string | null): content is string => {
     if (!content?.trim()) {

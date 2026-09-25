@@ -53,7 +53,7 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
                 pathname={pathname}
                 title={main.titleSeo?.trim() || title}
             />
-            <div className={styles.heading}>
+            <div className={`flcol ${styles.heading}`}>
                 <h1 className={styles.title} itemProp="headline">
                     {title}
                 </h1>
