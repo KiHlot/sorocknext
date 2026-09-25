@@ -1,5 +1,0 @@
-import { PostArchiveIF } from '@/types/post';
-
-export interface PublicationsArchiveTPLPropsIF {
-    data?: PostArchiveIF | null;
-}
