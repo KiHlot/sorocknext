@@ -18,7 +18,7 @@ const ArchivePromoIntro: FC<ArchivePromoIntroPropsIF> = ({
         {seoData ? (
             <h1
                 id={titleId}
-                className={`archivePromoTitle ${styles.title}`}
+                className={`${styles.archivePromoTitle} ${styles.title}`}
                 dangerouslySetInnerHTML={{ __html: seoData.titleH1 }}
             />
         ) : (
@@ -26,10 +26,10 @@ const ArchivePromoIntro: FC<ArchivePromoIntroPropsIF> = ({
                 {title}
             </h1>
         )}
-        <Breadcrumbs pathname={pathname} />
+        <Breadcrumbs pathname={pathname} className={styles.breadcrumbs} />
         {seoData?.description && (
             <div
-                className={`archivePromoLead ${styles.description}`}
+                className={`${styles.archivePromoLead} ${styles.description}`}
                 dangerouslySetInnerHTML={{
                     __html: seoData.description,
                 }}

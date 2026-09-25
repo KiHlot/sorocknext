@@ -13,6 +13,7 @@
 
     @include media(xxl) {
         flex-direction: column;
+        padding: 24px;
     }
 
     @include media(xl) {

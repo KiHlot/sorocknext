@@ -15,8 +15,9 @@
     }
 
     @include media(xxl) {
-        max-width: 1100px;
+        max-width: 1160px;
     }
+    
     @include media(xl) {
         max-width: 900px;
     }
