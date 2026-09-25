@@ -2,10 +2,9 @@
 
 .archivePromoSectionWrapper {
     display: flex;
-    align-items: stretch;
-    gap: var(--gapDesktop);
     width: 100%;
-    padding: 30px;
+    gap: var(--gapDesktop);
+    padding: 16px;
     border-radius: var(--borderRadius);
     box-shadow: var(--elemShadow);
     background-color: var(--bgColorSecondary);
@@ -18,11 +17,26 @@
 
     @include media(xl) {
         flex-wrap: wrap;
-        padding: 24px;
     }
 
     @include media(sm) {
         padding: 16px;
         gap: var(--gapBlock);
+    }
+
+    .archivePromoIntro {
+        width: 40%;
+        
+        @include media(xxl) {
+            width: 100%;
+        }
+    }
+    
+    .archivePromoGallery{
+        width: 56%;
+        
+        @include media(xxl) {
+            width: 100%;
+        }
     }
 }

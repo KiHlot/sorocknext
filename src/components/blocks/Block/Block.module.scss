@@ -1,5 +1,11 @@
+@use '@/styles/mixins' as *;
+
 .blockWrapper {
-    padding: 16px;
+    padding: 20px;
     border-radius: var(--borderRadius);
     background-color: var(--bgColorSecondary);
+
+    @include media(xl) {
+        padding: 16px;
+    }
 }

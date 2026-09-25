@@ -5,4 +5,5 @@ export interface ArchivePromoIntroPropsIF {
     title: string;
     titleId: string;
     seoData?: ArchiveSeoDataIF | null;
+    className?: string;
 }

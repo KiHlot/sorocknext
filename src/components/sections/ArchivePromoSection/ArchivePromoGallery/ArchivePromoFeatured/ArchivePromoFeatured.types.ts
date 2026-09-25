@@ -2,4 +2,5 @@ import { PostArchiveCardModelIF } from '@/components/cards/PostArchiveCard/PostA
 
 export interface ArchivePromoFeaturedPropsIF {
     postData: PostArchiveCardModelIF;
+    className?: string;
 }

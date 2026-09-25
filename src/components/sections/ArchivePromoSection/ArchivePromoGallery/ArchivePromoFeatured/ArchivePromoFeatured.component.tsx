@@ -7,6 +7,7 @@ import { ArchivePromoFeaturedPropsIF } from '@/components/sections/ArchivePromoS
 
 const ArchivePromoFeatured: FC<ArchivePromoFeaturedPropsIF> = ({
     postData,
+    className = '',
 }) => {
     const {
         author,
@@ -24,7 +25,7 @@ const ArchivePromoFeatured: FC<ArchivePromoFeaturedPropsIF> = ({
         .trim();
 
     return (
-        <div className={styles.featuredWrap}>
+        <div className={`${styles.featuredWrap} ${className}`}>
             <div
                 className={`bgc ${styles.cover}`}
                 role="img"
@@ -37,9 +38,9 @@ const ArchivePromoFeatured: FC<ArchivePromoFeaturedPropsIF> = ({
                         : undefined
                 }
             />
-            <article className={styles.featured}>
+            <article className={`flcol ${styles.featured}`}>
                 <h2 className={styles.featuredTitle}>{titleH1}</h2>
-                <dl className={styles.meta}>
+                <dl className={`flcol ${styles.meta}`}>
                     <div className={styles.metaRow}>
                         <dt className={styles.metaLabel}>Дата</dt>
                         <dd className={styles.metaValue}>
@@ -78,16 +79,14 @@ const ArchivePromoFeatured: FC<ArchivePromoFeaturedPropsIF> = ({
                     </div>
                 </dl>
                 {excerpt && <p className={styles.excerpt}>{excerpt}</p>}
-                <div className={styles.readWrap}>
-                    <Button
-                        href={url}
-                        variant="secondary"
-                        className={styles.readButton}
-                        dataTest="archive_promo_read"
-                    >
-                        Читать
-                    </Button>
-                </div>
+                <Button
+                    href={url}
+                    variant="secondary"
+                    className={styles.readButton}
+                    dataTest="archive_promo_read"
+                >
+                    Читать
+                </Button>
             </article>
         </div>
     );

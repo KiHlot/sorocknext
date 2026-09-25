@@ -2,4 +2,5 @@ import { PostArchiveCardModelIF } from '@/components/cards/PostArchiveCard/PostA
 
 export interface ArchivePromoGalleryPropsIF {
     archivePromoData: PostArchiveCardModelIF[];
+    className?: string;
 }

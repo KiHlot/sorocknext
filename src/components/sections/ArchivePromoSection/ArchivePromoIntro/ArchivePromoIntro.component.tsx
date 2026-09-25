@@ -13,8 +13,9 @@ const ArchivePromoIntro: FC<ArchivePromoIntroPropsIF> = ({
     title,
     titleId,
     seoData = null,
+    className = '',
 }) => (
-    <div className={styles.intro}>
+    <div className={`flcol ${styles.archivePromoIntroWrapper} ${className}`}>
         {seoData ? (
             <h1
                 id={titleId}

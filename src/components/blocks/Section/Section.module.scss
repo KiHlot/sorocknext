@@ -1,4 +1,16 @@
+@use '@/styles/mixins' as *;
+
 .sectionWrapper {
     position: relative;
-    width: 100%;
+    padding: 24px;
+    border-radius: var(--borderRadius);
+    background-color: var(--bgColorSecondary);
+    
+    @include media(xl) {
+        padding: 20px;
+    }
+    
+    @include media(md) {
+        padding: 16px;
+    }
 }

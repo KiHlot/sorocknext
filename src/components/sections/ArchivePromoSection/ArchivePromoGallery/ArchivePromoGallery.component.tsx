@@ -8,6 +8,7 @@ import { ArchivePromoGalleryPropsIF } from '@/components/sections/ArchivePromoSe
 
 const ArchivePromoGallery: FC<ArchivePromoGalleryPropsIF> = ({
     archivePromoData,
+    className = '',
 }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -32,8 +33,11 @@ const ArchivePromoGallery: FC<ArchivePromoGalleryPropsIF> = ({
     }
 
     return (
-        <div className={styles.archivePromoGalleryWrapper}>
-            <div className={styles.thumbs} aria-label="Посты промо-блока">
+        <div className={`${className} ${styles.archivePromoGalleryWrapper}`}>
+            <div
+                className={`flcol ${styles.thumbsWrapper}`}
+                aria-label="Посты промо-блока"
+            >
                 {archivePromoData.map((postData, index) => {
                     const isSelected = index === selectedIndex;
 
@@ -58,7 +62,10 @@ const ArchivePromoGallery: FC<ArchivePromoGalleryPropsIF> = ({
                     );
                 })}
             </div>
-            <ArchivePromoFeatured postData={selectedPost} />
+            <ArchivePromoFeatured
+                postData={selectedPost}
+                className={styles.archivePromoFeatured}
+            />
         </div>
     );
 };

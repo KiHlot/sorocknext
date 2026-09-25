@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Section from '@/components/blocks/Section/Section.component';
 import ArchivePromoGallery from '@/components/sections/ArchivePromoSection/ArchivePromoGallery/ArchivePromoGallery.component';
 import ArchivePromoIntro from '@/components/sections/ArchivePromoSection/ArchivePromoIntro/ArchivePromoIntro.component';
 import styles from '@/components/sections/ArchivePromoSection/ArchivePromoSection.module.scss';
@@ -11,20 +12,25 @@ const ArchivePromoSection: FC<ArchivePromoSectionPropsIF> = ({
     seoData = null,
     archivePromoData = null,
 }) => (
-    <section
+    <Section
         className={styles.archivePromoSectionWrapper}
-        aria-labelledby={titleId}
+        ariaLabel={title}
+        ariaLabelledBy={titleId}
     >
         <ArchivePromoIntro
             pathname={pathname}
             title={title}
             titleId={titleId}
             seoData={seoData}
+            className={styles.archivePromoIntro}
         />
         {!!archivePromoData?.length && (
-            <ArchivePromoGallery archivePromoData={archivePromoData} />
+            <ArchivePromoGallery
+                archivePromoData={archivePromoData}
+                className={styles.archivePromoGallery}
+            />
         )}
-    </section>
+    </Section>
 );
 
 export default ArchivePromoSection;

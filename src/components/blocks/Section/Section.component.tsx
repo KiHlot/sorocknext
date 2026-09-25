@@ -6,12 +6,14 @@ const Section: FC<SectionPropsIF> = ({
     children,
     className = '',
     ariaLabel,
+    ariaLabelledBy,
     title,
 }) => (
     <section
         itemScope
         itemType="https://schema.org/WebPageElement"
         aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
         className={`${styles.sectionWrapper} ${className}`}
     >
         {title && <h2>{title}</h2>}

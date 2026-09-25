@@ -4,5 +4,6 @@ export interface SectionPropsIF {
     children: ReactNode;
     className?: string;
     ariaLabel?: string;
+    ariaLabelledBy?: string;
     title?: string;
 }
