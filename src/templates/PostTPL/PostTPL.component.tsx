@@ -13,11 +13,17 @@ const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname }) => {
     return (
         <>
             <Content>
-                <SinglePostPromoSection
-                    postBase={postBase}
-                    pathname={pathname}
-                />
-                <PostContentSection content={postBase.main.content} />
+                <article
+                    className="flcol gapLayout"
+                    itemScope
+                    itemType="https://schema.org/Article"
+                >
+                    <SinglePostPromoSection
+                        postBase={postBase}
+                        pathname={pathname}
+                    />
+                    <PostContentSection content={postBase.main.content} />
+                </article>
             </Content>
             <Sidebar>sidebar</Sidebar>
         </>

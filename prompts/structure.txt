@@ -276,10 +276,15 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |   |   ArchivePromoSection.types.ts
 |   |   |   |   
 |   |   |   +---ArchivePromoGallery
-|   |   |   |       ArchivePromoGallery.component.tsx
-|   |   |   |       ArchivePromoGallery.module.scss
-|   |   |   |       ArchivePromoGallery.types.ts
-|   |   |   |       
+|   |   |   |   |   ArchivePromoGallery.component.tsx
+|   |   |   |   |   ArchivePromoGallery.module.scss
+|   |   |   |   |   ArchivePromoGallery.types.ts
+|   |   |   |   |   
+|   |   |   |   \---ArchivePromoFeatured
+|   |   |   |           ArchivePromoFeatured.component.tsx
+|   |   |   |           ArchivePromoFeatured.module.scss
+|   |   |   |           ArchivePromoFeatured.types.ts
+|   |   |   |           
 |   |   |   \---ArchivePromoIntro
 |   |   |           ArchivePromoIntro.component.tsx
 |   |   |           ArchivePromoIntro.module.scss
@@ -342,11 +347,13 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       
 |   |   +---PostContentSection
 |   |   |       PostContentSection.component.tsx
+|   |   |       PostContentSection.helpers.ts
 |   |   |       PostContentSection.module.scss
 |   |   |       PostContentSection.types.ts
 |   |   |       
 |   |   \---SinglePostPromoSection
 |   |           SinglePostPromoSection.component.tsx
+|   |           SinglePostPromoSection.helpers.ts
 |   |           SinglePostPromoSection.module.scss
 |   |           SinglePostPromoSection.types.ts
 |   |           
@@ -636,38 +643,14 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |       HomePageTPL.module.scss
 |   |       HomePageTPL.types.ts
 |   |       
-|   +---MusicArchiveTPL
-|   |       MusicArchiveTPL.component.tsx
-|   |       MusicArchiveTPL.types.ts
-|   |       
-|   +---NewsArchiveTPL
 |   +---PostTPL
 |   |       PostTPL.component.tsx
 |   |       PostTPL.types.ts
 |   |       
-|   +---ProfileTPL
-|   |       ProfileTPL.component.tsx
-|   |       
-|   +---PublicationsArchiveTPL
-|   |       PublicationsArchiveTPL.component.tsx
-|   |       PublicationsArchiveTPL.types.ts
-|   |       
-|   +---SearchTPL
-|   |       SearchTPL.component.tsx
-|   |       SearchTPL.module.scss
-|   |       SearchTPL.types.ts
-|   |       
-|   +---ShortsArchiveTPL
-|   |       ShortsArchiveTPL.component.tsx
-|   |       ShortsArchiveTPL.types.ts
-|   |       
-|   +---SportArchiveTPL
-|   |       SportArchiveTPL.component.tsx
-|   |       SportArchiveTPL.types.ts
-|   |       
-|   \---VideoArchiveTPL
-|           VideoArchiveTPL.component.tsx
-|           VideoArchiveTPL.types.ts
+|   \---SearchTPL
+|           SearchTPL.component.tsx
+|           SearchTPL.module.scss
+|           SearchTPL.types.ts
 |           
 \---types
         api.ts

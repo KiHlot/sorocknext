@@ -10,5 +10,7 @@ export const fetchPost = async ({
 
     searchParams.append('postType', postType);
 
-    return fetchApi<PostIF>(`/post/${slug}?${searchParams.toString()}`);
+    return fetchApi<PostIF>(
+        `/post/${encodeURIComponent(slug)}?${searchParams.toString()}`,
+    );
 };

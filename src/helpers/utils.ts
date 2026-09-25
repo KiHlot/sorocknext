@@ -41,10 +41,16 @@ export const formatDate = (backDate?: string, type?: 'withTime'): string => {
         return '';
     }
 
+    const parsed = dayjs(backDate, TIME_FORMATS.BackDateWithTime);
+
+    if (!parsed.isValid()) {
+        return '';
+    }
+
     const uiFormat =
         type === 'withTime' ? TIME_FORMATS.DateWithTimeUi : TIME_FORMATS.DateUi;
 
-    return `${dayjs(backDate, TIME_FORMATS.BackDateWithTime).format(uiFormat)}${type ? '' : 'г.'}`;
+    return `${parsed.format(uiFormat)}${type ? '' : 'г.'}`;
 };
 
 export const normalizeImage = (

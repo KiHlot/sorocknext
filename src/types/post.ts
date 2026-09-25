@@ -25,7 +25,7 @@ export interface PostBaseIF {
     };
     taxonomies: {
         tags: OptionIF[] | null;
-        categories: OptionIF[] | null;
+        categories: string[] | null;
     };
 }
 
