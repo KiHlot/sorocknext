@@ -3,6 +3,7 @@ import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
+import Section from '@/components/blocks/Section/Section.component';
 import PostArchiveCard from '@/components/cards/PostArchiveCard/PostArchiveCard.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 import Pagination from '@/components/interactive/Pagination/Pagination.component';
@@ -35,10 +36,10 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
                 ) : (
                     <Breadcrumbs pathname={pathname} />
                 )}
-                <section
+                <Section
                     className={styles.archive}
-                    aria-labelledby={hasPromo ? undefined : titleId}
-                    aria-label={hasPromo ? 'Материалы раздела' : undefined}
+                    ariaLabelledBy={hasPromo ? undefined : titleId}
+                    ariaLabel={hasPromo ? 'Материалы раздела' : undefined}
                 >
                     {!hasPromo && (
                         <h1 id={titleId} className={styles.title}>
@@ -66,7 +67,7 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
                                 : null
                         }
                     />
-                </section>
+                </Section>
             </Content>
             <Sidebar>sidebar</Sidebar>
         </>
