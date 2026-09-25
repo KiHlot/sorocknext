@@ -32,7 +32,7 @@ const ArchivePromoGallery: FC<ArchivePromoGalleryPropsIF> = ({
     }
 
     return (
-        <div className={styles.gallery}>
+        <div className={styles.archivePromoGalleryWrapper}>
             <div className={styles.thumbs} aria-label="Посты промо-блока">
                 {archivePromoData.map((postData, index) => {
                     const isSelected = index === selectedIndex;

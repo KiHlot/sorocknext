@@ -10,7 +10,9 @@
 }
 
 .leftSide {
-    flex: 0 0 10vw;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 10vw;
     background-color: var(--bgColorDark);
 
     @include media(xl) {
@@ -18,14 +20,18 @@
     }
 
     @include media(md) {
-        flex: 0 0 0;
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 0;
         width: 0;
         overflow: hidden;
     }
 }
 
 .content {
-    flex: 0 0 600px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 600px;
     width: 600px;
     padding: var(--gapDesktop);
 
@@ -34,7 +40,9 @@
     }
 
     @include media(md) {
-        flex: 1 1 auto;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
         width: 100%;
     }
 }
@@ -53,13 +61,17 @@
 }
 
 .thumb {
-    flex: 1 1 auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
     min-width: 0;
     height: auto;
     min-height: 100vh;
 
     @include media(md) {
-        flex: 0 0 0;
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 0;
         width: 0;
         overflow: hidden;
     }

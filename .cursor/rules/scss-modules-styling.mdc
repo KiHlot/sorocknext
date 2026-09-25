@@ -17,7 +17,8 @@ alwaysApply: false
 - Повторяющиеся паттерны — миксины `@/styles/_mixins.scss`.
 - Классы — **camelCase** (`.modalHeader`). Модификаторы — отдельные классы (`.primary`), не BEM.
 - `classnames` / `clsx` нет: `` className={`${styles.button} ${styles.primary} ${className}`} ``.
-- Для раскладки использовать Flexbox. CSS Grid (`display: grid`) не использовать.
+- Для раскладки использовать Flexbox: `display: flex`, `flex-direction`, `flex-wrap`, `justify-content`, `align-items`, `align-content`, `gap`, `order`. CSS Grid (`display: grid`) не использовать.
+- Сокращение `flex` не использовать. `flex-grow`, `flex-shrink` и `flex-basis` по умолчанию не ставить: их трудно сверять. Ширину и высоту задавать через `width`, `min-width`, `max-width`, `height`. Эти три свойства — редкий случай, когда блок должен занять остаток ряда или не сжаться, и это нельзя выразить шириной.
 - Вложенность ≤ 3. `&:hover` / `&.active`. Без `!important` (кроме утилит вроде `.d_none`).
 - Отступы — 4 пробела.
 

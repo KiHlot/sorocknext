@@ -12,7 +12,9 @@
 }
 
 .menu {
-    flex: 0 0 200px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 200px;
     width: 200px;
     position: sticky;
     top: 90px;
@@ -26,13 +28,17 @@
 }
 
 .content {
-    flex: 1 1 auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
     min-width: 0;
     height: auto;
 }
 
 .sidebar {
-    flex: 0 0 280px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 280px;
     width: 280px;
 
     @include media(xl) {
@@ -40,7 +46,9 @@
         top: 60px;
         right: 0;
         z-index: calc(var(--zIndexMenu) - 1);
-        flex: none;
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: auto;
         width: 300px;
         height: calc(100dvh - 60px);
         padding: var(--gapBlock);

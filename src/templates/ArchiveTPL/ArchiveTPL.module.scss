@@ -24,7 +24,9 @@
 }
 
 .card {
-    flex: 0 0 calc((100% - (var(--gapBlock) * 2)) / 3);
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: calc((100% - (var(--gapBlock) * 2)) / 3);
 
     @include media(xxl) {
         flex-basis: calc((100% - var(--gapBlock)) / 2);

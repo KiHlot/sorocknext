@@ -542,7 +542,8 @@ const onSubmit = async (values: RegistrationFieldsIF): Promise<void> => {
 - Предпочтительно `*.module.scss`, классы **camelCase**.
 - Глобальное — `src/styles/` (`global.scss`, `_variables.scss`, `_mixins.scss`, `_base.scss`, `_reset.scss`).
 - Тема: класс `defaultTheme` на `body`, CSS-переменные из `$defaultTheme`.
-- Раскладка строится на Flexbox; CSS Grid (`display: grid`) не используется.
+- Раскладка строится на Flexbox (`display: flex`, `flex-direction`, `flex-wrap`, `justify-content`, `align-items`, `gap`). CSS Grid (`display: grid`) не используется.
+- Сокращение `flex` не писать. `flex-grow`, `flex-shrink` и `flex-basis` не использовать как обычный способ задать размер — только если шириной (`width`, `min-width`, `max-width`) раскладку не выразить.
 - Медиа: `@use '@/styles/mixins' as *;` и `@include media(md) { ... }`. Медиамиксин вкладывается внутрь изменяемого класса, а не размещается на верхнем уровне. Брейкпоинты в `_variables.scss` (`xxs` … `desktop`).
 - Вложенность селекторов — не больше трёх уровней. Без `!important`, кроме существующих утилит вроде `.d_none`.
 
@@ -555,16 +556,15 @@ const onSubmit = async (values: RegistrationFieldsIF): Promise<void> => {
 ```scss
 @use '@/styles/mixins' as *;
 
-.authLayout {
+.card {
     display: flex;
-    min-height: 100vh;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
 
-    .content {
-        flex: 1;
-
-        @include media(md) {
-            padding: 30px;
-        }
+    @include media(md) {
+        gap: 12px;
+        padding: 30px;
     }
 }
 ```
