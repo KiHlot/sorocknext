@@ -8,7 +8,7 @@ export const MAGIC_NUMBERS = {
     RockDatesDaysPerView: 7,
     RockDatesDaysPerViewMd: 5,
     RockDatesDaysPerViewSm: 3,
-    RockDatesEventsPerDay: 2,
+    RockDatesEventsPerDay: 3,
     BreakpointSm: 576,
     BreakpointMd: 768,
     LeapDay: 29,

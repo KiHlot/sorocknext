@@ -3,6 +3,11 @@ export interface RockDateEventIF {
     monthDay: string;
     title: string;
     text: string;
+    authorName: string;
+    tags: string[];
+    country: string;
+    cover: string;
+    url: string;
 }
 
 export interface RockDateMonthIF {

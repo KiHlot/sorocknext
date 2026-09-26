@@ -6,7 +6,14 @@ import {
 } from 'react';
 
 type ButtonVariantT =
-    'primary' | 'secondary' | 'sq' | 'sq_error' | 'sq_info' | 'link' | 'accent';
+    | 'primary'
+    | 'secondary'
+    | 'secondarySmall'
+    | 'sq'
+    | 'sq_error'
+    | 'sq_info'
+    | 'link'
+    | 'accent';
 
 export interface ButtonPropsIF extends ButtonHTMLAttributes<HTMLButtonElement> {
     children?: ReactNode;

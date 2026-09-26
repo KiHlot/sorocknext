@@ -69,11 +69,14 @@ const Button: FC<ButtonPropsIF> = ({
                 clickHandler?.(event);
             }}
         >
-            {isLoading && ['primary', 'secondary'].includes(variant) && (
-                <span className={styles.spinnerWrapper}>
-                    <span className="spinner"></span>
-                </span>
-            )}
+            {isLoading &&
+                ['primary', 'secondary', 'secondarySmall'].includes(
+                    variant,
+                ) && (
+                    <span className={styles.spinnerWrapper}>
+                        <span className="spinner"></span>
+                    </span>
+                )}
             {icon && !isLoading && variant !== 'link' && (
                 <span className={`flc ${styles.icon}`}>{icon}</span>
             )}

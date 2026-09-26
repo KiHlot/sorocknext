@@ -1,10 +1,9 @@
 'use client';
 
 import { FC } from 'react';
-import { IoChatboxEllipsesOutline, IoCopyOutline } from 'react-icons/io5';
-import { handleCopyLink } from '@/helpers/utils';
-import Button from '@/components/controls/Button/Button.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
+import CopyLinkButton from '@/components/interactive/CopyLinkButton/CopyLinkButton.component';
+import ReviewButton from '@/components/interactive/ReviewButton/ReviewButton.component';
 import styles from '@/components/sections/ArchivePromoSection/ArchivePromoIntro/ArchivePromoIntro.module.scss';
 import { ArchivePromoIntroPropsIF } from '@/components/sections/ArchivePromoSection/ArchivePromoIntro/ArchivePromoIntro.types';
 
@@ -37,27 +36,13 @@ const ArchivePromoIntro: FC<ArchivePromoIntroPropsIF> = ({
             />
         )}
         <div className={styles.actions}>
-            <Button
-                isCustom
-                className={`flc ${styles.iconButton} ${styles.copyButton}`}
-                clickHandler={handleCopyLink}
-                aria-label="Копировать ссылку"
-                dataTest="archive_promo_copy"
-            >
-                <IoCopyOutline aria-hidden="true" />
-            </Button>
+            <CopyLinkButton dataTest="archive_promo_copy" size="large" />
             {seoData?.reviewUrl && (
-                <Button
-                    isCustom
+                <ReviewButton
                     href={seoData.reviewUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flc ${styles.iconButton} ${styles.reviewButton}`}
-                    aria-label="Оставить отзыв"
                     dataTest="archive_promo_review"
-                >
-                    <IoChatboxEllipsesOutline aria-hidden="true" />
-                </Button>
+                    size="large"
+                />
             )}
         </div>
     </div>

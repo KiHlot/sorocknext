@@ -4,8 +4,8 @@ import { FC, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import { TIME_FORMATS } from '@/configs/timeFormats.config';
 import Section from '@/components/blocks/Section/Section.component';
+import EventCard from '@/components/cards/EventCard/EventCard.component';
 import DaysSlider from '@/components/sections/RockDatesSection/DaysSlider/DaysSlider.component';
-import EventCard from '@/components/sections/RockDatesSection/EventCard/EventCard.component';
 import MonthsSlider from '@/components/sections/RockDatesSection/MonthsSlider/MonthsSlider.component';
 import { ROCK_DATES_LABELS } from '@/components/sections/RockDatesSection/RockDatesSection.config';
 import {
@@ -73,8 +73,14 @@ const RockDatesSection: FC = () => {
                             events.map((event) => (
                                 <EventCard
                                     key={event.id}
+                                    className={styles.eventCard}
                                     title={event.title}
                                     text={event.text}
+                                    authorName={event.authorName}
+                                    tags={event.tags}
+                                    country={event.country}
+                                    cover={event.cover}
+                                    url={event.url}
                                 />
                             ))
                         ) : (

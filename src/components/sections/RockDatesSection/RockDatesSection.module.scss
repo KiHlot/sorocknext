@@ -13,13 +13,26 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: stretch;
     gap: var(--gapBlock);
     animation-name: fadeIn;
     animation-duration: 0.3s;
     animation-timing-function: ease;
 
+    @include media(md) {
+        flex-direction: column;
+    }
+
     @media (prefers-reduced-motion: reduce) {
         animation-name: none;
+    }
+}
+
+.eventCard {
+    width: calc((100% - 2 * var(--gapBlock)) / 3);
+
+    @include media(md) {
+        width: 100%;
     }
 }
 

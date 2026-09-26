@@ -8,6 +8,7 @@ const CategoryLink: FC<CategoryLinkPropsIF> = ({
     className = '',
     categorySLug,
     linkType = 'simple',
+    size = 'default',
 }) => {
     const categoryData = SITE_CATEGORIES[categorySLug];
 
@@ -18,7 +19,9 @@ const CategoryLink: FC<CategoryLinkPropsIF> = ({
     return (
         <Link
             href={categoryData.link.url}
-            className={`flc ${styles.categoryLink} ${styles[linkType]} ${className}`}
+            className={`flc ${styles.categoryLink} ${
+                linkType === 'text' ? styles.text : styles[size]
+            } ${className}`}
             title={`Категория: ${categoryData.link.label}`}
         >
             {linkType === 'text' ? categoryData.link.label : categoryData.icon}

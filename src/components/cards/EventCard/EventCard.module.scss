@@ -1,0 +1,104 @@
+@use '@/styles/mixins' as *;
+
+.card {
+    min-width: 0;
+    border-radius: var(--borderRadius);
+    box-shadow: var(--boxShadow);
+}
+
+.frame {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--borderRadius);
+    padding: 16px;
+    background-color: var(--bgColorSecondary);
+    gap: 16px;
+}
+
+.bg {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+}
+
+.title {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+}
+
+.author {
+    color: var(--textColor);
+    font-size: 14px;
+    line-height: 20px;
+    text-align: left;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px;
+}
+
+.tag {
+    padding: 4px 8px;
+    border-radius: var(--borderRadius);
+    background-color: var(--bgColor);
+    color: var(--textColor);
+    font-size: 11px;
+}
+
+.excerpt {
+    display: -webkit-box;
+    width: 100%;
+    overflow: hidden;
+    color: var(--textColor);
+    font-size: 14px;
+    line-height: 20px;
+    text-align: left;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+
+    @include media(sm) {
+        flex-wrap: wrap;
+    }
+
+    .readButton {
+        width: fit-content;
+        margin-left: auto;
+    }
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
