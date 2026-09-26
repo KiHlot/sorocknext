@@ -4,6 +4,7 @@ import {
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import LastNewsPromoSection from '@/components/sections/LastNewsPromoSection/LastNewsPromoSection.component';
+import RockDatesSection from '@/components/sections/RockDatesSection/RockDatesSection.component';
 import LoginWidget from '@/components/widgets/LoginWidget/LoginWidget.component';
 import { HomePageTPLPropsIF } from '@/templates/HomePageTPL/HomePageTPL.types';
 
@@ -13,6 +14,7 @@ const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
     return (
         <>
             <Content>
+                <RockDatesSection />
                 {!!lastNewsPromoData?.length && (
                     <LastNewsPromoSection
                         lastNewsPromoData={lastNewsPromoData}

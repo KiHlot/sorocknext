@@ -1,0 +1,25 @@
+.arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background-color: transparent;
+    color: var(--white);
+    cursor: pointer;
+
+    &:disabled {
+        opacity: var(--disabledOpacity);
+        cursor: default;
+    }
+
+    &:hover:not(:disabled) {
+        opacity: var(--hoverOpacity);
+    }
+}
+
+.icon {
+    width: 22px;
+    height: 22px;
+}

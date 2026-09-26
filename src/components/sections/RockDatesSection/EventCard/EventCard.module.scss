@@ -1,0 +1,25 @@
+@use '@/styles/mixins' as *;
+
+.card {
+    width: 240px;
+    padding: 16px;
+    background-color: var(--bgColor);
+    border: var(--border);
+    border-radius: var(--borderRadius);
+
+    @include media(md) {
+        width: 100%;
+    }
+}
+
+.title {
+    margin-bottom: 8px;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.text {
+    color: var(--textColor);
+    font-size: 14px;
+}

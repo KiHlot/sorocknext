@@ -1,0 +1,99 @@
+@use '@/styles/mixins' as *;
+
+.slider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.swiper {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    width: auto;
+    min-width: 0;
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 22%,
+        black 78%,
+        transparent
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 22%,
+        black 78%,
+        transparent
+    );
+}
+
+.slide {
+    display: flex;
+    align-items: stretch;
+    height: auto;
+}
+
+.dayButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    min-height: 108px;
+    padding: 8px 4px;
+    background-color: transparent;
+    color: var(--white);
+    cursor: pointer;
+
+    &.noEvents {
+        color: var(--colorSecondary);
+    }
+
+    &.active {
+        color: var(--accent);
+    }
+}
+
+.weekday,
+.monthLabel {
+    color: var(--textColor);
+    font-size: 12px;
+    text-align: center;
+}
+
+.weekday {
+    text-transform: capitalize;
+}
+
+.dayLabel {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+
+    @include media(md) {
+        font-size: 24px;
+    }
+}
+
+.dayLabelMuted {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.noEvents .weekday,
+.noEvents .monthLabel,
+.noEvents .dayLabel {
+    color: var(--colorSecondary);
+}
+
+.active .weekday,
+.active .monthLabel,
+.active .dayLabel {
+    color: var(--accent);
+}

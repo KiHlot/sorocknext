@@ -1,0 +1,38 @@
+@use '@/styles/mixins' as *;
+
+.section {
+    width: 100%;
+    background-color: var(--bgColorDark);
+}
+
+.eventsRegion {
+    min-width: 0;
+}
+
+.events {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--gapBlock);
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-timing-function: ease;
+
+    @media (prefers-reduced-motion: reduce) {
+        animation-name: none;
+    }
+}
+
+.empty {
+    color: var(--textColor);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
