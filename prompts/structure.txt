@@ -3,6 +3,7 @@
 D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 +---api
 |   +---archive
+|   |       archive.ts
 |   |       endpoints.ts
 |   |       types.ts
 |   |       
@@ -356,7 +357,6 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |   |   RockDatesSection.component.tsx
 |   |   |   |   RockDatesSection.config.ts
 |   |   |   |   RockDatesSection.helpers.ts
-|   |   |   |   RockDatesSection.mock.ts
 |   |   |   |   RockDatesSection.module.scss
 |   |   |   |   RockDatesSection.types.ts
 |   |   |   |   

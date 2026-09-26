@@ -246,7 +246,7 @@ export const fetchApi = async <DataIF = null>(
 Обёртки серверных эндпоинтов лежат в `src/api/<domain>/endpoints.ts` (не регистрируются в Redux):
 
 - `fetchMetadata({ type, slug?, param? })` — `/metadata?type=...&slug=...&param=...` + `getMetadata`
-- `fetchHomePageData` — `/page/home-page-data`
+- `fetchHomePageData` — `/page/home-page-data`; в `data` рядом с `lastNewsPromoData` приходит `calendarDefaultData` (события сегодняшнего дня, `EventCardModelIF[] | null`)
 - `fetchArchive({ postType, page })` — `/archive/archive?postType=...&page=...`;
   количество страниц приходит в `paginationInfo: { currentPage, pagesCount }`
   и в запрос не передаётся
@@ -255,6 +255,7 @@ export const fetchApi = async <DataIF = null>(
   `archivePromoData` (посты галереи, активен первый). Без `page`.
   На архивной странице лента и промо грузятся через `Promise.allSettled`
 - `fetchArchiveSlugs(postType)` — `/archive/get-slugs?postType=...`
+- клиентский `archiveApi.useGetCalendarQuery({ month, day })` — `GET /archive/calendar?month=1&day=23` (`month` 1–12). Серверный `fetchApi` этот роут не вызывает. Сегодняшний день на главной берётся из `calendarDefaultData`, запрос уходит только при смене даты
 - `fetchPost({ postType, slug })` (`@/api/post/endpoints`) — `/post/{slug}?postType=...`;
   нет записи — `null` (`notfound`), страница вызывает `notFound()`
 - `fetchSearchData` / `fetchSearchConfig` — `/search`, `/search/get-search-config`
@@ -361,6 +362,7 @@ export async function generateStaticParams(): Promise<
 
 ```ts
 const rootReducer = combineReducers({
+    [archiveApi.reducerPath]: archiveApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [siteApi.reducerPath]: siteApi.reducer,
     [taxonomyApi.reducerPath]: taxonomyApi.reducer,
@@ -460,11 +462,12 @@ export default MainWrapper;
 
 ```tsx
 const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
-    const { lastNewsPromoData } = data || {};
+    const { lastNewsPromoData, calendarDefaultData } = data || {};
 
     return (
         <>
             <Content>
+                <RockDatesSection data={calendarDefaultData} />
                 {!!lastNewsPromoData?.length && (
                     <LastNewsPromoSection
                         lastNewsPromoData={lastNewsPromoData}

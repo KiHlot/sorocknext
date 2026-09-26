@@ -1,13 +1,7 @@
-export interface RockDateEventIF {
-    id: string;
-    monthDay: string;
-    title: string;
-    text: string;
-    authorName: string;
-    tags: string[];
-    country: string;
-    cover: string;
-    url: string;
+import { EventCardModelIF } from '@/components/cards/EventCard/EventCard.types';
+
+export interface RockDatesSectionPropsIF {
+    data?: EventCardModelIF[] | null;
 }
 
 export interface RockDateMonthIF {
@@ -22,5 +16,4 @@ export interface RockDateDayIF {
     weekdayShortLabel: string;
     dayLabel: string;
     monthLabel: string;
-    hasEvents: boolean;
 }

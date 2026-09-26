@@ -691,6 +691,15 @@ class Some_Controller extends WP_REST_Controller
 - `/promo-data` — промо раздела. Query: обязательный `postType`, без `page`.
   `data`: `seoData` (`titleH1`, `description`, `reviewUrl`) и `archivePromoData`.
 - `/get-slugs` — слаги для SSG. Query: обязательный `postType`.
+- `/calendar` — события одного календарного дня, без года. Query: `month`
+  (1–12) и `day` (1–31). `data` — массив карточек или `null`, без обёртки
+  `postsData`. Поля элемента: `titleH1`, `content` (HTML), `author`
+  (`fullName`, опциональные `img80` и `url`), `url`, `coverImg` (или `null`),
+  `tags` (имена строками или `null`), `country`. Выборка — опубликованные
+  записи с этим месяцем и днём `post_date` за любые годы, от новых к старым.
+  Небывалая дата — `data: null`. 29 февраля допустим. В невисокосном году
+  записи 29 февраля отдаются вместе с `month=2&day=28`, потому что фронт
+  `day=29` в такой год не запрашивает.
 - `/metadata/{post_type}` — legacy SEO поста. Query: `slug`; новый фронт
   использует единый `/metadata`.
 - `/archive` не принимает `pagesCount` от клиента. `data` содержит:
@@ -710,7 +719,9 @@ class Some_Controller extends WP_REST_Controller
 
 **`Page_Controller`** — `/page/*` (публичные):
 
-- `/home-page-data`.
+- `/home-page-data`. В `data` рядом с `lastNewsPromoData` —
+  `calendarDefaultData`: тот же массив, что `/archive/calendar` на
+  сегодняшний месяц и день (часовой пояс сайта), или `null`.
 
 **`Search_Controller`** — `/search/*` (публичные):
 

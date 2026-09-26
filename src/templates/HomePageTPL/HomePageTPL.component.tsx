@@ -9,12 +9,12 @@ import LoginWidget from '@/components/widgets/LoginWidget/LoginWidget.component'
 import { HomePageTPLPropsIF } from '@/templates/HomePageTPL/HomePageTPL.types';
 
 const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
-    const { lastNewsPromoData } = data || {};
+    const { lastNewsPromoData, calendarDefaultData } = data || {};
 
     return (
         <>
             <Content>
-                <RockDatesSection />
+                <RockDatesSection data={calendarDefaultData} />
                 {!!lastNewsPromoData?.length && (
                     <LastNewsPromoSection
                         lastNewsPromoData={lastNewsPromoData}

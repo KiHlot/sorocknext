@@ -62,22 +62,3 @@ export const normalizeImage = (
         }
     }
 };
-
-export const normalizeFilter = ({
-    page,
-    column,
-    direction,
-}: NormalizeFilterIF): string => {
-    const filter: FilterIF = {
-        page: Number(page) || 1,
-        column: column || 'id',
-        direction: (direction || 'desc') as DirectionT,
-    };
-
-    return Object.entries(filter)
-        .map(
-            ([key, value]) =>
-                `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
-        )
-        .join('&');
-};

@@ -87,7 +87,7 @@ const DaysSlider: FC<DaysSliderPropsIF> = ({
                         <SwiperSlide key={day.dateKey} className={styles.slide}>
                             <Button
                                 isCustom
-                                className={`${styles.dayButton} ${isActive ? styles.active : ''} ${day.hasEvents ? '' : styles.noEvents}`}
+                                className={`${styles.dayButton} ${isActive ? styles.active : ''}`}
                                 data-index={index}
                                 aria-current={isActive ? 'date' : undefined}
                                 clickHandler={handleSelectDay}
@@ -101,11 +101,7 @@ const DaysSlider: FC<DaysSliderPropsIF> = ({
                                         {day.weekdayShortLabel}
                                     </span>
                                 </span>
-                                <span
-                                    className={`${styles.dayLabel} ${day.hasEvents ? '' : styles.dayLabelMuted}`}
-                                >
-                                    {day.dayLabel}
-                                </span>
+                                <span className={styles.dayLabel}>{day.dayLabel}</span>
                                 <span className={styles.monthLabel}>
                                     {day.monthLabel}
                                 </span>

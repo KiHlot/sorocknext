@@ -2,6 +2,7 @@ export const MAGIC_NUMBERS = {
     BreadcrumbHomePosition: 1,
     BreadcrumbPathPositionOffset: 2,
     RedirectDelay: 2000,
+    CalendarRequestDelay: 1000,
     SwiperLoopMinSlides: 2,
     MonthsInYear: 12,
     RockDatesMonthsPerView: 5,
@@ -9,10 +10,7 @@ export const MAGIC_NUMBERS = {
     RockDatesDaysPerView: 7,
     RockDatesDaysPerViewMd: 5,
     RockDatesDaysPerViewSm: 3,
-    RockDatesEventsPerDay: 3,
     BreakpointSm: 576,
     BreakpointMd: 768,
     BreakpointXxl: 1500,
-    LeapDay: 29,
-    FebruaryFallbackDay: 28,
 } as const;

@@ -1,28 +1,56 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
+import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import { TIME_FORMATS } from '@/configs/timeFormats.config';
+import { archiveApi } from '@/api/archive/archive';
 import Section from '@/components/blocks/Section/Section.component';
 import EventCard from '@/components/cards/EventCard/EventCard.component';
+import Loading from '@/components/elems/Loading/Loading.component';
 import DaysSlider from '@/components/sections/RockDatesSection/DaysSlider/DaysSlider.component';
 import MonthsSlider from '@/components/sections/RockDatesSection/MonthsSlider/MonthsSlider.component';
 import { ROCK_DATES_LABELS } from '@/components/sections/RockDatesSection/RockDatesSection.config';
 import {
-    getEventsForDate,
-    getFirstDateWithEvents,
     getMonthDays,
     getMonthStart,
 } from '@/components/sections/RockDatesSection/RockDatesSection.helpers';
 import styles from '@/components/sections/RockDatesSection/RockDatesSection.module.scss';
+import { RockDatesSectionPropsIF } from '@/components/sections/RockDatesSection/RockDatesSection.types';
 
-const RockDatesSection: FC = () => {
+const RockDatesSection: FC<RockDatesSectionPropsIF> = ({ data }) => {
     const [selectedDate, setSelectedDate] = useState<Dayjs>(() =>
         dayjs().startOf('day'),
     );
+    const [queryDate, setQueryDate] = useState<Dayjs | null>(null);
+    const isToday = selectedDate.isSame(dayjs(), 'day');
+    const isQueryReady = queryDate?.isSame(selectedDate, 'day') ?? false;
     const monthKey = selectedDate.format(TIME_FORMATS.YearMonth);
     const days = getMonthDays(selectedDate);
-    const events = getEventsForDate(selectedDate);
+    const { data: calendarData, isFetching } = archiveApi.useGetCalendarQuery(
+        {
+            month: selectedDate.month() + 1,
+            day: selectedDate.date(),
+        },
+        { skip: isToday || !isQueryReady },
+    );
+    const events = isToday ? data : calendarData;
+    const showLoader = !isToday && (!isQueryReady || isFetching);
+    const showEmpty = !showLoader && !events?.length;
+
+    useEffect(() => {
+        if (selectedDate.isSame(dayjs(), 'day')) {
+            return;
+        }
+
+        const timeoutId = window.setTimeout(() => {
+            setQueryDate(selectedDate);
+        }, MAGIC_NUMBERS.CalendarRequestDelay);
+
+        return () => {
+            window.clearTimeout(timeoutId);
+        };
+    }, [selectedDate]);
 
     const handleSelectMonth = (monthIndex: number): void => {
         setSelectedDate((current) => {
@@ -36,16 +64,23 @@ const RockDatesSection: FC = () => {
                 return today;
             }
 
-            return getFirstDateWithEvents(
-                getMonthStart(today.year(), monthIndex),
-            );
+            return getMonthStart(today.year(), monthIndex);
         });
     };
 
     const handleSelectDay = (dayIndex: number): void => {
-        setSelectedDate((current) =>
-            getMonthStart(current.year(), current.month()).add(dayIndex, 'day'),
-        );
+        setSelectedDate((current) => {
+            const nextDate = getMonthStart(
+                current.year(),
+                current.month(),
+            ).add(dayIndex, 'day');
+
+            if (nextDate.isSame(current, 'day')) {
+                return current;
+            }
+
+            return nextDate;
+        });
     };
 
     return (
@@ -64,29 +99,26 @@ const RockDatesSection: FC = () => {
                     activeDayIndex={selectedDate.date() - 1}
                     onSelectDay={handleSelectDay}
                 />
-                <div className={styles.eventsRegion} aria-live="polite">
+                <div
+                    className={styles.eventsRegion}
+                    aria-live="polite"
+                    aria-busy={showLoader}
+                >
                     <div
                         key={selectedDate.format(TIME_FORMATS.DateIso)}
                         className={styles.events}
                     >
-                        {events.length > 0 ? (
-                            events.map((event) => (
-                                <EventCard
-                                    key={event.id}
-                                    className={styles.eventCard}
-                                    title={event.title}
-                                    text={event.text}
-                                    authorName={event.authorName}
-                                    tags={event.tags}
-                                    country={event.country}
-                                    cover={event.cover}
-                                    url={event.url}
-                                />
-                            ))
-                        ) : (
+                        {showLoader ? (
+                            <Loading />
+                        ) : showEmpty ? (
                             <p className={styles.empty}>
                                 {ROCK_DATES_LABELS.emptyDay}
                             </p>
+                        ) : (
+                            <EventCard
+                                data={events}
+                                className={styles.eventCard}
+                            />
                         )}
                     </div>
                 </div>

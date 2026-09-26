@@ -1,14 +1,4 @@
-import dayjs from 'dayjs';
 import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
-import { TIME_FORMATS } from '@/configs/timeFormats.config';
-
-export const ROCK_DATES_LEAP_YEAR_ANCHOR = '2024-01-01';
-
-export const ROCK_DATES_LEAP_DAY_KEY = dayjs('2024-02-29').format(
-    TIME_FORMATS.MonthDay,
-);
-
-export const ROCK_DATES_FEBRUARY_MONTH_INDEX = 1;
 
 export const ROCK_DATES_MONTH_SLIDES_PER_VIEW = 1;
 
@@ -38,6 +28,5 @@ export const ROCK_DATES_LABELS = {
     nextMonth: 'Следующий месяц',
     prevDay: 'Предыдущий день',
     nextDay: 'Следующий день',
-    noEvents: 'нет событий',
     emptyDay: 'В этот день событий нет',
 } as const;
