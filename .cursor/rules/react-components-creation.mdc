@@ -36,6 +36,23 @@ alwaysApply: false
 - **Helpers** рядом с компонентом — PascalCase + `.helpers.ts`: `ModalSheet.helpers.ts`.
 - **Config** — PascalCase + `.config.ts` / `.config.tsx` (JSX в конфиге): `AdminMenu.config.tsx`.
     - Константы внутри — `UPPER_SNAKE_CASE`: `MENU_ITEMS`.
+    - Именованные константы модуля (подписи, брейкпоинты, якоря, индексы) живут здесь, не в `.component.tsx`, `.helpers.ts`, `.mock.ts`.
+    - Числа для `no-magic-numbers` — по-прежнему `@/configs/magicNumbers.config`. Конфиг компонента собирает из них объекты.
+    - Одноразовое выражение внутри функции не выносить — `code-style.mdc`.
+
+```ts
+    // ❌ MonthsSlider.component.tsx
+    const MONTH_BREAKPOINTS = {
+        [MAGIC_NUMBERS.BreakpointSm + 1]: { slidesPerView: 3 },
+    };
+
+    // ✅ RockDatesSection.config.ts
+    export const ROCK_DATES_MONTH_BREAKPOINTS = {
+        [MAGIC_NUMBERS.BreakpointSm + 1]: {
+            slidesPerView: MAGIC_NUMBERS.RockDatesMonthsPerView,
+        },
+    };
+```
 - **Hooks** (в `src/hooks/`) — camelCase **без** префикса `use` в имени файла: `outsideClick.hook.ts`, `breakpoint/breakpoint.hook.ts`.
     - Экспорт: `export const useOutsideClick` / `export const useBreakpoint` (named, не default).
     - Рядом: `breakpoint.config.ts`, при необходимости `*.types.ts`.

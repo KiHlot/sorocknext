@@ -42,7 +42,7 @@ src/
 - `*.component.tsx` — обязателен
 - `*.module.scss` — стили
 - `*.types.ts` — пропсы и локальные типы
-- `*.config.ts` / `*.config.tsx` — схемы, константы, пункты меню
+- `*.config.ts` / `*.config.tsx` — схемы, константы, пункты меню. Именованные константы модуля лежат здесь, не в `*.component.tsx` / `*.helpers.ts` / `*.mock.ts`
 - `*.helpers.ts` — локальные хелперы
 
 Именование файлов: PascalCase для компонентов (`Button.component.tsx`), camelCase для хелперов и хуков (`fetchApi.ts`, `outsideClick.hook.ts`). ESLint: `unicorn/filename-case`.

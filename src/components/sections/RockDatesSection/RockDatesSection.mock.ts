@@ -2,9 +2,8 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import { TIME_FORMATS } from '@/configs/timeFormats.config';
+import { ROCK_DATES_LEAP_YEAR_ANCHOR } from '@/components/sections/RockDatesSection/RockDatesSection.config';
 import { RockDateEventIF } from '@/components/sections/RockDatesSection/RockDatesSection.types';
-
-const LEAP_YEAR_ANCHOR = '2024-01-01';
 
 const createDayEvents = (
     monthDay: string,
@@ -30,7 +29,10 @@ const createDayEvents = (
 export const ROCK_DATE_EVENTS: RockDateEventIF[] = Array.from(
     { length: MAGIC_NUMBERS.MonthsInYear },
     (_, monthIndex) => {
-        const monthStart = dayjs(LEAP_YEAR_ANCHOR).add(monthIndex, 'month');
+        const monthStart = dayjs(ROCK_DATES_LEAP_YEAR_ANCHOR).add(
+            monthIndex,
+            'month',
+        );
         const daysInMonth = monthStart.daysInMonth();
 
         return Array.from({ length: daysInMonth }, (_, dayIndex) => {

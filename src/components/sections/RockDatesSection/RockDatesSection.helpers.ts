@@ -2,16 +2,17 @@ import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/ru';
 import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import { TIME_FORMATS } from '@/configs/timeFormats.config';
-import { ROCK_DATES_LABELS } from '@/components/sections/RockDatesSection/RockDatesSection.config';
+import {
+    ROCK_DATES_FEBRUARY_MONTH_INDEX,
+    ROCK_DATES_LABELS,
+    ROCK_DATES_LEAP_DAY_KEY,
+} from '@/components/sections/RockDatesSection/RockDatesSection.config';
 import { ROCK_DATE_EVENTS } from '@/components/sections/RockDatesSection/RockDatesSection.mock';
 import {
     RockDateDayIF,
     RockDateEventIF,
     RockDateMonthIF,
 } from '@/components/sections/RockDatesSection/RockDatesSection.types';
-
-const FEBRUARY_MONTH_INDEX = 1;
-const LEAP_DAY_KEY = dayjs('2024-02-29').format(TIME_FORMATS.MonthDay);
 
 const eventsByMonthDay: Record<string, RockDateEventIF[]> = {};
 
@@ -32,7 +33,7 @@ export const getEventsForDate = (date: Dayjs): RockDateEventIF[] => {
     const ownEvents = eventsByMonthDay[monthDay] ?? [];
     // В невисокосном году 29 февраля нет: эти события показываем 28-го.
     const shouldTransferLeapDay =
-        date.month() === FEBRUARY_MONTH_INDEX &&
+        date.month() === ROCK_DATES_FEBRUARY_MONTH_INDEX &&
         date.date() === MAGIC_NUMBERS.FebruaryFallbackDay &&
         !yearHasLeapDay(date.year());
 
@@ -40,7 +41,7 @@ export const getEventsForDate = (date: Dayjs): RockDateEventIF[] => {
         return ownEvents;
     }
 
-    const transferredEvents = eventsByMonthDay[LEAP_DAY_KEY] ?? [];
+    const transferredEvents = eventsByMonthDay[ROCK_DATES_LEAP_DAY_KEY] ?? [];
 
     return [...ownEvents, ...transferredEvents];
 };

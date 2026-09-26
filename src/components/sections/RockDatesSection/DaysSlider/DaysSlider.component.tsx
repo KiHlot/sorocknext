@@ -7,17 +7,11 @@ import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import Button from '@/components/controls/Button/Button.component';
 import styles from '@/components/sections/RockDatesSection/DaysSlider/DaysSlider.module.scss';
 import { DaysSliderPropsIF } from '@/components/sections/RockDatesSection/DaysSlider/DaysSlider.types';
-import { ROCK_DATES_LABELS } from '@/components/sections/RockDatesSection/RockDatesSection.config';
+import {
+    ROCK_DATES_DAY_BREAKPOINTS,
+    ROCK_DATES_LABELS,
+} from '@/components/sections/RockDatesSection/RockDatesSection.config';
 import SliderArrow from '@/components/sections/RockDatesSection/SliderArrow/SliderArrow.component';
-
-const DAY_BREAKPOINTS = {
-    [MAGIC_NUMBERS.BreakpointSm + 1]: {
-        slidesPerView: MAGIC_NUMBERS.RockDatesDaysPerViewMd,
-    },
-    [MAGIC_NUMBERS.BreakpointMd + 1]: {
-        slidesPerView: MAGIC_NUMBERS.RockDatesDaysPerView,
-    },
-};
 
 const DaysSlider: FC<DaysSliderPropsIF> = ({
     days,
@@ -78,7 +72,7 @@ const DaysSlider: FC<DaysSliderPropsIF> = ({
             <Swiper
                 initialSlide={activeDayIndex}
                 slidesPerView={MAGIC_NUMBERS.RockDatesDaysPerViewSm}
-                breakpoints={DAY_BREAKPOINTS}
+                breakpoints={ROCK_DATES_DAY_BREAKPOINTS}
                 centeredSlides
                 loop
                 slideToClickedSlide

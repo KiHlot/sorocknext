@@ -1,3 +1,32 @@
+import dayjs from 'dayjs';
+import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
+import { TIME_FORMATS } from '@/configs/timeFormats.config';
+
+export const ROCK_DATES_LEAP_YEAR_ANCHOR = '2024-01-01';
+
+export const ROCK_DATES_LEAP_DAY_KEY = dayjs('2024-02-29').format(
+    TIME_FORMATS.MonthDay,
+);
+
+export const ROCK_DATES_FEBRUARY_MONTH_INDEX = 1;
+
+export const ROCK_DATES_MONTH_SLIDES_PER_VIEW = 1;
+
+export const ROCK_DATES_MONTH_BREAKPOINTS = {
+    [MAGIC_NUMBERS.BreakpointSm + 1]: {
+        slidesPerView: MAGIC_NUMBERS.RockDatesMonthsPerView,
+    },
+};
+
+export const ROCK_DATES_DAY_BREAKPOINTS = {
+    [MAGIC_NUMBERS.BreakpointSm + 1]: {
+        slidesPerView: MAGIC_NUMBERS.RockDatesDaysPerViewMd,
+    },
+    [MAGIC_NUMBERS.BreakpointMd + 1]: {
+        slidesPerView: MAGIC_NUMBERS.RockDatesDaysPerView,
+    },
+};
+
 export const ROCK_DATES_LABELS = {
     section: 'Рок-даты',
     months: 'Месяцы',

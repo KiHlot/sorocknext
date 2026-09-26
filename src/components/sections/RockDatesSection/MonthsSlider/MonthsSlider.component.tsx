@@ -4,19 +4,16 @@ import { FC, MouseEvent, useRef } from 'react';
 import dayjs from 'dayjs';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 import Button from '@/components/controls/Button/Button.component';
 import styles from '@/components/sections/RockDatesSection/MonthsSlider/MonthsSlider.module.scss';
 import { MonthsSliderPropsIF } from '@/components/sections/RockDatesSection/MonthsSlider/MonthsSlider.types';
-import { ROCK_DATES_LABELS } from '@/components/sections/RockDatesSection/RockDatesSection.config';
+import {
+    ROCK_DATES_LABELS,
+    ROCK_DATES_MONTH_BREAKPOINTS,
+    ROCK_DATES_MONTH_SLIDES_PER_VIEW,
+} from '@/components/sections/RockDatesSection/RockDatesSection.config';
 import { getYearMonths } from '@/components/sections/RockDatesSection/RockDatesSection.helpers';
 import SliderArrow from '@/components/sections/RockDatesSection/SliderArrow/SliderArrow.component';
-
-const MONTH_BREAKPOINTS = {
-    [MAGIC_NUMBERS.BreakpointSm + 1]: {
-        slidesPerView: MAGIC_NUMBERS.RockDatesMonthsPerView,
-    },
-};
 
 const MonthsSlider: FC<MonthsSliderPropsIF> = ({
     activeMonthIndex,
@@ -76,8 +73,8 @@ const MonthsSlider: FC<MonthsSliderPropsIF> = ({
             />
             <Swiper
                 initialSlide={activeMonthIndex}
-                slidesPerView={1}
-                breakpoints={MONTH_BREAKPOINTS}
+                slidesPerView={ROCK_DATES_MONTH_SLIDES_PER_VIEW}
+                breakpoints={ROCK_DATES_MONTH_BREAKPOINTS}
                 centeredSlides
                 loop
                 slideToClickedSlide
