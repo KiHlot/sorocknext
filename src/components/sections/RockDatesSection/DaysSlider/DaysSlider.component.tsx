@@ -94,7 +94,12 @@ const DaysSlider: FC<DaysSliderPropsIF> = ({
                                 dataTest={`rock_dates_day_${day.dateKey}`}
                             >
                                 <span className={styles.weekday}>
-                                    {day.weekdayLabel}
+                                    <span className={styles.weekdayFull}>
+                                        {day.weekdayLabel}
+                                    </span>
+                                    <span className={styles.weekdayShort}>
+                                        {day.weekdayShortLabel}
+                                    </span>
                                 </span>
                                 <span
                                     className={`${styles.dayLabel} ${day.hasEvents ? '' : styles.dayLabelMuted}`}

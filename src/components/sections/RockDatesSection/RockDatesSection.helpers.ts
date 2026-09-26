@@ -82,6 +82,7 @@ export const getMonthDays = (monthDate: Dayjs): RockDateDayIF[] => {
         return {
             dateKey: date.format(TIME_FORMATS.DateIso),
             weekdayLabel: date.format(TIME_FORMATS.WeekdayName),
+            weekdayShortLabel: date.format(TIME_FORMATS.WeekdayMin),
             dayLabel: hasEvents
                 ? date.format(TIME_FORMATS.DayOfMonth)
                 : ROCK_DATES_LABELS.noEvents,

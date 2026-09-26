@@ -14,9 +14,9 @@ const Section: FC<SectionPropsIF> = ({
         itemType="https://schema.org/WebPageElement"
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
-        className={`${styles.sectionWrapper} ${className}`}
+        className={`${styles.sectionWrapper} ${className} ${title ? 'flcol gapBlock' : ''}`}
     >
-        {title && <h2>{title}</h2>}
+        {title && <h2 className={styles.sectionTitle}>{title}</h2>}
         {children}
     </section>
 );

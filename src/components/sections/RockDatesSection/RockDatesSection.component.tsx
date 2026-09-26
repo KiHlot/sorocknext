@@ -50,8 +50,8 @@ const RockDatesSection: FC = () => {
 
     return (
         <Section
-            className={styles.section}
             ariaLabel={ROCK_DATES_LABELS.section}
+            title={ROCK_DATES_LABELS.section}
         >
             <div className="flcol gapBlock">
                 <MonthsSlider

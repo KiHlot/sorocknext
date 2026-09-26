@@ -19,6 +19,7 @@ export interface RockDateMonthIF {
 export interface RockDateDayIF {
     dateKey: string;
     weekdayLabel: string;
+    weekdayShortLabel: string;
     dayLabel: string;
     monthLabel: string;
     hasEvents: boolean;

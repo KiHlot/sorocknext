@@ -8,6 +8,7 @@ export const TIME_FORMATS: Record<string, string> = {
     MonthName: 'MMMM',
     MonthShort: 'MMM',
     WeekdayName: 'dddd',
+    WeekdayMin: 'dd',
     DayOfMonth: 'D',
     DayWithMonth: 'D MMMM',
 } as const;

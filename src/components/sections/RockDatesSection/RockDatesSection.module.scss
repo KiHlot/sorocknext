@@ -1,8 +1,9 @@
 @use '@/styles/mixins' as *;
 
-.section {
-    width: 100%;
-    background-color: var(--bgColorDark);
+.sectionTitle{
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--accent);
 }
 
 .eventsRegion {
