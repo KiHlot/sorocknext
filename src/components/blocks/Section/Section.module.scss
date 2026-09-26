@@ -19,5 +19,21 @@
         font-size: 28px;
         font-weight: 600;
         color: var(--accent);
+        
+        @include media(xl) {
+            font-size: 26px;
+        }
+        
+        @include media(lg) {
+            font-size: 24px;
+        }
+        
+        @include media(md) {
+            font-size: 22px;
+        }
+        
+        @include media(sm) {
+            font-size: 20px;
+        }
     }
 }

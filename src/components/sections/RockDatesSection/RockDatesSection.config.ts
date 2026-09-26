@@ -14,6 +14,9 @@ export const ROCK_DATES_MONTH_SLIDES_PER_VIEW = 1;
 
 export const ROCK_DATES_MONTH_BREAKPOINTS = {
     [MAGIC_NUMBERS.BreakpointSm + 1]: {
+        slidesPerView: MAGIC_NUMBERS.RockDatesMonthsPerViewXxl,
+    },
+    [MAGIC_NUMBERS.BreakpointXxl + 1]: {
         slidesPerView: MAGIC_NUMBERS.RockDatesMonthsPerView,
     },
 };

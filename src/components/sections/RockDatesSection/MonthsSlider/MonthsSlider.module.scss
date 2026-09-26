@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as *;
+
 .slider {
     display: flex;
     flex-direction: row;
@@ -15,17 +17,34 @@
     -webkit-mask-image: linear-gradient(
         to right,
         transparent,
-        black 34%,
-        black 66%,
+        black 8%,
+        black 92%,
         transparent
     );
     mask-image: linear-gradient(
         to right,
         transparent,
-        black 34%,
-        black 66%,
+        black 8%,
+        black 92%,
         transparent
     );
+
+    @include media(xxl) {
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 34%,
+            black 66%,
+            transparent
+        );
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 34%,
+            black 66%,
+            transparent
+        );
+    }
 }
 
 .slide {
