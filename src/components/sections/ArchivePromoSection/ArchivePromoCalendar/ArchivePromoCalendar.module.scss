@@ -1,0 +1,145 @@
+@use '@/styles/mixins' as *;
+
+.calendar {
+    min-width: 0;
+}
+
+.weekdays,
+.days {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.weekday,
+.cell {
+    width: calc(100% / 7);
+}
+
+.weekday {
+    padding: 0 2px 8px;
+    color: var(--colorSecondary);
+    font-size: 12px;
+    text-align: center;
+}
+
+.cell {
+    display: flex;
+    padding: 2px;
+}
+
+.dayButton,
+.outsideDay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    width: 100%;
+    min-height: 52px;
+    padding: 6px 2px;
+    border-radius: var(--borderRadius);
+    background-color: var(--bgColorDark);
+}
+
+.outsideDay {
+    opacity: var(--disabledOpacity);
+}
+
+.dayButton {
+    border: 1px solid transparent;
+    color: var(--textColor);
+
+    &.selected {
+        border-color: var(--white);
+    }
+
+    &:hover,
+    &:focus-visible {
+        opacity: var(--hoverOpacity);
+    }
+}
+
+.dayLabel {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.marks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+    width: 100%;
+    min-height: 18px;
+}
+
+.bar {
+    width: 16px;
+    height: 2px;
+    border-radius: var(--borderRadius);
+}
+
+.primary {
+    background-color: var(--colorPrimary);
+}
+
+.accent {
+    background-color: var(--accent);
+}
+
+.text {
+    background-color: var(--textColor);
+}
+
+.secondary {
+    background-color: var(--colorSecondary);
+}
+
+.correct {
+    background-color: var(--correct);
+}
+
+.overflowMark {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background-color: var(--accent);
+}
+
+.sheetBody {
+    width: 100%;
+}
+
+.sheet {
+    width: 100%;
+}
+
+.sheetTitle {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.sheetList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: var(--gapBlock);
+    width: 100%;
+}
+
+.sheetCard {
+    width: calc((100% - 2 * var(--gapBlock)) / 3);
+    min-width: 0;
+
+    @include media(xxl) {
+        width: calc((100% - var(--gapBlock)) / 2);
+    }
+}
+
+.empty {
+    color: var(--textColor);
+}

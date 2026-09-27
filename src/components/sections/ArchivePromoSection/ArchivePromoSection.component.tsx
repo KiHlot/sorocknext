@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import Section from '@/components/blocks/Section/Section.component';
+import ArchivePromoCalendar from '@/components/sections/ArchivePromoSection/ArchivePromoCalendar/ArchivePromoCalendar.component';
+import { ROCK_DATA_ARCHIVE_PATH } from '@/components/sections/ArchivePromoSection/ArchivePromoCalendar/ArchivePromoCalendar.config';
 import ArchivePromoGallery from '@/components/sections/ArchivePromoSection/ArchivePromoGallery/ArchivePromoGallery.component';
 import ArchivePromoIntro from '@/components/sections/ArchivePromoSection/ArchivePromoIntro/ArchivePromoIntro.component';
 import styles from '@/components/sections/ArchivePromoSection/ArchivePromoSection.module.scss';
@@ -24,11 +26,15 @@ const ArchivePromoSection: FC<ArchivePromoSectionPropsIF> = ({
             seoData={seoData}
             className={styles.archivePromoIntro}
         />
-        {!!archivePromoData?.length && (
-            <ArchivePromoGallery
-                archivePromoData={archivePromoData}
-                className={styles.archivePromoGallery}
-            />
+        {pathname === ROCK_DATA_ARCHIVE_PATH ? (
+            <ArchivePromoCalendar className={styles.archivePromoGallery} />
+        ) : (
+            !!archivePromoData?.length && (
+                <ArchivePromoGallery
+                    archivePromoData={archivePromoData}
+                    className={styles.archivePromoGallery}
+                />
+            )
         )}
     </Section>
 );

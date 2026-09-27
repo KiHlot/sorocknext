@@ -7,6 +7,7 @@ import Section from '@/components/blocks/Section/Section.component';
 import PostArchiveCard from '@/components/cards/PostArchiveCard/PostArchiveCard.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 import Pagination from '@/components/interactive/Pagination/Pagination.component';
+import { ROCK_DATA_ARCHIVE_PATH } from '@/components/sections/ArchivePromoSection/ArchivePromoCalendar/ArchivePromoCalendar.config';
 import ArchivePromoSection from '@/components/sections/ArchivePromoSection/ArchivePromoSection.component';
 import styles from '@/templates/ArchiveTPL/ArchiveTPL.module.scss';
 import { ArchiveTPLPropsIF } from '@/templates/ArchiveTPL/ArchiveTPL.types';
@@ -20,7 +21,10 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
     archivePromoData = null,
 }) => {
     const titleId = `${pathname.replaceAll('/', '') || 'archive'}-title`;
-    const hasPromo = !!seoData || !!archivePromoData?.length;
+    const hasPromo =
+        !!seoData ||
+        !!archivePromoData?.length ||
+        pathname === ROCK_DATA_ARCHIVE_PATH;
 
     return (
         <>

@@ -95,6 +95,12 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |           Section.types.ts
 |   |           
 |   +---cards
+|   |   +---EventCard
+|   |   |       EventCard.component.tsx
+|   |   |       EventCard.helpers.ts
+|   |   |       EventCard.module.scss
+|   |   |       EventCard.types.ts
+|   |   |       
 |   |   +---PostArchiveCard
 |   |   |       PostArchiveCard.component.tsx
 |   |   |       PostArchiveCard.module.scss
@@ -221,6 +227,11 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       ButtonsGroup.module.scss
 |   |   |       ButtonsGroup.types.ts
 |   |   |       
+|   |   +---CopyLinkButton
+|   |   |       CopyLinkButton.component.tsx
+|   |   |       CopyLinkButton.module.scss
+|   |   |       CopyLinkButton.types.ts
+|   |   |       
 |   |   +---DialogModal
 |   |   |       DialogModal.component.tsx
 |   |   |       DialogModal.module.scss
@@ -258,6 +269,11 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       Pagination.config.ts
 |   |   |       Pagination.module.scss
 |   |   |       Pagination.types.ts
+|   |   |       
+|   |   +---ReviewButton
+|   |   |       ReviewButton.component.tsx
+|   |   |       ReviewButton.module.scss
+|   |   |       ReviewButton.types.ts
 |   |   |       
 |   |   \---Tabs
 |   |           Tabs.component.tsx
@@ -366,10 +382,6 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |   |       DaysSlider.types.ts
 |   |   |   |       
 |   |   |   +---EventCard
-|   |   |   |       EventCard.component.tsx
-|   |   |   |       EventCard.module.scss
-|   |   |   |       EventCard.types.ts
-|   |   |   |       
 |   |   |   +---MonthsSlider
 |   |   |   |       MonthsSlider.component.tsx
 |   |   |   |       MonthsSlider.module.scss

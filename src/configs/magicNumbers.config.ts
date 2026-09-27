@@ -14,4 +14,11 @@ export const MAGIC_NUMBERS = {
     BreakpointSm: 576,
     BreakpointMd: 768,
     BreakpointXxl: 1500,
+    DaysInWeek: 7,
+    MondayWeekdayOffset: 6,
+    CalendarEventBarLimit: 5,
+    FebruaryMonthIndex: 1,
+    FebruaryLastCommonDay: 28,
+    LeapDayOfMonth: 29,
+    SampleLeapYear: 2024,
 } as const;
