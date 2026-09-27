@@ -7,6 +7,7 @@ import { TIME_FORMATS } from '@/configs/timeFormats.config';
 import { archiveApi } from '@/api/archive/archive';
 import Section from '@/components/blocks/Section/Section.component';
 import EventCard from '@/components/cards/EventCard/EventCard.component';
+import Button from '@/components/controls/Button/Button.component';
 import Loading from '@/components/elems/Loading/Loading.component';
 import DaysSlider from '@/components/sections/RockDatesSection/DaysSlider/DaysSlider.component';
 import MonthsSlider from '@/components/sections/RockDatesSection/MonthsSlider/MonthsSlider.component';
@@ -23,6 +24,7 @@ const RockDatesSection: FC<RockDatesSectionPropsIF> = ({ data }) => {
         dayjs().startOf('day'),
     );
     const [queryDate, setQueryDate] = useState<Dayjs | null>(null);
+    const [expandedDateKey, setExpandedDateKey] = useState<string | null>(null);
     const isToday = selectedDate.isSame(dayjs(), 'day');
     const isQueryReady = queryDate?.isSame(selectedDate, 'day') ?? false;
     const monthKey = selectedDate.format(TIME_FORMATS.YearMonth);
@@ -35,8 +37,18 @@ const RockDatesSection: FC<RockDatesSectionPropsIF> = ({ data }) => {
         { skip: isToday || !isQueryReady },
     );
     const events = isToday ? data : calendarData;
+    const selectedDateKey = selectedDate.format(TIME_FORMATS.DateIso);
+    const isListExpanded = expandedDateKey === selectedDateKey;
+    const hasMoreEvents =
+        (events?.length ?? 0) > MAGIC_NUMBERS.RockDatesPreviewCount;
+    const visibleEvents =
+        hasMoreEvents && !isListExpanded
+            ? events?.slice(0, MAGIC_NUMBERS.RockDatesPreviewCount)
+            : events;
     const showLoader = !isToday && (!isQueryReady || isFetching);
     const showEmpty = !showLoader && !events?.length;
+    const showAllButton =
+        !showLoader && !showEmpty && hasMoreEvents && !isListExpanded;
 
     useEffect(() => {
         if (selectedDate.isSame(dayjs(), 'day')) {
@@ -68,12 +80,16 @@ const RockDatesSection: FC<RockDatesSectionPropsIF> = ({ data }) => {
         });
     };
 
+    const handleShowAll = (): void => {
+        setExpandedDateKey(selectedDateKey);
+    };
+
     const handleSelectDay = (dayIndex: number): void => {
         setSelectedDate((current) => {
-            const nextDate = getMonthStart(
-                current.year(),
-                current.month(),
-            ).add(dayIndex, 'day');
+            const nextDate = getMonthStart(current.year(), current.month()).add(
+                dayIndex,
+                'day',
+            );
 
             if (nextDate.isSame(current, 'day')) {
                 return current;
@@ -104,10 +120,7 @@ const RockDatesSection: FC<RockDatesSectionPropsIF> = ({ data }) => {
                     aria-live="polite"
                     aria-busy={showLoader}
                 >
-                    <div
-                        key={selectedDate.format(TIME_FORMATS.DateIso)}
-                        className={styles.events}
-                    >
+                    <div key={selectedDateKey} className={styles.events}>
                         {showLoader ? (
                             <Loading />
                         ) : showEmpty ? (
@@ -116,11 +129,23 @@ const RockDatesSection: FC<RockDatesSectionPropsIF> = ({ data }) => {
                             </p>
                         ) : (
                             <EventCard
-                                data={events}
+                                data={visibleEvents}
                                 className={styles.eventCard}
                             />
                         )}
                     </div>
+                    {showAllButton && (
+                        <div className={styles.showAll}>
+                            <Button
+                                variant="secondary"
+                                className={styles.showAllButton}
+                                clickHandler={handleShowAll}
+                                dataTest="rock_dates_show_all"
+                            >
+                                {ROCK_DATES_LABELS.showAll}
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </div>
         </Section>

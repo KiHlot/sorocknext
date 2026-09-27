@@ -29,4 +29,5 @@ export const ROCK_DATES_LABELS = {
     prevDay: 'Предыдущий день',
     nextDay: 'Следующий день',
     emptyDay: 'В этот день событий нет',
+    showAll: 'Показать все',
 } as const;

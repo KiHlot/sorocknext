@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { toExcerpt } from '@/components/cards/EventCard/EventCard.helpers';
+import { formatDate } from '@/helpers/utils';
 import styles from '@/components/cards/EventCard/EventCard.module.scss';
 import { EventCardPropsIF } from '@/components/cards/EventCard/EventCard.types';
 import Button from '@/components/controls/Button/Button.component';
@@ -15,6 +16,7 @@ const EventCard: FC<EventCardPropsIF> = ({ data, className = '' }) => {
         <>
             {data.map((event, index) => {
                 const excerpt = toExcerpt(event.content);
+                const eventDateLabel = formatDate(event.eventDate);
 
                 return (
                     <article
@@ -35,6 +37,14 @@ const EventCard: FC<EventCardPropsIF> = ({ data, className = '' }) => {
                                 <h2 className={styles.title}>
                                     {event.titleH1}
                                 </h2>
+                                {eventDateLabel && (
+                                    <time
+                                        className={styles.date}
+                                        dateTime={event.eventDate}
+                                    >
+                                        {eventDateLabel}
+                                    </time>
+                                )}
                                 <p className={styles.author}>
                                     {event.author.fullName}
                                 </p>

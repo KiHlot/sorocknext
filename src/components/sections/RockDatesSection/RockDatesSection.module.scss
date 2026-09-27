@@ -1,12 +1,15 @@
 @use '@/styles/mixins' as *;
 
-.sectionTitle{
+.sectionTitle {
     font-size: 28px;
     font-weight: 600;
     color: var(--accent);
 }
 
 .eventsRegion {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gapBlock);
     min-width: 0;
 }
 
@@ -39,6 +42,15 @@
 
 .empty {
     color: var(--textColor);
+}
+
+.showAll {
+    display: flex;
+    justify-content: center;
+}
+
+.showAllButton {
+    width: fit-content;
 }
 
 @keyframes fadeIn {

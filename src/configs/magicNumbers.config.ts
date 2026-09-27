@@ -10,6 +10,7 @@ export const MAGIC_NUMBERS = {
     RockDatesDaysPerView: 7,
     RockDatesDaysPerViewMd: 5,
     RockDatesDaysPerViewSm: 3,
+    RockDatesPreviewCount: 3,
     BreakpointSm: 576,
     BreakpointMd: 768,
     BreakpointXxl: 1500,
