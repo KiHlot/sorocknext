@@ -1,6 +1,7 @@
 import { PaginationInfoIF } from '@/types/common';
 import { EventCardModelIF } from '@/components/cards/EventCard/EventCard.types';
 import { PostArchiveCardModelIF } from '@/components/cards/PostArchiveCard/PostArchiveCard.types';
+import { PostShortCardModelIF } from '@/components/cards/PostShortCard/PostShortCard.types';
 import { ArchiveSeoDataIF } from '@/components/sections/ArchivePromoSection/ArchivePromoSection.types';
 
 export interface FetchArchiveParamsIF {
@@ -28,3 +29,9 @@ export interface FetchCalendarParamsIF {
 }
 
 export type FetchCalendarIF = EventCardModelIF[] | null;
+
+export interface FetchRockCalendarParamsIF {
+    month: number;
+}
+
+export type FetchRockCalendarIF = Record<string, PostShortCardModelIF[]> | null;

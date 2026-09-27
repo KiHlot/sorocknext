@@ -24,7 +24,7 @@ const PostShortCard: FC<PostShortCardPropsIF> = ({
         >
             <div className={styles.thumbHeader}>
                 <span className={styles.date}>
-                    {formatDate(postData.postDate)}
+                    {formatDate(postData.eventDate || postData.postDate)}
                 </span>
                 {postData.categories && (
                     <div className={styles.categories}>

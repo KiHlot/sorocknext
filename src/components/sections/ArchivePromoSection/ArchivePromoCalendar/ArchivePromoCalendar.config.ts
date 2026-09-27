@@ -11,4 +11,9 @@ export const EVENT_BAR_COLOR_KEYS = [
     'text',
     'secondary',
     'correct',
+    'primary',
+    'accent',
+    'text',
+    'secondary',
+    'correct',
 ] as const;

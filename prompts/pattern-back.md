@@ -700,6 +700,14 @@ class Some_Controller extends WP_REST_Controller
   Небывалая дата — `data: null`. 29 февраля допустим. В невисокосном году
   записи 29 февраля отдаются вместе с `month=2&day=28`, потому что фронт
   `day=29` в такой год не запрашивает.
+- `/rock-calendar` — календарь архива `/rock-data` на месяц, без года.
+  Query: `month` (1–12). `data` — объект, ключ `MM-DD`, значение — массив
+  `PostShortCard` (`thumbnail`, `title`, `url`, `author`, `categories`,
+  `postDate`, `eventDate` в формате `YYYY-MM-DD`, `year`). На карточке
+  в модалке дня показывается `eventDate`. Дней без постов в объекте нет. Месяц вне 1–12 или
+  пустая выборка — `data: null`. Группировка по ACF `event_date` (`Ymd`),
+  год игнорируется. `02-28` и `02-29` — отдельные ключи. Внутри дня — от
+  новых записей к старым.
 - `/metadata/{post_type}` — legacy SEO поста. Query: `slug`; новый фронт
   использует единый `/metadata`.
 - `/archive` не принимает `pagesCount` от клиента. `data` содержит:

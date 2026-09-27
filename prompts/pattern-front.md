@@ -256,6 +256,7 @@ export const fetchApi = async <DataIF = null>(
   На архивной странице лента и промо грузятся через `Promise.allSettled`
 - `fetchArchiveSlugs(postType)` — `/archive/get-slugs?postType=...`
 - клиентский `archiveApi.useGetCalendarQuery({ month, day })` — `GET /archive/calendar?month=1&day=23` (`month` 1–12). Серверный `fetchApi` этот роут не вызывает. Сегодняшний день на главной берётся из `calendarDefaultData`, запрос уходит только при смене даты
+- клиентский `archiveApi.useGetRockCalendarQuery({ month })` — `GET /archive/rock-calendar?month=9`. Календарь архива `/rock-data`: `data` — `MM-DD` → `PostShortCardModelIF[]` или `null`. Запрос на текущий месяц при открытии и при смене месяца. Клик по дню отдельный запрос не шлёт. Дата на карточке — `eventDate`. На дне до 10 полосок в две колонки, больше 10 — акцентный квадрат
 - `fetchPost({ postType, slug })` (`@/api/post/endpoints`) — `/post/{slug}?postType=...`;
   нет записи — `null` (`notfound`), страница вызывает `notFound()`
 - `fetchSearchData` / `fetchSearchConfig` — `/search`, `/search/get-search-config`

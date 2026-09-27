@@ -1,6 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { ResponseIF } from '@/types/api';
-import { FetchCalendarIF, FetchCalendarParamsIF } from '@/api/archive/types';
+import {
+    FetchCalendarIF,
+    FetchCalendarParamsIF,
+    FetchRockCalendarIF,
+    FetchRockCalendarParamsIF,
+} from '@/api/archive/types';
 import { fetchRestApiQuery } from '@/helpers/fetchRestApi/fetchRestApi';
 
 export const archiveApi = createApi({
@@ -13,6 +18,18 @@ export const archiveApi = createApi({
                 params: { month, day },
             }),
             transformResponse(response: ResponseIF<FetchCalendarIF>) {
+                return response?.data ?? null;
+            },
+        }),
+        getRockCalendar: builder.query<
+            FetchRockCalendarIF,
+            FetchRockCalendarParamsIF
+        >({
+            query: ({ month }) => ({
+                url: '/rock-calendar',
+                params: { month },
+            }),
+            transformResponse(response: ResponseIF<FetchRockCalendarIF>) {
                 return response?.data ?? null;
             },
         }),

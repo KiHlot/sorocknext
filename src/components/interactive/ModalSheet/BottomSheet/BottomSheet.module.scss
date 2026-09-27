@@ -36,7 +36,7 @@
 
 .bottomSheetBody {
     padding: 10px 20px calc(24px + env(safe-area-inset-bottom));
-    color: var(--bgColorSecondary);
+    color: var(--textColor);
 }
 
 @keyframes shakeDown {

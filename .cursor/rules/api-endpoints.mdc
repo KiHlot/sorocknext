@@ -25,6 +25,7 @@ alwaysApply: false
 | `/archive/promo-data` | Промо архива, query `postType`: `seoData` + `archivePromoData` |
 | `/archive/get-slugs` | Слаги для `generateStaticParams`, query `postType` |
 | `/archive/calendar` | События дня, query `month` (1–12) и `day` (1–31). `data`: `EventCardModelIF[]` или `null`. Тот же массив в `calendarDefaultData` у `/page/home-page-data` (сегодня) |
+| `/archive/rock-calendar` | Календарь архива рок-дат на месяц. Query `month` (1–12). `data`: объект `MM-DD` → `PostShortCardModelIF[]` или `null`. `02-29` — отдельный ключ |
 | `/archive/metadata/{post_type}` | Legacy SEO поста, query `slug`; фронт использует `/metadata` |
 | `/post/{slug}` | Одна запись, query обязательный `postType`; нет записи — `notfound` |
 | `/page/home-page-data` | Данные главной: `lastNewsPromoData` и `calendarDefaultData` (события сегодня) |

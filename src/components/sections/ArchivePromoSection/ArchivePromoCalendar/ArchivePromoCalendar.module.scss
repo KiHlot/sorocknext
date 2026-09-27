@@ -12,6 +12,10 @@
     width: 100%;
 }
 
+.monthLoading {
+    flex-basis: 100%;
+}
+
 .weekday,
 .cell {
     width: calc(100% / 7);
@@ -68,18 +72,29 @@
 
 .marks {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
     gap: 2px;
     width: 100%;
     min-height: 18px;
+}
+
+.markColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 2px;
 }
 
 .bar {
     width: 16px;
     height: 2px;
     border-radius: var(--borderRadius);
+
+    @include media(xs) {
+        width: 8px;
+    }
 }
 
 .primary {
@@ -137,6 +152,10 @@
 
     @include media(xxl) {
         width: calc((100% - var(--gapBlock)) / 2);
+    }
+
+    @include media(sm) {
+        width: 100%;
     }
 }
 
