@@ -4,11 +4,17 @@ import {
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import PostContentSection from '@/components/sections/PostContentSection/PostContentSection.component';
+import PostVideoSection from '@/components/sections/PostVideoSection/PostVideoSection.component';
 import SinglePostPromoSection from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.component';
 import { PostTPLPropsIF } from '@/templates/PostTPL/PostTPL.types';
 
 const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname }) => {
     const { postBase } = data;
+    const videos = (postBase.video ?? []).filter((item) =>
+        Boolean(item.videoCode?.trim()),
+    );
+
+    console.log('postBase', postBase?.video?.[0]);
 
     return (
         <>
@@ -22,6 +28,9 @@ const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname }) => {
                         postBase={postBase}
                         pathname={pathname}
                     />
+                    {videos.length > 0 ? (
+                        <PostVideoSection videos={videos} />
+                    ) : null}
                     <PostContentSection content={postBase.main.content} />
                 </article>
             </Content>

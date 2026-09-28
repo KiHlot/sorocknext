@@ -10,6 +10,18 @@ export interface AuthorIF {
     url?: string;
 }
 
+export interface VideoInfoIF {
+    title: string;
+    artists: string[] | null;
+    year: number | null;
+    coverImg: string;
+}
+
+export interface VideoIF {
+    videoCode: string;
+    videoInfo: VideoInfoIF;
+}
+
 export interface PostBaseIF {
     author: AuthorIF;
     innerImg: string | null;
@@ -27,6 +39,7 @@ export interface PostBaseIF {
         tags: OptionIF[] | null;
         categories: string[] | null;
     };
+    video: VideoIF[] | null;
 }
 
 export interface PostIF {
