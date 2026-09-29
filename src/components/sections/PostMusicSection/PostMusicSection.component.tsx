@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useEffect, useRef } from 'react';
-import { mountMusicEmbed } from '@/components/sections/PostMusicSection/PostMusicSection.helpers';
+import { mountMusicEmbed } from '@/helpers/mountMusicEmbed';
 import styles from '@/components/sections/PostMusicSection/PostMusicSection.module.scss';
 import { PostMusicSectionPropsIF } from '@/components/sections/PostMusicSection/PostMusicSection.types';
 
@@ -26,10 +26,7 @@ const PostMusicSection: FC<PostMusicSectionPropsIF> = ({ music }) => {
     }, [music.musicCode]);
 
     return (
-        <section
-            className={styles.postMusicSectionWrapper}
-            aria-label="Альбом"
-        >
+        <section className={styles.postMusicSectionWrapper} aria-label="Альбом">
             <div ref={playerRef} className={styles.player} />
         </section>
     );

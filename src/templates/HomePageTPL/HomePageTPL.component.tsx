@@ -5,11 +5,13 @@ import {
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import LastNewsPromoSection from '@/components/sections/LastNewsPromoSection/LastNewsPromoSection.component';
 import RockDatesSection from '@/components/sections/RockDatesSection/RockDatesSection.component';
+import TopAlbomsSection from '@/components/sections/TopAlbomsSection/TopAlbomsSection.component';
 import LoginWidget from '@/components/widgets/LoginWidget/LoginWidget.component';
 import { HomePageTPLPropsIF } from '@/templates/HomePageTPL/HomePageTPL.types';
 
 const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
-    const { lastNewsPromoData, calendarDefaultData } = data || {};
+    const { lastNewsPromoData, calendarDefaultData, topAlbomsListData } =
+        data || {};
 
     return (
         <>
@@ -19,6 +21,9 @@ const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
                     <LastNewsPromoSection
                         lastNewsPromoData={lastNewsPromoData}
                     />
+                )}
+                {!!topAlbomsListData?.length && (
+                    <TopAlbomsSection data={topAlbomsListData} />
                 )}
             </Content>
             <Sidebar>

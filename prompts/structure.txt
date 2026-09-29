@@ -376,6 +376,12 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       PostContentSection.module.scss
 |   |   |       PostContentSection.types.ts
 |   |   |       
+|   |   +---PostMusicSection
+|   |   |       PostMusicSection.component.tsx
+|   |   |       PostMusicSection.helpers.ts
+|   |   |       PostMusicSection.module.scss
+|   |   |       PostMusicSection.types.ts
+|   |   |       
 |   |   +---PostVideoSection
 |   |   |       PostVideoSection.component.tsx
 |   |   |       PostVideoSection.module.scss
