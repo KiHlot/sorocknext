@@ -16,8 +16,6 @@ const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname }) => {
     );
     const music = postBase.music;
 
-    console.log('postBase', postBase?.video?.[0]);
-
     return (
         <>
             <Content>

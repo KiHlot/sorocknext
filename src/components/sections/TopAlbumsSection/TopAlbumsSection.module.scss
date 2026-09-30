@@ -6,7 +6,7 @@
     align-items: start;
     gap: var(--gapBlock);
 
-    @include media(xl) {
+    @include media(xxl) {
         grid-template-columns: minmax(0, 1fr);
     }
 }
@@ -15,8 +15,9 @@
     position: sticky;
     top: var(--gapBlock);
 
-    @include media(xl) {
+    @include media(xxl) {
         position: static;
+        order: 1;
     }
 }
 

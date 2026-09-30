@@ -22,7 +22,7 @@ export interface VideoIF {
     videoInfo: VideoInfoIF;
 }
 
-export interface AlbomInfoIF {
+export interface AlbumInfoIF {
     title: string;
     artists: string[] | null;
     year: number | null;
@@ -31,7 +31,7 @@ export interface AlbomInfoIF {
 
 export interface MusicIF {
     musicCode: string;
-    albomInfo: AlbomInfoIF;
+    albumInfo: AlbumInfoIF;
 }
 
 export interface PostBaseIF {

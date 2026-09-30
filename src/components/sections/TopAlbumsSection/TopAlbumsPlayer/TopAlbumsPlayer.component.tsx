@@ -2,11 +2,11 @@
 
 import { FC, useEffect, useRef } from 'react';
 import { mountMusicEmbed } from '@/helpers/mountMusicEmbed';
-import styles from '@/components/sections/TopAlbomsSection/TopAlbomsPlayer/TopAlbomsPlayer.module.scss';
-import { TopAlbomsPlayerPropsIF } from '@/components/sections/TopAlbomsSection/TopAlbomsPlayer/TopAlbomsPlayer.types';
-import { TOP_ALBOMS_LABELS } from '@/components/sections/TopAlbomsSection/TopAlbomsSection.config';
+import styles from '@/components/sections/TopAlbumsSection/TopAlbumsPlayer/TopAlbumsPlayer.module.scss';
+import { TopAlbumsPlayerPropsIF } from '@/components/sections/TopAlbumsSection/TopAlbumsPlayer/TopAlbumsPlayer.types';
+import { TOP_ALBUMS_LABELS } from '@/components/sections/TopAlbumsSection/TopAlbumsSection.config';
 
-const TopAlbomsPlayer: FC<TopAlbomsPlayerPropsIF> = ({
+const TopAlbumsPlayer: FC<TopAlbumsPlayerPropsIF> = ({
     musicCode,
     className = '',
 }) => {
@@ -34,9 +34,9 @@ const TopAlbomsPlayer: FC<TopAlbomsPlayerPropsIF> = ({
             ref={playerRef}
             className={`${styles.player} ${className}`}
             role="region"
-            aria-label={TOP_ALBOMS_LABELS.player}
+            aria-label={TOP_ALBUMS_LABELS.player}
         />
     );
 };
 
-export default TopAlbomsPlayer;
+export default TopAlbumsPlayer;

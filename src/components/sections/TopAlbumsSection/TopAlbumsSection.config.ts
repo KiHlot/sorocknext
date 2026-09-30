@@ -1,13 +1,13 @@
 import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 
-export const TOP_ALBOMS_LIMIT = MAGIC_NUMBERS.TopAlbomsLimit;
+export const TOP_ALBUMS_LIMIT = MAGIC_NUMBERS.TopAlbumsLimit;
 
-export const TOP_ALBOMS_WIDE_INDEXES: readonly number[] = [
-    MAGIC_NUMBERS.TopAlbomsFirstWideIndex,
-    MAGIC_NUMBERS.TopAlbomsSecondWideIndex,
+export const TOP_ALBUMS_WIDE_INDEXES: readonly number[] = [
+    MAGIC_NUMBERS.TopAlbumsFirstWideIndex,
+    MAGIC_NUMBERS.TopAlbumsSecondWideIndex,
 ];
 
-export const TOP_ALBOMS_LABELS = {
+export const TOP_ALBUMS_LABELS = {
     section: 'Топ альбомов',
     tabs: 'Списки альбомов',
     grid: 'Альбомы топа',

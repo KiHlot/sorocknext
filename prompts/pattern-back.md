@@ -730,9 +730,9 @@ class Some_Controller extends WP_REST_Controller
 - `/home-page-data`. В `data` рядом с `lastNewsPromoData` —
   `calendarDefaultData`: тот же массив, что `/archive/calendar` на
   сегодняшний месяц и день (часовой пояс сайта), или `null`.
-  `topAlbomsListData` — массив топов альбомов или `null`. Топ:
+  `topAlbumsListData` — массив топов альбомов или `null`. Топ:
   `title` (общий заголовок), `tabTitle` (короткое имя вкладки),
-  `alboms` (до 10, по порядку мест). Альбом: `position`, `musicCode`
+  `albums` (до 10, по порядку мест). Альбом: `position`, `musicCode`
   (готовый HTML iframe/виджета, как `music.musicCode` у поста), `title`,
   `artists` (`string[] | null`), `year` (`number | null`), `country`
   (`string | null`), `coverImg` (квадрат), `innerImg` (горизонтальное фото

@@ -1,23 +1,23 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import styles from '@/components/cards/TopAlbomCard/TopAlbomCard.module.scss';
-import { TopAlbomCardPropsIF } from '@/components/cards/TopAlbomCard/TopAlbomCard.types';
+import styles from '@/components/cards/TopAlbumCard/TopAlbumCard.module.scss';
+import { TopAlbumCardPropsIF } from '@/components/cards/TopAlbumCard/TopAlbumCard.types';
 import Button from '@/components/controls/Button/Button.component';
 import Country from '@/components/elems/Country/Country.component';
 import Img from '@/components/elems/Img/Img.component';
 
-const TopAlbomCard: FC<TopAlbomCardPropsIF> = ({
-    albom,
+const TopAlbumCard: FC<TopAlbumCardPropsIF> = ({
+    album,
     index,
     isWide = false,
     isActive = false,
     className = '',
     clickHandler,
 }) => {
-    const { position, title, year, artists, country, url, musicCode } = albom;
-    const imgUrl = isWide ? (albom.innerImg ?? albom.coverImg) : albom.coverImg;
+    const { position, title, year, artists, country, url, musicCode } = album;
+    const imgUrl = isWide ? (album.innerImg ?? album.coverImg) : album.coverImg;
     const heading = year ? `${title}, ${year}` : title;
-    const wrapperClassName = `${styles.topAlbomCardWrapper} ${isActive ? styles.active : ''} ${className}`;
+    const wrapperClassName = `${styles.topAlbumCardWrapper} ${isActive ? styles.active : ''} ${className}`;
 
     const content = (
         <>
@@ -46,7 +46,7 @@ const TopAlbomCard: FC<TopAlbomCardPropsIF> = ({
                 aria-pressed={isActive}
                 aria-label={heading}
                 clickHandler={clickHandler}
-                dataTest={`top_albom_${position}`}
+                dataTest={`top_album_${position}`}
             >
                 {content}
             </Button>
@@ -64,4 +64,4 @@ const TopAlbomCard: FC<TopAlbomCardPropsIF> = ({
     return <div className={wrapperClassName}>{content}</div>;
 };
 
-export default TopAlbomCard;
+export default TopAlbumCard;

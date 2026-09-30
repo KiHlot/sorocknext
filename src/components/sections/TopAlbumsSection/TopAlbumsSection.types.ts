@@ -1,4 +1,4 @@
-export interface TopAlbomIF {
+export interface TopAlbumIF {
     position: number;
     musicCode: string;
     title: string;
@@ -10,12 +10,12 @@ export interface TopAlbomIF {
     url: string | null;
 }
 
-export interface TopAlbomsListIF {
+export interface TopAlbumsListIF {
     title: string;
     tabTitle: string;
-    alboms: TopAlbomIF[];
+    albums: TopAlbumIF[];
 }
 
-export interface TopAlbomsSectionPropsIF {
-    data: TopAlbomsListIF[];
+export interface TopAlbumsSectionPropsIF {
+    data: TopAlbumsListIF[];
 }

@@ -5,9 +5,9 @@ import type { Swiper as SwiperInstance } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Button from '@/components/controls/Button/Button.component';
 import SliderArrow from '@/components/sections/RockDatesSection/SliderArrow/SliderArrow.component';
-import { TOP_ALBOMS_LABELS } from '@/components/sections/TopAlbomsSection/TopAlbomsSection.config';
-import styles from '@/components/sections/TopAlbomsSection/TopAlbomsTabs/TopAlbomsTabs.module.scss';
-import { TopAlbomsTabsPropsIF } from '@/components/sections/TopAlbomsSection/TopAlbomsTabs/TopAlbomsTabs.types';
+import { TOP_ALBUMS_LABELS } from '@/components/sections/TopAlbumsSection/TopAlbumsSection.config';
+import styles from '@/components/sections/TopAlbumsSection/TopAlbumsTabs/TopAlbumsTabs.module.scss';
+import { TopAlbumsTabsPropsIF } from '@/components/sections/TopAlbumsSection/TopAlbumsTabs/TopAlbumsTabs.types';
 
 interface ScrollStateIF {
     isLocked: boolean;
@@ -15,7 +15,7 @@ interface ScrollStateIF {
     isEnd: boolean;
 }
 
-const TopAlbomsTabs: FC<TopAlbomsTabsPropsIF> = ({
+const TopAlbumsTabs: FC<TopAlbumsTabsPropsIF> = ({
     tabs,
     activeIndex,
     baseId,
@@ -72,7 +72,7 @@ const TopAlbomsTabs: FC<TopAlbomsTabsPropsIF> = ({
                 onReachEnd={syncScrollState}
                 className={styles.swiper}
                 role="tablist"
-                aria-label={TOP_ALBOMS_LABELS.tabs}
+                aria-label={TOP_ALBUMS_LABELS.tabs}
             >
                 {tabs.map((tab, index) => {
                     const isActive = index === activeIndex;
@@ -88,7 +88,7 @@ const TopAlbomsTabs: FC<TopAlbomsTabsPropsIF> = ({
                                 className={`${styles.tab} ${isActive ? styles.active : ''}`}
                                 data-index={index}
                                 clickHandler={handleSelectTab}
-                                dataTest={`top_alboms_tab_${index}`}
+                                dataTest={`top_albums_tab_${index}`}
                             >
                                 {tab}
                             </Button>
@@ -100,16 +100,16 @@ const TopAlbomsTabs: FC<TopAlbomsTabsPropsIF> = ({
                 <div className={styles.arrows}>
                     <SliderArrow
                         direction="prev"
-                        ariaLabel={TOP_ALBOMS_LABELS.prevTab}
+                        ariaLabel={TOP_ALBUMS_LABELS.prevTab}
                         isDisabled={scrollState.isBeginning}
-                        dataTest="top_alboms_tab_prev"
+                        dataTest="top_albums_tab_prev"
                         clickHandler={handlePrev}
                     />
                     <SliderArrow
                         direction="next"
-                        ariaLabel={TOP_ALBOMS_LABELS.nextTab}
+                        ariaLabel={TOP_ALBUMS_LABELS.nextTab}
                         isDisabled={scrollState.isEnd}
-                        dataTest="top_alboms_tab_next"
+                        dataTest="top_albums_tab_next"
                         clickHandler={handleNext}
                     />
                 </div>
@@ -118,4 +118,4 @@ const TopAlbomsTabs: FC<TopAlbomsTabsPropsIF> = ({
     );
 };
 
-export default TopAlbomsTabs;
+export default TopAlbumsTabs;

@@ -1,4 +1,4 @@
-export interface TopAlbomsTabsPropsIF {
+export interface TopAlbumsTabsPropsIF {
     tabs: string[];
     activeIndex: number;
     baseId: string;

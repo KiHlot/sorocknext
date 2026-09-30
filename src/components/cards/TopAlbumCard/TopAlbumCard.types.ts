@@ -1,8 +1,8 @@
 import { MouseEvent } from 'react';
-import { TopAlbomIF } from '@/components/sections/TopAlbomsSection/TopAlbomsSection.types';
+import { TopAlbumIF } from '@/components/sections/TopAlbumsSection/TopAlbumsSection.types';
 
-export interface TopAlbomCardPropsIF {
-    albom: TopAlbomIF;
+export interface TopAlbumCardPropsIF {
+    album: TopAlbumIF;
     index: number;
     isWide?: boolean;
     isActive?: boolean;

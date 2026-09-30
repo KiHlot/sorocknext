@@ -246,7 +246,7 @@ export const fetchApi = async <DataIF = null>(
 Обёртки серверных эндпоинтов лежат в `src/api/<domain>/endpoints.ts` (не регистрируются в Redux):
 
 - `fetchMetadata({ type, slug?, param? })` — `/metadata?type=...&slug=...&param=...` + `getMetadata`
-- `fetchHomePageData` — `/page/home-page-data`; в `data` рядом с `lastNewsPromoData` приходит `calendarDefaultData` (события сегодняшнего дня, `EventCardModelIF[] | null`) и `topAlbomsListData` (топы альбомов, `TopAlbomsListIF[] | null`, типы в `@/components/sections/TopAlbomsSection/TopAlbomsSection.types`)
+- `fetchHomePageData` — `/page/home-page-data`; в `data` рядом с `lastNewsPromoData` приходит `calendarDefaultData` (события сегодняшнего дня, `EventCardModelIF[] | null`) и `topAlbumsListData` (топы альбомов, `TopAlbumsListIF[] | null`, типы в `@/components/sections/TopAlbumsSection/TopAlbumsSection.types`)
 - `fetchArchive({ postType, page })` — `/archive/archive?postType=...&page=...`;
   количество страниц приходит в `paginationInfo: { currentPage, pagesCount }`
   и в запрос не передаётся
@@ -463,7 +463,7 @@ export default MainWrapper;
 
 ```tsx
 const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
-    const { lastNewsPromoData, calendarDefaultData, topAlbomsListData } =
+    const { lastNewsPromoData, calendarDefaultData, topAlbumsListData } =
         data || {};
 
     return (
@@ -475,8 +475,8 @@ const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
                         lastNewsPromoData={lastNewsPromoData}
                     />
                 )}
-                {!!topAlbomsListData?.length && (
-                    <TopAlbomsSection data={topAlbomsListData} />
+                {!!topAlbumsListData?.length && (
+                    <TopAlbumsSection data={topAlbumsListData} />
                 )}
             </Content>
             <Sidebar>
