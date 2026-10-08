@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import type { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { PageProps } from '@/types/common';
 import { fetchArchive, fetchArchivePromo } from '@/api/archive/endpoints';
 import { fetchMetadata } from '@/api/metadata/endpoints';
@@ -9,6 +9,14 @@ import {
     POST_TYPE_SLUGS,
     isPostType,
 } from '@/configs/postTypes.config';
+import {
+    getTermSegmentsFromCategories,
+    nestPostUrl,
+} from '@/configs/taxonomies.config';
+import {
+    parseArchivePage,
+    redirectArchivePage,
+} from '@/helpers/archive/archive.helpers';
 import ArchiveTPL from '@/templates/ArchiveTPL/ArchiveTPL.component';
 
 type ArchivePagePropsT = PageProps<{ postType: string }>;
@@ -39,8 +47,7 @@ const ArchivePage = async ({
     }
 
     const queryParams = await searchParams;
-    const parsedPage = Number(queryParams?.page);
-    const page = Number.isInteger(parsedPage) ? Math.max(1, parsedPage) : 1;
+    const page = parseArchivePage(queryParams);
 
     const results = await Promise.allSettled([
         fetchArchive({ postType, page }),
@@ -50,32 +57,37 @@ const ArchivePage = async ({
     const data = results[0].status === 'fulfilled' ? results[0].value : null;
     const promo = results[1].status === 'fulfilled' ? results[1].value : null;
 
-    if (data && queryParams?.page !== undefined) {
-        const pagesCount = Math.max(1, data.paginationInfo.pagesCount);
-        const normalizedPage = Math.min(page, pagesCount);
-
-        if (queryParams.page !== String(normalizedPage)) {
-            const normalizedSearchParams = new URLSearchParams();
-
-            for (const [key, value] of Object.entries(queryParams)) {
-                if (value !== undefined) {
-                    normalizedSearchParams.set(key, value);
-                }
-            }
-
-            normalizedSearchParams.set('page', String(normalizedPage));
-            redirect(`/${postType}?${normalizedSearchParams.toString()}`);
-        }
+    if (data && queryParams) {
+        redirectArchivePage(
+            `/${postType}`,
+            queryParams,
+            page,
+            data.paginationInfo.pagesCount,
+        );
     }
 
     return data ? (
         <ArchiveTPL
             pathname={`/${postType}`}
             title={POST_TYPES[postType]}
-            postsData={data.postsData}
+            postsData={data.postsData?.map((post) => ({
+                ...post,
+                url: nestPostUrl(
+                    postType,
+                    post.url,
+                    getTermSegmentsFromCategories(postType, post.categories),
+                ),
+            }))}
             paginationInfo={data.paginationInfo}
             seoData={promo?.seoData}
-            archivePromoData={promo?.archivePromoData}
+            archivePromoData={promo?.archivePromoData?.map((post) => ({
+                ...post,
+                url: nestPostUrl(
+                    postType,
+                    post.url,
+                    getTermSegmentsFromCategories(postType, post.categories),
+                ),
+            }))}
         />
     ) : (
         <div />

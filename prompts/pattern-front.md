@@ -296,12 +296,26 @@ JWT `/token` — **другая форма ответа** (`token`, `expires`, `
 
 Роуты сейчас:
 
-| Путь                                                                | Назначение   |
-| ------------------------------------------------------------------- | ------------ |
-| `(site)/`                                                           | Главная      |
-| `(site)/[postType]`, `(site)/[postType]/[slug]`                     | Архив и пост |
-| `(site)/search`                                                     | Поиск        |
-| `(auth)/login`, `registration`, `reset-password`, `confirm-account` | Авторизация  |
+| Путь | Назначение |
+| --- | --- |
+| `(site)/` | Главная |
+| `(site)/[postType]` | Архив типа записи |
+| `(site)/[postType]/[...slug]` | Термин кастомной таксономии или пост |
+| `(site)/tag/[slug]` | Метка `post_tag` |
+| `(site)/search` | Поиск |
+| `(auth)/login`, `registration`, `reset-password`, `confirm-account` | Авторизация |
+
+Типы: `article`, `journal`, `music`, `news`, `quiz`, `rock-data`, `site-archive`, `stars`, `video` (`src/configs/postTypes.config.ts`). Кастомные таксономии — `article_cat`, `music_cat`, `news_cat`, `video_cat` (`src/configs/taxonomies.config.ts`).
+
+Как читается `[...slug]`:
+
+- один сегмент из дефолтных терминов (`/article/interview`) редиректит на архив термина `/article/interview/1`;
+- `/article/interview/:id` — архив термина, `:id` это номер страницы (`1`, `2`, …);
+- `/article/interview/{слаг}` — запись: термин остаётся в адресе;
+- вложенный термин архива заканчивается номером страницы: `/article/sport/child/1`;
+- у типа без кастомной таксономии (`journal`, `quiz`, `rock-data`, `site-archive`, `stars`) допустим только один сегмент — запись.
+
+Список постов термина пока берётся тем же `fetchArchive({ postType, page })`: `page` равен `:id`. Бэк ещё не фильтрует архив по термину.
 
 Паттерн страницы:
 
@@ -337,13 +351,15 @@ export default async function HomePage(): Promise<ReactElement> {
 
 ```ts
 export async function generateStaticParams(): Promise<
-    { postType: string; slug: string }[]
+    { postType: string; slug: string[] }[]
 > {
     const slugGroups = await Promise.all(
         POST_TYPE_SLUGS.map(async (postType) => {
             const slugs = await fetchArchiveSlugs(postType);
 
-            return slugs?.map((slug) => ({ postType, slug })) ?? [];
+            return (
+                slugs?.map((slug) => ({ postType, slug: [slug] })) ?? []
+            );
         }),
     );
 

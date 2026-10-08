@@ -47,7 +47,10 @@ const Breadcrumbs: FC<BreadcrumbsPropsIF> = ({
                             .slice(0, index + 1)
                             .join('/')}`;
                         const isLast = index === pathSegments.length - 1;
-                        const label = getArchiveLabel(segment, title);
+                        const label = getArchiveLabel(
+                            segment,
+                            isLast ? title : undefined,
+                        );
 
                         return (
                             <li

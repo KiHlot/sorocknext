@@ -3,28 +3,24 @@ export const FOOTER_MENU = {
         label: 'Категории',
         menuList: [
             {
-                url: '/clips',
+                url: '/video/clip',
                 label: 'Клипы',
             },
             {
-                url: '/alboms',
+                url: '/music/album',
                 label: 'Альбомы',
             },
             {
-                url: '/concerts',
+                url: '/video/concert',
                 label: 'Концерты',
             },
             {
-                url: '/rock-films',
+                url: '/video/film',
                 label: 'Фильмы',
             },
             {
-                url: '/intervju',
+                url: '/article/interview',
                 label: 'Интервью',
-            },
-            {
-                url: '/okolorock',
-                label: 'Вокруг рока',
             },
         ],
     },
@@ -36,24 +32,36 @@ export const FOOTER_MENU = {
                 label: 'Новости',
             },
             {
-                url: '/rock-data',
-                label: 'Рок-дата',
+                url: '/article',
+                label: 'Статьи',
             },
             {
-                url: '/cool',
+                url: '/music',
+                label: 'Музыка',
+            },
+            {
+                url: '/video',
                 label: 'Видео',
             },
             {
-                url: '/reviews',
-                label: 'Рецензии',
+                url: '/journal',
+                label: 'Журнал',
             },
             {
-                url: '/nocommerce',
-                label: 'Новый рок',
+                url: '/quiz',
+                label: 'Тесты',
             },
             {
-                url: '/autors',
-                label: 'Статьи',
+                url: '/stars',
+                label: 'Звезды',
+            },
+            {
+                url: '/rock-data',
+                label: 'Рок даты',
+            },
+            {
+                url: '/site-archive',
+                label: 'Архив',
             },
         ],
     },

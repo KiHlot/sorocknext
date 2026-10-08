@@ -18,28 +18,28 @@ export const SITE_CATEGORIES: SiteCategoriesT = {
     alboms_rub: {
         link: {
             label: 'Альбомы',
-            url: '/alboms',
+            url: '/music/album',
         },
         icon: <HeadphonesIcon />,
     },
     interview_rub: {
         link: {
             label: 'Интервью',
-            url: '/intervju',
+            url: '/article/interview',
         },
         icon: <MicrophoneIcon />,
     },
     clips_rub: {
         link: {
             label: 'Клипы',
-            url: '/clips',
+            url: '/video/clip',
         },
         icon: <PlayerIcon />,
     },
     concert_rub: {
         link: {
             label: 'Концерты',
-            url: '/concerts',
+            url: '/video/concert',
         },
         icon: <TicketIcon />,
     },
@@ -53,7 +53,7 @@ export const SITE_CATEGORIES: SiteCategoriesT = {
     rock_film: {
         link: {
             label: 'Рок-фильмы',
-            url: '/rock-films',
+            url: '/video/film',
         },
         icon: <ClapperIcon />,
     },

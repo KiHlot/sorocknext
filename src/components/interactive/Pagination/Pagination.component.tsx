@@ -4,7 +4,7 @@ import { createPaginationData } from '@/components/interactive/Pagination/Pagina
 import styles from '@/components/interactive/Pagination/Pagination.module.scss';
 import { PaginationPropsIF } from '@/components/interactive/Pagination/Pagination.types';
 
-const Pagination: FC<PaginationPropsIF> = ({ pagination }) => {
+const Pagination: FC<PaginationPropsIF> = ({ pagination, getPageHref }) => {
     if (!pagination?.pagesCount || pagination.pagesCount <= 1) {
         return null;
     }
@@ -36,7 +36,9 @@ const Pagination: FC<PaginationPropsIF> = ({ pagination }) => {
                             ) : (
                                 <Link
                                     key={label}
-                                    href={`?page=${label}`}
+                                    href={
+                                        getPageHref?.(label) ?? `?page=${label}`
+                                    }
                                     className={`flc ${styles.paginationButton}`}
                                     aria-label={`Страница ${label}`}
                                 >

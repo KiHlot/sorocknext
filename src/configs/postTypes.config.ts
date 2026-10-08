@@ -1,10 +1,13 @@
 export const POST_TYPES = {
+    article: 'Статьи',
+    journal: 'Журнал',
+    music: 'Музыка',
     news: 'Новости',
-    autors: 'Статьи',
-    cool: 'Видео',
-    nocommerce: 'Новый рок',
-    reviews: 'Рецензии',
-    'rock-data': 'Рок-дата',
+    quiz: 'Тесты',
+    'rock-data': 'Рок даты',
+    'site-archive': 'Архивные материалы',
+    stars: 'Звезды',
+    video: 'Видео',
 } as const;
 
 export type PostTypeT = keyof typeof POST_TYPES;

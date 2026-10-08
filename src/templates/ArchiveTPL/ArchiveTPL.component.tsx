@@ -19,6 +19,7 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
     paginationInfo,
     seoData = null,
     archivePromoData = null,
+    getPageHref,
 }) => {
     const titleId = `${pathname.replaceAll('/', '') || 'archive'}-title`;
     const hasPromo =
@@ -38,7 +39,7 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
                         archivePromoData={archivePromoData}
                     />
                 ) : (
-                    <Breadcrumbs pathname={pathname} />
+                    <Breadcrumbs pathname={pathname} title={title} />
                 )}
                 <Section
                     className={styles.archive}
@@ -62,6 +63,7 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
                         </div>
                     )}
                     <Pagination
+                        getPageHref={getPageHref}
                         pagination={
                             paginationInfo
                                 ? {

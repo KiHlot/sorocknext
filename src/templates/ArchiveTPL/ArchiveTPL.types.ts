@@ -9,4 +9,5 @@ export interface ArchiveTPLPropsIF {
     paginationInfo?: PaginationInfoIF | null;
     seoData?: ArchiveSeoDataIF | null;
     archivePromoData?: PostArchiveCardModelIF[] | null;
+    getPageHref?: (page: number) => string;
 }

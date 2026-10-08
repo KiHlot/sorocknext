@@ -72,10 +72,14 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |       +---search
 |       |       page.tsx
 |       |       
+|       +---tag
+|       |   \---[slug]
+|       |           page.tsx
+|       |           
 |       \---[postType]
 |           |   page.tsx
 |           |   
-|           \---[slug]
+|           \---[...slug]
 |                   page.tsx
 |                   
 +---components
@@ -106,10 +110,15 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       PostArchiveCard.module.scss
 |   |   |       PostArchiveCard.types.ts
 |   |   |       
-|   |   \---PostShortCard
-|   |           PostShortCard.component.tsx
-|   |           PostShortCard.module.scss
-|   |           PostShortCard.types.ts
+|   |   +---PostShortCard
+|   |   |       PostShortCard.component.tsx
+|   |   |       PostShortCard.module.scss
+|   |   |       PostShortCard.types.ts
+|   |   |       
+|   |   \---TopAlbumCard
+|   |           TopAlbumCard.component.tsx
+|   |           TopAlbumCard.module.scss
+|   |           TopAlbumCard.types.ts
 |   |           
 |   +---controls
 |   |   +---Button
@@ -202,9 +211,14 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       Overlay.module.scss
 |   |   |       Overlay.types.ts
 |   |   |       
-|   |   \---SiteEmail
-|   |           SiteEmail.component.tsx
-|   |           SiteEmail.module.scss
+|   |   +---SiteEmail
+|   |   |       SiteEmail.component.tsx
+|   |   |       SiteEmail.module.scss
+|   |   |       
+|   |   \---TermLink
+|   |           TermLink.component.tsx
+|   |           TermLink.module.scss
+|   |           TermLink.types.ts
 |   |           
 |   +---forms
 |   |   +---LoginForm
@@ -378,7 +392,6 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       
 |   |   +---PostMusicSection
 |   |   |       PostMusicSection.component.tsx
-|   |   |       PostMusicSection.helpers.ts
 |   |   |       PostMusicSection.module.scss
 |   |   |       PostMusicSection.types.ts
 |   |   |       
@@ -409,12 +422,33 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |           SliderArrow.module.scss
 |   |   |           SliderArrow.types.ts
 |   |   |           
-|   |   \---SinglePostPromoSection
-|   |           SinglePostPromoSection.component.tsx
-|   |           SinglePostPromoSection.helpers.ts
-|   |           SinglePostPromoSection.module.scss
-|   |           SinglePostPromoSection.types.ts
-|   |           
+|   |   +---SinglePostPromoSection
+|   |   |       SinglePostPromoSection.component.tsx
+|   |   |       SinglePostPromoSection.helpers.ts
+|   |   |       SinglePostPromoSection.module.scss
+|   |   |       SinglePostPromoSection.types.ts
+|   |   |       
+|   |   \---TopAlbumsSection
+|   |       |   TopAlbumsSection.component.tsx
+|   |       |   TopAlbumsSection.config.ts
+|   |       |   TopAlbumsSection.module.scss
+|   |       |   TopAlbumsSection.types.ts
+|   |       |   
+|   |       +---TopAlbumsGrid
+|   |       |       TopAlbumsGrid.component.tsx
+|   |       |       TopAlbumsGrid.module.scss
+|   |       |       TopAlbumsGrid.types.ts
+|   |       |       
+|   |       +---TopAlbumsPlayer
+|   |       |       TopAlbumsPlayer.component.tsx
+|   |       |       TopAlbumsPlayer.module.scss
+|   |       |       TopAlbumsPlayer.types.ts
+|   |       |       
+|   |       \---TopAlbumsTabs
+|   |               TopAlbumsTabs.component.tsx
+|   |               TopAlbumsTabs.module.scss
+|   |               TopAlbumsTabs.types.ts
+|   |               
 |   \---widgets
 |       +---ConfirmAccountWidget
 |       |   |   ConfirmAccountWidget.component.tsx
@@ -465,8 +499,13 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 +---configs
 |   |   magicNumbers.config.ts
 |   |   postTypes.config.ts
+|   |   taxonomies.config.ts
 |   |   timeFormats.config.ts
 |   |   
+|   +---postTypeTerms
+|   |       postTypeTerms.config.tsx
+|   |       postTypeTerms.types.ts
+|   |       
 |   \---siteCategories
 |           siteCategories.config.tsx
 |           siteCategories.types.ts
@@ -476,8 +515,12 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |       
 +---helpers
 |   |   fetchApi.ts
+|   |   mountMusicEmbed.ts
 |   |   utils.ts
 |   |   
+|   +---archive
+|   |       archive.helpers.ts
+|   |       
 |   +---fetchRestApi
 |   |       fetchRestApi.helpers.ts
 |   |       fetchRestApi.ts

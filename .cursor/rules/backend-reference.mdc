@@ -1,5 +1,5 @@
 ---
-description: Справочники бэкенда — пост-типы news/reviews/cool/autors, размеры img80/img500/img900, коды er200/er900, cron JSON-кэш
+description: Справочники бэкенда — пост-типы article/journal/music/news/quiz/rock-data/site-archive/stars/video, размеры img80/img500/img900, коды er200/er900, cron JSON-кэш
 alwaysApply: false
 ---
 
@@ -7,10 +7,27 @@ alwaysApply: false
 
 ## Пост-типы
 
-`news` (Новости), `reviews` (Рецензии), `cool` (Видео), `autors` (Статьи),
-`nocommerce` (Новый рок), `rock-data` (Рок-дата).
+`article` (Статьи), `journal` (Журнал), `music` (Музыка), `news` (Новости),
+`quiz` (Тесты), `rock-data` (Рок даты), `site-archive` (Архивные материалы),
+`stars` (Звезды), `video` (Видео).
 
-Таксономии — стандартные WordPress: `category` и `post_tag`.
+Кастомные таксономии (`hierarchical`, дефолтные термины плоские):
+
+- `article_cat` → `article`: `interview`, `review`, `sport`, `game`, `fact`,
+  `entertaining`, `event`, `advertising`
+- `music_cat` → `music`: `album`, `single`, `ep`, `playlist`, `live`
+- `news_cat` → `news`: `society`, `sport`, `celebrities`, `interesting`,
+  `advertisement`
+- `video_cat` → `video`: `clip`, `concert`, `live`, `film`, `cool`
+
+Стандартная таксономия на всех типах: `post_tag` (метки). Рубрики `category`
+в публичной иерархии не используются.
+
+Фронтовые URL: `/{postType}`, `/{postType}/{postSlug}`,
+`/{postType}/{term}/{id}` — архив термина (`id` — номер страницы),
+`/{postType}/{term}/{slug}` — запись. `/{postType}/{term}` редиректит на
+`/{postType}/{term}/1`. Метки — `/tag/{slug}`.
+Архив REST пока фильтрует только по `postType` — отдельного query по термину нет.
 
 ## Изображения
 

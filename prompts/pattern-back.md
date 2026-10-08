@@ -6,14 +6,14 @@
 
 Проект работает на **PHP 8.4+**. Используются:
 
-- **Типизированные константы класса:** `private const string X = '...'`
+- **Типизированные константы класса:** `private const string X = '...'`, `private const array Y = [...]`, `private const int Z = 10`
 - **`readonly`-свойства:** `private readonly int $id`
 - **`readonly class`:** для неизменяемых моделей (`Post_Model`, `Page_Model`)
 - **Конструктор property promotion** — не используется
 - **`match` вместо `switch`** — везде, где возможно
 - **`??=`** для ленивой инициализации
 - **`?->`** для null-safe вызовов
-- **First-class callable:** `self::method(...)`
+- **First-class callable:** `self::sort_by_date_asc(...)`, `fn(...)`
 - **`catch (Exception)` без переменной** — когда `$e` не нужна
 
 ### Namespace
@@ -45,10 +45,11 @@ $date = \DateTime::createFromFormat('Y-m-d', $value);
 - **Переменные** — `snake_case`: `$post_types`, `$is_valid`
 - **Ключи JSON** — `camelCase`: `userId`, `avatarUrl`, `fullName`
 - **Классы** — `PascalCase` с префиксами категорий:
-    - `Site_Config`, `Site_Model`, `User_Model` — модели/конфиги
-    - `Admin_Controller`, `Auth_Controller` — контроллеры
-    - `Api_Helper`, `Validate` — хелперы
-- **Файлы** — с префиксом `_` для автозагрузки: `_class-api-helper.php`, `_post-model.php`
+  - `Site_Config`, `Site_Model`, `User_Model`, `Archive_Model` — модели/конфиги
+  - `Admin_Controller`, `Auth_Controller` — контроллеры
+  - `Api_Helper`, `Validate` — хелперы
+- **Файлы** — с префиксом `_` для автозагрузки: `_class-api-helper.php`, `_post-model.php`, `_archive-controller.php`
+- **CPT-файлы** — `_pt_{slug}.php` (`_pt_news.php`, `_pt_rock_data.php`)
 
 ### Форматирование
 
@@ -58,6 +59,7 @@ $date = \DateTime::createFromFormat('Y-m-d', $value);
 - **Секции** — в больших классах через `// =========`
 - **Одинарные кавычки** для строк без интерполяции
 - **Интерполяция** — без `{}` для простых переменных: `"Привет, $name"`
+- **Отбивка оператора `?->`, `??`, `?:`** — без пробелов вокруг: `$this->user_data?->user_email`
 
 ### Секции в классах
 
@@ -75,10 +77,16 @@ $date = \DateTime::createFromFormat('Y-m-d', $value);
 - `Константы`
 - `Состояние`
 - `Публичные настройки` (для `Site_Config`)
+- `Пост-типы и категории`
+- `Валидация`
+- `Роли и capabilities`
+- `Справочники`
+- `Утилиты`
 - `Регистрация роутов`
 - `Публичные эндпоинты`
 - `Внутренние хелперы`
 - `Модели ответа`
+- `Статические хелперы`
 
 ---
 
@@ -88,48 +96,52 @@ $date = \DateTime::createFromFormat('Y-m-d', $value);
 
 ```
 theme/
-├── functions.php              # Точка входа — подключение всех папок
-├── index.php                  # Обязательный файл темы (заглушка)
-├── style.css                  # Заголовок темы + CSS
-├── readme.txt                 # Описание темы
+├── functions.php                    # Точка входа — подключение всех папок
+├── index.php                        # Обязательный файл темы (заглушка)
+├── style.css                        # Заголовок темы + CSS
+├── readme.txt                       # Описание темы
 ├── helpers/
-│   ├── index.php              # Автозагрузка helpers
-│   ├── _class-api-helper.php  # Регистрация роутов, ответы, JWT
-│   ├── _class-site-config.php # Singleton-конфиг
-│   ├── _class-validate.php    # Валидация полей
-│   ├── _mail_html.php         # HTML-шаблон писем
-│   ├── _upload_image_file.php # Загрузка и масштабирование
-│   └── _utils.php             # Утилиты
+│   ├── index.php                    # Автозагрузка helpers
+│   ├── _class-api-helper.php        # Регистрация роутов, ответы, JWT
+│   ├── _class-site-config.php       # Singleton-конфиг
+│   ├── _class-validate.php          # Валидация полей
+│   ├── _mail_html.php               # HTML-шаблон писем
+│   ├── _upload_image_file.php       # Загрузка и масштабирование
+│   └── _utils.php                   # Утилиты
 ├── configs/
-│   └── index.php              # Автозагрузка конфигов
+│   └── index.php                    # Автозагрузка конфигов
 ├── site-setup/
-│   ├── index.php              # Автозагрузка site-setup
-│   ├── _debug.php             # Debug для локального окружения
-│   ├── _jwt.php               # Настройка JWT
-│   ├── _media.php             # Размеры изображений
-│   ├── _options_page.php      # ACF-страницы настроек
-│   ├── _reset_functions.php   # Отключение лишнего из WP
-│   ├── _pt_autors.php         # Post type: autors
-│   ├── _pt_cool.php           # Post type: cool
-│   ├── _pt_news.php           # Post type: news
-│   ├── _pt_nocommerce.php     # Post type: nocommerce
-│   ├── _pt_reviews.php        # Post type: reviews
-│   ├── _pt_rock_data.php      # Post type: rock-data
-│   ├── _pt_stars.php          # Post type: stars (экспериментальный)
-│   └── jsons/                 # JSON-кэш (cron_info_JSON и др.)
+│   ├── index.php                    # Автозагрузка site-setup
+│   ├── _debug.php                   # Debug для локального окружения
+│   ├── _jwt.php                     # Настройка JWT
+│   ├── _media.php                   # Размеры изображений
+│   ├── _options_page.php            # ACF-страницы настроек
+│   ├── _reset_functions.php         # Отключение лишнего из WP
+│   ├── _pt_article.php              # Post type: article
+│   ├── _pt_journal.php              # Post type: journal
+│   ├── _pt_music.php                # Post type: music
+│   ├── _pt_news.php                 # Post type: news
+│   ├── _pt_quiz.php                 # Post type: quiz
+│   ├── _pt_rock_data.php            # Post type: rock-data
+│   ├── _pt_site_archive.php         # Post type: site-archive
+│   ├── _pt_stars.php                # Post type: stars
+│   ├── _pt_video.php                # Post type: video
+│   └── jsons/                       # JSON-кэш (cron_info_JSON и др.)
 ├── controllers/
-│   ├── index.php              # Автозагрузка контроллеров
-│   ├── _admin-controller.php
+│   ├── index.php                    # Автозагрузка контроллеров
+│   ├── _admin-controller.php        # (не регистрируется)
+│   ├── _archive-controller.php
 │   ├── _auth-controller.php
 │   ├── _metadata_controller.php
-│   ├── _news-controller.php
 │   ├── _page-controller.php
+│   ├── _post-controller.php
 │   ├── _search-controller.php
 │   ├── _site-controller.php
 │   ├── _taxonomy-controller.php
 │   └── _users-controller.php
 ├── models/
-│   ├── index.php              # Автозагрузка моделей
+│   ├── index.php                    # Автозагрузка моделей
+│   ├── _archive-model.php
 │   ├── _auth-model.php
 │   ├── _page-model.php
 │   ├── _post-model.php
@@ -138,7 +150,7 @@ theme/
 │   ├── _taxonomy-model.php
 │   └── _user-model.php
 └── api/
-    └── routes.php             # Регистрация всех роутов
+    └── routes.php                   # Регистрация всех роутов
 ```
 
 ### Точка входа — `functions.php`
@@ -152,8 +164,19 @@ if (!defined('_S_VERSION')) {
 
 function add_admin_scripts(): void
 {
-    wp_enqueue_script('custom_js', get_template_directory_uri() . '/scripts.js', [], _S_VERSION, true);
-    wp_enqueue_style('custom_css', get_template_directory_uri() . '/style.css', [], _S_VERSION);
+    wp_enqueue_script(
+        'custom_js',
+        get_template_directory_uri().'/scripts.js',
+        [],
+        _S_VERSION,
+        true
+    );
+    wp_enqueue_style(
+        'custom_css',
+        get_template_directory_uri().'/style.css',
+        [],
+        _S_VERSION
+    );
 }
 
 add_action('admin_enqueue_scripts', 'add_admin_scripts', 25);
@@ -166,17 +189,40 @@ include_once 'models/index.php';
 include_once 'api/routes.php';
 ```
 
+### Регистрация роутов — `api/routes.php`
+
+```php
+<?php
+
+function register_custom_rest_routes(): void
+{
+    new Auth_Controller()->register_routes();
+    new Metadata_Controller()->register_routes();
+    new Archive_Controller()->register_routes();
+    new Page_Controller()->register_routes();
+    new Post_Controller()->register_routes();
+    new Search_Controller()->register_routes();
+    new Site_Controller()->register_routes();
+    new Taxonomy_Controller()->register_routes();
+    new User_Controller()->register_routes();
+}
+
+add_action('rest_api_init', 'register_custom_rest_routes');
+```
+
+`Admin_Controller` существует, но его регистрация **закомментирована**. Пока роуты `/admin/*` не включены — не вызывать с фронта.
+
 ### Автозагрузка через `index.php`
 
 Каждая папка содержит `index.php`, который подключает все файлы с префиксом `_` и все вложенные `index.php`:
 
 ```php
 <?php
-foreach (glob(dirname(__FILE__) . '/_*.php') as $file) {
+foreach (glob(dirname(__FILE__).'/_*.php') as $file) {
     include_once $file;
 }
 
-foreach (glob(dirname(__FILE__) . '/**/index.php') as $file) {
+foreach (glob(dirname(__FILE__).'/**/index.php') as $file) {
     include_once $file;
 }
 ```
@@ -223,6 +269,8 @@ JSON
 
 - `private const string API_ENDPOINT = '/rest'` — базовый префикс всех роутов
 
+**Состояние:** конструктор отсутствует, все методы либо статические, либо создают `new self()` при необходимости.
+
 **Методы:**
 
 - `public function public_route(string $route, array $callback): void` — регистрация публичного эндпоинта (без JWT).
@@ -235,8 +283,8 @@ JSON
 **Пример регистрации роутов:**
 
 ```php
-$this->api->public_route('/page/home-page-data', [$this, 'get_home_page_data']);
-$this->api->private_route('/users/get-current-user', [$this, 'get_current_user']);
+$this->api->public_route($this->base_route.'/home-page-data', [$this, 'get_home_page_data']);
+$this->api->private_route($this->base_route.'/get-current-user', [$this, 'get_current_user']);
 ```
 
 ### 2.2. `Site_Config` (Singleton)
@@ -273,20 +321,43 @@ $support_email = $config->emails['support'];
 
 **Секции:**
 
-- **Публичные настройки** — `$query_latest_posts_types`, `$time_format`, `$emails`, `$permitted_config`, `$cron_config`, `$admin_id`.
+- **Публичные настройки** — `$time_format`, `$emails` (`support`, `mail_to`, `test_mail`), `$links` (`reviewUrl`), `$permitted_config`, `$cron_config`, `$admin_id`.
 - **Пост-типы и категории** — `$post_types_config`, `$categories_config`.
 - **Валидация** — `$VALIDATORS`, `$FIELDS`, `$VALIDATE_SORT`.
 - **Роли и capabilities** — `$base_cap`, метод `get_roles()`.
 - **Справочники** — `$countries_arr`, `$week_days_short_translate`, `$month_days_short_translate`.
-- **Утилиты** — методы `get_site_url()`, `get_post_type_args()`, `generate_post_type_labels()`.
+- **Утилиты** — методы `is_production()`, `get_mail_to()`, `get_site_url()`, `get_post_type_args()`, `generate_post_type_labels()`.
+
+**Ключи `$permitted_config`:**
+
+| Ключ | Значение | Описание |
+|---|---|---|
+| `search_result_max_count` | 24 | Макс. результатов поиска |
+| `archive_posts_per_page` | 18 | Постов на странице архива |
+| `pageCategoryMode` | 6 | Режим выбора категорий (1/multi) |
+| `postTagsCount` | 10 | Тегов у поста |
+| `mediaAuthorsCount` | 3 | Авторов у медиа |
+| `addPostMinLevel` | 1 | Мин. уровень для добавления |
+| `bookmarkFeedCount` | 6 | Закладок в ленте |
 
 **Методы:**
 
 - `public static function get_instance(): self` — получение singleton.
-- `public function get_roles(): array` — список ролей с capabilities.
+- `public function is_production(): bool` — `true`, если хост из `PROD_HOSTS` (`sorock.ru`, `www.sorock.ru`).
+- `public function get_mail_to(): string` — email получателя писем с учётом окружения: на тестовом стенде `test_mail`, на проде `mail_to`.
+- `public function get_roles(): array` — список ролей (`lobby`, `member`, `editor`, `admin`) с capabilities.
 - `public function get_site_url(?string $type = null): ?string` — URL сайта (`full`, `decorated`, `server_name`, `back_local_domain`).
 - `public function get_post_type_args(array $props): array` — генерация аргументов для `register_post_type()`.
-- `private function generate_post_type_labels(array $props): array` — генерация labels для CPT.
+- `private function generate_post_type_labels(array $props): array` — генерация labels для CPT (с учётом рода `gender`: `m` / `f`).
+
+**Хосты продакшена:**
+
+```php
+private const array PROD_HOSTS = [
+    'sorock.ru',
+    'www.sorock.ru',
+];
+```
 
 ### 2.3. `Validate`
 
@@ -294,11 +365,17 @@ $support_email = $config->emails['support'];
 
 Валидация входящих запросов по правилам из `Site_Config::$FIELDS` и `$VALIDATORS`.
 
+**Константы:**
+
+- `private const int DEFAULT_CODE_LENGTH = 6`
+
 **Конструктор:**
 
 ```php
 public function __construct(?WP_REST_Request $credentials)
 ```
+
+Сливает `get_params()` и `get_file_params()` — чтобы валидаторы файлов видели `$_FILES`.
 
 **Методы:**
 
@@ -307,28 +384,26 @@ public function __construct(?WP_REST_Request $credentials)
 **Принцип работы:**
 
 1. Если маршрут **не описан** в `FIELDS` — возвращает `false` (валидация не требуется).
-2. Если `$user_id` передан и в маршруте есть `capability` — проверяет права.
-3. Для каждого поля:
-    - Проверяет наличие (`isset`).
-    - Если поле обязательно и отсутствует — ошибка `er200`.
-    - Нормализует значение (`null`, `'null'`, `'undefined'` → `null`; строка → `sanitize_string`).
-    - Прогоняет через валидаторы в порядке `VALIDATE_SORT`.
+2. Для каждого поля:
+  - Проверяет наличие (`isset`).
+  - Если поле обязательно и отсутствует — ошибка `er200`.
+  - Нормализует значение (`null`, `'null'`, `'undefined'` → `null`; строка → `sanitize_string`).
+  - Прогоняет через валидаторы в порядке `VALIDATE_SORT`.
 
 **Внутренние хелперы:**
 
 - `private function normalize_value(mixed $value): mixed` — нормализация.
 - `private function validate(string $field_name, mixed $value): ?array` — прогон через валидаторы.
-- `private function run_validator(string $type, mixed $value, string $field_name, array $validator, bool $is_required): ?array` — запуск конкретного валидатора с тип-чекингом.
+- `private function run_validator(string $type, mixed $value, string $field_name, array $validator, bool $is_required): ?array` — запуск конкретного валидатора с тип-чекингом (string / numeric / array).
 
 **Валидаторы:**
 
-- `check_required`, `check_min_length`, `check_max_length`, `check_length`
-- `check_email`, `check_email_uniq`, `check_text_only`, `check_space`
-- `check_en_numbers_only`, `check_some`
-- `check_is_number`, `check_phone`, `check_telegram`
-- `check_less_then_now`
-- `check_is_user_exist`, `check_is_page_exist`
-- `check_file_size`, `check_file_type`
+- **Строки:** `check_required`, `check_min_length`, `check_max_length`, `check_length`, `check_email`, `check_email_uniq`, `check_text_only`, `check_space`, `check_en_numbers_only`, `check_some`.
+- **Числа:** `check_is_number`.
+- **Телефон / Telegram:** `check_phone`, `check_telegram`.
+- **Даты:** `check_less_then_now`.
+- **Объекты:** `check_is_user_exist`, `check_is_page_exist`.
+- **Файлы:** `check_file_size`, `check_file_type`.
 
 **Пример использования:**
 
@@ -344,19 +419,36 @@ if ($errors) {
 
 **Файл:** `helpers/_utils.php`
 
-Глобальные функции:
+Глобальные функции, сгруппированы по секциям: «Идентификаторы и запросы», «Санитизация и работа со строками», «Работа с массивами», «ACF-хелперы», «JSON-файлы (кэш)», «Время».
 
-- `get_entity_id(string $slug, ?string $post_type = null): ?int` — ID поста по слагу или числовому ID.
+**Идентификаторы и запросы:**
+
+- `get_entity_id(string $slug, ?string $post_type = null): ?int` — ID поста по слагу или числовому ID. Если `$post_type` не задан — ищет по всем из `Site_Config::$post_types_config`.
+
+**Строки:**
+
 - `sanitize_string(?string $text = null): string` — базовая санитизация (`trim` + `sanitize_text_field` + `strip_tags`).
-- `hf_get_first_sentence(string $text, int $max_length = 0): string` — первое предложение.
-- `hf_explode(?string $str, ?string $type = null): ?array` — разбиение строки по запятой.
+- `hf_get_first_sentence(string $text, int $max_length = 0): string` — первое предложение с опциональной обрезкой.
+- `hf_explode(?string $str, ?string $type = null): ?array` — разбиение строки по запятой; `$type = 'int'` — вернуть целые числа.
+
+**Массивы:**
+
 - `array_or_null(array $array): ?array` — `null`, если массив пуст.
+
+**ACF:**
+
 - `gf(string $name, int|string $id): string|array|bool|WP_Post|null` — получение ACF-поля.
-- `uf(string $name, int|string $id, mixed $value): bool` — обновление ACF-поля.
+- `uf(string $name, int|string $id, mixed $value): bool` — обновление ACF-поля (массив → `add_row`).
 - `gf_img(string $name, int|string $id, string $type = 'img900'): string|int|null` — изображение ACF.
+
+**JSON-кэш:**
+
 - `save_json_file(mixed $data, string $title): bool` — сохранение в `site-setup/jsons/`.
 - `get_json_file(string $filename): ?array` — чтение из `site-setup/jsons/`.
-- `get_time(?string $type = null, ?int $gmt = null): string|int` — текущее время.
+
+**Время:**
+
+- `get_time(?string $type = null, ?int $gmt = null): string|int` — текущее время; `$type = 'timestamp'` — unix timestamp.
 
 ### 2.5. Почта (`_mail_html.php`)
 
@@ -390,7 +482,72 @@ function _mail_html(string $title, string $body): string
 
 ## 3. Модели (models/)
 
-### 3.1. `Post_Model` (readonly class)
+### 3.1. `Archive_Model`
+
+**Файл:** `models/_archive-model.php`
+
+Модель архива. Отвечает за ленты постов, SEO-интро архива, промо-подборку и оба календаря (день / месяц).
+
+**Константы:**
+
+- `CONFIG_POSTS_PER_PAGE = 'archive_posts_per_page'`
+- `DEFAULT_PAGE = 1`
+- `AUTHOR_FALLBACK = 'SorockRu'`
+- `FIELD_H1_TITLE = 'archive_h1_title'`
+- `FIELD_H1_CONTENT = 'archive_h1_content'`
+- `META_PAGE_VIEWS = 'mpf_page_views_count'`
+- `PROMO_PERIOD = '2 years ago'`
+- `PROMO_POSTS_LIMIT = 6`
+- `FEBRUARY = 2`, `FEBRUARY_SHORT_DAY = 28`, `FEBRUARY_LAST_DAY = 29`, `LEAP_YEAR_REFERENCE = 2024`
+- `META_EVENT_DATE = 'event_date'`
+- `ROCK_DATA_POST_TYPE = 'rock-data'`
+- `MONTH_MIN = 1`, `MONTH_MAX = 12`
+
+**Публичные методы:**
+
+- `get_posts_archive(?string $post_type, ?int $page = null): ?array` — посты архива для типа записи, страница с 1. `null`, если постов нет.
+- `get_archive_metadata(?string $post_type): ?array` — SEO-метаданные архива (`title`, `description`, `canonical`, `dateGmt`, `modifiedGmt`, `author`).
+- `get_archive_seo_data(?string $post_type): ?array` — SEO-интро (`titleH1`, `description`, `reviewUrl`). `null`, если оба ACF-поля пусты.
+- `get_archive_promo_data(?string $post_type): ?array` — топ-6 постов по `mpf_page_views_count` за 2 года. Сортировка: просмотры (DESC), затем дата (DESC). Записи без счётчика — в конце.
+- `get_calendar_data(?int $month, ?int $day): ?array` — карточки событий дня (год игнорируется). Источники: `rock-data` + все CPT с `is_calendar` + посты из категорий с `is_calendar`. Для `28 февраля` дополнительно попадают записи `29 февраля`. Сортировка — от новых к старым.
+- `get_rock_calendar_data(?int $month): ?array` — карточки событий месяца, сгруппированные по `MM-DD`. Месяц вне 1–12 или пусто — `null`.
+
+**Внутренние хелперы:**
+
+- `resolve_archive_page_id(?string $post_type): ?int` — ID страницы-архива из `$post_types_config[$post_type]['page_id']`.
+- `is_valid_date(?int $month, ?int $day): bool` — проверка даты через `checkdate()` с leap-годом `2024`.
+- `resolve_calendar_post_types(): array` — `rock-data` + всё с `is_calendar` в `$post_types_config`.
+- `resolve_calendar_category_ids(): array` — ID категорий с `is_calendar` в `$categories_config`.
+
+**Фильтр по дате события** — через `meta_query` с `REGEXP` по ACF-полю `event_date` (формат `Ymd`):
+
+```php
+// Календарь дня: `(0123)$` или `(0228|0229)$`. Якорь `$` — чтобы
+// месяц+день стояли в конце строки.
+$meta_query = [
+    [
+        'key' => self::META_EVENT_DATE,
+        'value' => '('.implode('|', $mmdd_list).')$',
+        'compare' => 'REGEXP',
+    ],
+];
+```
+
+```php
+// Календарь месяца: `^[0-9]{4}MM[0-9]{2}$`. Якоря `^` и `$` — чтобы
+// не поймать `MMDD` в середине.
+$meta_query = [
+    [
+        'key'     => self::META_EVENT_DATE,
+        'value'   => '^[0-9]{4}'.$mm.'[0-9]{2}$',
+        'compare' => 'REGEXP',
+    ],
+];
+```
+
+**Дедупликация:** после объединения выборок по типам и категориям — `$unique[$post->ID] = $post`, затем `usort()` по `post_date` (DESC).
+
+### 3.2. `Post_Model` (readonly class)
 
 **Файл:** `models/_post-model.php`
 
@@ -402,33 +559,89 @@ function _mail_html(string $title, string $body): string
 public function __construct(int|string|null $page_id = null)
 ```
 
-**Публичные методы:**
+**Публичные методы (SEO):**
 
 - `get_seo_title(): string` — SEO-заголовок из Yoast (или fallback на `get_title()`).
 - `get_title(?int $page_id = null): string` — заголовок поста (fallback на первое предложение).
 - `get_h1(): string` — H1 из ACF или заголовок.
 - `get_description(): string` — SEO-описание из Yoast.
-- `get_post_metadata(): array` — SEO-данные для `generateMetadata`.
-- `get_cover_image(string $type = 'img900'): ?string` — обложка.
-- `get_inner_image(string $type = 'img900'): ?string` — внутреннее изображение.
-- `get_categories(string $type = 'slug'): ?array` — категории поста (исключая `main_rub`).
-- `get_tags(?string $format = null): ?array` — теги поста.
-- `get_post_author(string $format = 'fullname', int $post_count = 5): string|array|null` — данные автора.
-- `get_post_date(?string $type = null): string|int|null` — дата поста.
-- `get_content(?string $format = null, int $cut_count = 0): string` — контент с очисткой.
-- `get_country(string $type = 'value'): string` — страна события.
-- `get_permalink(?int $page_id = null): string` — относительный URL.
-- `get_post_base(): array` — полные данные поста для фронта.
-- `get_latest_news_promo_model(): array` — данные поста для промо-блока.
-- `public static function get_last_posts_by_type(array $post_type, ?int $posts_per_page = 3): ?array` — последние посты по типам.
+- `get_post_metadata(): array` — SEO-данные (`title`, `description`, `canonical`, `innerImg`, `dateGmt`, `modifiedGmt`, `author`, `tags`).
 
-**Приватные методы:**
+**Медиа:**
+
+- `get_cover_image(string $type = 'img900'): ?string`
+- `get_inner_image(string $type = 'img900'): ?string`
+
+**Таксономии:**
+
+- `get_categories(string $type = 'slug'): ?array` — категории (исключая `main_rub`).
+- `get_tags(?string $format = null): ?array` — `name_arr`, `id_arr`, `thumb_type` или `[{value, label}]`.
+
+**Автор:**
+
+- `get_post_author(string $format = 'fullname', int $post_count = 5): string|array|null` — `id`, `author_thumb_data`, `name`, `surname`, `fullname`, `logo`, `link`, `about`, `socList`, `posts_id`.
+
+**Дата:**
+
+- `get_post_date(?string $type = null): string|int|null` — `yafeed`, `seo`, `seo_modify` или дефолт из `time_format.date_with_time`.
+- `get_event_date(): ?string` — ACF `event_date` (`Ymd` → `Y-m-d`).
+
+**Контент:**
+
+- `get_content(?string $format = null, int $cut_count = 0): string` — `clean`, `autop` или дефолт.
+
+**Страна / ссылка:**
+
+- `get_country(string $type = 'value'): string` — `value` (код) или `label`.
+- `get_permalink(?int $page_id = null): string` — относительный URL.
+
+**Модели ответа:**
+
+- `get_post_base(): array` — полные данные поста (`author`, `innerImg`, `country`, `settings.readingTime`, `main`, `taxonomies`, `video`, `music`).
+- `get_post_archive_model(): array` — карточка архива (`titleH1`, `content` (20 слов), `author`, `url`, `coverImg` (img500), `postDate`, `tags`, `country`, `categories`, `readingTime`).
+- `get_post_event_card_model(): array` — карточка события (`eventDate`, `titleH1`, `content`, `author`, `url`, `coverImg`, `tags`, `country`).
+- `get_post_short_model(): array` — короткая карточка (`thumbnail`, `title`, `url`, `author`, `categories`, `postDate`, `eventDate`, `year`).
+- `get_latest_news_promo_model(): array` — промо главной (`titleH1`, `content`, `author`, `innerImg`, `country`, `readingTime`, `postDate`, `tags`, `categories`).
+- `get_video_models(): ?array` — галерея видео из ACF-повторителя `videogalary`.
+- `get_music_model(): ?array` — альбом поста (`musicCode`, `albumInfo`).
+- `get_top_album_model(): array` — карточка топа (переиспользует `get_music_model()` + `innerImg`, `country`, `url`).
+
+**Статические хелперы:**
+
+- `public static function get_last_posts_by_type(array $post_type, ?int $posts_per_page = 3): ?array`
+
+**Внутренние хелперы:**
 
 - `get_yafeed_time(): string` — время в формате Yandex Feed.
 - `get_clean_content()`, `get_autop_content()`, `get_default_content()` — варианты очистки контента.
-- `get_reading_time(): int` — время чтения в минутах.
+- `get_reading_time(): int` — время чтения в минутах (`WORDS_PER_MINUTE = 200`).
+- `resolve_terms_names(mixed $terms): ?array` — ACF-таксономия (`id` / `object` / `array` / `string`) → массив имён.
+- `resolve_acf_image(mixed $image): ?string` — ACF-изображение (`id` / `url` / `array`) → URL.
 
-### 3.2. `User_Model`
+### 3.3. `Page_Model` (readonly class)
+
+**Файл:** `models/_page-model.php`
+
+Модель для страниц (не постов).
+
+**Конструктор:**
+
+```php
+public function __construct(int|string|null $page_id = null)
+```
+
+**Методы:**
+
+- `get_page_metadata(): array` — SEO-данные страницы.
+- `get_latest_news_promo_data(array $post_type, ?int $posts_per_page = 3): ?array` — промо-данные последних постов.
+- `get_calendar_default_data(): ?array` — события на сегодня (тот же сборщик, что `/archive/calendar`, но месяц и день — из `wp_date('n')` / `wp_date('j')`).
+- `get_top_albums_list_data(): ?array` — топы альбомов с главной (ACF-опции `ta_ls_top_list`, `ta_ls_title`, `ta_ls_tabtitle`, `ta_ls_tl_item`). У топа ≤ 10 альбомов, у каждого — `position` (1..N).
+
+**Приватные хелперы:**
+
+- `build_top_albums(array $album_rows): array` — сборка карточек топа с нумерацией.
+
+### 3.4. `User_Model`
 
 **Файл:** `models/_user-model.php`
 
@@ -488,37 +701,22 @@ public function __construct(int $user_id)
 
 **Модели ответа:**
 
-- `get_user_model(): array` — полный публичный профиль.
-- `get_current_user_model(): array` — сокращённый профиль текущего пользователя.
+- `get_user_model(): array` — полный публичный профиль (`userId`, `userLogin`, `avatarUrl`, `role`, `userUrl`, `metrics`, `contacts`, `socLinks`, `activity`).
+- `get_current_user_model(): array` — сокращённый профиль текущего пользователя (`userId`, `role`, `fullName`, `avatarUrl` (img80), `isActivated`, `isCookieAccepted`).
 
-### 3.3. `Page_Model` (readonly class)
-
-**Файл:** `models/_page-model.php`
-
-Модель для страниц (не постов).
-
-**Конструктор:**
-
-```php
-public function __construct(int|string|null $page_id = null)
-```
-
-**Методы:**
-
-- `get_page_metadata(): array` — SEO-данные страницы.
-- `get_latest_news_promo_data(array $post_type, ?int $posts_per_page = 3): ?array` — промо-данные последних постов.
-
-### 3.4. `Taxonomy_Model`
+### 3.5. `Taxonomy_Model`
 
 **Файл:** `models/_taxonomy-model.php`
 
 Модель для работы с таксономиями.
 
+**Константы:** `JSON_POPULAR_TAGS = 'popular_tags_JSON'`, `TYPE_JSON = 'json'`, `MIN_TAG_POSTS_COUNT = 15`, `TAGGED_POST_TYPES = ['news']`.
+
 **Методы:**
 
 - `get_posts_by_tag(int $tag_id): ?array` — посты по тегу, сгруппированные по годам.
 - `get_published_posts_by_tag(int $tag_id): ?array` — ID опубликованных постов по тегу.
-- `get_popular_tags(?string $type = null): ?array` — популярные теги. `json` — из кэша, иначе — из БД.
+- `get_popular_tags(?string $type = null): ?array` — популярные теги. `json` — из кэша, иначе — из БД (фильтр `count >= 15`).
 
 **Приватные методы:**
 
@@ -528,15 +726,18 @@ public function __construct(int|string|null $page_id = null)
 - `get_popular_tags_from_db(): ?array`
 - `get_tag_data(WP_Term|WP_Error|int|null $tag): ?array`
 
-### 3.5. `Search_Model`
+### 3.6. `Search_Model`
 
 **Файл:** `models/_search-model.php`
 
 Модель глобального поиска.
 
+**Константы:** `AUTHOR_FALLBACK = 'SorockRu'`.
+
 **Методы:**
 
-- `get_search_data(WP_REST_Request $request): ?array` — данные поиска (посты + метаинформация).
+- `get_search_data(?string $post_types, ?string $categories, ?string $phrase): ?array` — данные поиска (посты + метаинформация).
+- `get_search_metadata(?string $phrase): array` — SEO-метаданные страницы поиска.
 
 **Приватные методы:**
 
@@ -545,36 +746,39 @@ public function __construct(int|string|null $page_id = null)
 - `get_allowed_post_types(): array`
 - `get_allowed_category_ids(): array`
 - `parse_requested_list(string $value): array`
-- `format_post_data(WP_Post $post): array`
 
-### 3.6. `Auth_Model`
+### 3.7. `Auth_Model`
 
 **Файл:** `models/_auth-model.php`
 
 Модель авторизации и писем.
+
+**Константы:** `MAIL_HEADERS = 'Content-type: text/html; charset="UTF-8";'`, `CONFIRM_CODE_FIELD = 'usrmain_confirm_code'`, `CODE_MIN = 100000`, `CODE_MAX = 999999`.
 
 **Методы:**
 
 - `send_confirm_account_mail(string $email, int $user_id): bool` — письмо для подтверждения аккаунта.
 - `send_reset_password_code_mail(string $email, int $user_id): bool` — письмо для сброса пароля.
 - `send_changed_password_info_mail(string $email): bool` — уведомление о смене пароля.
-- `get_default_user_data(array $credentials): array` — данные для регистрации.
+- `get_default_user_data(array $credentials): array` — данные для регистрации (берёт `loginEmail`, `password`, `name`, `surname`, ставит первую роль из `get_roles()`).
 
 **Приватные методы:**
 
 - `generate_code(): int` — 6-значный код.
 - `save_confirm_code(int $user_id, int $code): void`
 
-### 3.7. `Site_Model`
+### 3.8. `Site_Model`
 
 **Файл:** `models/_site-model.php`
 
 Модель общих данных сайта.
 
+**Константы:** `MAIL_HEADERS`, `JSON_CRON_INFO`, `JSON_POPULAR_TAGS`, `JSON_USERS_INFO`, `STATUS_SUCCESS = 'success'`, `STATUS_ERROR = 'error'`, `UPDATED_BY = 'user'`.
+
 **Методы:**
 
 - `send_contact_form_mail(array $params): bool` — отправка контактной формы.
-- `get_trends_data(): ?array` — тренды (последние 10 постов).
+- `get_trends_data(): ?array` — тренды (последние 10 постов из `news`).
 - `set_cron_info(): ?array` — обновление cron-сводки.
 - `set_popular_tags(): array` — обновление JSON популярных тегов.
 - `set_users_info(): array` — обновление JSON пользователей.
@@ -611,7 +815,7 @@ class Some_Controller extends WP_REST_Controller
     // Константы
     // =====================================================================
 
-    private const string SOME_CONST = '...';
+    private const string ROUTE_SINGLE = '/(?P<slug>[a-zA-Z0-9_-]+)';
     private const int    SOME_LIMIT = 10;
 
     // =====================================================================
@@ -635,7 +839,10 @@ class Some_Controller extends WP_REST_Controller
 
     public function register_routes(): void
     {
-        $this->api->public_route($this->base_route . '/endpoint', [$this, 'some_method']);
+        $this->api->public_route(
+            $this->base_route.self::ROUTE_SINGLE,
+            [$this, 'some_method'],
+        );
     }
 
     // =====================================================================
@@ -659,7 +866,7 @@ class Some_Controller extends WP_REST_Controller
 
 ### 4.3. Список контроллеров
 
-**`Admin_Controller`** — `/admin/*` (приватные), **пауза:** регистрация роутов на бэке закомментирована, фронт админки снят. Возможно вернутся. Не вызывать, пока снова не включат:
+**`Admin_Controller`** — `/admin/*` (приватные), **не зарегистрирован** в `routes.php`. Регистрация закомментирована, на фронте админки нет. Не вызывать с фронта, пока роуты не включат. Список для справки:
 
 - `/get-cron-info`, `/update-cron-info`, `/update-cron-task`
 - `/get-users-info`, `/update-users`, `/delete-users`
@@ -667,93 +874,58 @@ class Some_Controller extends WP_REST_Controller
 
 **`Auth_Controller`** — `/auth/*` (публичные):
 
-- `/registration`, `/send-confirm-code-mail`, `/confirm-email`
-- `/send-reset-pass-code-mail`, `/reset-password`
+- `/registration`
+- `/send-confirm-code-mail`
+- `/confirm-email` — две ветки: без параметров (по JWT) → `['isConfirmed' => bool]`; с `email` + `confirmCode` → подтверждение.
+- `/send-reset-pass-code-mail`
+- `/reset-password`
 
 **`Metadata_Controller`** — `/metadata` (публичный):
 
-- `/metadata` — единая точка SEO-метаданных. Query: обязательный `type`
+- `/metadata` — единая точка SEO. Query: обязательный `type`
   (`page` / `archive` / `post` / `search`), опциональные `slug` и `param`.
-  Для `page` пустой `slug` означает главную; для `archive` в `slug`
-  передаётся post type; для `post` — слаг записи; для `search` поисковая
-  фраза передаётся в `param`.
+  Для `page` пустой `slug` — главная; для `archive` в `slug` передаётся
+  post type; для `post` — слаг записи; для `search` фраза — в `param`.
 
-**`Post_Controller`** — `/post/*` (публичный):
-
-- `/post/{slug}` — базовые данные одной записи (`Post_Model::get_post_base()`).
-  Query: обязательный `postType`. Запись не найдена → `data: null`,
-  `['notfound' => true]`.
-
-**`Archive_Controller`** — `/archive/*` (публичные), общий для всех пост-типов:
+**`Archive_Controller`** — `/archive/*` (публичные):
 
 - `/archive` — архив. Query: обязательный `postType`, опциональный `page`.
   `page` отсутствует или `< 1` → первая; `page > archive_pages_count` → последняя.
-- `/promo-data` — промо раздела. Query: обязательный `postType`, без `page`.
-  `data`: `seoData` (`titleH1`, `description`, `reviewUrl`) и `archivePromoData`.
-- `/get-slugs` — слаги для SSG. Query: обязательный `postType`.
-- `/calendar` — события одного календарного дня, без года. Query: `month`
-  (1–12) и `day` (1–31). `data` — массив карточек или `null`, без обёртки
-  `postsData`. Поля элемента: `titleH1`, `content` (HTML), `author`
-  (`fullName`, опциональные `img80` и `url`), `url`, `coverImg` (или `null`),
-  `tags` (имена строками или `null`), `country`. Выборка — опубликованные
-  записи с этим месяцем и днём `post_date` за любые годы, от новых к старым.
-  Небывалая дата — `data: null`. 29 февраля допустим. В невисокосном году
-  записи 29 февраля отдаются вместе с `month=2&day=28`, потому что фронт
-  `day=29` в такой год не запрашивает.
-- `/rock-calendar` — календарь архива `/rock-data` на месяц, без года.
-  Query: `month` (1–12). `data` — объект, ключ `MM-DD`, значение — массив
-  `PostShortCard` (`thumbnail`, `title`, `url`, `author`, `categories`,
-  `postDate`, `eventDate` в формате `YYYY-MM-DD`, `year`). На карточке
-  в модалке дня показывается `eventDate`. Дней без постов в объекте нет. Месяц вне 1–12 или
-  пустая выборка — `data: null`. Группировка по ACF `event_date` (`Ymd`),
-  год игнорируется. `02-28` и `02-29` — отдельные ключи. Внутри дня — от
-  новых записей к старым.
-- `/metadata/{post_type}` — legacy SEO поста. Query: `slug`; новый фронт
-  использует единый `/metadata`.
-- `/archive` не принимает `pagesCount` от клиента. `data` содержит:
-
-```php
-[
-    'postsData' => $archive_model->get_posts_archive(
-        $post_type,
-        $page_num,
-    ),
-    'paginationInfo' => [
-        'currentPage' => $page_num,
-        'pagesCount'  => $pages_max,
-    ],
-]
-```
+  `pagesCount` от клиента не принимается.
+  `data`: `postsData` + `paginationInfo: { currentPage, pagesCount }`.
+- `/get-slugs` — слаги для `generateStaticParams`. Query: обязательный `postType`.
+- `/promo-data` — промо раздела. Query: обязательный `postType`. `data`: `seoData` (`titleH1`, `description`, `reviewUrl`) и `archivePromoData`. Отсутствие данных — `null` в полях, не 404.
+- `/calendar` — события календарного дня. Query: `month` (1–12) и `day` (1–31). `data` — `EventCardModel[]` или `null`. Поля карточки: `eventDate`, `titleH1`, `content`, `author`, `url`, `coverImg`, `tags`, `country`. Небывалая дата — `data: null`. 29 февраля допустим; в невисокосном году записи 29 февраля отдаются вместе с `month=2&day=28`.
+- `/rock-calendar` — календарь месяца архива `/rock-data`. Query: `month` (1–12). `data` — объект `MM-DD` → `PostShortCard[]` (`thumbnail`, `title`, `url`, `author`, `categories`, `postDate`, `eventDate` (`YYYY-MM-DD`), `year`). Дней без постов в объекте нет. `02-28` и `02-29` — отдельные ключи.
 
 **`Page_Controller`** — `/page/*` (публичные):
 
-- `/home-page-data`. В `data` рядом с `lastNewsPromoData` —
-  `calendarDefaultData`: тот же массив, что `/archive/calendar` на
-  сегодняшний месяц и день (часовой пояс сайта), или `null`.
-  `topAlbumsListData` — массив топов альбомов или `null`. Топ:
-  `title` (общий заголовок), `tabTitle` (короткое имя вкладки),
-  `albums` (до 10, по порядку мест). Альбом: `position`, `musicCode`
-  (готовый HTML iframe/виджета, как `music.musicCode` у поста), `title`,
-  `artists` (`string[] | null`), `year` (`number | null`), `country`
-  (`string | null`), `coverImg` (квадрат), `innerImg` (горизонтальное фото
-  или `null`), `url` (ссылка на рецензию или `null`).
+- `/home-page-data`. `data` содержит `lastNewsPromoData`, `calendarDefaultData` (тот же массив, что `/archive/calendar` на сегодня, или `null`), `topAlbumsListData` (массив топов или `null`). Топ: `title`, `tabTitle`, `albums` (до 10 с `position` 1..N; альбом — `musicCode`, `title`, `artists`, `year`, `country`, `coverImg`, `innerImg`, `url`).
+
+**`Post_Controller`** — `/post/*` (публичный):
+
+- `/(?P<slug>[a-zA-Z0-9_-]+)` — базовая карточка поста. Path: `slug`. Query: обязательный `postType`. Нет поста → `data: null`, `['notfound' => true]`.
 
 **`Search_Controller`** — `/search/*` (публичные):
 
-- `/` (поиск), `/get-search-config`.
+- `/` — поиск. Query: `phrase`, опциональные `post_types`, `categories`.
+- `/get-search-config` — конфиг поиска (`searchResultMaxCount`, `postTypes` и `categories` только с `is_searched`).
 
 **`Site_Controller`** — `/site/*` (публичные):
 
-- `/common-data`, `/filter-params`, `/send-contact-form`.
+- `/common-data` — тренды, `base.supportEmail`, `popularTags` (из JSON).
+- `/filter-params` — **в работе.** В `Site_Config::get_filter_params()` реализации пока нет; эндпоинт упадёт с Fatal Error. Не вызывать с фронта, пока метод не реализован.
+- `/send-contact-form` — контактная форма. Валидация `send-contact-form`. Возвращает `['isSent' => bool]`.
 
 **`Taxonomy_Controller`** — `/taxonomy/*` (публичные):
 
-- `/search-posts-by-tag`.
+- `/search-posts-by-tag` — посты по тегу. Валидация `search-posts-by-tag`. Query: `tagId`.
 
 **`User_Controller`** — `/users/*`:
 
-- `/filter` (public), `/get-user-data` (public)
-- `/get-current-user` (private)
+- `/filter` (public) — пагинация юзеров. Query: `page`, `offset`.
+- `/get-user-data` (public) — публичный профиль. Валидация `get-user-data`. Query: `userId`.
+- `/get-current-user` (private) — профиль по JWT.
 
 ---
 
@@ -862,15 +1034,15 @@ public function response(?array $data = null, ?array $settings = null): array
 
 - `$data` — данные ответа (для `result: 'ok'`).
 - `$settings` — настройки:
-    - `errors` — массив ошибок (или одна ошибка).
-    - `redirect` — URL для редиректа.
-    - `logout` — флаг принудительного выхода.
-    - `notfound` — флаг 404.
+  - `errors` — массив ошибок (или одна ошибка).
+  - `redirect` — URL для редиректа.
+  - `logout` — флаг принудительного выхода.
+  - `notfound` — флаг 404.
 
 **Логика:**
 
-- `result` определяется по наличию `errors`, `redirect`, `logout`, `notfound`.
-- При `result === 'errors'` — массив нормализуется (одна ошибка → `[ошибка]`).
+- `result` определяется по наличию `errors`, `redirect`, `logout`, `notfound` (через `match(true)`).
+- При `result === 'errors'` — массив нормализуется: если у ошибки есть `code` — оборачивается в `[$errors]`.
 - При `result === 'redirect'` — добавляется `redirectUrl`.
 
 ### Метод `set_error()`
@@ -939,7 +1111,7 @@ return $this->api->response(null, $this->api->set_error('er200'));
 ],
 ```
 
-Если `capability` указан — проверяются права пользователя.
+Опционально — `capability` (проверка прав в разработке).
 
 ### Порядок валидации (`Site_Config::$VALIDATE_SORT`)
 
@@ -987,8 +1159,8 @@ function gf(string $name, int|string $id): string|array|bool|WP_Post|null
 
 ```php
 $h1 = gf('main_h1', $post_id);
-$about = gf('prf_about', 'user_' . $user_id);
-$cover = gf('tgg_cover_img', 'post_tag_' . $tag_id);
+$about = gf('prf_about', 'user_'.$user_id);
+$cover = gf('tgg_cover_img', 'post_tag_'.$tag_id);
 ```
 
 ### `uf()` — обновление поля
@@ -1003,8 +1175,8 @@ function uf(string $name, int|string $id, mixed $value): bool
 
 ```php
 uf('main_h1', $post_id, 'Новый заголовок');
-uf('is_activated', 'user_' . $user_id, true);
-uf('usrmain_confirm_code', 'user_' . $user_id, null); // удаление
+uf('is_activated', 'user_'.$user_id, true);
+uf('usrmain_confirm_code', 'user_'.$user_id, null); // удаление
 ```
 
 ### `gf_img()` — изображение
@@ -1013,13 +1185,13 @@ uf('usrmain_confirm_code', 'user_' . $user_id, null); // удаление
 function gf_img(string $name, int|string $id, string $type = 'img900'): string|int|null
 ```
 
-**Размеры:** `img80`, `img500`, `img900`, `origin`, `id`.
+**Размеры:** `img80`, `img500`, `img900`, `thumbnail`, `origin`, `id`.
 
 **Примеры:**
 
 ```php
 $cover = gf_img('cover_img', $post_id);
-$avatar = gf_img('avatar', 'user_' . $user_id, 'img80');
+$avatar = gf_img('avatar', 'user_'.$user_id, 'img80');
 $image_id = gf_img('cover_img', $post_id, 'id');
 ```
 
@@ -1036,19 +1208,40 @@ $image_id = gf_img('cover_img', $post_id, 'id');
 
 ## 8. Пост-типы и таксономии
 
-### Список CPT
+### Активные CPT
 
-- `news` — Новости
-- `reviews` — Рецензии
-- `cool` — Видео
-- `autors` — Статьи
-- `nocommerce` — Новый рок
-- `rock-data` — Рок-дата
+| Slug | Label | Кастомная таксономия |
+| --- | --- | --- |
+| `article` | Статьи | `article_cat` |
+| `journal` | Журнал | нет |
+| `music` | Музыка | `music_cat` |
+| `news` | Новости | `news_cat` |
+| `quiz` | Тесты | нет |
+| `rock-data` | Рок даты | нет |
+| `site-archive` | Архивные материалы | нет |
+| `stars` | Звезды | нет |
+| `video` | Видео | `video_cat` |
+
+Флаги `in_latest_posts` / `is_searched` / `is_calendar` здесь не зафиксированы: архив REST по-прежнему принимает только `postType` и `page`.
+
+### Таксономии
+
+**Стандартные** (все CPT): `post_tag` (метки). Рубрики `category` в публичной иерархии не используются.
+
+**Кастомные**, `hierarchical => true`. Дефолтные термины плоские (`parent = 0`), вложенность задаётся в админке WP.
+
+| Таксономия | CPT | Дефолтные термины |
+| --- | --- | --- |
+| `article_cat` | `article` | `interview`, `review`, `sport`, `game`, `fact`, `entertaining`, `event`, `advertising` |
+| `music_cat` | `music` | `album`, `single`, `ep`, `playlist`, `live` |
+| `news_cat` | `news` | `society`, `sport`, `celebrities`, `interesting`, `advertisement` |
+| `video_cat` | `video` | `clip`, `concert`, `live`, `film`, `cool` |
 
 ### Правило `singular` / `plural`
 
-- `singular` — **единственное** число (`'Статья'`, `'Новость'`, `'Рецензия'`)
-- `plural` — **множественное** число (`'Статьи'`, `'Новости'`, `'Рецензии'`)
+- `singular` — **единственное** число (`'Новость'`, `'Рок дата'`)
+- `plural` — **множественное** число (`'Новости'`, `'Рок даты'`)
+- `gender` (опционально) — `m` / `f` для согласования «не найдено / не найдены»
 
 **Пример:**
 
@@ -1056,10 +1249,10 @@ $image_id = gf_img('cover_img', $post_id, 'id');
 register_post_type(
     $post_type,
     Site_Config::get_instance()->get_post_type_args([
-        'singular'  => 'Статья',
-        'plural'    => 'Статьи',
-        'icon'      => 'dashicons-businessman',
-        'post_type' => 'autors',
+        'singular'  => 'Новость',
+        'plural'    => 'Новости',
+        'icon'      => 'dashicons-pressthis',
+        'post_type' => $post_type,
     ])
 );
 ```
@@ -1099,21 +1292,27 @@ add_action('init', 'add_{slug}_post_type');
        'label'           => 'Новые типы',
        'in_latest_posts' => true,
        'is_searched'     => true,
-       'page_id'         => ...,
+       'is_calendar'     => false,
+       'page_id'         => 123,
    ],
    ```
 
-3. Создать контроллер `controllers/_new-type-controller.php` (если нужны свои эндпоинты).
-4. Зарегистрировать роуты в `api/routes.php`.
+3. Зарегистрировать `Site_Config::$FIELDS`, если нужны свои эндпоинты с валидацией.
+4. Использовать существующие `Archive_Controller` / `Post_Controller` — отдельный контроллер не требуется.
 
-### Таксономии
+### Категории сайта
 
-Проект использует **стандартные** таксономии:
+`Site_Config::$categories_config` — старые ключи меню. В публичных маршрутах их нет: разделы живут в терминах `article_cat`, `music_cat`, `news_cat`, `video_cat`.
 
-- `category` — рубрики
-- `post_tag` — теги
-
-Дополнительные категории описаны в `Site_Config::$categories_config`.
+| Slug | Label | `url` | `id` | `page_id` | `is_searched` | `is_calendar` |
+|---|---|---|---|---|---|---|
+| `alboms_rub` | Альбомы | `alboms` | 18 | 15465 | ✅ | ✅ |
+| `interview_rub` | Интервью | `intervju` | 110 | 15467 | ✅ | ❌ |
+| `clips_rub` | Клипы | `clips` | 62 | 15469 | ✅ | ✅ |
+| `concert_rub` | Концерты | `concerts` | 620 | 15471 | ✅ | ✅ |
+| `okolorock_rub` | Вокруг рока | `okolorock` | 15 | 15475 | ✅ | ❌ |
+| `rock_film` | Кино | `rock-films` | 273 | 15477 | ✅ | ❌ |
+| `rock_date_rub` | Рок даты | `alboms` | 279 | — | ✅ | ✅ |
 
 ---
 
@@ -1125,11 +1324,11 @@ add_action('init', 'add_{slug}_post_type');
 
 | Свойство | Тип | Описание |
 |---|---|---|
-| `$query_latest_posts_types` | array | Типы для ленты последних постов |
 | `$time_format` | array | Форматы дат (`date_with_time`, `date`) |
-| `$emails` | array | Email-адреса (`support`) |
-| `$permitted_config` | array | Настройки сайта |
-| `$cron_config` | array | Конфигурация cron |
+| `$emails` | array | `support`, `mail_to`, `test_mail` |
+| `$links` | array | `reviewUrl` |
+| `$permitted_config` | array | Настройки сайта (см. §2.2) |
+| `$cron_config` | array | Конфигурация cron (`popular_tags`, `users_info`) |
 | `$admin_id` | int | ID администратора |
 | `$post_types_config` | array | Конфиг пост-типов |
 | `$categories_config` | array | Конфиг категорий |
@@ -1140,9 +1339,11 @@ add_action('init', 'add_{slug}_post_type');
 | `$week_days_short_translate` | array | Дни недели (перевод) |
 | `$month_days_short_translate` | array | Месяцы (перевод) |
 
+Приватные: `PROD_HOSTS`, `$base_cap`.
+
 ### Справочники
 
-Статические данные (страны, дни недели, месяцы) хранятся **внутри `Site_Config`** (раньше были в `Site_Constants`).
+Статические данные (страны, дни недели, месяцы) хранятся **внутри `Site_Config`**.
 
 ### Использование
 
@@ -1173,7 +1374,7 @@ $validator = $config->VALIDATORS['email'] ?? null;
 - **`wp_reset_postdata()` — после чтения постов** (не до).
 - **`array_map` вместо `foreach + array_push`** — где возможно.
 - **Guard'ы на `null`** — где нужно.
-- **`is_valid()`** — для моделей, которые могут быть «пустыми» (User_Model).
+- **`is_valid()`** — для моделей, которые могут быть «пустыми» (`User_Model`).
 
 ### Ошибки
 
@@ -1201,7 +1402,7 @@ $validator = $config->VALIDATORS['email'] ?? null;
 
 ### Константы
 
-- **Все константы класса** — с типом: `private const string X = '...'`.
+- **Все константы класса** — с типом: `private const string X = '...'`, `private const array Y = [...]`, `private const int Z = 10`.
 - **Глобальные `const`** — без типа (или с типом, если PHP 8.3+).
 
 ---
@@ -1230,7 +1431,7 @@ $validator = $config->VALIDATORS['email'] ?? null;
 2. В `register_routes()`:
 
    ```php
-   $this->api->public_route($this->base_route . '/my-endpoint', [$this, 'my_method']);
+   $this->api->public_route($this->base_route.'/my-endpoint', [$this, 'my_method']);
    ```
 
 3. В `Site_Config::$FIELDS`:
@@ -1259,6 +1460,10 @@ public function my_method(int $param): ?array
 1. В админке ACF — создать группу полей.
 2. В коде — использовать через `gf()` / `uf()` / `gf_img()`.
 
+### Добавление нового пост-типа
+
+См. §8 «Добавление нового CPT (пошагово)».
+
 ---
 
 ## 12. Внешние зависимости
@@ -1282,11 +1487,26 @@ public function my_method(int $param): ?array
 
 **Расположение:** `site-setup/jsons/`.
 
-**Обновление (пауза):** роуты `/admin/update-cron-task` и `/admin/update-cron-info` на бэке закомментированы, возможно вернутся. Пока JSON обновляется только cron-задачами на сервере, не через REST.
+**Обновление:** только cron-задачами на сервере. Роуты `/admin/update-cron-task` и `/admin/update-cron-info` закомментированы (не вызывать с фронта).
 
 **Чтение:**
 
 - `get_json_file('popular_tags_JSON')` — утилита из `_utils.php`.
+
+**Структура JSON:**
+
+```json
+{
+    "modifyData": {
+        "lastUpdate": "2024-10-15 12:00:00",
+        "lastUpdateStatus": "success",
+        "updatedBy": "user",
+        "itemsCount": 42,
+        "label": "Популярные теги"
+    },
+    "data": [ ... ]
+}
+```
 
 ---
 
@@ -1295,7 +1515,7 @@ public function my_method(int $param): ?array
 - **Плагин:** JWT Authentication for WP-API.
 - **Секретный ключ:** `JWT_AUTH_SECRET_KEY` (в `wp-config.php`).
 - **Алгоритм:** HS256 (по умолчанию), через фильтр `jwt_auth_algorithm`.
-- **Время жизни:** 1 час (`JWT_TOKEN_LIFETIME = 3600`).
+- **Время жизни:** 1 час (`JWT_TOKEN_LIFETIME = 3600` в `_jwt.php`).
 
 **Получение токена:**
 
@@ -1303,6 +1523,17 @@ public function my_method(int $param): ?array
 POST /wp-json/jwt-auth/v1/token
 { "username": "...", "password": "..." }
 ```
+
+**Ответ:**
+
+```json
+{
+    "token": "...",
+    "expires": 1728993600000
+}
+```
+
+`expires` — **в миллисекундах** (кастомный фильтр `jwt_auth_token_before_dispatch`).
 
 **Использование:**
 
@@ -1323,12 +1554,30 @@ $user_id = (new Api_Helper())->get_user_id_from_headers($request);
 ## 15. Changelog паттернов
 
 - **1.0.0** — первая версия паттернов после рефакторинга:
-    - `Site_Config` — singleton.
-    - Типизированные константы.
-    - `readonly class` для `Post_Model` / `Page_Model`.
-    - `User_Model::is_valid()` + nullable `user_data`.
-    - Единая точка guard в `get_acf()` / `set_acf()`.
-    - `Api_Helper` — убран `__construct`, `const string API_ENDPOINT`.
-    - `Validate` — `array|false`, `run_validator()`.
-    - Все контроллеры — секции, константы, `register_routes(): void`.
-    - Post-types — правильные `singular` / `plural`.
+  - `Site_Config` — singleton.
+  - Типизированные константы.
+  - `readonly class` для `Post_Model` / `Page_Model`.
+  - `User_Model::is_valid()` + nullable `user_data`.
+  - Единая точка guard в `get_acf()` / `set_acf()`.
+  - `Api_Helper` — убран `__construct`, `const string API_ENDPOINT`.
+  - `Validate` — `array|false`, `run_validator()`.
+  - Все контроллеры — секции, константы, `register_routes(): void`.
+  - Post-types — правильные `singular` / `plural`.
+
+- **1.1.0** — синхронизация с актуальной структурой бэкенда:
+  - Новый контроллер **`Archive_Controller`** (`/archive/archive`, `/get-slugs`, `/promo-data`, `/calendar`, `/rock-calendar`).
+  - Новый контроллер **`Post_Controller`** (`/post/{slug}`).
+  - Новый контроллер **`Metadata_Controller`** (`/metadata` — единая точка SEO).
+  - `News_Controller` удалён.
+  - `Users_Controller` → **`User_Controller`** (`/users/*`).
+  - Новая модель **`Archive_Model`** (ленты, промо, календари).
+  - `Post_Model` расширена: `get_post_event_card_model`, `get_post_short_model`, `get_latest_news_promo_model`, `get_video_models`, `get_music_model`, `get_top_album_model`, `get_event_date`, `get_reading_time`, `resolve_terms_names`, `resolve_acf_image`.
+  - `Page_Model` расширена: `get_calendar_default_data`, `get_top_albums_list_data`.
+  - `Auth_Model` — добавлен `send_changed_password_info_mail`.
+  - `Site_Config` — добавлены `$links`, `PROD_HOSTS`, `is_production()`, `get_mail_to()`, новые ключи `$permitted_config` и `$emails`.
+  - Активные CPT: `article`, `journal`, `music`, `news`, `quiz`, `rock-data`, `site-archive`, `stars`, `video`.
+  - Кастомные таксономии: `article_cat`, `music_cat`, `news_cat`, `video_cat` (иерархические, дефолтные термины плоские).
+  - Стандартная таксономия на всех CPT: `post_tag`. Рубрики `category` в публичной иерархии не используются.
+  - `Admin_Controller` не зарегистрирован в `routes.php` — раздел «пауза» удалён из паттернов.
+  - `/site/filter-params` — «в работе» (`Site_Config::get_filter_params()` не реализован).
+  - JWT: `expires` в ответе `/token` — в миллисекундах.

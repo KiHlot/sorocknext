@@ -28,7 +28,7 @@ export interface TagIF {
 export type SearchParamsT = Record<string, string | undefined>;
 
 export interface PageProps<
-    ParamsIF extends Record<string, string> = Record<string, string>,
+    ParamsIF extends Record<string, string | string[]> = Record<string, string>,
 > {
     params: Promise<ParamsIF>;
     searchParams?: Promise<SearchParamsT>;
