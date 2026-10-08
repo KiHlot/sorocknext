@@ -3,6 +3,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { isPostTypeSectionPath } from '@/configs/postTypes.config';
 import { LEFT_MENU } from '@/components/menus/LeftMenu/LeftMenu.config';
 import styles from '@/components/menus/LeftMenu/LeftMenu.module.scss';
 
@@ -14,8 +15,7 @@ const LeftMenu: FC = () => {
             <ul className={`flcol ${styles.list}`}>
                 {LEFT_MENU.map((item) => {
                     const { label, url, icon, hasBorder } = item;
-                    const isCurrent =
-                        pathname === url || pathname.startsWith(`${url}/`);
+                    const isCurrent = isPostTypeSectionPath(pathname, url);
 
                     return (
                         <li

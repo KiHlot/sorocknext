@@ -2,10 +2,10 @@ import { cookies } from 'next/dist/server/request/cookies';
 import { ResponseIF } from '@/types/api';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 
-export const fetchApi = async <DataIF = null>(
+export const fetchApiEnvelope = async <DataIF = null>(
     route: string,
-    cache: RequestCache = 'no-cache', //'force-cache'
-): Promise<DataIF | null | undefined> => {
+    cache: RequestCache = 'no-cache',
+): Promise<ResponseIF<DataIF> | null> => {
     let token: string | null = null;
 
     try {
@@ -35,10 +35,23 @@ export const fetchApi = async <DataIF = null>(
             },
         );
 
-        const { result, data }: ResponseIF<DataIF> = await response.json();
-
-        return result === 'ok' ? data : null;
+        return (await response.json()) as ResponseIF<DataIF>;
     } catch (error) {
         console.error('error', error);
+
+        return null;
     }
+};
+
+export const fetchApi = async <DataIF = null>(
+    route: string,
+    cache: RequestCache = 'no-cache', //'force-cache'
+): Promise<DataIF | null | undefined> => {
+    const envelope = await fetchApiEnvelope<DataIF>(route, cache);
+
+    if (!envelope) {
+        return;
+    }
+
+    return envelope.result === 'ok' ? envelope.data : null;
 };

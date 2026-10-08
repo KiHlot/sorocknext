@@ -1,4 +1,4 @@
-import { POST_TYPES } from '@/configs/postTypes.config';
+import { POST_TYPES, getPostTypeBySlug } from '@/configs/postTypes.config';
 import {
     STANDARD_TAXONOMIES,
     TAG_PATH,
@@ -6,8 +6,10 @@ import {
 } from '@/configs/taxonomies.config';
 
 export const getArchiveLabel = (slug: string, title?: string): string => {
-    if (slug in POST_TYPES) {
-        return POST_TYPES[slug as keyof typeof POST_TYPES];
+    const postType = getPostTypeBySlug(slug);
+
+    if (postType) {
+        return POST_TYPES[postType];
     }
 
     const termLabel = getKnownTermLabel(slug);

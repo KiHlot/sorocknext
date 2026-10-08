@@ -19,7 +19,7 @@ export const FOOTER_MENU = {
                 label: 'Фильмы',
             },
             {
-                url: '/article/interview',
+                url: '/articles/interview',
                 label: 'Интервью',
             },
         ],
@@ -32,7 +32,7 @@ export const FOOTER_MENU = {
                 label: 'Новости',
             },
             {
-                url: '/article',
+                url: '/articles',
                 label: 'Статьи',
             },
             {

@@ -1,5 +1,6 @@
 import { PaginationInfoIF } from '@/types/common';
 import { PostArchiveCardModelIF } from '@/components/cards/PostArchiveCard/PostArchiveCard.types';
+import { ArchiveTermFilterPropsIF } from '@/components/interactive/ArchiveTermFilter/ArchiveTermFilter.types';
 import { ArchiveSeoDataIF } from '@/components/sections/ArchivePromoSection/ArchivePromoSection.types';
 
 export interface ArchiveTPLPropsIF {
@@ -9,5 +10,6 @@ export interface ArchiveTPLPropsIF {
     paginationInfo?: PaginationInfoIF | null;
     seoData?: ArchiveSeoDataIF | null;
     archivePromoData?: PostArchiveCardModelIF[] | null;
+    termFilter?: ArchiveTermFilterPropsIF | null;
     getPageHref?: (page: number) => string;
 }

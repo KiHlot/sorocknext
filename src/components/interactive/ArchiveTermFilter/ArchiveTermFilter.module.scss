@@ -1,0 +1,25 @@
+.filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--gapBlock);
+}
+
+.link {
+    height: 38px;
+    padding: 0 16px;
+    border: var(--border);
+    border-radius: var(--borderRadius);
+    background-color: var(--bgColorSecondary);
+    color: var(--textColor);
+}
+
+.current {
+    color: var(--white);
+    background-color: var(--accent);
+    cursor: default;
+
+    &:hover {
+        opacity: 1;
+    }
+}

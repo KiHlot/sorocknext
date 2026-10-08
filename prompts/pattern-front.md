@@ -247,9 +247,10 @@ export const fetchApi = async <DataIF = null>(
 
 - `fetchMetadata({ type, slug?, param? })` — `/metadata?type=...&slug=...&param=...` + `getMetadata`
 - `fetchHomePageData` — `/page/home-page-data`; в `data` рядом с `lastNewsPromoData` приходит `calendarDefaultData` (события сегодняшнего дня, `EventCardModelIF[] | null`) и `topAlbumsListData` (топы альбомов, `TopAlbumsListIF[] | null`, типы в `@/components/sections/TopAlbumsSection/TopAlbumsSection.types`)
-- `fetchArchive({ postType, page })` — `/archive/archive?postType=...&page=...`;
-  количество страниц приходит в `paginationInfo: { currentPage, pagesCount }`
-  и в запрос не передаётся
+- `fetchArchive({ postType, taxonomy?, page })` — `/archive/archive?postType=...&taxonomy=...&page=...`.
+  `taxonomy` — slug термина (`clip`), не имя таксономии (`video_cat`); в query попадает только если задан.
+  `pagesCount` приходит в `paginationInfo: { currentPage, pagesCount }`, в запрос не передаётся и считается от фильтра.
+  `result: 'redirect'` с `redirectUrl` обрабатывает сама обёртка через `redirect()` из `next/navigation` (`fetchApiEnvelope` в `@/helpers/fetchApi`). `fetchApi` по-прежнему возвращает только `data` при `result === 'ok'`
 - `fetchArchivePromo({ postType })` — `/archive/promo-data?postType=...`;
   `seoData` (HTML `titleH1` / `description`, `reviewUrl`) и
   `archivePromoData` (посты галереи, активен первый). Без `page`.
@@ -309,13 +310,13 @@ JWT `/token` — **другая форма ответа** (`token`, `expires`, `
 
 Как читается `[...slug]`:
 
-- один сегмент из дефолтных терминов (`/article/interview`) редиректит на архив термина `/article/interview/1`;
-- `/article/interview/:id` — архив термина, `:id` это номер страницы (`1`, `2`, …);
-- `/article/interview/{слаг}` — запись: термин остаётся в адресе;
-- вложенный термин архива заканчивается номером страницы: `/article/sport/child/1`;
+- один сегмент из дефолтных терминов (`/articles/interview`) редиректит на архив термина `/articles/interview/1`;
+- `/articles/interview/:id` — архив термина, `:id` это номер страницы (`1`, `2`, …);
+- `/article/interview/{слаг}` — запись: термин остаётся в адресе, слаг типа для записи — `article`;
+- вложенный термин архива заканчивается номером страницы: `/articles/sport/child/1`;
 - у типа без кастомной таксономии (`journal`, `quiz`, `rock-data`, `site-archive`, `stars`) допустим только один сегмент — запись.
 
-Список постов термина пока берётся тем же `fetchArchive({ postType, page })`: `page` равен `:id`. Бэк ещё не фильтрует архив по термину.
+Список постов термина — `fetchArchive({ postType, taxonomy, page })`: `taxonomy` равен slug термина из пути, `page` равен `:id`. Адрес архива статей — `/articles/{term}/{page}` (`/articles/entertaining/2`). В API `postType` остаётся `article`. Фильтр берёт термины из `CUSTOM_TAXONOMIES`. «Все» ведёт на `/articles`, термин — на `/articles/{term}/1`. `/article` и `/article/{term}/{page}` редиректят на `articles`. Query `?taxonomy=` редиректит на этот путь.
 
 Паттерн страницы:
 

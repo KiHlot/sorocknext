@@ -23,11 +23,14 @@ alwaysApply: false
 Стандартная таксономия на всех типах: `post_tag` (метки). Рубрики `category`
 в публичной иерархии не используются.
 
-Фронтовые URL: `/{postType}`, `/{postType}/{postSlug}`,
-`/{postType}/{term}/{id}` — архив термина (`id` — номер страницы),
-`/{postType}/{term}/{slug}` — запись. `/{postType}/{term}` редиректит на
-`/{postType}/{term}/1`. Метки — `/tag/{slug}`.
-Архив REST пока фильтрует только по `postType` — отдельного query по термину нет.
+Фронтовые URL: `/{archiveSlug}`, `/{archiveSlug}?page={n}`,
+`/{postType}/{postSlug}`,
+`/{archiveSlug}/{term}/{id}` — архив термина (`id` — номер страницы),
+`/{postType}/{term}/{slug}` — запись. `/{archiveSlug}/{term}` редиректит на
+`/{archiveSlug}/{term}/1`. Архивный слаг `article` — `articles`, остальные
+совпадают с пост-типом. Метки — `/tag/{slug}`.
+Архив REST: обязательный `postType`, опциональные `taxonomy` (slug термина,
+не имя таксономии) и `page`. `pagesCount` считается от текущего фильтра.
 
 ## Изображения
 

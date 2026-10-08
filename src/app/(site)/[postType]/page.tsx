@@ -1,35 +1,40 @@
 import { ReactElement } from 'react';
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { PageProps } from '@/types/common';
 import { fetchArchive, fetchArchivePromo } from '@/api/archive/endpoints';
 import { fetchMetadata } from '@/api/metadata/endpoints';
 import {
     POST_TYPES,
     POST_TYPE_SLUGS,
-    isPostType,
+    getArchiveSlug,
+    getPostTypeBySlug,
 } from '@/configs/postTypes.config';
 import {
     getTermSegmentsFromCategories,
+    isDefaultTerm,
     nestPostUrl,
 } from '@/configs/taxonomies.config';
 import {
+    getArchivePageHref,
     parseArchivePage,
     redirectArchivePage,
 } from '@/helpers/archive/archive.helpers';
+import { getArchiveTermFilter } from '@/components/interactive/ArchiveTermFilter/ArchiveTermFilter.helpers';
 import ArchiveTPL from '@/templates/ArchiveTPL/ArchiveTPL.component';
 
 type ArchivePagePropsT = PageProps<{ postType: string }>;
 
 export const generateStaticParams = (): { postType: string }[] =>
-    POST_TYPE_SLUGS.map((postType) => ({ postType }));
+    POST_TYPE_SLUGS.map((postType) => ({ postType: getArchiveSlug(postType) }));
 
 export async function generateMetadata({
     params,
 }: ArchivePagePropsT): Promise<Metadata> {
-    const { postType } = await params;
+    const { postType: postTypeSlug } = await params;
+    const postType = getPostTypeBySlug(postTypeSlug);
 
-    if (!isPostType(postType)) {
+    if (!postType) {
         notFound();
     }
 
@@ -40,14 +45,25 @@ const ArchivePage = async ({
     params,
     searchParams,
 }: ArchivePagePropsT): Promise<ReactElement> => {
-    const { postType } = await params;
+    const { postType: postTypeSlug } = await params;
+    const postType = getPostTypeBySlug(postTypeSlug);
 
-    if (!isPostType(postType)) {
+    if (!postType) {
         notFound();
     }
 
+    const archiveSlug = getArchiveSlug(postType);
     const queryParams = await searchParams;
     const page = parseArchivePage(queryParams);
+    const taxonomy = queryParams?.taxonomy?.trim();
+
+    if (taxonomy || postTypeSlug !== archiveSlug) {
+        redirect(
+            taxonomy && isDefaultTerm(postType, taxonomy)
+                ? `/${archiveSlug}/${taxonomy}/${page}`
+                : getArchivePageHref(postType, page),
+        );
+    }
 
     const results = await Promise.allSettled([
         fetchArchive({ postType, page }),
@@ -59,16 +75,15 @@ const ArchivePage = async ({
 
     if (data && queryParams) {
         redirectArchivePage(
-            `/${postType}`,
+            `/${archiveSlug}`,
             queryParams,
-            page,
-            data.paginationInfo.pagesCount,
+            data.paginationInfo.currentPage,
         );
     }
 
     return data ? (
         <ArchiveTPL
-            pathname={`/${postType}`}
+            pathname={`/${archiveSlug}`}
             title={POST_TYPES[postType]}
             postsData={data.postsData?.map((post) => ({
                 ...post,
@@ -79,6 +94,10 @@ const ArchivePage = async ({
                 ),
             }))}
             paginationInfo={data.paginationInfo}
+            termFilter={getArchiveTermFilter(postType)}
+            getPageHref={(pageNumber) =>
+                getArchivePageHref(postType, pageNumber)
+            }
             seoData={promo?.seoData}
             archivePromoData={promo?.archivePromoData?.map((post) => ({
                 ...post,

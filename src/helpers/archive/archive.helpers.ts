@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { SearchParamsT } from '@/types/common';
+import { PostTypeT, getArchiveSlug } from '@/configs/postTypes.config';
 
 export const parseArchivePage = (
     searchParams: SearchParamsT | undefined,
@@ -9,19 +10,25 @@ export const parseArchivePage = (
     return Number.isInteger(parsedPage) ? Math.max(1, parsedPage) : 1;
 };
 
+export const getArchivePageHref = (
+    postType: PostTypeT,
+    page: number,
+): string => {
+    const pathname = `/${getArchiveSlug(postType)}`;
+
+    return page > 1 ? `${pathname}?page=${page}` : pathname;
+};
+
 export const redirectArchivePage = (
     pathname: string,
     searchParams: SearchParamsT,
-    page: number,
-    pagesCount: number,
+    currentPage: number,
 ): void => {
     if (searchParams.page === undefined) {
         return;
     }
 
-    const normalizedPage = Math.min(page, Math.max(1, pagesCount));
-
-    if (searchParams.page === String(normalizedPage)) {
+    if (searchParams.page === String(currentPage)) {
         return;
     }
 
@@ -33,6 +40,6 @@ export const redirectArchivePage = (
         }
     }
 
-    normalizedSearchParams.set('page', String(normalizedPage));
+    normalizedSearchParams.set('page', String(currentPage));
     redirect(`${pathname}?${normalizedSearchParams.toString()}`);
 };

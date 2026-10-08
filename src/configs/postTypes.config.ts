@@ -16,3 +16,45 @@ export const POST_TYPE_SLUGS = Object.keys(POST_TYPES) as PostTypeT[];
 
 export const isPostType = (value: string): value is PostTypeT =>
     value in POST_TYPES;
+
+const POST_TYPE_ARCHIVE_SLUGS: Partial<Record<PostTypeT, string>> = {
+    article: 'articles',
+};
+
+export const getArchiveSlug = (postType: PostTypeT): string =>
+    POST_TYPE_ARCHIVE_SLUGS[postType] ?? postType;
+
+export const getPostTypeBySlug = (slug: string): PostTypeT | null => {
+    const matched = POST_TYPE_SLUGS.find(
+        (postType) => getArchiveSlug(postType) === slug,
+    );
+
+    if (matched) {
+        return matched;
+    }
+
+    return isPostType(slug) ? slug : null;
+};
+
+export const isPostTypeSectionPath = (
+    pathname: string,
+    href: string,
+): boolean => {
+    if (pathname === href || pathname.startsWith(`${href}/`)) {
+        return true;
+    }
+
+    const hrefSegment = href.split('/').find(Boolean);
+    const pathSegment = pathname.split('/').find(Boolean);
+    const postType = hrefSegment ? getPostTypeBySlug(hrefSegment) : null;
+
+    if (
+        !postType ||
+        !pathSegment ||
+        href.split('/').filter(Boolean).length !== 1
+    ) {
+        return false;
+    }
+
+    return pathSegment === postType || pathSegment === getArchiveSlug(postType);
+};

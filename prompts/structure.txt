@@ -230,6 +230,13 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |           RegistrationForm.config.ts
 |   |           
 |   +---interactive
+|   |   +---ArchiveTermFilter
+|   |   |       ArchiveTermFilter.component.tsx
+|   |   |       ArchiveTermFilter.config.ts
+|   |   |       ArchiveTermFilter.helpers.ts
+|   |   |       ArchiveTermFilter.module.scss
+|   |   |       ArchiveTermFilter.types.ts
+|   |   |       
 |   |   +---Breadcrumbs
 |   |   |       Breadcrumbs.component.tsx
 |   |   |       Breadcrumbs.config.ts

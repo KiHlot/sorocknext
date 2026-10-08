@@ -5,6 +5,7 @@ import {
 } from '@/layouts/CommonLayout/CommonLayout.component';
 import Section from '@/components/blocks/Section/Section.component';
 import PostArchiveCard from '@/components/cards/PostArchiveCard/PostArchiveCard.component';
+import ArchiveTermFilter from '@/components/interactive/ArchiveTermFilter/ArchiveTermFilter.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 import Pagination from '@/components/interactive/Pagination/Pagination.component';
 import { ROCK_DATA_ARCHIVE_PATH } from '@/components/sections/ArchivePromoSection/ArchivePromoCalendar/ArchivePromoCalendar.config';
@@ -19,6 +20,7 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
     paginationInfo,
     seoData = null,
     archivePromoData = null,
+    termFilter = null,
     getPageHref,
 }) => {
     const titleId = `${pathname.replaceAll('/', '') || 'archive'}-title`;
@@ -51,6 +53,7 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
                             {title}
                         </h1>
                     )}
+                    {termFilter && <ArchiveTermFilter {...termFilter} />}
                     {!!postsData?.length && (
                         <div className={styles.list}>
                             {postsData.map((postData) => (

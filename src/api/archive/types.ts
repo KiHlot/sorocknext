@@ -7,6 +7,7 @@ import { ArchiveSeoDataIF } from '@/components/sections/ArchivePromoSection/Arch
 export interface FetchArchiveParamsIF {
     postType: string;
     page: number;
+    taxonomy?: string;
 }
 
 export interface FetchArchiveIF {

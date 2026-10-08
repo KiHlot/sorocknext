@@ -889,9 +889,11 @@ class Some_Controller extends WP_REST_Controller
 
 **`Archive_Controller`** — `/archive/*` (публичные):
 
-- `/archive` — архив. Query: обязательный `postType`, опциональный `page`.
-  `page` отсутствует или `< 1` → первая; `page > archive_pages_count` → последняя.
-  `pagesCount` от клиента не принимается.
+- `/archive` — архив. Query: обязательный `postType`, опциональные `taxonomy` (slug термина, не имя таксономии; один) и `page`.
+  Имя таксономии бэк выводит из `postType`. У типа без кастомной таксономии `taxonomy` игнорируется.
+  Неизвестный slug — `postsData: null`, `pagesCount: 1`, не 404.
+  `page` отсутствует или `< 1` → первая; `page > pagesCount` → последняя, `currentPage` уже поправлен.
+  `pagesCount` считается от фильтра и от клиента не принимается.
   `data`: `postsData` + `paginationInfo: { currentPage, pagesCount }`.
 - `/get-slugs` — слаги для `generateStaticParams`. Query: обязательный `postType`.
 - `/promo-data` — промо раздела. Query: обязательный `postType`. `data`: `seoData` (`titleH1`, `description`, `reviewUrl`) и `archivePromoData`. Отсутствие данных — `null` в полях, не 404.
@@ -1222,7 +1224,7 @@ $image_id = gf_img('cover_img', $post_id, 'id');
 | `stars` | Звезды | нет |
 | `video` | Видео | `video_cat` |
 
-Флаги `in_latest_posts` / `is_searched` / `is_calendar` здесь не зафиксированы: архив REST по-прежнему принимает только `postType` и `page`.
+Флаги `in_latest_posts` / `is_searched` / `is_calendar` здесь не зафиксированы. Архив REST принимает `postType`, опциональный `taxonomy` (slug термина) и `page`.
 
 ### Таксономии
 

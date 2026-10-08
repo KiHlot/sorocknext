@@ -25,7 +25,7 @@ export const SITE_CATEGORIES: SiteCategoriesT = {
     interview_rub: {
         link: {
             label: 'Интервью',
-            url: '/article/interview',
+            url: '/articles/interview',
         },
         icon: <MicrophoneIcon />,
     },

@@ -19,7 +19,7 @@ export const LEFT_MENU: MenuItemIF[] = [
         icon: <IoNewspaperOutline />,
     },
     {
-        url: '/article',
+        url: '/articles',
         label: 'Статьи',
         icon: <IoLibraryOutline />,
     },

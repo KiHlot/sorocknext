@@ -25,7 +25,7 @@ import {
     PostTypeTermConfigIF,
     PostTypeTermsConfigIF,
 } from '@/configs/postTypeTerms/postTypeTerms.types';
-import { PostTypeT } from '@/configs/postTypes.config';
+import { PostTypeT, getArchiveSlug } from '@/configs/postTypes.config';
 import { CUSTOM_TAXONOMIES } from '@/configs/taxonomies.config';
 
 const articleTerms = CUSTOM_TAXONOMIES.article_cat.terms;
@@ -41,7 +41,7 @@ const createPostTypeTerm = (
 ): PostTypeTermConfigIF => ({
     link: {
         label,
-        url: `/${postType}/${slug}`,
+        url: `/${getArchiveSlug(postType)}/${slug}`,
     },
     icon,
 });

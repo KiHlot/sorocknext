@@ -5,7 +5,11 @@ import { PageProps } from '@/types/common';
 import { fetchArchive, fetchArchiveSlugs } from '@/api/archive/endpoints';
 import { fetchMetadata } from '@/api/metadata/endpoints';
 import { fetchPost } from '@/api/post/endpoints';
-import { POST_TYPE_SLUGS, isPostType } from '@/configs/postTypes.config';
+import {
+    POST_TYPE_SLUGS,
+    getArchiveSlug,
+    getPostTypeBySlug,
+} from '@/configs/postTypes.config';
 import {
     getDefaultTermSlugs,
     getTermLabel,
@@ -15,6 +19,7 @@ import {
     nestPostUrl,
     resolveContentPath,
 } from '@/configs/taxonomies.config';
+import { getArchiveTermFilter } from '@/components/interactive/ArchiveTermFilter/ArchiveTermFilter.helpers';
 import ArchiveTPL from '@/templates/ArchiveTPL/ArchiveTPL.component';
 import PostTPL from '@/templates/PostTPL/PostTPL.component';
 
@@ -38,9 +43,10 @@ export async function generateStaticParams(): Promise<
                       return [{ postType, slug: [normalized] }];
                   })
                 : [];
+            const archiveSlug = getArchiveSlug(postType);
             const termParams = getDefaultTermSlugs(postType).flatMap((term) => [
-                { postType, slug: [term, '1'] },
-                { postType, slug: [term] },
+                { postType: archiveSlug, slug: [term, '1'] },
+                { postType: archiveSlug, slug: [term] },
             ]);
 
             return [...termParams, ...postParams];
@@ -53,9 +59,10 @@ export async function generateStaticParams(): Promise<
 export async function generateMetadata({
     params,
 }: ContentPagePropsT): Promise<Metadata> {
-    const { postType, slug } = await params;
+    const { postType: postTypeSlug, slug } = await params;
+    const postType = getPostTypeBySlug(postTypeSlug);
 
-    if (!isPostType(postType)) {
+    if (!postType) {
         notFound();
     }
 
@@ -75,33 +82,35 @@ export async function generateMetadata({
 const ContentPage = async ({
     params,
 }: ContentPagePropsT): Promise<ReactElement> => {
-    const { postType, slug } = await params;
+    const { postType: postTypeSlug, slug } = await params;
+    const postType = getPostTypeBySlug(postTypeSlug);
 
-    if (!isPostType(postType)) {
+    if (!postType) {
         notFound();
     }
 
     const path = resolveContentPath(postType, slug);
+    const archiveSlug = getArchiveSlug(postType);
 
     if (path?.kind === 'term') {
-        const termPath = `/${postType}/${path.termSegments.join('/')}`;
+        const termPath = `/${archiveSlug}/${path.termSegments.join('/')}`;
         const termSlug = path.termSegments.at(-1) ?? '';
         const hasPageId =
             slug.length > path.termSegments.length &&
             isArchivePageId(slug.at(-1) ?? '');
 
-        if (!hasPageId) {
-            redirect(`${termPath}/1`);
+        if (!hasPageId || postTypeSlug !== archiveSlug) {
+            redirect(`${termPath}/${path.page}`);
         }
 
-        const data = await fetchArchive({ postType, page: path.page });
+        const data = await fetchArchive({
+            postType,
+            page: path.page,
+            taxonomy: termSlug || undefined,
+        });
 
-        if (data) {
-            const pagesCount = Math.max(1, data.paginationInfo.pagesCount);
-
-            if (path.page > pagesCount) {
-                redirect(`${termPath}/${pagesCount}`);
-            }
+        if (data && path.page !== data.paginationInfo.currentPage) {
+            redirect(`${termPath}/${data.paginationInfo.currentPage}`);
         }
 
         const postsData = data?.postsData?.map((post) => ({
@@ -115,6 +124,7 @@ const ContentPage = async ({
                 title={getTermLabel(postType, termSlug)}
                 postsData={postsData}
                 paginationInfo={data.paginationInfo}
+                termFilter={getArchiveTermFilter(postType, termSlug)}
                 getPageHref={(page) => `${termPath}/${page}`}
             />
         ) : (
@@ -124,6 +134,12 @@ const ContentPage = async ({
 
     if (path?.kind !== 'post' || !path.postSlug.trim()) {
         notFound();
+    }
+
+    if (postTypeSlug !== postType) {
+        const segments = [...path.termSegments, path.postSlug.trim()];
+
+        redirect(`/${postType}/${segments.join('/')}`);
     }
 
     const postSlug = path.postSlug.trim();
