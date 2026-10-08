@@ -14,7 +14,7 @@ const TopAlbumCard: FC<TopAlbumCardPropsIF> = ({
     className = '',
     clickHandler,
 }) => {
-    const { position, title, year, artists, country, url, musicCode } = album;
+    const { position, title, year, artists, country, url } = album;
     const imgUrl = isWide ? (album.innerImg ?? album.coverImg) : album.coverImg;
     const heading = year ? `${title}, ${year}` : title;
     const wrapperClassName = `${styles.topAlbumCardWrapper} ${isActive ? styles.active : ''} ${className}`;
@@ -37,7 +37,7 @@ const TopAlbumCard: FC<TopAlbumCardPropsIF> = ({
         </>
     );
 
-    if (musicCode && clickHandler) {
+    if (clickHandler) {
         return (
             <Button
                 isCustom
