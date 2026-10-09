@@ -1,5 +1,7 @@
 import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
 
+export const LAST_NEWS_PROMO_SLIDE_GAP = MAGIC_NUMBERS.LastNewsPromoSlideGap;
+
 export const LAST_NEWS_PROMO_SLIDES_PER_VIEW = 1.5;
 
 export const LAST_NEWS_PROMO_SLIDER_BREAKPOINTS = {

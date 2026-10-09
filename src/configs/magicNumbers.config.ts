@@ -4,6 +4,7 @@ export const MAGIC_NUMBERS = {
     RedirectDelay: 2000,
     CalendarRequestDelay: 1000,
     SwiperLoopMinSlides: 2,
+    LastNewsPromoSlideGap: 20,
     MonthsInYear: 12,
     RockDatesMonthsPerView: 5,
     RockDatesMonthsPerViewXxl: 3,

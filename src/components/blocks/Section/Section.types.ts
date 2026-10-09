@@ -6,4 +6,5 @@ export interface SectionPropsIF {
     ariaLabel?: string;
     ariaLabelledBy?: string;
     title?: string;
+    isDecorHidden?: boolean;
 }

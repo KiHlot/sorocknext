@@ -6,13 +6,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import LastNewsPromoCard from '@/components/cards/LastNewsPromoCard/LastNewsPromoCard.component';
 import {
     LAST_NEWS_PROMO_COPY,
+    LAST_NEWS_PROMO_SLIDE_GAP,
     LAST_NEWS_PROMO_SLIDER_BREAKPOINTS,
     getLastNewsPromoSlideLabel,
 } from '@/components/sections/LastNewsPromoSection/LastNewsPromoSection.config';
 import styles from '@/components/sections/LastNewsPromoSection/LastNewsPromoSlider/LastNewsPromoSlider.module.scss';
 import { LastNewsPromoSliderPropsIF } from '@/components/sections/LastNewsPromoSection/LastNewsPromoSlider/LastNewsPromoSlider.types';
-
-const SLIDE_GAP = 20;
 
 const LastNewsPromoSlider: FC<LastNewsPromoSliderPropsIF> = ({
     items,
@@ -42,7 +41,7 @@ const LastNewsPromoSlider: FC<LastNewsPromoSliderPropsIF> = ({
             <Swiper
                 slidesPerView={1}
                 breakpoints={LAST_NEWS_PROMO_SLIDER_BREAKPOINTS}
-                spaceBetween={SLIDE_GAP}
+                spaceBetween={LAST_NEWS_PROMO_SLIDE_GAP}
                 watchOverflow
                 onSwiper={handleSwiper}
                 onSlideChange={handleSlideChange}
