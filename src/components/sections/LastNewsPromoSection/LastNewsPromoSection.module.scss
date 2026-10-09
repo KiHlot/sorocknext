@@ -1,3 +1,52 @@
+@use '@/styles/mixins' as *;
+
 .lastNewsPromoSectionWrapper {
+    display: flex;
+    align-items: stretch;
+    gap: var(--gapDesktop);
     width: 100%;
+    overflow: hidden;
+    box-shadow: var(--elemShadow);
+
+    &#{&} {
+        background-color: var(--bgColorDark);
+        padding-top: 18px;
+        padding-bottom: 18px;
+    }
+
+    @include media(xxl) {
+        flex-direction: column;
+    }
+
+    .intro {
+        width: 40%;
+        min-width: 0;
+        position: relative;
+        z-index: 1;
+
+        @include media(xxl) {
+            width: 100%;
+        }
+    }
+
+    .sliderColumn {
+        width: 56%;
+        min-width: 0;
+        position: relative;
+        z-index: 1;
+
+        @include media(xxl) {
+            width: 100%;
+        }
+    }
+}
+
+.decor {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--textColor);
+    opacity: 0.35;
+    pointer-events: none;
 }

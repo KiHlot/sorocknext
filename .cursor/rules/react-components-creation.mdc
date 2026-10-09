@@ -69,6 +69,7 @@ alwaysApply: false
 - Без пропсов: `const Name: FC = () => { ... }`
 - Компонент — всегда `export default`. Named export — только типы, конфиги, хелперы, хуки.
 - Пропсы — в `*.types.ts`, имя `NamePropsIF`. Опциональные с дефолтом в деструктуризации (`className = ''`).
+- Размер и слой блока в родителе (`width`, `min-width`, `max-width`, `position`, `z-index`) не писать в SCSS ребёнка. Родитель передаёт их через `className`. Подробности — `scss-modules-styling.mdc`.
 - Обработчики — именованные `handle*`, не анонимные в JSX.
 - `'use client'` — первая строка, только если нужны хуки, события, формы, браузерные API.
 - Кнопка проекта: `children`, `clickHandler`, `variant`, `isLoading`, `href` (тогда `next/link`). Не вводить `label` / `onClick` как новый контракт — расширять существующий `ButtonPropsIF`.

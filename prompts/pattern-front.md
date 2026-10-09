@@ -569,6 +569,7 @@ const onSubmit = async (values: RegistrationFieldsIF): Promise<void> => {
 - Тема: класс `defaultTheme` на `body`, CSS-переменные из `$defaultTheme`.
 - Раскладка строится на Flexbox (`display: flex`, `flex-direction`, `flex-wrap`, `justify-content`, `align-items`, `gap`). CSS Grid (`display: grid`) не используется.
 - Сокращение `flex` не писать. `flex-grow`, `flex-shrink` и `flex-basis` не использовать как обычный способ задать размер — только если шириной (`width`, `min-width`, `max-width`) раскладку не выразить.
+- Место блока в родителе (`width`, `min-width`, `max-width`, `height`, `position`, `z-index`, внешний `margin` и их адаптив) задаёт SCSS родителя и передаётся пропом `className`. Модуль ребёнка описывает только содержимое.
 - Медиа: `@use '@/styles/mixins' as *;` и `@include media(md) { ... }`. Медиамиксин вкладывается внутрь изменяемого класса, а не размещается на верхнем уровне. Брейкпоинты в `_variables.scss` (`xxs` … `desktop`).
 - Вложенность селекторов — не больше трёх уровней. Без `!important`, кроме существующих утилит вроде `.d_none`.
 

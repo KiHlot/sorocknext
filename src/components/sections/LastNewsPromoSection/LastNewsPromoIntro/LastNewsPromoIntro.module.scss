@@ -1,0 +1,64 @@
+@use '@/styles/mixins' as *;
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.title {
+    margin: 0;
+    color: var(--white);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+
+    @include media(lg) {
+        font-size: 30px;
+    }
+
+    @include media(sm) {
+        font-size: 26px;
+    }
+}
+
+.titleAccent {
+    color: var(--accent);
+}
+
+.lead {
+    margin: 0;
+    max-width: 420px;
+    color: var(--textColor);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+a.explore {
+    width: fit-content;
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 28px;
+    margin: auto 0 0;
+    padding: 8px 0 0;
+    list-style: none;
+}
+
+.statValue {
+    color: var(--white);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.statLabel {
+    margin-top: 4px;
+    color: var(--textColor);
+    font-size: 13px;
+}

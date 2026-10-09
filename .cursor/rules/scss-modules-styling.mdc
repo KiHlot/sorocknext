@@ -21,6 +21,26 @@ alwaysApply: false
 - Сокращение `flex` не использовать. `flex-grow`, `flex-shrink` и `flex-basis` по умолчанию не ставить: их трудно сверять. Ширину и высоту задавать через `width`, `min-width`, `max-width`, `height`. Эти три свойства — редкий случай, когда блок должен занять остаток ряда или не сжаться, и это нельзя выразить шириной.
 - Вложенность ≤ 3. `&:hover` / `&.active`. Без `!important` (кроме утилит вроде `.d_none`).
 - Отступы — 4 пробела.
+- Место блока в родителе задаёт SCSS родителя и приходит пропом `className`. В модуле ребёнка этого нет. Сюда входят `width`, `min-width`, `max-width`, `height`, `position`, `z-index`, внешние `margin` и их `@include media`, если они раскладывают ребёнка внутри родителя. В модуле ребёнка остаются стили его содержимого: направление flex, `gap`, типографика, цвета.
+
+```scss
+// секция
+.intro {
+    width: 40%;
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+}
+```
+
+```tsx
+<LastNewsPromoIntro className={styles.intro} />
+```
+
+```tsx
+// ребёнок
+<div className={`${styles.intro} ${className}`} />
+```
 
 ### `@use` и токены
 

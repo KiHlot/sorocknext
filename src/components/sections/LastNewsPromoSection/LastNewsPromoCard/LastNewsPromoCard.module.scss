@@ -1,0 +1,152 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bgColor);
+    border-radius: var(--borderRadius);
+    box-shadow: var(--elemShadow);
+    overflow: hidden;
+}
+
+.cover {
+    display: block;
+    width: 100%;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    text-decoration: none;
+}
+
+.flag {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 1;
+}
+
+.tone0 {
+    background-image: linear-gradient(
+        160deg,
+        var(--bgColorSecondary),
+        var(--accent)
+    );
+}
+
+.tone1 {
+    background-image: linear-gradient(
+        165deg,
+        var(--colorPrimary),
+        var(--bgColorDark)
+    );
+}
+
+.tone2 {
+    background-image: linear-gradient(
+        150deg,
+        var(--colorSecondary),
+        var(--bgColor)
+    );
+}
+
+.tone3 {
+    background-image: linear-gradient(
+        170deg,
+        var(--accent),
+        var(--bgColorDark)
+    );
+}
+
+.tone4 {
+    background-image: linear-gradient(
+        155deg,
+        var(--bgColor),
+        var(--colorPrimary)
+    );
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 14px;
+}
+
+.title {
+    display: -webkit-box;
+    width: 100%;
+    margin: 0;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+    overflow: hidden;
+    text-decoration: none;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    &:hover {
+        opacity: var(--hoverOpacity);
+    }
+}
+
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+    color: var(--textColor);
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.metaItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.metaIcon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 100%;
+}
+
+.read {
+    color: var(--accent);
+    font-size: 13px;
+    line-height: 1.2;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+        opacity: var(--hoverOpacity);
+    }
+}
+
+.author {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--white);
+    font-size: 13px;
+
+    > span:first-child {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+}
