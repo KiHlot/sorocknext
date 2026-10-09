@@ -79,7 +79,6 @@ $date = \DateTime::createFromFormat('Y-m-d', $value);
 - `Публичные настройки` (для `Site_Config`)
 - `Пост-типы и категории`
 - `Валидация`
-- `Роли и capabilities`
 - `Справочники`
 - `Утилиты`
 - `Регистрация роутов`
@@ -117,15 +116,16 @@ theme/
 │   ├── _media.php                   # Размеры изображений
 │   ├── _options_page.php            # ACF-страницы настроек
 │   ├── _reset_functions.php         # Отключение лишнего из WP
-│   ├── _pt_article.php              # Post type: article
+│   ├── _set_popular_tags.php        # Cron: popular tags JSON
+│   ├── _pt_article.php              # Post type: article + article_cat
 │   ├── _pt_journal.php              # Post type: journal
-│   ├── _pt_music.php                # Post type: music
-│   ├── _pt_news.php                 # Post type: news
+│   ├── _pt_music.php                # Post type: music + music_cat
+│   ├── _pt_news.php                 # Post type: news + news_cat
 │   ├── _pt_quiz.php                 # Post type: quiz
 │   ├── _pt_rock_data.php            # Post type: rock-data
 │   ├── _pt_site_archive.php         # Post type: site-archive
-│   ├── _pt_stars.php                # Post type: stars
-│   ├── _pt_video.php                # Post type: video
+│   ├── _pt_stars.php                # Post type: stars — ЗАКОММЕНТИРОВАН
+│   ├── _pt_video.php                # Post type: video + video_cat
 │   └── jsons/                       # JSON-кэш (cron_info_JSON и др.)
 ├── controllers/
 │   ├── index.php                    # Автозагрузка контроллеров
@@ -210,7 +210,7 @@ function register_custom_rest_routes(): void
 add_action('rest_api_init', 'register_custom_rest_routes');
 ```
 
-`Admin_Controller` существует, но его регистрация **закомментирована**. Пока роуты `/admin/*` не включены — не вызывать с фронта.
+`Admin_Controller` существует, но его регистрация **не вызывается** из `routes.php`. Роуты `/admin/*` сейчас выключены — не вызывать с фронта.
 
 ### Автозагрузка через `index.php`
 
@@ -291,7 +291,7 @@ $this->api->private_route($this->base_route.'/get-current-user', [$this, 'get_cu
 
 **Файл:** `helpers/_class-site-config.php`
 
-Класс-конфигурация сайта. Хранит **все** настройки, справочники, пост-типы, правила валидации, роли.
+Класс-конфигурация сайта. Хранит **все** настройки, справочники, пост-типы, правила валидации.
 
 **Singleton:**
 
@@ -324,9 +324,12 @@ $support_email = $config->emails['support'];
 - **Публичные настройки** — `$time_format`, `$emails` (`support`, `mail_to`, `test_mail`), `$links` (`reviewUrl`), `$permitted_config`, `$cron_config`, `$admin_id`.
 - **Пост-типы и категории** — `$post_types_config`, `$categories_config`.
 - **Валидация** — `$VALIDATORS`, `$FIELDS`, `$VALIDATE_SORT`.
-- **Роли и capabilities** — `$base_cap`, метод `get_roles()`.
 - **Справочники** — `$countries_arr`, `$week_days_short_translate`, `$month_days_short_translate`.
 - **Утилиты** — методы `is_production()`, `get_mail_to()`, `get_site_url()`, `get_post_type_args()`, `generate_post_type_labels()`.
+
+**Приватное:**
+
+- `private const array PROD_HOSTS = ['sorock.ru', 'www.sorock.ru']`.
 
 **Ключи `$permitted_config`:**
 
@@ -340,12 +343,18 @@ $support_email = $config->emails['support'];
 | `addPostMinLevel` | 1 | Мин. уровень для добавления |
 | `bookmarkFeedCount` | 6 | Закладок в ленте |
 
+**`$cron_config`:**
+
+| Ключ | `action` | `jsonName` |
+|---|---|---|
+| `popular_tags` | `popular_tags` | `popular_tags_JSON` |
+| `users_info` | `users_info` | `users_info_JSON` |
+
 **Методы:**
 
 - `public static function get_instance(): self` — получение singleton.
-- `public function is_production(): bool` — `true`, если хост из `PROD_HOSTS` (`sorock.ru`, `www.sorock.ru`).
-- `public function get_mail_to(): string` — email получателя писем с учётом окружения: на тестовом стенде `test_mail`, на проде `mail_to`.
-- `public function get_roles(): array` — список ролей (`lobby`, `member`, `editor`, `admin`) с capabilities.
+- `public function is_production(): bool` — `true`, если хост из `PROD_HOSTS`.
+- `public function get_mail_to(): string` — email получателя с учётом окружения: на тестовом стенде `test_mail`, на проде `mail_to`.
 - `public function get_site_url(?string $type = null): ?string` — URL сайта (`full`, `decorated`, `server_name`, `back_local_domain`).
 - `public function get_post_type_args(array $props): array` — генерация аргументов для `register_post_type()`.
 - `private function generate_post_type_labels(array $props): array` — генерация labels для CPT (с учётом рода `gender`: `m` / `f`).
@@ -384,7 +393,9 @@ public function __construct(?WP_REST_Request $credentials)
 **Принцип работы:**
 
 1. Если маршрут **не описан** в `FIELDS` — возвращает `false` (валидация не требуется).
-2. Для каждого поля:
+2. Если задан `$user_id` и у маршрута есть `capability` — вызывает `check_permission()`.
+   **Сейчас `check_permission()` всегда возвращает `false`** (TODO), то есть любой маршрут с `capability` упадёт с `er228`.
+3. Для каждого поля:
   - Проверяет наличие (`isset`).
   - Если поле обязательно и отсутствует — ошибка `er200`.
   - Нормализует значение (`null`, `'null'`, `'undefined'` → `null`; строка → `sanitize_string`).
@@ -490,8 +501,6 @@ function _mail_html(string $title, string $body): string
 
 **Константы:**
 
-- `CONFIG_POSTS_PER_PAGE = 'archive_posts_per_page'`
-- `DEFAULT_PAGE = 1`
 - `AUTHOR_FALLBACK = 'SorockRu'`
 - `FIELD_H1_TITLE = 'archive_h1_title'`
 - `FIELD_H1_CONTENT = 'archive_h1_content'`
@@ -500,24 +509,34 @@ function _mail_html(string $title, string $body): string
 - `PROMO_POSTS_LIMIT = 6`
 - `FEBRUARY = 2`, `FEBRUARY_SHORT_DAY = 28`, `FEBRUARY_LAST_DAY = 29`, `LEAP_YEAR_REFERENCE = 2024`
 - `META_EVENT_DATE = 'event_date'`
-- `ROCK_DATA_POST_TYPE = 'rock-data'`
 - `MONTH_MIN = 1`, `MONTH_MAX = 12`
+
+**Маппинг пост-тип → таксономия (`POST_TYPE_TAXONOMY_MAP`):**
+
+```php
+'news'    => 'news_cat',
+'article' => 'article_cat',
+'music'   => 'music_cat',
+'video'   => 'video_cat',
+```
 
 **Публичные методы:**
 
-- `get_posts_archive(?string $post_type, ?int $page = null): ?array` — посты архива для типа записи, страница с 1. `null`, если постов нет.
 - `get_archive_metadata(?string $post_type): ?array` — SEO-метаданные архива (`title`, `description`, `canonical`, `dateGmt`, `modifiedGmt`, `author`).
 - `get_archive_seo_data(?string $post_type): ?array` — SEO-интро (`titleH1`, `description`, `reviewUrl`). `null`, если оба ACF-поля пусты.
-- `get_archive_promo_data(?string $post_type): ?array` — топ-6 постов по `mpf_page_views_count` за 2 года. Сортировка: просмотры (DESC), затем дата (DESC). Записи без счётчика — в конце.
+- `get_archive_promo_data(?string $post_type): ?array` — топ-6 постов по `mpf_page_views_count` за 2 года. Сортировка: просмотры (DESC), затем дата (DESC).
+- `get_archive_data(?string $post_type, ?string $taxonomy, int $page, int $per_page): ?array` — посты архива. Возвращает `['postsData' => ..., 'paginationInfo' => ['currentPage' => ..., 'pagesCount' => ...]]`.
 - `get_calendar_data(?int $month, ?int $day): ?array` — карточки событий дня (год игнорируется). Источники: `rock-data` + все CPT с `is_calendar` + посты из категорий с `is_calendar`. Для `28 февраля` дополнительно попадают записи `29 февраля`. Сортировка — от новых к старым.
 - `get_rock_calendar_data(?int $month): ?array` — карточки событий месяца, сгруппированные по `MM-DD`. Месяц вне 1–12 или пусто — `null`.
 
 **Внутренние хелперы:**
 
+- `build_archive_tax_query(string $post_type, ?string $taxonomy): array|null|false` — `tax_query` для архива по slug термина. `null` — фильтр не нужен; `false` — термин не найден.
 - `resolve_archive_page_id(?string $post_type): ?int` — ID страницы-архива из `$post_types_config[$post_type]['page_id']`.
+- `resolve_top_level_calendar_types(): array` — CPT с `is_calendar = true` на верхнем уровне (без `cat`). Сейчас это `rock-data`.
+- `build_calendar_tax_query(): ?array` — `tax_query` с `relation => OR` из кастомных таксономий с `is_calendar` + рубрики `rock_date_rub`.
+- `query_calendar_posts(array $meta_query): array` — сбор из двух источников, дедупликация, сортировка по `event_date` DESC.
 - `is_valid_date(?int $month, ?int $day): bool` — проверка даты через `checkdate()` с leap-годом `2024`.
-- `resolve_calendar_post_types(): array` — `rock-data` + всё с `is_calendar` в `$post_types_config`.
-- `resolve_calendar_category_ids(): array` — ID категорий с `is_calendar` в `$categories_config`.
 
 **Фильтр по дате события** — через `meta_query` с `REGEXP` по ACF-полю `event_date` (формат `Ymd`):
 
@@ -608,7 +627,7 @@ public function __construct(int|string|null $page_id = null)
 
 **Статические хелперы:**
 
-- `public static function get_last_posts_by_type(array $post_type, ?int $posts_per_page = 3): ?array`
+- `public static function get_last_posts_by_type(array $post_type, ?int $posts_per_page = 3): ?array` — последние посты для промо главной. Объединяет CPT с `in_latest_posts = true` + посты с рубрикой `news_rub`. Дедупликация + сортировка по `post_date` DESC.
 
 **Внутренние хелперы:**
 
@@ -624,6 +643,16 @@ public function __construct(int|string|null $page_id = null)
 
 Модель для страниц (не постов).
 
+**Константы:**
+
+- `TOP_ALBUMS_LIMIT = 10`
+- `OPTIONS_ID = 'options'`
+- `OPTION_TOP_LIST = 'ta_list'` — внешний повторитель топов
+- `OPTION_TOP_TITLE = 'ta_ls_title'` — заголовок топа
+- `OPTION_TOP_TAB_TITLE = 'ta_ls_tabtitle'` — короткое имя для вкладки
+- `OPTION_TOP_ITEM = 'ta_ls_top_list'` — вложенный повторитель альбомов
+- `OPTION_TOP_ALBUM_ID = 'ta_ls_tl_item'` — Post Object → Post ID
+
 **Конструктор:**
 
 ```php
@@ -635,7 +664,7 @@ public function __construct(int|string|null $page_id = null)
 - `get_page_metadata(): array` — SEO-данные страницы.
 - `get_latest_news_promo_data(array $post_type, ?int $posts_per_page = 3): ?array` — промо-данные последних постов.
 - `get_calendar_default_data(): ?array` — события на сегодня (тот же сборщик, что `/archive/calendar`, но месяц и день — из `wp_date('n')` / `wp_date('j')`).
-- `get_top_albums_list_data(): ?array` — топы альбомов с главной (ACF-опции `ta_ls_top_list`, `ta_ls_title`, `ta_ls_tabtitle`, `ta_ls_tl_item`). У топа ≤ 10 альбомов, у каждого — `position` (1..N).
+- `get_top_albums_list_data(): ?array` — топы альбомов с главной (ACF-опции `ta_list`, `ta_ls_title`, `ta_ls_tabtitle`, `ta_ls_top_list`). У топа ≤ 10 альбомов, у каждого — `position` (1..N).
 
 **Приватные хелперы:**
 
@@ -646,6 +675,15 @@ public function __construct(int|string|null $page_id = null)
 **Файл:** `models/_user-model.php`
 
 Модель пользователя. Работает с ACF (`user_{id}`).
+
+**Константы:**
+
+- `DEFAULT_FIRST_NAME = 'Автор'`
+- `DEFAULT_LAST_NAME = 'Контента'`
+- `DEFAULT_ABOUT = 'Молчание — золото'`
+- `DEFAULT_COUNTRY = 'sf'`
+- `SOC_TYPES = ['vk', 'in', 'fb', 'tt', 'yt']`
+- `MESSENGER_TYPES = ['tg', 'wa']`
 
 **Конструктор:**
 
@@ -671,9 +709,9 @@ public function __construct(int $user_id)
 - `get_id(): int`, `get_page_url(): string`
 - `get_avatar(string $type = 'img500'): string|int|null`
 - `get_uname(string $type = 'full'): ?string` — `full | name | last_name | as_is_name`
-- `get_about(string $type = 'replace'): ?string`
+- `get_about(string $type = 'replace'): ?string` — `replace | as_is`
 - `get_birthdate(): ?string`, `get_country(): ?string`, `get_city(): ?string`
-- `get_email(string $type = 'public'): ?string`
+- `get_email(string $type = 'public'): ?string` — `public | private`
 - `get_messenger(string $type): ?string` — `tg | wa`
 - `get_phone(): ?string`
 - `get_soclink(string $type): ?string` — `vk | in | fb | tt | yt`
@@ -684,10 +722,14 @@ public function __construct(int $user_id)
 **Публичные сеттеры:**
 
 - `update_uname(?string $new_name, string $type): bool` — `first_name | last_name`
-- `update_birthdate()`, `update_country()`, `update_city()`
+- `update_birthdate(?string $new_birthdate): bool`
+- `update_country(?string $new_country): bool`
+- `update_city(?string $new_city): bool`
 - `update_email(?string $new_email, string $type = 'public'): bool`
-- `update_messenger(?string $new_contact, string $type): bool`
-- `update_phone()`, `update_signature()`, `update_soclink()`
+- `update_messenger(?string $new_contact, string $type): bool` — `tg | wa`
+- `update_phone(?string $new_phone): bool`
+- `update_signature(?string $new_signature): bool`
+- `update_soclink(?string $new_link, string $type): bool` — `vk | in | fb | tt | yt`
 
 **Подтверждение аккаунта:**
 
@@ -736,7 +778,7 @@ public function __construct(int $user_id)
 
 **Методы:**
 
-- `get_search_data(?string $post_types, ?string $categories, ?string $phrase): ?array` — данные поиска (посты + метаинформация).
+- `get_search_data(?string $post_types, ?string $phrase): ?array` — данные поиска (посты + метаинформация).
 - `get_search_metadata(?string $phrase): array` — SEO-метаданные страницы поиска.
 
 **Приватные методы:**
@@ -760,7 +802,7 @@ public function __construct(int $user_id)
 - `send_confirm_account_mail(string $email, int $user_id): bool` — письмо для подтверждения аккаунта.
 - `send_reset_password_code_mail(string $email, int $user_id): bool` — письмо для сброса пароля.
 - `send_changed_password_info_mail(string $email): bool` — уведомление о смене пароля.
-- `get_default_user_data(array $credentials): array` — данные для регистрации (берёт `loginEmail`, `password`, `name`, `surname`, ставит первую роль из `get_roles()`).
+- `get_default_user_data(array $credentials): array` — данные для регистрации (`loginEmail`, `password`, `name`, `surname`). **Роль — `subscriber`** (хардкод).
 
 **Приватные методы:**
 
@@ -773,12 +815,12 @@ public function __construct(int $user_id)
 
 Модель общих данных сайта.
 
-**Константы:** `MAIL_HEADERS`, `JSON_CRON_INFO`, `JSON_POPULAR_TAGS`, `JSON_USERS_INFO`, `STATUS_SUCCESS = 'success'`, `STATUS_ERROR = 'error'`, `UPDATED_BY = 'user'`.
+**Константы:** `MAIL_HEADERS`, `JSON_CRON_INFO = 'cron_info_JSON'`, `JSON_POPULAR_TAGS = 'popular_tags_JSON'`, `JSON_USERS_INFO = 'users_info_JSON'`, `STATUS_SUCCESS = 'success'`, `STATUS_ERROR = 'error'`, `UPDATED_BY = 'user'`.
 
 **Методы:**
 
 - `send_contact_form_mail(array $params): bool` — отправка контактной формы.
-- `get_trends_data(): ?array` — тренды (последние 10 постов из `news`).
+- `get_trends_data(): ?array` — тренды (последние 10 постов из `video`, `music`, `article`).
 - `set_cron_info(): ?array` — обновление cron-сводки.
 - `set_popular_tags(): array` — обновление JSON популярных тегов.
 - `set_users_info(): array` — обновление JSON пользователей.
@@ -866,11 +908,15 @@ class Some_Controller extends WP_REST_Controller
 
 ### 4.3. Список контроллеров
 
-**`Admin_Controller`** — `/admin/*` (приватные), **не зарегистрирован** в `routes.php`. Регистрация закомментирована, на фронте админки нет. Не вызывать с фронта, пока роуты не включат. Список для справки:
+**`Admin_Controller`** — `/admin/*` (приватные), **не зарегистрирован** в `routes.php`. Регистрация не вызывается. Не вызывать с фронта, пока роуты не включат. Список для справки:
 
-- `/get-cron-info`, `/update-cron-info`, `/update-cron-task`
-- `/get-users-info`, `/update-users`, `/delete-users`
-- `/update-roles`
+- `/get-cron-info` — читает `cron_info_JSON`.
+- `/update-cron-info` — обновляет `cron_info_JSON`.
+- `/update-cron-task` — `taskName` = `popular_tags` \| `users_info`.
+- `/get-users-info` — `jsonData`, `siteRoles`, `filterResult`.
+- `/update-users` — миграция (`usersIds`).
+- `/delete-users` — удаление (`usersIds`).
+- `/update-roles` — обновление ролей.
 
 **`Auth_Controller`** — `/auth/*` (публичные):
 
@@ -890,7 +936,8 @@ class Some_Controller extends WP_REST_Controller
 **`Archive_Controller`** — `/archive/*` (публичные):
 
 - `/archive` — архив. Query: обязательный `postType`, опциональные `taxonomy` (slug термина, не имя таксономии; один) и `page`.
-  Имя таксономии бэк выводит из `postType`. У типа без кастомной таксономии `taxonomy` игнорируется.
+  Имя таксономии бэк выводит из `postType` через `POST_TYPE_TAXONOMY_MAP`.
+  У типа без кастомной таксономии `taxonomy` игнорируется.
   Неизвестный slug — `postsData: null`, `pagesCount: 1`, не 404.
   `page` отсутствует или `< 1` → первая; `page > pagesCount` → последняя, `currentPage` уже поправлен.
   `pagesCount` считается от фильтра и от клиента не принимается.
@@ -910,13 +957,12 @@ class Some_Controller extends WP_REST_Controller
 
 **`Search_Controller`** — `/search/*` (публичные):
 
-- `/` — поиск. Query: `phrase`, опциональные `post_types`, `categories`.
-- `/get-search-config` — конфиг поиска (`searchResultMaxCount`, `postTypes` и `categories` только с `is_searched`).
+- `/` — поиск. Query: обязательный `phrase`, опциональный `post_types`.
+- `/get-search-config` — конфиг поиска (`searchResultMaxCount`, `postTypes` только с `is_searched`).
 
 **`Site_Controller`** — `/site/*` (публичные):
 
 - `/common-data` — тренды, `base.supportEmail`, `popularTags` (из JSON).
-- `/filter-params` — **в работе.** В `Site_Config::get_filter_params()` реализации пока нет; эндпоинт упадёт с Fatal Error. Не вызывать с фронта, пока метод не реализован.
 - `/send-contact-form` — контактная форма. Валидация `send-contact-form`. Возвращает `['isSent' => bool]`.
 
 **`Taxonomy_Controller`** — `/taxonomy/*` (публичные):
@@ -1103,22 +1149,43 @@ return $this->api->response(null, $this->api->set_error('er200'));
 ],
 ```
 
+**Актуальный список полей:**
+
+| Поле | Правила |
+|---|---|
+| `name` | `required`, `min_length: 2`, `max_length: 30`, `text_only` |
+| `surname` | `required`, `min_length: 2`, `max_length: 30`, `text_only` |
+| `message` | `required`, `min_length: 10`, `max_length: 200` |
+| `password` | `required`, `min_length: 8`, `max_length: 30`, `no_spaces`, `en_numbers_spec_symbols_only` |
+| `passwordConfirm` | то же + `some: password` |
+| `email` | `required`, `min_length: 8`, `max_length: 100`, `email` |
+| `loginEmail` | `required`, `min_length: 8`, `max_length: 100`, `email`, `is_uniq_email` |
+| `userId` | `required`, `min_length: 1`, `max_length: 6`, `is_user_exist` |
+| `confirmCode` | `required`, `number` |
+| `image` | `max_size: 2`, `accept: ['image/png', 'image/jpeg', 'image/jpg']` |
+| `phrase` | `required`, `min_length: 3`, `max_length: 30` |
+| `tagId` | `required`, `number` |
+
 ### Маршруты (`Site_Config::$FIELDS`)
 
-Для каждого маршрута:
+| Ключ | Поля | `capability` |
+|---|---|---|
+| `registration` | `name`, `surname`, `password`, `loginEmail`, `passwordConfirm` | — |
+| `send-confirm-code-mail` | `email` | — |
+| `send-reset-pass-code-mail` | `email` | — |
+| `reset-password` | `password`, `passwordConfirm`, `email`, `confirmCode` | — |
+| `get-user-data` | `userId` | — |
+| `send-contact-form` | `name`, `email`, `message` | — |
+| `search-posts-by-tag` | `tagId` | — |
+| `search` | `phrase` | — |
+| `example-with-capability` | `userId` | `['edit_employee']` |
 
-```php
-'registration' => [
-    'fields' => ['name', 'surname', 'password', 'loginEmail', 'passwordConfirm'],
-],
-```
-
-Опционально — `capability` (проверка прав в разработке).
+**Про `capability`:** `Validate::check_permission()` пока не реализован и **всегда возвращает `false`** (TODO). Любой вызов маршрута с `capability` (сейчас это только `example-with-capability`) упадёт с `er228`.
 
 ### Порядок валидации (`Site_Config::$VALIDATE_SORT`)
 
 ```php
-['required', 'min_length', 'max_length', 'email', 'text_only', ...]
+['required', 'min_length', 'max_length', 'email', 'text_only', 'number', 'no_spaces', 'en_numbers_spec_symbols_only', 'some', 'max_size', 'accept', 'is_uniq_email', 'is_user_exist', 'is_page_exist', 'length', 'telegram', 'less_then_now', 'phone']
 ```
 
 Валидаторы применяются **в этом порядке** — первый упавший возвращает ошибку.
@@ -1212,32 +1279,57 @@ $image_id = gf_img('cover_img', $post_id, 'id');
 
 ### Активные CPT
 
-| Slug | Label | Кастомная таксономия |
-| --- | --- | --- |
-| `article` | Статьи | `article_cat` |
-| `journal` | Журнал | нет |
-| `music` | Музыка | `music_cat` |
-| `news` | Новости | `news_cat` |
-| `quiz` | Тесты | нет |
-| `rock-data` | Рок даты | нет |
-| `site-archive` | Архивные материалы | нет |
-| `stars` | Звезды | нет |
-| `video` | Видео | `video_cat` |
+| Slug | Label | `in_latest_posts` | `is_searched` | `is_calendar` | `page_id` | Кастомная таксономия |
+| --- | --- | --- | --- | --- | --- | --- |
+| `news` | Новости | ✅ | ✅ | — | 209 | `news_cat` |
+| `rock-data` | Рок-дата | ✅ | ✅ | ✅ | 213 | — |
+| `journal` | Журнал | ❌ | ❌ | ❌ | 46507 | — |
+| `quiz` | Тесты | ❌ | ❌ | ❌ | 46510 | — |
+| `site-archive` | Архивные материалы | ❌ | ❌ | ❌ | 46513 | — |
+| `article` | Статьи | ✅ | ✅ | — | 210 | `article_cat` |
+| `music` | Музыка | ❌ | ✅ | — | 46486 | `music_cat` |
+| `video` | Видео | ✅ | ✅ | — | 212 | `video_cat` |
+| `stars` | Звёзды | — | — | — | — | **ЗАКОММЕНТИРОВАН** |
 
-Флаги `in_latest_posts` / `is_searched` / `is_calendar` здесь не зафиксированы. Архив REST принимает `postType`, опциональный `taxonomy` (slug термина) и `page`.
+`stars` (`_pt_stars.php`) — весь файл закомментирован, в `$post_types_config` отсутствует.
 
 ### Таксономии
 
 **Стандартные** (все CPT): `post_tag` (метки). Рубрики `category` в публичной иерархии не используются.
 
-**Кастомные**, `hierarchical => true`. Дефолтные термины плоские (`parent = 0`), вложенность задаётся в админке WP.
+**Кастомные**, `hierarchical => true`. Дефолтные термины плоские (`parent = 0`), вложенность задаётся в админке WP. Дефолтные термины создаются один раз по флагу в `wp_options` (`{taxonomy}_terms_created`).
 
-| Таксономия | CPT | Дефолтные термины |
-| --- | --- | --- |
-| `article_cat` | `article` | `interview`, `review`, `sport`, `game`, `fact`, `entertaining`, `event`, `advertising` |
-| `music_cat` | `music` | `album`, `single`, `ep`, `playlist`, `live` |
-| `news_cat` | `news` | `society`, `sport`, `celebrities`, `interesting`, `advertisement` |
-| `video_cat` | `video` | `clip`, `concert`, `live`, `film`, `cool` |
+| Таксономия | CPT | `rewrite.slug` | Дефолтные термины |
+| --- | --- | --- | --- |
+| `article_cat` | `article` | `article-cat` | `interview`, `review`, `sport`, `game`, `fact`, `entertaining`, `event` |
+| `music_cat` | `music` | `music-cat` | `album`, `single`, `ep`, `playlist`, `live` |
+| `news_cat` | `news` | `news-cat` | `society`, `sport`, `celebrities`, `interesting`, `advertisement` |
+| `video_cat` | `video` | `video-cat` | `clip`, `concert`, `live`, `film`, `cool` |
+
+### Флаги `is_calendar` для календаря
+
+**Верхний уровень CPT:**
+
+- `rock-data` — `is_calendar = true`.
+
+**Термины кастомных таксономий** (в `$post_types_config[$post_type]['cat'][$term]['is_calendar']`):
+
+- `article` → `event`
+- `music` → `album`, `single`, `ep`
+- `video` → `clip`, `concert`
+
+**Сквозной маркер** — рубрика `rock_date_rub` (`categories_config`, ID `2043`).
+
+### `$categories_config`
+
+Две записи со старыми ID рубрик:
+
+| Slug | Label | `id` |
+|---|---|---|
+| `rock_date_rub` | Рок дата | `2043` |
+| `news_rub` | Новость | `2044` |
+
+Используются в `Archive_Model::build_calendar_tax_query()` (`rock_date_rub`) и `Post_Model::get_last_posts_by_type()` (`news_rub`).
 
 ### Правило `singular` / `plural`
 
@@ -1261,7 +1353,7 @@ register_post_type(
 
 ### Регистрация CPT
 
-Файлы `_pt_{slug}.php` в `site-setup/`:
+Файлы `_pt_{slug}.php` в `site-setup/`. Если у типа есть кастомная таксономия, файл дополнительно регистрирует `register_{taxonomy}_taxonomy()` и `create_{taxonomy}_default_terms()`.
 
 ```php
 <?php
@@ -1286,7 +1378,7 @@ add_action('init', 'add_{slug}_post_type');
 
 ### Добавление нового CPT (пошагово)
 
-1. Создать `site-setup/_pt_new_type.php` (см. шаблон выше).
+1. Создать `site-setup/_pt_new_type.php` (см. шаблон выше). Если нужна кастомная таксономия — добавить `register_taxonomy` + `create_default_terms`.
 2. Добавить в `Site_Config::$post_types_config`:
 
    ```php
@@ -1296,25 +1388,13 @@ add_action('init', 'add_{slug}_post_type');
        'is_searched'     => true,
        'is_calendar'     => false,
        'page_id'         => 123,
+       'cat'             => [],
    ],
    ```
 
-3. Зарегистрировать `Site_Config::$FIELDS`, если нужны свои эндпоинты с валидацией.
-4. Использовать существующие `Archive_Controller` / `Post_Controller` — отдельный контроллер не требуется.
-
-### Категории сайта
-
-`Site_Config::$categories_config` — старые ключи меню. В публичных маршрутах их нет: разделы живут в терминах `article_cat`, `music_cat`, `news_cat`, `video_cat`.
-
-| Slug | Label | `url` | `id` | `page_id` | `is_searched` | `is_calendar` |
-|---|---|---|---|---|---|---|
-| `alboms_rub` | Альбомы | `alboms` | 18 | 15465 | ✅ | ✅ |
-| `interview_rub` | Интервью | `intervju` | 110 | 15467 | ✅ | ❌ |
-| `clips_rub` | Клипы | `clips` | 62 | 15469 | ✅ | ✅ |
-| `concert_rub` | Концерты | `concerts` | 620 | 15471 | ✅ | ✅ |
-| `okolorock_rub` | Вокруг рока | `okolorock` | 15 | 15475 | ✅ | ❌ |
-| `rock_film` | Кино | `rock-films` | 273 | 15477 | ✅ | ❌ |
-| `rock_date_rub` | Рок даты | `alboms` | 279 | — | ✅ | ✅ |
+3. Если есть кастомная таксономия — добавить маппинг в `Archive_Model::POST_TYPE_TAXONOMY_MAP`.
+4. Зарегистрировать `Site_Config::$FIELDS`, если нужны свои эндпоинты с валидацией.
+5. Использовать существующие `Archive_Controller` / `Post_Controller` — отдельный контроллер не требуется.
 
 ---
 
@@ -1326,14 +1406,14 @@ add_action('init', 'add_{slug}_post_type');
 
 | Свойство | Тип | Описание |
 |---|---|---|
-| `$time_format` | array | Форматы дат (`date_with_time`, `date`) |
+| `$time_format` | array | `date_with_time` (`Y-m-d H:i:s`), `date` (`Y-m-d`) |
 | `$emails` | array | `support`, `mail_to`, `test_mail` |
 | `$links` | array | `reviewUrl` |
 | `$permitted_config` | array | Настройки сайта (см. §2.2) |
-| `$cron_config` | array | Конфигурация cron (`popular_tags`, `users_info`) |
-| `$admin_id` | int | ID администратора |
+| `$cron_config` | array | `popular_tags`, `users_info` |
+| `$admin_id` | int | `23` |
 | `$post_types_config` | array | Конфиг пост-типов |
-| `$categories_config` | array | Конфиг категорий |
+| `$categories_config` | array | Конфиг рубрик (`rock_date_rub`, `news_rub`) |
 | `$VALIDATORS` | array | Правила валидации |
 | `$FIELDS` | array | Поля для маршрутов |
 | `$VALIDATE_SORT` | array | Порядок валидации |
@@ -1341,7 +1421,7 @@ add_action('init', 'add_{slug}_post_type');
 | `$week_days_short_translate` | array | Дни недели (перевод) |
 | `$month_days_short_translate` | array | Месяцы (перевод) |
 
-Приватные: `PROD_HOSTS`, `$base_cap`.
+Приватные: `PROD_HOSTS`.
 
 ### Справочники
 
@@ -1489,7 +1569,9 @@ public function my_method(int $param): ?array
 
 **Расположение:** `site-setup/jsons/`.
 
-**Обновление:** только cron-задачами на сервере. Роуты `/admin/update-cron-task` и `/admin/update-cron-info` закомментированы (не вызывать с фронта).
+**Обновление:** cron-задачами на сервере. Роуты `/admin/update-cron-task` и `/admin/update-cron-info` не зарегистрированы (весь `Admin_Controller` на паузе).
+
+Также в `site-setup/_set_popular_tags.php` есть отдельная cron-функция `cron_set_site_popular_tags_JSON()`, которая пишет файл `site_popular_tags_JSON`. Это **дублирующий канал** — публичный `Taxonomy_Model::get_popular_tags('json')` читает `popular_tags_JSON`. Не путать.
 
 **Чтение:**
 
@@ -1519,6 +1601,11 @@ public function my_method(int $param): ?array
 - **Алгоритм:** HS256 (по умолчанию), через фильтр `jwt_auth_algorithm`.
 - **Время жизни:** 1 час (`JWT_TOKEN_LIFETIME = 3600` в `_jwt.php`).
 
+**Кастомизация в `_jwt.php`:**
+
+- `jwt_auth_expire` — возвращает глобальный `$expires` (`get_time('timestamp', -3) + JWT_TOKEN_LIFETIME`; параметр `-3` в `get_time()` фактически не используется, `timestamp` возвращает `time()`).
+- `jwt_auth_token_before_dispatch` — отдаёт `['token' => ..., 'expires' => $expires * 1000]`, то есть `expires` **в миллисекундах**.
+
 **Получение токена:**
 
 ```
@@ -1535,7 +1622,7 @@ POST /wp-json/jwt-auth/v1/token
 }
 ```
 
-`expires` — **в миллисекундах** (кастомный фильтр `jwt_auth_token_before_dispatch`).
+`expires` — **в миллисекундах**.
 
 **Использование:**
 
@@ -1577,9 +1664,25 @@ $user_id = (new Api_Helper())->get_user_id_from_headers($request);
   - `Page_Model` расширена: `get_calendar_default_data`, `get_top_albums_list_data`.
   - `Auth_Model` — добавлен `send_changed_password_info_mail`.
   - `Site_Config` — добавлены `$links`, `PROD_HOSTS`, `is_production()`, `get_mail_to()`, новые ключи `$permitted_config` и `$emails`.
-  - Активные CPT: `article`, `journal`, `music`, `news`, `quiz`, `rock-data`, `site-archive`, `stars`, `video`.
-  - Кастомные таксономии: `article_cat`, `music_cat`, `news_cat`, `video_cat` (иерархические, дефолтные термины плоские).
-  - Стандартная таксономия на всех CPT: `post_tag`. Рубрики `category` в публичной иерархии не используются.
-  - `Admin_Controller` не зарегистрирован в `routes.php` — раздел «пауза» удалён из паттернов.
-  - `/site/filter-params` — «в работе» (`Site_Config::get_filter_params()` не реализован).
   - JWT: `expires` в ответе `/token` — в миллисекундах.
+
+- **1.2.0** — актуализация по коду:
+  - **`stars`** исключён из активных CPT (файл `_pt_stars.php` закомментирован, в `$post_types_config` отсутствует).
+  - **`$categories_config`** сокращён до двух записей (`rock_date_rub`, `news_rub`). Старый список `alboms_rub`, `interview_rub`, … удалён.
+  - **`Site_Config`** — убраны `$base_cap` и `get_roles()` (в коде их нет).
+  - **`Auth_Model::get_default_user_data`** — роль `subscriber` (хардкод), не первая из `get_roles`.
+  - **`Archive_Model`** — актуальный публичный метод `get_archive_data()` (не `get_posts_archive()`), добавлен `POST_TYPE_TAXONOMY_MAP`.
+  - **`Page_Model`** — константы `OPTION_TOP_LIST = 'ta_list'`, `OPTION_TOP_ITEM = 'ta_ls_top_list'`, `OPTION_TOP_ALBUM_ID = 'ta_ls_tl_item'`.
+  - **`Search_Model`** — только `post_types` и `phrase`; `categories` не принимает (упоминания `get_searched_categories()` — внутренний мёртвый код).
+  - **`Search_Controller::get_search_config`** отдаёт только `postTypes` (без `categories`).
+  - **`Site_Controller`** — нет `/site/filter-params`; `get_filter_params()` в `Site_Config` отсутствует.
+  - **`Admin_Controller`** — все 7 роутов описаны, но `register_routes()` не вызывается из `routes.php`.
+  - **`Validate::check_permission()`** — заглушка, всегда `false` (маршруты с `capability` упадут с `er228`).
+  - **`$FIELDS`** — актуальный список маршрутов, добавлен `example-with-capability`.
+  - **`$VALIDATORS`** — актуальный список полей.
+  - **`Validate::check_less_then_now`** — парсит `get_time()` форматом `'Y-m-d'`, но `get_time()` возвращает `'Y-m-d H:i:s'`; валидатор сейчас всегда отдаёт `er223`. Описано как есть.
+  - **`Taxonomy_Model::sort_by_date_asc`** — читает `postDateNumber`, но `Post_Model::get_post_short_model()` его не отдаёт; сортировка фактически по `0`.
+  - **Cron popular tags:** `_set_popular_tags.php` пишет `site_popular_tags_JSON`, публичный `Taxonomy_Model::get_popular_tags('json')` читает `popular_tags_JSON`. Два разных файла.
+  - **`_jwt.php`** — `get_time('timestamp', -3)`: параметр `-3` не применяется.
+  - **`_options_page.php`** — ACF Options: `theme-general-settings` + подстраницы `Users rating`, `Users awards`, `Top Alboms`.
+  - **`_media.php`** — размеры: `img80` (80×80 crop), `img500` (500×500), `img900` (900×500 crop); стандартные `1536x1536`, `2048x2048`, `medium_large`, `large` удалены.
