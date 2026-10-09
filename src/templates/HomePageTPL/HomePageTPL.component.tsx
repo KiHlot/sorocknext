@@ -16,12 +16,12 @@ const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
     return (
         <>
             <Content>
-                <RockDatesSection data={calendarDefaultData} />
                 {!!lastNewsPromoData?.length && (
                     <LastNewsPromoSection
                         lastNewsPromoData={lastNewsPromoData}
                     />
                 )}
+                <RockDatesSection data={calendarDefaultData} />
                 {!!topAlbumsListData?.length && (
                     <TopAlbumsSection data={topAlbumsListData} />
                 )}
