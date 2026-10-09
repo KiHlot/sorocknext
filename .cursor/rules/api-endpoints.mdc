@@ -28,7 +28,7 @@ alwaysApply: false
 | `/archive/rock-calendar` | Календарь архива рок-дат на месяц. Query `month` (1–12). `data`: объект `MM-DD` → `PostShortCardModelIF[]` или `null`. `02-29` — отдельный ключ |
 | `/archive/metadata/{post_type}` | Legacy SEO поста, query `slug`; фронт использует `/metadata` |
 | `/post/{slug}` | Одна запись, query обязательный `postType`; нет записи — `notfound` |
-| `/page/home-page-data` | Данные главной: `lastNewsPromoData` и `calendarDefaultData` (события сегодня) |
+| `/page/home-page-data` | Данные главной: `lastNewsPromoData` (`promoData`, `lastNews`), `calendarDefaultData` (события сегодня), `topAlbumsListData` |
 | `/search` | Поиск |
 | `/search/get-search-config` | Конфиг поиска |
 | `/site/common-data` | Общие данные сайта |

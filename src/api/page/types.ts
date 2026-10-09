@@ -3,7 +3,7 @@ import { LastNewsPromoDataIF } from '@/components/sections/LastNewsPromoSection/
 import { TopAlbumsListIF } from '@/components/sections/TopAlbumsSection/TopAlbumsSection.types';
 
 export interface HomePageDataIF {
-    lastNewsPromoData?: LastNewsPromoDataIF[] | null;
+    lastNewsPromoData?: LastNewsPromoDataIF | null;
     calendarDefaultData?: EventCardModelIF[] | null;
     topAlbumsListData?: TopAlbumsListIF[] | null;
 }

@@ -620,7 +620,7 @@ public function __construct(int|string|null $page_id = null)
 - `get_post_archive_model(): array` — карточка архива (`titleH1`, `content` (20 слов), `author`, `url`, `coverImg` (img500), `postDate`, `tags`, `country`, `categories`, `readingTime`).
 - `get_post_event_card_model(): array` — карточка события (`eventDate`, `titleH1`, `content`, `author`, `url`, `coverImg`, `tags`, `country`).
 - `get_post_short_model(): array` — короткая карточка (`thumbnail`, `title`, `url`, `author`, `categories`, `postDate`, `eventDate`, `year`).
-- `get_latest_news_promo_model(): array` — промо главной (`titleH1`, `content`, `author`, `innerImg`, `country`, `readingTime`, `postDate`, `tags`, `categories`).
+- `get_latest_news_promo_model(): array` — карточка промо главной (`title`, `url`, `innerImg` img500 или `null`, `postDate`, `country`, `readingTime`, `author` — полное имя строкой или `null`).
 - `get_video_models(): ?array` — галерея видео из ACF-повторителя `videogalary`.
 - `get_music_model(): ?array` — альбом поста (`musicCode`, `albumInfo`).
 - `get_top_album_model(): array` — карточка топа (переиспользует `get_music_model()` + `innerImg`, `country`, `url`).
@@ -949,7 +949,7 @@ class Some_Controller extends WP_REST_Controller
 
 **`Page_Controller`** — `/page/*` (публичные):
 
-- `/home-page-data`. `data` содержит `lastNewsPromoData`, `calendarDefaultData` (тот же массив, что `/archive/calendar` на сегодня, или `null`), `topAlbumsListData` (массив топов или `null`). Топ: `title`, `tabTitle`, `albums` (до 10 с `position` 1..N; альбом — `musicCode`, `title`, `artists`, `year`, `country`, `coverImg`, `innerImg`, `url`).
+- `/home-page-data`. `data` содержит `lastNewsPromoData`, `calendarDefaultData` (тот же массив, что `/archive/calendar` на сегодня, или `null`), `topAlbumsListData` (массив топов или `null`). `lastNewsPromoData`: `promoData` (`titleH1`, HTML `description`, `achievementsList` из `value` и `label`) или `null`, и `lastNews` (массив карточек или `null`: `title`, `url`, `innerImg` img500 или `null`, `postDate`, `country`, `readingTime`, `author` — полное имя или `null`). `achievementsList` может быть `null`. Топ: `title`, `tabTitle`, `albums` (до 10 с `position` 1..N; альбом — `musicCode`, `title`, `artists`, `year`, `country`, `coverImg`, `innerImg`, `url`).
 
 **`Post_Controller`** — `/post/*` (публичный):
 

@@ -1,17 +1,22 @@
-import { DateWithTimeT, OptionIF } from '@/types/common';
+import { HTMLString } from '@/types/common';
+import { LastNewsPromoCardModelIF } from '@/components/cards/LastNewsPromoCard/LastNewsPromoCard.types';
+
+export interface LastNewsPromoAchievementIF {
+    value: string;
+    label: string;
+}
+
+export interface LastNewsPromoPromoDataIF {
+    titleH1: string;
+    description: HTMLString;
+    achievementsList: LastNewsPromoAchievementIF[] | null;
+}
 
 export interface LastNewsPromoDataIF {
-    titleH1: string;
-    content: string;
-    author: string | null;
-    innerImg: string;
-    country: string;
-    readingTime: number;
-    postDate: DateWithTimeT;
-    tags: OptionIF[] | null;
-    taxonomies: string[] | null;
+    promoData: LastNewsPromoPromoDataIF | null;
+    lastNews: LastNewsPromoCardModelIF[] | null;
 }
 
 export interface LastNewsPromoSectionPropsIF {
-    lastNewsPromoData: LastNewsPromoDataIF[];
+    lastNewsPromoData?: LastNewsPromoDataIF | null;
 }

@@ -4,7 +4,6 @@ import { IoCalendarOutline, IoTimerOutline } from 'react-icons/io5';
 import { formatDate } from '@/helpers/utils';
 import styles from '@/components/cards/LastNewsPromoCard/LastNewsPromoCard.module.scss';
 import { LastNewsPromoCardPropsIF } from '@/components/cards/LastNewsPromoCard/LastNewsPromoCard.types';
-import Author from '@/components/elems/Author/Author.component';
 import Country from '@/components/elems/Country/Country.component';
 
 const COVER_TONE_CLASS = [
@@ -42,12 +41,15 @@ const LastNewsPromoCard: FC<LastNewsPromoCardPropsIF> = ({
                     {item.title}
                 </Link>
                 <div className={styles.meta}>
-                    <time className={styles.metaItem} dateTime={item.postDate}>
+                    <time
+                        className={styles.metaItem}
+                        dateTime={item.postDate || undefined}
+                    >
                         <IoCalendarOutline
                             className={styles.metaIcon}
                             aria-hidden="true"
                         />
-                        {formatDate(item.postDate)}
+                        {formatDate(item.postDate || undefined)}
                     </time>
                     <span
                         className={styles.metaItem}
@@ -68,13 +70,9 @@ const LastNewsPromoCard: FC<LastNewsPromoCardPropsIF> = ({
                     >
                         Читать
                     </Link>
-                    {!!item.author && (
-                        <Author
-                            type="name"
-                            data={item.author}
-                            className={styles.author}
-                        />
-                    )}
+                    {item.author ? (
+                        <span className={styles.author}>{item.author}</span>
+                    ) : null}
                 </div>
             </div>
         </article>

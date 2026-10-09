@@ -1,14 +1,13 @@
 import { DateWithTimeT } from '@/types/common';
-import { AuthorIF } from '@/types/post';
 
 export interface LastNewsPromoCardModelIF {
     title: string;
     url: string;
-    innerImg: string;
-    postDate: DateWithTimeT;
+    innerImg: string | null;
+    postDate: DateWithTimeT | null;
     country: string;
     readingTime: number;
-    author: AuthorIF | null;
+    author: string | null;
 }
 
 export interface LastNewsPromoCardPropsIF {

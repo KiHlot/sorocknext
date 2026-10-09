@@ -14,6 +14,10 @@
     font-weight: 700;
     line-height: 1.15;
 
+    span {
+        color: var(--accent);
+    }
+
     @include media(lg) {
         font-size: 28px;
     }
@@ -23,22 +27,12 @@
     }
 }
 
-.titleAccent {
-    color: var(--accent);
-}
-
 .lead {
     margin: 0;
     max-width: 420px;
     color: var(--textColor);
     font-size: 14px;
     line-height: 1.5;
-}
-
-a.explore {
-    width: fit-content;
-    border-radius: 999px;
-    text-decoration: none;
 }
 
 .stats {

@@ -246,7 +246,7 @@ export const fetchApi = async <DataIF = null>(
 Обёртки серверных эндпоинтов лежат в `src/api/<domain>/endpoints.ts` (не регистрируются в Redux):
 
 - `fetchMetadata({ type, slug?, param? })` — `/metadata?type=...&slug=...&param=...` + `getMetadata`
-- `fetchHomePageData` — `/page/home-page-data`; в `data` рядом с `lastNewsPromoData` приходит `calendarDefaultData` (события сегодняшнего дня, `EventCardModelIF[] | null`) и `topAlbumsListData` (топы альбомов, `TopAlbumsListIF[] | null`, типы в `@/components/sections/TopAlbumsSection/TopAlbumsSection.types`)
+- `fetchHomePageData` — `/page/home-page-data`; в `data` приходит `lastNewsPromoData` (`promoData` и `lastNews`, либо `null`), `calendarDefaultData` (события сегодняшнего дня, `EventCardModelIF[] | null`) и `topAlbumsListData` (топы альбомов, `TopAlbumsListIF[] | null`, типы в `@/components/sections/TopAlbumsSection/TopAlbumsSection.types`)
 - `fetchArchive({ postType, taxonomy?, page })` — `/archive/archive?postType=...&taxonomy=...&page=...`.
   `taxonomy` — slug термина (`clip`), не имя таксономии (`video_cat`); в query попадает только если задан.
   `pagesCount` приходит в `paginationInfo: { currentPage, pagesCount }`, в запрос не передаётся и считается от фильтра.
@@ -486,12 +486,8 @@ const HomePageTPL: FC<HomePageTPLPropsIF> = ({ data }) => {
     return (
         <>
             <Content>
+                <LastNewsPromoSection lastNewsPromoData={lastNewsPromoData} />
                 <RockDatesSection data={calendarDefaultData} />
-                {!!lastNewsPromoData?.length && (
-                    <LastNewsPromoSection
-                        lastNewsPromoData={lastNewsPromoData}
-                    />
-                )}
                 {!!topAlbumsListData?.length && (
                     <TopAlbumsSection data={topAlbumsListData} />
                 )}
