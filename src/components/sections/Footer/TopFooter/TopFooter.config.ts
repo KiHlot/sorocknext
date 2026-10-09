@@ -52,10 +52,6 @@ export const FOOTER_MENU = {
                 label: 'Тесты',
             },
             {
-                url: '/stars',
-                label: 'Звезды',
-            },
-            {
                 url: '/rock-data',
                 label: 'Рок даты',
             },

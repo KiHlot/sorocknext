@@ -5,7 +5,6 @@ import {
     IoFilmOutline,
     IoBookOutline,
     IoHelpCircleOutline,
-    IoStarOutline,
     IoCalendarOutline,
     IoArchiveOutline,
     IoFingerPrintOutline,
@@ -42,11 +41,6 @@ export const LEFT_MENU: MenuItemIF[] = [
         url: '/quiz',
         label: 'Тесты',
         icon: <IoHelpCircleOutline />,
-    },
-    {
-        url: '/stars',
-        label: 'Звезды',
-        icon: <IoStarOutline />,
     },
     {
         url: '/rock-data',

@@ -4,16 +4,14 @@ import {
     IoPersonOutline,
     IoTimerOutline,
 } from 'react-icons/io5';
-import { SITE_CATEGORIES } from '@/configs/siteCategories/siteCategories.config';
+import { getPostTypeBySlug } from '@/configs/postTypes.config';
+import { isDefaultTerm } from '@/configs/taxonomies.config';
 import { formatDate } from '@/helpers/utils';
 import Author from '@/components/elems/Author/Author.component';
-import CategoryLink from '@/components/elems/CategoryLink/CategoryLink.component';
 import Country from '@/components/elems/Country/Country.component';
+import TermLink from '@/components/elems/TermLink/TermLink.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
-import {
-    getPromoCategories,
-    getPromoTags,
-} from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.helpers';
+import { getPromoTags } from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.helpers';
 import styles from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.module.scss';
 import { SinglePostPromoSectionPropsIF } from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.types';
 
@@ -22,7 +20,18 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
     pathname,
 }) => {
     const { main, country, settings, innerImg, author, taxonomies } = postBase;
-    const categories = getPromoCategories(taxonomies?.categories);
+    const pathSegment = pathname.split('/').find(Boolean) ?? '';
+    const postType = getPostTypeBySlug(pathSegment);
+    const termSlugs =
+        postType === null
+            ? []
+            : (taxonomies?.taxonomies ?? []).flatMap((slug) => {
+                  const termSlug = slug.trim();
+
+                  return termSlug && isDefaultTerm(postType, termSlug)
+                      ? [termSlug]
+                      : [];
+              });
     const tags = getPromoTags(taxonomies?.tags);
     const title = main?.titleH1?.trim();
     const coverUrl = innerImg?.trim();
@@ -57,20 +66,16 @@ const SinglePostPromoSection: FC<SinglePostPromoSectionPropsIF> = ({
                 <h1 className={styles.title} itemProp="headline">
                     {title}
                 </h1>
-                {categories.length > 0 && (
-                    <ul className={styles.categories} aria-label="Категории">
-                        {categories.map((slug) =>
-                            slug in SITE_CATEGORIES ? (
-                                <li key={slug}>
-                                    <CategoryLink
-                                        categorySLug={slug}
-                                        linkType="small"
-                                    />
-                                </li>
-                            ) : (
-                                <li key={slug}>{slug}</li>
-                            ),
-                        )}
+                {postType && termSlugs.length > 0 && (
+                    <ul className={styles.categories} aria-label="Рубрики">
+                        {termSlugs.map((termSlug) => (
+                            <li key={termSlug}>
+                                <TermLink
+                                    postType={postType}
+                                    termSlug={termSlug}
+                                />
+                            </li>
+                        ))}
                     </ul>
                 )}
                 {tags.length > 0 && (

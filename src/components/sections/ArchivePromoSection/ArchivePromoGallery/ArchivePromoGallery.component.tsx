@@ -8,6 +8,7 @@ import { ArchivePromoGalleryPropsIF } from '@/components/sections/ArchivePromoSe
 
 const ArchivePromoGallery: FC<ArchivePromoGalleryPropsIF> = ({
     archivePromoData,
+    postType,
     className = '',
 }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -64,6 +65,7 @@ const ArchivePromoGallery: FC<ArchivePromoGalleryPropsIF> = ({
             </div>
             <ArchivePromoFeatured
                 postData={selectedPost}
+                postType={postType}
                 className={styles.archivePromoFeatured}
             />
         </div>

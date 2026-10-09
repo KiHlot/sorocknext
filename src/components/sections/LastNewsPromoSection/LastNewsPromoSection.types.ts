@@ -9,7 +9,7 @@ export interface LastNewsPromoDataIF {
     readingTime: number;
     postDate: DateWithTimeT;
     tags: OptionIF[] | null;
-    categories: OptionIF[] | null;
+    taxonomies: string[] | null;
 }
 
 export interface LastNewsPromoSectionPropsIF {

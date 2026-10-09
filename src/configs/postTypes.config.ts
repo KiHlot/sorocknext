@@ -6,7 +6,6 @@ export const POST_TYPES = {
     quiz: 'Тесты',
     'rock-data': 'Рок даты',
     'site-archive': 'Архивные материалы',
-    stars: 'Звезды',
     video: 'Видео',
 } as const;
 

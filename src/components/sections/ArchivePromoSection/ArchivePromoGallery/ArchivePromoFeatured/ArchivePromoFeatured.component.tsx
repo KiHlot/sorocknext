@@ -1,21 +1,22 @@
 import { FC } from 'react';
 import { formatDate } from '@/helpers/utils';
 import Button from '@/components/controls/Button/Button.component';
-import CategoryLink from '@/components/elems/CategoryLink/CategoryLink.component';
+import TermLink from '@/components/elems/TermLink/TermLink.component';
 import styles from '@/components/sections/ArchivePromoSection/ArchivePromoGallery/ArchivePromoFeatured/ArchivePromoFeatured.module.scss';
 import { ArchivePromoFeaturedPropsIF } from '@/components/sections/ArchivePromoSection/ArchivePromoGallery/ArchivePromoFeatured/ArchivePromoFeatured.types';
 
 const ArchivePromoFeatured: FC<ArchivePromoFeaturedPropsIF> = ({
     postData,
+    postType,
     className = '',
 }) => {
     const {
         author,
-        categories,
         content,
         coverImg,
         postDate,
         tags,
+        taxonomies,
         titleH1,
         url,
     } = postData;
@@ -57,16 +58,17 @@ const ArchivePromoFeatured: FC<ArchivePromoFeaturedPropsIF> = ({
                             </dd>
                         </div>
                     )}
-                    {!!categories?.length && (
+                    {!!taxonomies?.length && (
                         <div className={styles.metaRow}>
                             <dt className={styles.metaLabel}>Категория</dt>
                             <dd
                                 className={`${styles.metaValue} ${styles.categories}`}
                             >
-                                {categories.map((categorySlug) => (
-                                    <CategoryLink
-                                        key={categorySlug}
-                                        categorySLug={categorySlug}
+                                {taxonomies.map((termSlug) => (
+                                    <TermLink
+                                        key={termSlug}
+                                        postType={postType}
+                                        termSlug={termSlug}
                                         linkType="text"
                                     />
                                 ))}

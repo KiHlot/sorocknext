@@ -49,7 +49,7 @@ export interface PostBaseIF {
     };
     taxonomies: {
         tags: OptionIF[] | null;
-        categories: string[] | null;
+        taxonomies: string[] | null;
     };
     video: VideoIF[] | null;
     music: MusicIF | null;

@@ -5,22 +5,23 @@ import { formatDate, normalizeImage } from '@/helpers/utils';
 import styles from '@/components/cards/PostArchiveCard/PostArchiveCard.module.scss';
 import { PostArchiveCardPropsIF } from '@/components/cards/PostArchiveCard/PostArchiveCard.types';
 import Button from '@/components/controls/Button/Button.component';
-import CategoryLink from '@/components/elems/CategoryLink/CategoryLink.component';
 import Country from '@/components/elems/Country/Country.component';
+import TermLink from '@/components/elems/TermLink/TermLink.component';
 
 const PostArchiveCard: FC<PostArchiveCardPropsIF> = ({
     className = '',
     postData,
+    postType,
 }) => {
     const {
         author,
-        categories,
         content,
         country,
         coverImg,
         postDate,
         readingTime,
         tags,
+        taxonomies,
         titleH1,
         url,
     } = postData;
@@ -42,13 +43,13 @@ const PostArchiveCard: FC<PostArchiveCardPropsIF> = ({
                     }}
                     aria-label={titleH1}
                 />
-                {!!categories?.length && (
+                {!!taxonomies?.length && (
                     <span className={styles.categories}>
-                        {categories.map((categorySlug) => (
-                            <CategoryLink
-                                key={categorySlug}
-                                categorySLug={categorySlug}
-                                linkType="small"
+                        {taxonomies.map((termSlug) => (
+                            <TermLink
+                                key={termSlug}
+                                postType={postType}
+                                termSlug={termSlug}
                             />
                         ))}
                     </span>

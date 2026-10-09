@@ -306,7 +306,7 @@ JWT `/token` — **другая форма ответа** (`token`, `expires`, `
 | `(site)/search` | Поиск |
 | `(auth)/login`, `registration`, `reset-password`, `confirm-account` | Авторизация |
 
-Типы: `article`, `journal`, `music`, `news`, `quiz`, `rock-data`, `site-archive`, `stars`, `video` (`src/configs/postTypes.config.ts`). Кастомные таксономии — `article_cat`, `music_cat`, `news_cat`, `video_cat` (`src/configs/taxonomies.config.ts`).
+Типы: `article`, `journal`, `music`, `news`, `quiz`, `rock-data`, `site-archive`, `video` (`src/configs/postTypes.config.ts`). Кастомные таксономии — `article_cat`, `music_cat`, `news_cat`, `video_cat` (`src/configs/taxonomies.config.ts`).
 
 Как читается `[...slug]`:
 
@@ -314,7 +314,7 @@ JWT `/token` — **другая форма ответа** (`token`, `expires`, `
 - `/articles/interview/:id` — архив термина, `:id` это номер страницы (`1`, `2`, …);
 - `/article/interview/{слаг}` — запись: термин остаётся в адресе, слаг типа для записи — `article`;
 - вложенный термин архива заканчивается номером страницы: `/articles/sport/child/1`;
-- у типа без кастомной таксономии (`journal`, `quiz`, `rock-data`, `site-archive`, `stars`) допустим только один сегмент — запись.
+- у типа без кастомной таксономии (`journal`, `quiz`, `rock-data`, `site-archive`) допустим только один сегмент — запись.
 
 Список постов термина — `fetchArchive({ postType, taxonomy, page })`: `taxonomy` равен slug термина из пути, `page` равен `:id`. Адрес архива статей — `/articles/{term}/{page}` (`/articles/entertaining/2`). В API `postType` остаётся `article`. Фильтр берёт термины из `CUSTOM_TAXONOMIES`. «Все» ведёт на `/articles`, термин — на `/articles/{term}/1`. `/article` и `/article/{term}/{page}` редиректят на `articles`. Query `?taxonomy=` редиректит на этот путь.
 

@@ -85,12 +85,13 @@ const ArchivePage = async ({
         <ArchiveTPL
             pathname={`/${archiveSlug}`}
             title={POST_TYPES[postType]}
+            postType={postType}
             postsData={data.postsData?.map((post) => ({
                 ...post,
                 url: nestPostUrl(
                     postType,
                     post.url,
-                    getTermSegmentsFromCategories(postType, post.categories),
+                    getTermSegmentsFromCategories(postType, post.taxonomies),
                 ),
             }))}
             paginationInfo={data.paginationInfo}
@@ -104,7 +105,7 @@ const ArchivePage = async ({
                 url: nestPostUrl(
                     postType,
                     post.url,
-                    getTermSegmentsFromCategories(postType, post.categories),
+                    getTermSegmentsFromCategories(postType, post.taxonomies),
                 ),
             }))}
         />

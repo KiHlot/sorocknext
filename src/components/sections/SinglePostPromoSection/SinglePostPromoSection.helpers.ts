@@ -1,17 +1,5 @@
 import { OptionIF } from '@/types/common';
 
-export const getPromoCategories = (
-    categories?: Array<string | OptionIF> | null,
-): string[] =>
-    categories?.flatMap((category) => {
-        const slug =
-            typeof category === 'string'
-                ? category.trim()
-                : category?.value?.trim();
-
-        return slug ? [slug] : [];
-    }) ?? [];
-
 export const getPromoTags = (
     tags?: Array<string | OptionIF> | null,
 ): OptionIF[] =>

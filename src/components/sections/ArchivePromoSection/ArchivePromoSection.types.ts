@@ -1,4 +1,5 @@
 import { HTMLString } from '@/types/common';
+import { PostTypeT } from '@/configs/postTypes.config';
 import { PostArchiveCardModelIF } from '@/components/cards/PostArchiveCard/PostArchiveCard.types';
 
 export interface ArchiveSeoDataIF {
@@ -13,4 +14,5 @@ export interface ArchivePromoSectionPropsIF {
     titleId: string;
     seoData?: ArchiveSeoDataIF | null;
     archivePromoData?: PostArchiveCardModelIF[] | null;
+    postType?: PostTypeT;
 }

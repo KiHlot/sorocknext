@@ -1,5 +1,5 @@
 ---
-description: Справочники бэкенда — пост-типы article/journal/music/news/quiz/rock-data/site-archive/stars/video, размеры img80/img500/img900, коды er200/er900, cron JSON-кэш
+description: Справочники бэкенда — пост-типы article/journal/music/news/quiz/rock-data/site-archive/video, размеры img80/img500/img900, коды er200/er900, cron JSON-кэш
 alwaysApply: false
 ---
 
@@ -9,12 +9,12 @@ alwaysApply: false
 
 `article` (Статьи), `journal` (Журнал), `music` (Музыка), `news` (Новости),
 `quiz` (Тесты), `rock-data` (Рок даты), `site-archive` (Архивные материалы),
-`stars` (Звезды), `video` (Видео).
+`video` (Видео).
 
 Кастомные таксономии (`hierarchical`, дефолтные термины плоские):
 
 - `article_cat` → `article`: `interview`, `review`, `sport`, `game`, `fact`,
-  `entertaining`, `event`, `advertising`
+  `entertaining`, `event`
 - `music_cat` → `music`: `album`, `single`, `ep`, `playlist`, `live`
 - `news_cat` → `news`: `society`, `sport`, `celebrities`, `interesting`,
   `advertisement`

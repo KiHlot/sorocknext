@@ -1282,16 +1282,15 @@ $image_id = gf_img('cover_img', $post_id, 'id');
 | Slug | Label | `in_latest_posts` | `is_searched` | `is_calendar` | `page_id` | Кастомная таксономия |
 | --- | --- | --- | --- | --- | --- | --- |
 | `news` | Новости | ✅ | ✅ | — | 209 | `news_cat` |
-| `rock-data` | Рок-дата | ✅ | ✅ | ✅ | 213 | — |
+| `rock-data` | Рок даты | ✅ | ✅ | ✅ | 213 | — |
 | `journal` | Журнал | ❌ | ❌ | ❌ | 46507 | — |
 | `quiz` | Тесты | ❌ | ❌ | ❌ | 46510 | — |
 | `site-archive` | Архивные материалы | ❌ | ❌ | ❌ | 46513 | — |
 | `article` | Статьи | ✅ | ✅ | — | 210 | `article_cat` |
 | `music` | Музыка | ❌ | ✅ | — | 46486 | `music_cat` |
 | `video` | Видео | ✅ | ✅ | — | 212 | `video_cat` |
-| `stars` | Звёзды | — | — | — | — | **ЗАКОММЕНТИРОВАН** |
 
-`stars` (`_pt_stars.php`) — весь файл закомментирован, в `$post_types_config` отсутствует.
+`stars` в `$post_types_config` нет.
 
 ### Таксономии
 

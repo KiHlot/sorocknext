@@ -6,7 +6,7 @@ export interface PostShortCardModelIF {
     title: string;
     url: string;
     author: AuthorIF;
-    categories: string[] | null;
+    taxonomies: string[] | null;
     postDate: DateWithTimeT;
     eventDate: DateT;
     year: string;

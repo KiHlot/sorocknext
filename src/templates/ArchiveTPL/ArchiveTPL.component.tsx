@@ -16,6 +16,7 @@ import { ArchiveTPLPropsIF } from '@/templates/ArchiveTPL/ArchiveTPL.types';
 const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
     pathname,
     title,
+    postType,
     postsData,
     paginationInfo,
     seoData = null,
@@ -39,6 +40,7 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
                         titleId={titleId}
                         seoData={seoData}
                         archivePromoData={archivePromoData}
+                        postType={postType}
                     />
                 ) : (
                     <Breadcrumbs pathname={pathname} title={title} />
@@ -54,12 +56,13 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
                         </h1>
                     )}
                     {termFilter && <ArchiveTermFilter {...termFilter} />}
-                    {!!postsData?.length && (
+                    {!!postsData?.length && postType && (
                         <div className={styles.list}>
                             {postsData.map((postData) => (
                                 <PostArchiveCard
                                     key={postData.url}
                                     postData={postData}
+                                    postType={postType}
                                     className={styles.card}
                                 />
                             ))}

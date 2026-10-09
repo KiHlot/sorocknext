@@ -90,12 +90,6 @@ export const POST_TYPE_TERMS: PostTypeTermsConfigIF = {
             articleTerms.event,
             <IoCalendarOutline />,
         ),
-        advertising: createPostTypeTerm(
-            'article',
-            'advertising',
-            articleTerms.advertising,
-            <IoMegaphoneOutline />,
-        ),
     },
     music: {
         album: createPostTypeTerm(

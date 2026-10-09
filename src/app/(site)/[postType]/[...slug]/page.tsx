@@ -122,6 +122,7 @@ const ContentPage = async ({
             <ArchiveTPL
                 pathname={termPath}
                 title={getTermLabel(postType, termSlug)}
+                postType={postType}
                 postsData={postsData}
                 paginationInfo={data.paginationInfo}
                 termFilter={getArchiveTermFilter(postType, termSlug)}
@@ -154,7 +155,7 @@ const ContentPage = async ({
             ? path.termSegments
             : getTermSegmentsFromCategories(
                   postType,
-                  data.postBase.taxonomies.categories,
+                  data.postBase.taxonomies.taxonomies,
               );
 
     if (path.termSegments.length === 0 && termSegments.length > 0) {

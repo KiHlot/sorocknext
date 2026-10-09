@@ -13,6 +13,7 @@ const ArchivePromoSection: FC<ArchivePromoSectionPropsIF> = ({
     titleId,
     seoData = null,
     archivePromoData = null,
+    postType,
 }) => (
     <Section
         className={styles.archivePromoSectionWrapper}
@@ -29,9 +30,11 @@ const ArchivePromoSection: FC<ArchivePromoSectionPropsIF> = ({
         {pathname === ROCK_DATA_ARCHIVE_PATH ? (
             <ArchivePromoCalendar className={styles.archivePromoGallery} />
         ) : (
-            !!archivePromoData?.length && (
+            !!archivePromoData?.length &&
+            postType && (
                 <ArchivePromoGallery
                     archivePromoData={archivePromoData}
+                    postType={postType}
                     className={styles.archivePromoGallery}
                 />
             )
