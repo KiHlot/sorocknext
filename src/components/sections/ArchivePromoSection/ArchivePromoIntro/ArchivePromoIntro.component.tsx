@@ -14,7 +14,9 @@ const ArchivePromoIntro: FC<ArchivePromoIntroPropsIF> = ({
     seoData = null,
     className = '',
 }) => (
-    <div className={`flcol ${styles.archivePromoIntroWrapper} ${className}`}>
+    <div
+        className={`flcol gapBlock ${styles.archivePromoIntroWrapper} ${className}`}
+    >
         {seoData ? (
             <h1
                 id={titleId}
@@ -26,7 +28,7 @@ const ArchivePromoIntro: FC<ArchivePromoIntroPropsIF> = ({
                 {title}
             </h1>
         )}
-        <Breadcrumbs pathname={pathname} className={styles.breadcrumbs} />
+        <Breadcrumbs pathname={pathname} />
         {seoData?.description && (
             <div
                 className={`${styles.archivePromoLead} ${styles.description}`}

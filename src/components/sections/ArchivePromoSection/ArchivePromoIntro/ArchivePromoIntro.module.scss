@@ -21,12 +21,7 @@
     }
 }
 
-.breadcrumbs {
-    margin-top: var(--gapBlock);
-}
-
 .description {
-    margin-top: 16px;
     color: var(--textColor);
     font-size: 14px;
     line-height: 22px;
@@ -57,11 +52,6 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--gapBlock);
     margin-top: auto;
-
-    @include media(xxl) {
-        margin-top: 16px;
-    }
+    gap: var(--gapBlock);
 }
-
