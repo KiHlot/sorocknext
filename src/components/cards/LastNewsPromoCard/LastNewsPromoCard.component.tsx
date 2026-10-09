@@ -2,11 +2,10 @@ import { FC } from 'react';
 import Link from 'next/link';
 import { IoCalendarOutline, IoTimerOutline } from 'react-icons/io5';
 import { formatDate } from '@/helpers/utils';
+import styles from '@/components/cards/LastNewsPromoCard/LastNewsPromoCard.module.scss';
+import { LastNewsPromoCardPropsIF } from '@/components/cards/LastNewsPromoCard/LastNewsPromoCard.types';
 import Author from '@/components/elems/Author/Author.component';
 import Country from '@/components/elems/Country/Country.component';
-import styles from '@/components/sections/LastNewsPromoSection/LastNewsPromoCard/LastNewsPromoCard.module.scss';
-import { LastNewsPromoCardPropsIF } from '@/components/sections/LastNewsPromoSection/LastNewsPromoCard/LastNewsPromoCard.types';
-import { LAST_NEWS_PROMO_COPY } from '@/components/sections/LastNewsPromoSection/LastNewsPromoSection.config';
 
 const COVER_TONE_CLASS = [
     styles.tone0,
@@ -20,12 +19,12 @@ const LastNewsPromoCard: FC<LastNewsPromoCardPropsIF> = ({
     item,
     coverTone,
     index,
+    className = '',
 }) => {
     const toneClass = COVER_TONE_CLASS[coverTone] ?? styles.tone0;
-    const authorName = item.author?.fullName?.trim();
 
     return (
-        <article className={styles.card}>
+        <article className={`${styles.card} ${className}`}>
             <Link
                 href={item.url}
                 aria-label={item.title}
@@ -38,7 +37,7 @@ const LastNewsPromoCard: FC<LastNewsPromoCardPropsIF> = ({
             >
                 <Country value={item.country} className={styles.flag} />
             </Link>
-            <div className={styles.body}>
+            <div className={`flcol ${styles.body}`}>
                 <Link href={item.url} className={styles.title}>
                     {item.title}
                 </Link>
@@ -67,11 +66,15 @@ const LastNewsPromoCard: FC<LastNewsPromoCardPropsIF> = ({
                         className={styles.read}
                         data-test={`last_news_promo_read_${index}`}
                     >
-                        {LAST_NEWS_PROMO_COPY.readLabel}
+                        Читать
                     </Link>
-                    {authorName && item.author ? (
-                        <Author data={item.author} className={styles.author} />
-                    ) : null}
+                    {!!item.author && (
+                        <Author
+                            type="name"
+                            data={item.author}
+                            className={styles.author}
+                        />
+                    )}
                 </div>
             </div>
         </article>

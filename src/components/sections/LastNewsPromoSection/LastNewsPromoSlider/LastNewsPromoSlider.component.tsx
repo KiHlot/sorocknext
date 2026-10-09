@@ -3,7 +3,7 @@
 import { FC, useRef, useState } from 'react';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import LastNewsPromoCard from '@/components/sections/LastNewsPromoSection/LastNewsPromoCard/LastNewsPromoCard.component';
+import LastNewsPromoCard from '@/components/cards/LastNewsPromoCard/LastNewsPromoCard.component';
 import {
     LAST_NEWS_PROMO_COPY,
     LAST_NEWS_PROMO_SLIDER_BREAKPOINTS,
@@ -54,6 +54,7 @@ const LastNewsPromoSlider: FC<LastNewsPromoSliderPropsIF> = ({
                             item={item}
                             coverTone={index}
                             index={index}
+                            className={styles.slideCard}
                         />
                     </SwiperSlide>
                 ))}

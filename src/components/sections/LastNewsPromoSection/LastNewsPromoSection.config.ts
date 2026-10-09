@@ -18,7 +18,6 @@ export const LAST_NEWS_PROMO_COPY = {
     ctaHref: '/news',
     sliderLabel: 'Последние новости',
     dotsLabel: 'Слайды новостей',
-    readLabel: 'Читать',
     stats: [
         { id: 'materials', value: '32K+', label: 'Материалов' },
         { id: 'authors', value: '20K+', label: 'Авторов' },

@@ -1,6 +1,6 @@
-import { LastNewsPromoCardIF } from '@/components/sections/LastNewsPromoSection/LastNewsPromoSection.mock';
+import { LastNewsPromoCardModelIF } from '@/components/cards/LastNewsPromoCard/LastNewsPromoCard.types';
 
 export interface LastNewsPromoSliderPropsIF {
-    items: LastNewsPromoCardIF[];
+    items: LastNewsPromoCardModelIF[];
     className?: string;
 }

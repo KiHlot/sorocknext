@@ -1,17 +1,6 @@
-import { DateWithTimeT } from '@/types/common';
-import { AuthorIF } from '@/types/post';
+import { LastNewsPromoCardModelIF } from '@/components/cards/LastNewsPromoCard/LastNewsPromoCard.types';
 
-export interface LastNewsPromoCardIF {
-    title: string;
-    url: string;
-    innerImg: string;
-    postDate: DateWithTimeT;
-    country: string;
-    readingTime: number;
-    author: AuthorIF | null;
-}
-
-export const LAST_NEWS_PROMO_MOCK: LastNewsPromoCardIF[] = [
+export const LAST_NEWS_PROMO_MOCK: LastNewsPromoCardModelIF[] = [
     {
         title: 'Pink Floyd открыли редкий концерт 1972 года',
         url: '/news/pink-floyd-1972',
