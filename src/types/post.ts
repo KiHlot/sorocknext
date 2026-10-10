@@ -55,6 +55,12 @@ export interface PostBaseIF {
     music: MusicIF | null;
 }
 
+export interface TaxonomyTermCountIF {
+    slug: string;
+    count: number;
+}
+
 export interface PostIF {
     postBase: PostBaseIF;
+    taxonomyTerms: TaxonomyTermCountIF[] | null;
 }

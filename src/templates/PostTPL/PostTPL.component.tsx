@@ -9,15 +9,18 @@ import PostMusicSection from '@/components/sections/PostMusicSection/PostMusicSe
 import PostVideoSection from '@/components/sections/PostVideoSection/PostVideoSection.component';
 import SinglePostPromoSection from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.component';
 import PopularTagsWidget from '@/components/widgets/PopularTagsWidget/PopularTagsWidget.component';
+import TaxonomyTermsWidget from '@/components/widgets/TaxonomyTermsWidget/TaxonomyTermsWidget.component';
+import { getTaxonomySidebarTerms } from '@/components/widgets/TaxonomyTermsWidget/TaxonomyTermsWidget.helpers';
 import styles from '@/templates/PostTPL/PostTPL.module.scss';
 import { PostTPLPropsIF } from '@/templates/PostTPL/PostTPL.types';
 
-const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname }) => {
+const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname, postType }) => {
     const { postBase } = data;
     const videos = (postBase.video ?? []).filter((item) =>
         Boolean(item.videoCode?.trim()),
     );
     const music = postBase.music;
+    const taxonomyTerms = getTaxonomySidebarTerms(postType, data.taxonomyTerms);
 
     return (
         <>
@@ -41,6 +44,14 @@ const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname }) => {
                 </article>
             </Content>
             <Sidebar>
+                {taxonomyTerms ? (
+                    <Block>
+                        <TaxonomyTermsWidget
+                            title={taxonomyTerms.title}
+                            items={taxonomyTerms.items}
+                        />
+                    </Block>
+                ) : null}
                 <Block>
                     <h2 className={styles.title}>Популярные теги</h2>
                     <PopularTagsWidget />

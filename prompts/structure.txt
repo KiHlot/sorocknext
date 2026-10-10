@@ -515,11 +515,18 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |       |           SendResetPasswordMailForm.config.ts
 |       |           SendResetPasswordMailForm.types.ts
 |       |           
-|       \---SearchWidget
-|               SearchWidget.component.tsx
-|               SearchWidget.config.ts
-|               SearchWidget.module.scss
-|               SearchWidget.types.ts
+|       +---SearchWidget
+|       |       SearchWidget.component.tsx
+|       |       SearchWidget.config.ts
+|       |       SearchWidget.module.scss
+|       |       SearchWidget.types.ts
+|       |       
+|       \---TaxonomyTermsWidget
+|               TaxonomyTermsWidget.component.tsx
+|               TaxonomyTermsWidget.config.ts
+|               TaxonomyTermsWidget.helpers.ts
+|               TaxonomyTermsWidget.module.scss
+|               TaxonomyTermsWidget.types.ts
 |               
 +---configs
 |   |   magicNumbers.config.ts
@@ -771,6 +778,7 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |       
 |   +---PostTPL
 |   |       PostTPL.component.tsx
+|   |       PostTPL.module.scss
 |   |       PostTPL.types.ts
 |   |       
 |   \---SearchTPL

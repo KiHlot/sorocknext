@@ -167,7 +167,7 @@ const ContentPage = async ({
             ? `/${postType}/${termSegments.join('/')}/${postSlug}`
             : `/${postType}/${postSlug}`;
 
-    return <PostTPL data={data} pathname={pathname} />;
+    return <PostTPL data={data} pathname={pathname} postType={postType} />;
 };
 
 export default ContentPage;

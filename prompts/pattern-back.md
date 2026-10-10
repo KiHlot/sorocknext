@@ -982,7 +982,7 @@ class Some_Controller extends WP_REST_Controller
 
 **`Post_Controller`** — `/post/*` (публичный):
 
-- `/(?P<slug>[a-zA-Z0-9_-]+)` — базовая карточка поста. Path: `slug`. Query: обязательный `postType`. Нет поста → `data: null`, `['notfound' => true]`.
+- `/(?P<slug>[a-zA-Z0-9_-]+)` — базовая карточка поста. Path: `slug`. Query: обязательный `postType`. Нет поста → `data: null`, `['notfound' => true]`. `data`: `postBase` и `taxonomyTerms` (`{ slug, count }[]` или `null`, если у пост-типа нет кастомной таксономии; `count` — опубликованные записи термина).
 
 **`Search_Controller`** — `/search/*` (публичные):
 

@@ -21,7 +21,8 @@ alwaysApply: false
 - `video_cat` → `video`: `clip`, `concert`, `live`, `film`, `cool`
 
 Стандартная таксономия на всех типах: `post_tag` (метки). Рубрики `category`
-в публичной иерархии не используются.
+в публичной иерархии не используются. Счётчики терминов для сайдбара поста
+приходят в `GET /post/{slug}` полем `taxonomyTerms`: `{ slug, count }[] | null`.
 
 Фронтовые URL: `/{archiveSlug}`, `/{archiveSlug}?page={n}`,
 `/{postType}/{postSlug}`,
