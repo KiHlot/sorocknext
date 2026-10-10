@@ -15,6 +15,7 @@ import ArchivePromoSection from '@/components/sections/ArchivePromoSection/Archi
 import PopularTagsWidget from '@/components/widgets/PopularTagsWidget/PopularTagsWidget.component';
 import TaxonomyTermsWidget from '@/components/widgets/TaxonomyTermsWidget/TaxonomyTermsWidget.component';
 import { getTaxonomySidebarTerms } from '@/components/widgets/TaxonomyTermsWidget/TaxonomyTermsWidget.helpers';
+import TodayRockDatesWidget from '@/components/widgets/TodayRockDatesWidget/TodayRockDatesWidget.component';
 import styles from '@/templates/ArchiveTPL/ArchiveTPL.module.scss';
 import { ArchiveTPLPropsIF } from '@/templates/ArchiveTPL/ArchiveTPL.types';
 
@@ -28,6 +29,7 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
     archivePromoData = null,
     termFilter = null,
     taxonomyTerms = null,
+    todayRockDates = null,
     getPageHref,
 }) => {
     const sidebarFlags = postType ? getArchiveSidebarFlags(postType) : null;
@@ -93,6 +95,9 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
                 </Section>
             </Content>
             <Sidebar>
+                {todayRockDates?.length ? (
+                    <TodayRockDatesWidget items={todayRockDates} />
+                ) : null}
                 {taxonomySidebar ? (
                     <Block>
                         <TaxonomyTermsWidget

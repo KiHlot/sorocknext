@@ -5,6 +5,8 @@ import {
     FetchArchiveParamsIF,
     FetchArchivePromoIF,
     FetchArchivePromoParamsIF,
+    FetchCalendarIF,
+    FetchCalendarParamsIF,
 } from '@/api/archive/types';
 import { fetchApi, fetchApiEnvelope } from '@/helpers/fetchApi';
 
@@ -48,6 +50,20 @@ export const fetchArchivePromo = async ({
 
     return fetchApi<FetchArchivePromoIF>(
         `/archive/promo-data?${searchParams.toString()}`,
+    );
+};
+
+export const fetchCalendar = async ({
+    month,
+    day,
+}: FetchCalendarParamsIF): Promise<FetchCalendarIF | null | undefined> => {
+    const searchParams = new URLSearchParams();
+
+    searchParams.append('month', String(month));
+    searchParams.append('day', String(day));
+
+    return fetchApi<FetchCalendarIF>(
+        `/archive/calendar?${searchParams.toString()}`,
     );
 };
 

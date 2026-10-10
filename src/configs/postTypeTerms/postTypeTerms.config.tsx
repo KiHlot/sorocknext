@@ -148,10 +148,10 @@ export const POST_TYPE_TERMS: PostTypeTermsConfigIF = {
             newsTerms.interesting,
             <IoFlashOutline />,
         ),
-        advertisement: createPostTypeTerm(
+        preview: createPostTypeTerm(
             'news',
-            'advertisement',
-            newsTerms.advertisement,
+            'preview',
+            newsTerms.preview,
             <IoMegaphoneOutline />,
         ),
     },

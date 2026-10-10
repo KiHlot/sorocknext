@@ -42,7 +42,7 @@ export const CUSTOM_TAXONOMIES = {
             sport: 'Спорт',
             celebrities: 'Знаменитости',
             interesting: 'Интересное',
-            advertisement: 'Анонс',
+            preview: 'Анонс',
         },
     },
     video_cat: {

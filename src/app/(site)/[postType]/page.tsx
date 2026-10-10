@@ -1,8 +1,13 @@
 import { ReactElement } from 'react';
+import dayjs from 'dayjs';
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import { PageProps } from '@/types/common';
-import { fetchArchive, fetchArchivePromo } from '@/api/archive/endpoints';
+import {
+    fetchArchive,
+    fetchArchivePromo,
+    fetchCalendar,
+} from '@/api/archive/endpoints';
 import { fetchMetadata } from '@/api/metadata/endpoints';
 import {
     POST_TYPES,
@@ -65,13 +70,22 @@ const ArchivePage = async ({
         );
     }
 
+    const today = dayjs();
     const results = await Promise.allSettled([
         fetchArchive({ postType, page }),
         fetchArchivePromo({ postType }),
+        postType === 'rock-data'
+            ? fetchCalendar({
+                  month: today.month() + 1,
+                  day: today.date(),
+              })
+            : Promise.resolve(null),
     ]);
 
     const data = results[0].status === 'fulfilled' ? results[0].value : null;
     const promo = results[1].status === 'fulfilled' ? results[1].value : null;
+    const todayRockDates =
+        results[2].status === 'fulfilled' ? results[2].value : null;
 
     if (data && queryParams) {
         redirectArchivePage(
@@ -101,6 +115,7 @@ const ArchivePage = async ({
             }
             taxonomyTerms={data.taxonomyTerms}
             seoData={promo?.seoData}
+            todayRockDates={todayRockDates}
             archivePromoData={promo?.archivePromoData?.map((post) => ({
                 ...post,
                 url: nestPostUrl(
