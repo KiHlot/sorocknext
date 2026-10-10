@@ -1,0 +1,87 @@
+@use '@/styles/mixins' as *;
+
+.section {
+    position: relative;
+    overflow: hidden;
+    padding: 28px 0;
+    background-color: var(--bgColorDark);
+}
+
+.watermark {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    width: 100%;
+    text-align: right;
+}
+
+.portrait {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    width: 200px;
+    height: auto;
+    pointer-events: none;
+
+    @include media(md) {
+        display: none;
+    }
+}
+
+.card {
+    position: relative;
+    z-index: 1;
+    margin-left: 160px;
+    padding: 24px;
+    border-radius: var(--borderRadius);
+    background-color: var(--bgColorSecondary);
+
+    @include media(lg) {
+        margin-left: 72px;
+    }
+
+    @include media(md) {
+        margin-left: 0;
+        padding: 16px;
+    }
+}
+
+.item {
+    margin-bottom: 16px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.itemTitle {
+    margin-bottom: 16px;
+    color: var(--white);
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 600;
+}
+
+.itemText {
+    position: relative;
+    padding-left: 40px;
+    color: var(--textColor);
+    line-height: 22px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 25px;
+        width: 4px;
+        height: 100%;
+        background-color: var(--accent);
+    }
+
+    @include media(sm) {
+        font-size: 14px;
+        line-height: 18px;
+    }
+}

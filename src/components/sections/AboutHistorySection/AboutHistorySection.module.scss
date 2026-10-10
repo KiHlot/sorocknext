@@ -1,0 +1,158 @@
+@use '@/styles/mixins' as *;
+
+.section {
+    overflow: hidden;
+}
+
+.watermark {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    width: 100%;
+    text-align: right;
+}
+
+.body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gapBlock);
+}
+
+.title {
+    color: var(--accent);
+    font-size: 28px;
+    font-weight: 600;
+
+    @include media(md) {
+        font-size: 22px;
+    }
+}
+
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.list {
+    width: calc(50% - 10px);
+    padding: 24px;
+    border-radius: var(--borderRadius);
+    background-color: var(--bgColorDark);
+
+    @include media(md) {
+        width: 100%;
+        padding: 16px;
+    }
+}
+
+.item {
+    position: relative;
+    margin-bottom: 30px;
+    padding-left: 40px;
+
+    &:last-child {
+        margin-bottom: 0;
+
+        &::after {
+            display: none;
+        }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 28px;
+        left: 9px;
+        width: 1px;
+        height: calc(100% - 8px);
+    }
+
+    @include media(sm) {
+        padding-left: 28px;
+    }
+}
+
+.marker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.history {
+    .marker {
+        color: var(--highlight);
+    }
+
+    .item::after {
+        background-color: var(--highlight);
+    }
+
+    .label {
+        color: var(--highlight);
+    }
+}
+
+.facts {
+    .marker {
+        color: var(--colorPrimary);
+    }
+
+    .item::after {
+        background-color: var(--colorPrimary);
+    }
+
+    .label {
+        color: var(--colorPrimary);
+    }
+}
+
+.label {
+    margin-bottom: 8px;
+    font-size: 14px;
+
+    a {
+        text-decoration: underline;
+    }
+
+    @include media(sm) {
+        font-size: 12px;
+    }
+}
+
+.itemTitle {
+    margin-bottom: 12px;
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 700;
+
+    a {
+        text-decoration: underline;
+    }
+
+    @include media(sm) {
+        margin-bottom: 8px;
+        font-size: 18px;
+    }
+}
+
+.text {
+    color: var(--textColor);
+    font-size: 16px;
+    line-height: 22px;
+
+    a {
+        text-decoration: underline;
+    }
+
+    @include media(sm) {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

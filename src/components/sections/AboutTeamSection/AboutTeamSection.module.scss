@@ -1,0 +1,121 @@
+@use '@/styles/mixins' as *;
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gapBlock);
+}
+
+.title {
+    color: var(--accent);
+    font-size: 28px;
+    font-weight: 600;
+
+    @include media(md) {
+        font-size: 22px;
+    }
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    display: flex;
+    align-items: stretch;
+    width: calc((100% - 60px) / 4);
+    min-height: 180px;
+    overflow: hidden;
+    border-radius: var(--borderRadius);
+    background-color: var(--bgColorDark);
+
+    &:hover {
+        box-shadow: var(--boxShadow);
+    }
+
+    @include media(xxxl) {
+        width: calc((100% - 40px) / 3);
+    }
+
+    @include media(xl) {
+        width: calc((100% - 20px) / 2);
+    }
+
+    @include media(md) {
+        width: 100%;
+    }
+}
+
+.avatarLink {
+    position: relative;
+    display: block;
+    width: 150px;
+    min-height: 180px;
+
+    @include media(xl) {
+        width: 120px;
+    }
+}
+
+.avatar {
+    position: absolute;
+    inset: 0;
+}
+
+.body {
+    position: relative;
+    width: calc(100% - 150px);
+    padding: 16px 16px 40px;
+
+    @include media(xl) {
+        width: calc(100% - 120px);
+        padding: 10px 10px 40px;
+    }
+}
+
+.name {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--white);
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.position {
+    margin-bottom: 10px;
+    color: var(--accent);
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.about {
+    max-height: 70px;
+    overflow: auto;
+    line-height: 19px;
+
+    @include media(xs) {
+        font-size: 12px;
+        line-height: 16px;
+    }
+}
+
+.socList {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    display: flex;
+    gap: 6px;
+}
+
+.socLink {
+    width: 18px;
+    height: 18px;
+    color: var(--textColor);
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+}

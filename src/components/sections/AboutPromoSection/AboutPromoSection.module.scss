@@ -1,0 +1,105 @@
+@use '@/styles/mixins' as *;
+
+.section {
+    overflow: hidden;
+}
+
+.watermark {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    width: 100%;
+    text-align: right;
+}
+
+.layout {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px 20px;
+}
+
+.intro {
+    width: calc(100% - 420px);
+    min-width: 0;
+
+    @include media(xl) {
+        width: 100%;
+    }
+}
+
+.title {
+    max-width: calc(100% - 200px);
+    color: var(--accent);
+    font-size: 40px;
+    line-height: 1.15;
+    font-weight: 600;
+
+    @include media(lg) {
+        font-size: 32px;
+    }
+
+    @include media(sm) {
+        font-size: 26px;
+    }
+}
+
+.lead {
+    line-height: 24px;
+    color: var(--textColor);
+
+    strong,
+    em {
+        color: var(--white);
+        font-style: normal;
+    }
+
+    @include media(sm) {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
+
+.business {
+    width: 400px;
+
+    @include media(md) {
+        width: 350px;
+    }
+
+    @include media(sm) {
+        width: 100%;
+    }
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px 0;
+    border-top: 1px solid var(--bgColorDark);
+    padding-top: 24px;
+}
+
+.stat {
+    width: 24%;
+
+    @include media(sm) {
+        width: 48%;
+    }
+}
+
+.statValue {
+    margin-bottom: 10px;
+    color: var(--white);
+    font-size: 32px;
+    font-weight: 900;
+}
+
+.statLabel {
+    color: var(--textColor);
+}

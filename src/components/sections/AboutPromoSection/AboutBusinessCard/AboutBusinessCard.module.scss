@@ -1,0 +1,112 @@
+@use '@/styles/mixins' as *;
+
+.card {
+    overflow: hidden;
+    border-radius: var(--borderRadius);
+    background-color: var(--highlight);
+    color: var(--bgColorDark);
+}
+
+.map {
+    position: relative;
+    height: 150px;
+    background-color: var(--bgColorDark);
+    transition: height 0.3s ease;
+}
+
+.mapOpen {
+    height: 360px;
+}
+
+.mapIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 36px;
+    height: 36px;
+    color: var(--highlight);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.mapButton {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--white);
+    cursor: pointer;
+}
+
+.mapOpen .mapButton {
+    top: auto;
+    left: auto;
+    width: 110px;
+    height: 40px;
+    background-color: var(--bgColor);
+}
+
+.body {
+    padding: 30px;
+
+    @include media(lg) {
+        padding: 20px;
+    }
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+}
+
+.name {
+    font-size: 22px;
+    line-height: 1.1;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.tagline {
+    margin-bottom: 15px;
+}
+
+.rows {
+    width: 100%;
+}
+
+.row {
+    position: relative;
+    min-height: 24px;
+    margin-bottom: 15px;
+    padding-left: 36px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.rowIcon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.mapLink {
+    text-decoration: underline;
+}
