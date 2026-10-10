@@ -17,7 +17,12 @@ const Sidebar: FC<CommonPropsIF> = ({ children }) => {
     const wasOpenRef = useRef(false);
     const { isSidebarOpen, closeSidebar } = useLayoutShell();
 
-    useOutsideClick(panelRef, isSidebarOpen ? closeSidebar : null);
+    useOutsideClick(
+        panelRef,
+        isSidebarOpen ? closeSidebar : null,
+        undefined,
+        SIDEBAR_BUTTON_ID,
+    );
 
     useEffect(() => {
         if (isSidebarOpen) {

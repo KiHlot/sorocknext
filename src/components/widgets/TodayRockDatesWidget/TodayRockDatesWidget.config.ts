@@ -1,7 +1,7 @@
 export const TODAY_ROCK_DATES_TITLE_ID = 'today-rock-dates-title';
 
 export const TODAY_ROCK_DATES_COPY = {
-    title: 'Рок даты сегодня',
+    title: 'Последние из добавленного',
     dotsLabel: 'Слайды рок-дат',
 } as const;
 

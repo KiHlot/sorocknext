@@ -6,6 +6,7 @@ export const useOutsideClick = (
     reference: RefObject<HTMLElement | null>,
     callback: (() => void) | null,
     overlayId?: string,
+    excludedElementId?: string,
 ): void => {
     const stack = useSelector(
         (state: RootState) => state.siteConfig.overlayStack,
@@ -23,6 +24,16 @@ export const useOutsideClick = (
                 return;
             }
 
+            if (excludedElementId) {
+                const excludedElement = document.querySelector(
+                    `#${excludedElementId}`,
+                );
+
+                if (excludedElement?.contains(target)) {
+                    return;
+                }
+            }
+
             if (overlayId && stack.at(-1) !== overlayId) {
                 return;
             }
@@ -33,5 +44,5 @@ export const useOutsideClick = (
         document.addEventListener('mousedown', handleClick);
 
         return () => document.removeEventListener('mousedown', handleClick);
-    }, [reference, callback, overlayId, stack]);
+    }, [reference, callback, overlayId, excludedElementId, stack]);
 };
