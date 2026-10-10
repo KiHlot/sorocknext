@@ -95,6 +95,8 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       
 |   |   \---Section
 |   |           Section.component.tsx
+|   |           Section.config.ts
+|   |           Section.helpers.ts
 |   |           Section.module.scss
 |   |           Section.types.ts
 |   |           
@@ -104,6 +106,11 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       EventCard.helpers.ts
 |   |   |       EventCard.module.scss
 |   |   |       EventCard.types.ts
+|   |   |       
+|   |   +---LastNewsPromoCard
+|   |   |       LastNewsPromoCard.component.tsx
+|   |   |       LastNewsPromoCard.module.scss
+|   |   |       LastNewsPromoCard.types.ts
 |   |   |       
 |   |   +---PostArchiveCard
 |   |   |       PostArchiveCard.component.tsx
@@ -386,10 +393,21 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |           UserMenu.module.scss
 |   |   |           
 |   |   +---LastNewsPromoSection
-|   |   |       LastNewsPromoSection.component.tsx
-|   |   |       LastNewsPromoSection.module.scss
-|   |   |       LastNewsPromoSection.types.ts
-|   |   |       
+|   |   |   |   LastNewsPromoSection.component.tsx
+|   |   |   |   LastNewsPromoSection.config.ts
+|   |   |   |   LastNewsPromoSection.module.scss
+|   |   |   |   LastNewsPromoSection.types.ts
+|   |   |   |   
+|   |   |   +---LastNewsPromoIntro
+|   |   |   |       LastNewsPromoIntro.component.tsx
+|   |   |   |       LastNewsPromoIntro.module.scss
+|   |   |   |       LastNewsPromoIntro.types.ts
+|   |   |   |       
+|   |   |   \---LastNewsPromoSlider
+|   |   |           LastNewsPromoSlider.component.tsx
+|   |   |           LastNewsPromoSlider.module.scss
+|   |   |           LastNewsPromoSlider.types.ts
+|   |   |           
 |   |   +---PostContentSection
 |   |   |       PostContentSection.component.tsx
 |   |   |       PostContentSection.config.ts
