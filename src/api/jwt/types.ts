@@ -1,9 +1,6 @@
-import { CurrentUserIF } from '@/types/user';
-
 export interface LoginUserResponseIF {
     token: string;
-    expires: string;
-    currentUser: CurrentUserIF;
+    expires: number;
 }
 
 export interface LoginUserIF {

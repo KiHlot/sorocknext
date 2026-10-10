@@ -3,10 +3,13 @@ import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
+import Block from '@/components/blocks/Block/Block.component';
 import PostContentSection from '@/components/sections/PostContentSection/PostContentSection.component';
 import PostMusicSection from '@/components/sections/PostMusicSection/PostMusicSection.component';
 import PostVideoSection from '@/components/sections/PostVideoSection/PostVideoSection.component';
 import SinglePostPromoSection from '@/components/sections/SinglePostPromoSection/SinglePostPromoSection.component';
+import PopularTagsWidget from '@/components/widgets/PopularTagsWidget/PopularTagsWidget.component';
+import styles from '@/templates/PostTPL/PostTPL.module.scss';
 import { PostTPLPropsIF } from '@/templates/PostTPL/PostTPL.types';
 
 const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname }) => {
@@ -37,7 +40,12 @@ const PostTPL: FC<PostTPLPropsIF> = ({ data, pathname }) => {
                     <PostContentSection content={postBase.main.content} />
                 </article>
             </Content>
-            <Sidebar>sidebar</Sidebar>
+            <Sidebar>
+                <Block>
+                    <h2 className={styles.title}>Популярные теги</h2>
+                    <PopularTagsWidget />
+                </Block>
+            </Sidebar>
         </>
     );
 };

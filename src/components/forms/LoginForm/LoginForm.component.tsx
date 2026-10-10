@@ -8,9 +8,12 @@ import { toast } from 'react-toastify';
 import { CurrentUserIF } from '@/types/user';
 import { jwtApi } from '@/api/jwt/jwt';
 import { LoginUserIF } from '@/api/jwt/types';
+import { usersApi } from '@/api/users/users';
 import { MAGIC_NUMBERS } from '@/configs/magicNumbers.config';
+import { parseResponse } from '@/helpers/fetchRestApi/fetchRestApi.helpers';
 import { STORAGE_KEYS } from '@/helpers/storage/storage.config';
 import {
+    deleteCookie,
     setCookie,
     setSessionStorageItem,
 } from '@/helpers/storage/storage.helpers';
@@ -27,7 +30,12 @@ import { schema } from '@/components/forms/LoginForm/LoginForm.config';
 const LoginForm: FC = () => {
     const router = useRouter();
 
-    const [loginUser, { isLoading }] = jwtApi.useLoginUserMutation();
+    const [loginUser, { isLoading: isLoginLoading }] =
+        jwtApi.useLoginUserMutation();
+    const [fetchCurrentUser, { isFetching: isCurrentUserLoading }] =
+        usersApi.useLazyGetCurrentUserQuery();
+
+    const isLoading = isLoginLoading || isCurrentUserLoading;
 
     const {
         handleSubmit,
@@ -41,25 +49,49 @@ const LoginForm: FC = () => {
     });
 
     const onSubmit = async (values: LoginUserIF): Promise<void> => {
+        let isTokenSet = false;
+
         try {
             const result = await loginUser(values).unwrap();
 
-            if (result) {
-                reset();
+            if (!result?.token) {
+                toast.error(ERRORS_CODES.er900);
+                return;
+            }
 
-                const { token, expires, currentUser } = result;
+            reset();
 
-                setCookie(STORAGE_KEYS.Token, token, {
-                    expires: new Date(expires),
-                });
+            const { token, expires } = result;
+
+            setCookie(STORAGE_KEYS.Token, token, {
+                expires: new Date(expires),
+            });
+            isTokenSet = true;
+
+            const currentUserResponse = await fetchCurrentUser().unwrap();
+
+            parseResponse(currentUserResponse, ({ data, errors }) => {
+                if (errors?.length || !data) {
+                    deleteCookie(STORAGE_KEYS.Token);
+                    const code = errors?.[0]?.code;
+                    toast.error(
+                        (code && ERRORS_CODES[code]) || ERRORS_CODES.er900,
+                    );
+                    return;
+                }
+
                 setSessionStorageItem<CurrentUserIF>(
                     STORAGE_KEYS.CurrentUser,
-                    currentUser,
+                    data,
                 );
                 toast.success(SUCCESS_CODES.s105);
                 setTimeout(() => router.push('/'), MAGIC_NUMBERS.RedirectDelay);
-            }
+            });
         } catch (error) {
+            if (isTokenSet) {
+                deleteCookie(STORAGE_KEYS.Token);
+            }
+
             const { status, message } = catchError(error);
 
             if (status === SERVER_CODES.C403) {

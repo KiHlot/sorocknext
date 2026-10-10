@@ -52,7 +52,7 @@ src/
 ## 2. Типы и интерфейсы
 
 - Интерфейсы — постфикс `IF` (`UserIF`, `PageProps`, `ResponseIF`).
-- Типы — постфикс `T` (`ValueOfT`, `UserRoleT`, `SearchParamsT`).
+- Типы — постфикс `T` (`ValueOfT`, `PostTypeT`, `SearchParamsT`).
 - Ключи JSON с бэка — **camelCase**. `snake_case` во фронтовых типах не появляется.
 - Имена полей форм совпадают с `Site_Config::$FIELDS` на бэке (`loginEmail`, `passwordConfirm`, `confirmCode`).
 
@@ -279,7 +279,7 @@ export const fetchApi = async <DataIF = null>(
 
 Мутации REST: всегда `.unwrap()` + `parseResponse` + `catchError`. Успех **не** смотреть по HTTP-статусу: бэк почти всегда отдаёт 200, статус в `result`.
 
-JWT `/token` — **другая форма ответа** (`token`, `expires`, `currentUser`), не `ResponseIF`. Для логина `parseResponse` не используется.
+JWT `/token` — **другая форма ответа** (`token`, `expires` в миллисекундах), не `ResponseIF` и без профиля. Для логина `parseResponse` не используется. Профиль после записи cookie — `usersApi` `GET /users/get-current-user` (`CurrentUserIF`: `userId`, `role`, `fullName`, `avatarUrl`, `isActivated`) и `parseResponse`.
 
 ### 5.3. `parseResponse` и `catchError`
 
@@ -450,7 +450,7 @@ export const jwtApi = createApi({
 });
 ```
 
-Токен: cookie `STORAGE_KEYS.Token`. Профиль: sessionStorage `STORAGE_KEYS.CurrentUser`. Хелперы — `src/helpers/storage/`.
+Токен: cookie `STORAGE_KEYS.Token`. Профиль после логина кладётся в sessionStorage `STORAGE_KEYS.CurrentUser` из `/users/get-current-user`, не из ответа `/token`. Хелперы — `src/helpers/storage/`.
 
 `siteApi.getCommonData` использует `transformResponse` и отдаёт уже `data`, не весь конверт — исключение, не копировать слепо на мутации.
 

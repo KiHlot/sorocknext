@@ -682,8 +682,6 @@ public function __construct(int|string|null $page_id = null)
 - `DEFAULT_LAST_NAME = 'Контента'`
 - `DEFAULT_ABOUT = 'Молчание — золото'`
 - `DEFAULT_COUNTRY = 'sf'`
-- `SOC_TYPES = ['vk', 'in', 'fb', 'tt', 'yt']`
-- `MESSENGER_TYPES = ['tg', 'wa']`
 
 **Конструктор:**
 
@@ -707,44 +705,75 @@ public function __construct(int $user_id)
 **Публичные геттеры:**
 
 - `get_id(): int`, `get_page_url(): string`
-- `get_avatar(string $type = 'img500'): string|int|null`
-- `get_uname(string $type = 'full'): ?string` — `full | name | last_name | as_is_name`
-- `get_about(string $type = 'replace'): ?string` — `replace | as_is`
-- `get_birthdate(): ?string`, `get_country(): ?string`, `get_city(): ?string`
-- `get_email(string $type = 'public'): ?string` — `public | private`
-- `get_messenger(string $type): ?string` — `tg | wa`
-- `get_phone(): ?string`
-- `get_soclink(string $type): ?string` — `vk | in | fb | tt | yt`
-- `get_soclist(): ?array`
+- `get_avatar(string $type = 'img500'): string|int|null` — ACF `prf_profile_img`
+- `get_uname(string $type = 'full'): ?string` — `full | name | last_name | as_is_name`. Имя из `prf_public_name` (иначе `display_name`), фамилия из `prf_public_last_name` (иначе `user_lastname`)
+- `get_about(string $type = 'replace'): ?string` — `replace | as_is`, ACF `prf_about`
+- `get_birthdate(): ?string` — ACF `prf_birthdate`
+- `get_country(): ?string` — ACF `prf_profile_bcountry`
+- `get_email(): ?string` — `WP_User::user_email`, без аргумента
+- `get_messenger(string $type): ?string` — только `tg` (`prf_tg_login`), иначе `null`
 - `get_author_posts_id(array $post__not_in = [-1], int $posts_per_page = 5): ?array`
-- `get_role(): ?string`
+- `get_role(): ?string` — первый элемент `WP_User::$roles`
 
 **Публичные сеттеры:**
 
-- `update_uname(?string $new_name, string $type): bool` — `first_name | last_name`
+- `update_uname(?string $new_name, string $type): bool` — `first_name | last_name` через `wp_update_user`
 - `update_birthdate(?string $new_birthdate): bool`
-- `update_country(?string $new_country): bool`
-- `update_city(?string $new_city): bool`
-- `update_email(?string $new_email, string $type = 'public'): bool`
-- `update_messenger(?string $new_contact, string $type): bool` — `tg | wa`
-- `update_phone(?string $new_phone): bool`
-- `update_signature(?string $new_signature): bool`
-- `update_soclink(?string $new_link, string $type): bool` — `vk | in | fb | tt | yt`
+- `update_country(?string $new_country): bool` — пустое значение пишется как `DEFAULT_COUNTRY`
+- `update_email(?string $new_email): bool` — `wp_update_user`, поле `user_email`
+- `update_messenger(?string $new_contact, string $type): bool` — только `tg`
+- `update_signature(?string $new_signature): bool` — ACF `prf_signature`
 
 **Подтверждение аккаунта:**
 
-- `is_confirmed(): bool`
+- `is_confirmed(): bool` — ACF `usrmain_is_activate`
 - `confirm_user(?string $confirm_code): bool`
 - `set_new_password(string $new_password, string $confirm_code): bool`
 
-**Миграция:**
-
-- `migrate_user(): void`
-
 **Модели ответа:**
 
-- `get_user_model(): array` — полный публичный профиль (`userId`, `userLogin`, `avatarUrl`, `role`, `userUrl`, `metrics`, `contacts`, `socLinks`, `activity`).
-- `get_current_user_model(): array` — сокращённый профиль текущего пользователя (`userId`, `role`, `fullName`, `avatarUrl` (img80), `isActivated`, `isCookieAccepted`).
+- `get_user_model(): array` — публичный профиль. Пустой пользователь — `[]`.
+- `get_current_user_model(): array` — профиль текущего пользователя. Пустой пользователь — `[]`.
+
+`get_user_model()`:
+
+```json
+{
+    "userId": 23,
+    "userLogin": "user@mail.test",
+    "avatarUrl": "https://sorock.ru/wp-content/uploads/.../img500.jpg",
+    "role": "subscriber",
+    "userUrl": "/users/23",
+    "metrics": {
+        "firstName": "Автор",
+        "lastName": "Контента",
+        "birthdate": null,
+        "country": null
+    },
+    "contacts": {
+        "email": "user@mail.test",
+        "tgLogin": null
+    },
+    "activity": {
+        "registrationDate": "2024-10-15 12:00:00",
+        "isActivated": false
+    }
+}
+```
+
+`get_current_user_model()`:
+
+```json
+{
+    "userId": 23,
+    "role": "subscriber",
+    "fullName": "Автор Контента",
+    "avatarUrl": "https://sorock.ru/wp-content/uploads/.../img80.jpg",
+    "isActivated": false
+}
+```
+
+В ответах нет `metrics.city`, `contacts.phone`, `contacts.waLogin`, `contacts.emailPublic`, `socLinks`, `activity.lastActivity`, `activity.isCookieAccepted`. Город, телефон, WhatsApp, соцсети и флаг cookie из модели убраны. Email один — аккаунт WordPress, не отдельное публичное поле.
 
 ### 3.5. `Taxonomy_Model`
 
@@ -971,9 +1000,9 @@ class Some_Controller extends WP_REST_Controller
 
 **`User_Controller`** — `/users/*`:
 
-- `/filter` (public) — пагинация юзеров. Query: `page`, `offset`.
-- `/get-user-data` (public) — публичный профиль. Валидация `get-user-data`. Query: `userId`.
-- `/get-current-user` (private) — профиль по JWT.
+- `/filter` (public) — пагинация юзеров. Query: `page`, `offset`. Элементы списка — `get_user_model()`.
+- `/get-user-data` (public) — публичный профиль. Валидация `get-user-data`. Параметр `userId` (query или body). `data` — `get_user_model()`.
+- `/get-current-user` (private) — профиль по JWT. `data` — `get_current_user_model()`. Без токена — `er401`.
 
 ---
 
@@ -1685,3 +1714,11 @@ $user_id = (new Api_Helper())->get_user_id_from_headers($request);
   - **`_jwt.php`** — `get_time('timestamp', -3)`: параметр `-3` не применяется.
   - **`_options_page.php`** — ACF Options: `theme-general-settings` + подстраницы `Users rating`, `Users awards`, `Top Alboms`.
   - **`_media.php`** — размеры: `img80` (80×80 crop), `img500` (500×500), `img900` (900×500 crop); стандартные `1536x1536`, `2048x2048`, `medium_large`, `large` удалены.
+
+- **1.3.0** — `User_Model` без города, телефона, WhatsApp, соцсетей и cookie:
+  - Удалены `SOC_TYPES`, `MESSENGER_TYPES`, `get_city`, `get_phone`, `get_soclink`, `get_soclist`, `update_city`, `update_phone`, `update_soclink`, `migrate_user`.
+  - `get_email(): ?string` и `update_email(?string): bool` без аргумента `public | private`. Email — `user_email`.
+  - `get_messenger` / `update_messenger` — только `tg`.
+  - `get_user_model()`: `metrics` (`firstName`, `lastName`, `birthdate`, `country`), `contacts` (`email`, `tgLogin`), `activity` (`registrationDate`, `isActivated`). Нет `socLinks`.
+  - `get_current_user_model()`: `userId`, `role`, `fullName`, `avatarUrl` (img80), `isActivated`. Нет `isCookieAccepted`.
+  - JWT `/token` по-прежнему `{ token, expires }`. Профиль текущего пользователя — отдельный `GET/POST /users/get-current-user`.

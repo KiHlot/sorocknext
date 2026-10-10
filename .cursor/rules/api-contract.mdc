@@ -31,7 +31,7 @@ interface ResponseIF<DataIF = null> {
 ## Обработка ответа
 
 - `parseResponse` — бизнес-логика, разбирает все пять веток `result`. **Обязателен для мутаций REST** (`ResponseIF`).
-- **Исключение:** JWT `POST /wp-json/jwt-auth/v1/token` возвращает `{ token, expires, currentUser }`, не `ResponseIF`. Для логина `parseResponse` не использовать.
+- **Исключение:** JWT `POST /wp-json/jwt-auth/v1/token` возвращает `{ token, expires }`, не `ResponseIF` и без профиля. Для логина `parseResponse` не использовать. Профиль — следом `GET /users/get-current-user` (`ResponseIF`, уже с `parseResponse`).
 - `catchError` — только транспорт и JWT-плагин (нет сети, 401/403/500). Вызывается в `catch`.
 
 ```ts

@@ -45,7 +45,7 @@ alwaysApply: false
 ### TypeScript
 
 - **Все интерфейсы — постфикс `IF`** (`UserIF`, `ResponseIF`, `ButtonPropsIF`).
-- **Все типы — постфикс `T`** (`ValueOfT`, `UserRoleT`, `SearchParamsT`).
+- **Все типы — постфикс `T`** (`ValueOfT`, `PostTypeT`, `SearchParamsT`).
 - Исключение без постфикса: `PageProps` в `@/types/common.ts` (контракт страниц Next). Новые интерфейсы страниц — с `IF`.
 - **Ключи JSON с бэка — camelCase.** В фронтовых типах `snake_case` не появляется.
 - **Не использовать `any`.** Generics — где обосновано, `unknown` — редко.
