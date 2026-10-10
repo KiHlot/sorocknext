@@ -23,6 +23,7 @@ export const MAGIC_NUMBERS = {
     FebruaryLastCommonDay: 28,
     LeapDayOfMonth: 29,
     SampleLeapYear: 2024,
+    LatestPostsLimit: 5,
     TopAlbumsLimit: 10,
     TopAlbumsFirstWideIndex: 4,
     TopAlbumsSecondWideIndex: 7,

@@ -112,6 +112,11 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |   |   |       LastNewsPromoCard.module.scss
 |   |   |       LastNewsPromoCard.types.ts
 |   |   |       
+|   |   +---LatestPostCard
+|   |   |       LatestPostCard.component.tsx
+|   |   |       LatestPostCard.module.scss
+|   |   |       LatestPostCard.types.ts
+|   |   |       
 |   |   +---PostArchiveCard
 |   |   |       PostArchiveCard.component.tsx
 |   |   |       PostArchiveCard.module.scss
@@ -485,6 +490,13 @@ D:\OSPANEL635\HOME\SOROCKNEXT\SRC
 |       |           SendConfirmCodeForm.config.ts
 |       |           SendConfirmCodeForm.module.scss
 |       |           
+|       +---LatestPostsWidget
+|       |       LatestPostsWidget.component.tsx
+|       |       LatestPostsWidget.config.ts
+|       |       LatestPostsWidget.helpers.ts
+|       |       LatestPostsWidget.module.scss
+|       |       LatestPostsWidget.types.ts
+|       |       
 |       +---LoginWidget
 |       |       LoginWidget.component.tsx
 |       |       LoginWidget.module.scss

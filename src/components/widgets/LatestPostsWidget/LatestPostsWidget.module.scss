@@ -1,0 +1,47 @@
+.title {
+    color: var(--accent);
+    margin-bottom: 16px;
+}
+
+.slider {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.swiper {
+    width: 100%;
+    margin: 0;
+
+    .slide {
+        height: auto;
+    }
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--textColor);
+    opacity: 0.45;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px solid var(--textColor);
+        outline-offset: 2px;
+    }
+
+    &.active {
+        background-color: var(--accent);
+        opacity: 1;
+    }
+}

@@ -145,7 +145,10 @@ const ContentPage = async ({
     }
 
     const postSlug = path.postSlug.trim();
-    const data = await fetchPost({ postType, slug: postSlug });
+    const [data, archiveData] = await Promise.all([
+        fetchPost({ postType, slug: postSlug }),
+        fetchArchive({ postType, page: 1 }),
+    ]);
 
     if (!data?.postBase?.main?.titleH1?.trim()) {
         notFound();
@@ -168,7 +171,14 @@ const ContentPage = async ({
             ? `/${postType}/${termSegments.join('/')}/${postSlug}`
             : `/${postType}/${postSlug}`;
 
-    return <PostTPL data={data} pathname={pathname} postType={postType} />;
+    return (
+        <PostTPL
+            data={data}
+            latestPosts={archiveData?.postsData ?? null}
+            pathname={pathname}
+            postType={postType}
+        />
+    );
 };
 
 export default ContentPage;

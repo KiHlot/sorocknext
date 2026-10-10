@@ -47,6 +47,8 @@ const ARCHIVE_SIDEBAR_FLAGS: Partial<
     article: { popularTags: true, taxonomyTerms: true },
     music: { popularTags: true, taxonomyTerms: true },
     video: { popularTags: true, taxonomyTerms: true },
+    'rock-data': { popularTags: true, taxonomyTerms: false },
+    'site-archive': { popularTags: true, taxonomyTerms: false },
 };
 
 const HIDDEN_ARCHIVE_SIDEBAR: ArchiveSidebarFlagsIF = {
