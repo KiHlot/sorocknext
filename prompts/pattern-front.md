@@ -250,6 +250,7 @@ export const fetchApi = async <DataIF = null>(
 - `fetchArchive({ postType, taxonomy?, page })` — `/archive/archive?postType=...&taxonomy=...&page=...`.
   `taxonomy` — slug термина (`clip`), не имя таксономии (`video_cat`); в query попадает только если задан.
   `pagesCount` приходит в `paginationInfo: { currentPage, pagesCount }`, в запрос не передаётся и считается от фильтра.
+  Рядом с лентой — `taxonomyTerms` (`{ slug, count }[] | null`, тип `TaxonomyTermCountIF` в `@/types/post`): все термины кастомной таксономии пост-типа. `null`, если таксономии нет. Фильтр `taxonomy` этот список не режет.
   `result: 'redirect'` с `redirectUrl` обрабатывает сама обёртка через `redirect()` из `next/navigation` (`fetchApiEnvelope` в `@/helpers/fetchApi`). `fetchApi` по-прежнему возвращает только `data` при `result === 'ok'`
 - `fetchArchivePromo({ postType })` — `/archive/promo-data?postType=...`;
   `seoData` (HTML `titleH1` / `description`, `reviewUrl`) и

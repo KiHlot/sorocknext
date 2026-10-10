@@ -35,6 +35,30 @@ export const getPostTypeBySlug = (slug: string): PostTypeT | null => {
     return isPostType(slug) ? slug : null;
 };
 
+export interface ArchiveSidebarFlagsIF {
+    popularTags: boolean;
+    taxonomyTerms: boolean;
+}
+
+const ARCHIVE_SIDEBAR_FLAGS: Partial<
+    Record<PostTypeT, ArchiveSidebarFlagsIF>
+> = {
+    news: { popularTags: true, taxonomyTerms: true },
+    article: { popularTags: true, taxonomyTerms: true },
+    music: { popularTags: true, taxonomyTerms: true },
+    video: { popularTags: true, taxonomyTerms: true },
+};
+
+const HIDDEN_ARCHIVE_SIDEBAR: ArchiveSidebarFlagsIF = {
+    popularTags: false,
+    taxonomyTerms: false,
+};
+
+export const getArchiveSidebarFlags = (
+    postType: PostTypeT,
+): ArchiveSidebarFlagsIF =>
+    ARCHIVE_SIDEBAR_FLAGS[postType] ?? HIDDEN_ARCHIVE_SIDEBAR;
+
 export const isPostTypeSectionPath = (
     pathname: string,
     href: string,

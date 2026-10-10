@@ -126,6 +126,7 @@ const ContentPage = async ({
                 postsData={postsData}
                 paginationInfo={data.paginationInfo}
                 termFilter={getArchiveTermFilter(postType, termSlug)}
+                taxonomyTerms={data.taxonomyTerms}
                 getPageHref={(page) => `${termPath}/${page}`}
             />
         ) : (

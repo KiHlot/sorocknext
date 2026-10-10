@@ -1,4 +1,5 @@
 import { PaginationInfoIF } from '@/types/common';
+import { TaxonomyTermCountIF } from '@/types/post';
 import { EventCardModelIF } from '@/components/cards/EventCard/EventCard.types';
 import { PostArchiveCardModelIF } from '@/components/cards/PostArchiveCard/PostArchiveCard.types';
 import { PostShortCardModelIF } from '@/components/cards/PostShortCard/PostShortCard.types';
@@ -13,6 +14,7 @@ export interface FetchArchiveParamsIF {
 export interface FetchArchiveIF {
     postsData: PostArchiveCardModelIF[] | null;
     paginationInfo: PaginationInfoIF;
+    taxonomyTerms: TaxonomyTermCountIF[] | null;
 }
 
 export interface FetchArchivePromoParamsIF {

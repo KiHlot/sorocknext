@@ -99,6 +99,7 @@ const ArchivePage = async ({
             getPageHref={(pageNumber) =>
                 getArchivePageHref(postType, pageNumber)
             }
+            taxonomyTerms={data.taxonomyTerms}
             seoData={promo?.seoData}
             archivePromoData={promo?.archivePromoData?.map((post) => ({
                 ...post,

@@ -525,7 +525,7 @@ function _mail_html(string $title, string $body): string
 - `get_archive_metadata(?string $post_type): ?array` — SEO-метаданные архива (`title`, `description`, `canonical`, `dateGmt`, `modifiedGmt`, `author`).
 - `get_archive_seo_data(?string $post_type): ?array` — SEO-интро (`titleH1`, `description`, `reviewUrl`). `null`, если оба ACF-поля пусты.
 - `get_archive_promo_data(?string $post_type): ?array` — топ-6 постов по `mpf_page_views_count` за 2 года. Сортировка: просмотры (DESC), затем дата (DESC).
-- `get_archive_data(?string $post_type, ?string $taxonomy, int $page, int $per_page): ?array` — посты архива. Возвращает `['postsData' => ..., 'paginationInfo' => ['currentPage' => ..., 'pagesCount' => ...]]`.
+- `get_archive_data(?string $post_type, ?string $taxonomy, int $page, int $per_page): ?array` — посты архива. Возвращает `postsData`, `paginationInfo` (`currentPage`, `pagesCount`) и `taxonomyTerms` (`{ slug, count }[]` или `null`, если у пост-типа нет кастомной таксономии). Счётчики не зависят от фильтра `taxonomy`.
 - `get_calendar_data(?int $month, ?int $day): ?array` — карточки событий дня (год игнорируется). Источники: `rock-data` + все CPT с `is_calendar` + посты из категорий с `is_calendar`. Для `28 февраля` дополнительно попадают записи `29 февраля`. Сортировка — от новых к старым.
 - `get_rock_calendar_data(?int $month): ?array` — карточки событий месяца, сгруппированные по `MM-DD`. Месяц вне 1–12 или пусто — `null`.
 
@@ -595,6 +595,7 @@ public function __construct(int|string|null $page_id = null)
 
 - `get_categories(string $type = 'slug'): ?array` — категории (исключая `main_rub`).
 - `get_tags(?string $format = null): ?array` — `name_arr`, `id_arr`, `thumb_type` или `[{value, label}]`.
+- `get_taxonomy_terms(): ?array` — `{ slug, count }[]` кастомной таксономии пост-типа или `null`.
 
 **Автор:**
 
@@ -628,6 +629,7 @@ public function __construct(int|string|null $page_id = null)
 **Статические хелперы:**
 
 - `public static function get_last_posts_by_type(array $post_type, ?int $posts_per_page = 3): ?array` — последние посты для промо главной. Объединяет CPT с `in_latest_posts = true` + посты с рубрикой `news_rub`. Дедупликация + сортировка по `post_date` DESC.
+- `public static function get_taxonomy_term_counts(?string $post_type): ?array` — `{ slug, count }[]` кастомной таксономии или `null`. Тот же список, что `get_taxonomy_terms()` и поле `taxonomyTerms` архива.
 
 **Внутренние хелперы:**
 
@@ -970,7 +972,7 @@ class Some_Controller extends WP_REST_Controller
   Неизвестный slug — `postsData: null`, `pagesCount: 1`, не 404.
   `page` отсутствует или `< 1` → первая; `page > pagesCount` → последняя, `currentPage` уже поправлен.
   `pagesCount` считается от фильтра и от клиента не принимается.
-  `data`: `postsData` + `paginationInfo: { currentPage, pagesCount }`.
+  `data`: `postsData`, `paginationInfo: { currentPage, pagesCount }` и `taxonomyTerms` (`{ slug, count }[]` или `null`, если у пост-типа нет кастомной таксономии; список всей таксономии, фильтр `taxonomy` на него не влияет).
 - `/get-slugs` — слаги для `generateStaticParams`. Query: обязательный `postType`.
 - `/promo-data` — промо раздела. Query: обязательный `postType`. `data`: `seoData` (`titleH1`, `description`, `reviewUrl`) и `archivePromoData`. Отсутствие данных — `null` в полях, не 404.
 - `/calendar` — события календарного дня. Query: `month` (1–12) и `day` (1–31). `data` — `EventCardModel[]` или `null`. Поля карточки: `eventDate`, `titleH1`, `content`, `author`, `url`, `coverImg`, `tags`, `country`. Небывалая дата — `data: null`. 29 февраля допустим; в невисокосном году записи 29 февраля отдаются вместе с `month=2&day=28`.
@@ -1663,62 +1665,3 @@ Authorization: Bearer <token>
 ```php
 $user_id = (new Api_Helper())->get_user_id_from_headers($request);
 ```
-
-**TODO:** в будущем авторизация **будет удалена** (портал публичный).
-
----
-
-## 15. Changelog паттернов
-
-- **1.0.0** — первая версия паттернов после рефакторинга:
-  - `Site_Config` — singleton.
-  - Типизированные константы.
-  - `readonly class` для `Post_Model` / `Page_Model`.
-  - `User_Model::is_valid()` + nullable `user_data`.
-  - Единая точка guard в `get_acf()` / `set_acf()`.
-  - `Api_Helper` — убран `__construct`, `const string API_ENDPOINT`.
-  - `Validate` — `array|false`, `run_validator()`.
-  - Все контроллеры — секции, константы, `register_routes(): void`.
-  - Post-types — правильные `singular` / `plural`.
-
-- **1.1.0** — синхронизация с актуальной структурой бэкенда:
-  - Новый контроллер **`Archive_Controller`** (`/archive/archive`, `/get-slugs`, `/promo-data`, `/calendar`, `/rock-calendar`).
-  - Новый контроллер **`Post_Controller`** (`/post/{slug}`).
-  - Новый контроллер **`Metadata_Controller`** (`/metadata` — единая точка SEO).
-  - `News_Controller` удалён.
-  - `Users_Controller` → **`User_Controller`** (`/users/*`).
-  - Новая модель **`Archive_Model`** (ленты, промо, календари).
-  - `Post_Model` расширена: `get_post_event_card_model`, `get_post_short_model`, `get_latest_news_promo_model`, `get_video_models`, `get_music_model`, `get_top_album_model`, `get_event_date`, `get_reading_time`, `resolve_terms_names`, `resolve_acf_image`.
-  - `Page_Model` расширена: `get_calendar_default_data`, `get_top_albums_list_data`.
-  - `Auth_Model` — добавлен `send_changed_password_info_mail`.
-  - `Site_Config` — добавлены `$links`, `PROD_HOSTS`, `is_production()`, `get_mail_to()`, новые ключи `$permitted_config` и `$emails`.
-  - JWT: `expires` в ответе `/token` — в миллисекундах.
-
-- **1.2.0** — актуализация по коду:
-  - **`stars`** исключён из активных CPT (файл `_pt_stars.php` закомментирован, в `$post_types_config` отсутствует).
-  - **`$categories_config`** сокращён до двух записей (`rock_date_rub`, `news_rub`). Старый список `alboms_rub`, `interview_rub`, … удалён.
-  - **`Site_Config`** — убраны `$base_cap` и `get_roles()` (в коде их нет).
-  - **`Auth_Model::get_default_user_data`** — роль `subscriber` (хардкод), не первая из `get_roles`.
-  - **`Archive_Model`** — актуальный публичный метод `get_archive_data()` (не `get_posts_archive()`), добавлен `POST_TYPE_TAXONOMY_MAP`.
-  - **`Page_Model`** — константы `OPTION_TOP_LIST = 'ta_list'`, `OPTION_TOP_ITEM = 'ta_ls_top_list'`, `OPTION_TOP_ALBUM_ID = 'ta_ls_tl_item'`.
-  - **`Search_Model`** — только `post_types` и `phrase`; `categories` не принимает (упоминания `get_searched_categories()` — внутренний мёртвый код).
-  - **`Search_Controller::get_search_config`** отдаёт только `postTypes` (без `categories`).
-  - **`Site_Controller`** — нет `/site/filter-params`; `get_filter_params()` в `Site_Config` отсутствует.
-  - **`Admin_Controller`** — все 7 роутов описаны, но `register_routes()` не вызывается из `routes.php`.
-  - **`Validate::check_permission()`** — заглушка, всегда `false` (маршруты с `capability` упадут с `er228`).
-  - **`$FIELDS`** — актуальный список маршрутов, добавлен `example-with-capability`.
-  - **`$VALIDATORS`** — актуальный список полей.
-  - **`Validate::check_less_then_now`** — парсит `get_time()` форматом `'Y-m-d'`, но `get_time()` возвращает `'Y-m-d H:i:s'`; валидатор сейчас всегда отдаёт `er223`. Описано как есть.
-  - **`Taxonomy_Model::sort_by_date_asc`** — читает `postDateNumber`, но `Post_Model::get_post_short_model()` его не отдаёт; сортировка фактически по `0`.
-  - **Cron popular tags:** `_set_popular_tags.php` пишет `site_popular_tags_JSON`, публичный `Taxonomy_Model::get_popular_tags('json')` читает `popular_tags_JSON`. Два разных файла.
-  - **`_jwt.php`** — `get_time('timestamp', -3)`: параметр `-3` не применяется.
-  - **`_options_page.php`** — ACF Options: `theme-general-settings` + подстраницы `Users rating`, `Users awards`, `Top Alboms`.
-  - **`_media.php`** — размеры: `img80` (80×80 crop), `img500` (500×500), `img900` (900×500 crop); стандартные `1536x1536`, `2048x2048`, `medium_large`, `large` удалены.
-
-- **1.3.0** — `User_Model` без города, телефона, WhatsApp, соцсетей и cookie:
-  - Удалены `SOC_TYPES`, `MESSENGER_TYPES`, `get_city`, `get_phone`, `get_soclink`, `get_soclist`, `update_city`, `update_phone`, `update_soclink`, `migrate_user`.
-  - `get_email(): ?string` и `update_email(?string): bool` без аргумента `public | private`. Email — `user_email`.
-  - `get_messenger` / `update_messenger` — только `tg`.
-  - `get_user_model()`: `metrics` (`firstName`, `lastName`, `birthdate`, `country`), `contacts` (`email`, `tgLogin`), `activity` (`registrationDate`, `isActivated`). Нет `socLinks`.
-  - `get_current_user_model()`: `userId`, `role`, `fullName`, `avatarUrl` (img80), `isActivated`. Нет `isCookieAccepted`.
-  - JWT `/token` по-прежнему `{ token, expires }`. Профиль текущего пользователя — отдельный `GET/POST /users/get-current-user`.

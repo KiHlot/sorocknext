@@ -21,7 +21,7 @@ alwaysApply: false
 | `/auth/confirm-email` | Подтверждение аккаунта |
 | `/auth/send-reset-pass-code-mail` | Письмо для сброса пароля |
 | `/auth/reset-password` | Сброс пароля |
-| `/archive/archive` | Архив постов, query `postType`, опциональные `taxonomy` (slug термина) и `page` |
+| `/archive/archive` | Архив постов, query `postType`, опциональные `taxonomy` (slug термина) и `page`. `data`: `postsData`, `paginationInfo`, `taxonomyTerms` (`{ slug, count }[]` или `null`, если у пост-типа нет кастомной таксономии) |
 | `/archive/promo-data` | Промо архива, query `postType`: `seoData` + `archivePromoData` |
 | `/archive/get-slugs` | Слаги для `generateStaticParams`, query `postType` |
 | `/archive/calendar` | События дня, query `month` (1–12) и `day` (1–31). `data`: `EventCardModelIF[]` или `null`. Тот же массив в `calendarDefaultData` у `/page/home-page-data` (сегодня) |

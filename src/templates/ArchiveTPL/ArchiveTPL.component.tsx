@@ -1,8 +1,10 @@
 import { FC } from 'react';
+import { getArchiveSidebarFlags } from '@/configs/postTypes.config';
 import {
     Content,
     Sidebar,
 } from '@/layouts/CommonLayout/CommonLayout.component';
+import Block from '@/components/blocks/Block/Block.component';
 import Section from '@/components/blocks/Section/Section.component';
 import PostArchiveCard from '@/components/cards/PostArchiveCard/PostArchiveCard.component';
 import ArchiveTermFilter from '@/components/interactive/ArchiveTermFilter/ArchiveTermFilter.component';
@@ -10,6 +12,9 @@ import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.compon
 import Pagination from '@/components/interactive/Pagination/Pagination.component';
 import { ROCK_DATA_ARCHIVE_PATH } from '@/components/sections/ArchivePromoSection/ArchivePromoCalendar/ArchivePromoCalendar.config';
 import ArchivePromoSection from '@/components/sections/ArchivePromoSection/ArchivePromoSection.component';
+import PopularTagsWidget from '@/components/widgets/PopularTagsWidget/PopularTagsWidget.component';
+import TaxonomyTermsWidget from '@/components/widgets/TaxonomyTermsWidget/TaxonomyTermsWidget.component';
+import { getTaxonomySidebarTerms } from '@/components/widgets/TaxonomyTermsWidget/TaxonomyTermsWidget.helpers';
 import styles from '@/templates/ArchiveTPL/ArchiveTPL.module.scss';
 import { ArchiveTPLPropsIF } from '@/templates/ArchiveTPL/ArchiveTPL.types';
 
@@ -22,8 +27,14 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
     seoData = null,
     archivePromoData = null,
     termFilter = null,
+    taxonomyTerms = null,
     getPageHref,
 }) => {
+    const sidebarFlags = postType ? getArchiveSidebarFlags(postType) : null;
+    const taxonomySidebar =
+        postType && sidebarFlags?.taxonomyTerms
+            ? getTaxonomySidebarTerms(postType, taxonomyTerms)
+            : null;
     const titleId = `${pathname.replaceAll('/', '') || 'archive'}-title`;
     const hasPromo =
         !!seoData ||
@@ -81,7 +92,25 @@ const ArchiveTPL: FC<ArchiveTPLPropsIF> = ({
                     />
                 </Section>
             </Content>
-            <Sidebar>sidebar</Sidebar>
+            <Sidebar>
+                {taxonomySidebar ? (
+                    <Block>
+                        <TaxonomyTermsWidget
+                            title={taxonomySidebar.title}
+                            items={taxonomySidebar.items}
+                        />
+                    </Block>
+                ) : null}
+                {sidebarFlags?.popularTags ? (
+                    <Block>
+                        <h2 className={styles.tagsTitle}>Популярные теги</h2>
+                        <PopularTagsWidget />
+                    </Block>
+                ) : null}
+                {!taxonomySidebar && !sidebarFlags?.popularTags
+                    ? 'sidebar'
+                    : null}
+            </Sidebar>
         </>
     );
 };
