@@ -1,21 +1,6 @@
 @use '@/styles/mixins' as *;
 
-.section {
-    overflow: hidden;
-}
-
-.watermark {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 0;
-    width: 100%;
-    text-align: right;
-}
-
 .layout {
-    position: relative;
-    z-index: 1;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -33,7 +18,6 @@
 }
 
 .title {
-    max-width: calc(100% - 200px);
     color: var(--accent);
     font-size: 40px;
     line-height: 1.15;

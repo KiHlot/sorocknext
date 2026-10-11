@@ -1,6 +1,5 @@
 import { FC, ReactElement } from 'react';
 import { IoBulbOutline, IoCalendarOutline } from 'react-icons/io5';
-import SectionWatermark from '@/components/elems/SectionWatermark/SectionWatermark.component';
 import {
     ABOUT_HISTORY_COPY,
     ABOUT_TIMELINE_VARIANT,
@@ -46,14 +45,7 @@ const AboutHistorySection: FC<AboutHistorySectionPropsIF> = ({
     history,
     facts,
 }) => (
-    <section
-        className={styles.section}
-        aria-labelledby={ABOUT_HISTORY_COPY.titleId}
-    >
-        <SectionWatermark
-            className={styles.watermark}
-            text={ABOUT_HISTORY_COPY.watermark}
-        />
+    <section aria-labelledby={ABOUT_HISTORY_COPY.titleId}>
         <div className={styles.body}>
             <h2 id={ABOUT_HISTORY_COPY.titleId} className={styles.title}>
                 {ABOUT_HISTORY_COPY.title}

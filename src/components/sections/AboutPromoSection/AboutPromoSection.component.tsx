@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import SectionWatermark from '@/components/elems/SectionWatermark/SectionWatermark.component';
+import Section from '@/components/blocks/Section/Section.component';
 import Breadcrumbs from '@/components/interactive/Breadcrumbs/Breadcrumbs.component';
 import AboutBusinessCard from '@/components/sections/AboutPromoSection/AboutBusinessCard/AboutBusinessCard.component';
 import AboutPromoActions from '@/components/sections/AboutPromoSection/AboutPromoActions/AboutPromoActions.component';
@@ -8,14 +8,7 @@ import styles from '@/components/sections/AboutPromoSection/AboutPromoSection.mo
 import { AboutPromoSectionPropsIF } from '@/components/sections/AboutPromoSection/AboutPromoSection.types';
 
 const AboutPromoSection: FC<AboutPromoSectionPropsIF> = ({ data }) => (
-    <section
-        className={styles.section}
-        aria-labelledby={ABOUT_PROMO_COPY.titleId}
-    >
-        <SectionWatermark
-            className={styles.watermark}
-            text={ABOUT_PROMO_COPY.watermark}
-        />
+    <Section ariaLabelledBy={ABOUT_PROMO_COPY.titleId}>
         <div className={styles.layout}>
             <div className={`flcol gapBlock ${styles.intro}`}>
                 <h1 id={ABOUT_PROMO_COPY.titleId} className={styles.title}>
@@ -44,7 +37,7 @@ const AboutPromoSection: FC<AboutPromoSectionPropsIF> = ({ data }) => (
                 data={data.business}
             />
         </div>
-    </section>
+    </Section>
 );
 
 export default AboutPromoSection;

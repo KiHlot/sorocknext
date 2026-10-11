@@ -3,7 +3,6 @@ import { ValueOfT } from '@/types/common';
 export const ABOUT_HISTORY_COPY = {
     titleId: 'about-history-title',
     title: 'История проекта Сорок Ру',
-    watermark: '#10 ЛЕТ',
 } as const;
 
 export const ABOUT_TIMELINE_VARIANT = {
